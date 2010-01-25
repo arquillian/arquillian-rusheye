@@ -1,0 +1,55 @@
+<visual-suite xmlns="http://www.jboss.org/test/visual-suite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
+
+	<global-configuration>
+		<!-- the image retriever, implementing SourceRetriever interface -->
+		<image-retriever class="org.jboss.visualTesting.FileSourceRetriever">
+			<xxx></xxx>
+			<yyy></yyy>
+		</image-retriever>
+		<perception>
+			<!--
+				unperceptible treshold of color difference in scope of one pixel
+			-->
+			<!-- 0-768 -->
+			<one-pixel-treshold>5</one-pixel-treshold>
+			<!--
+				unperceptible treshold of color difference of one pixel to be
+				recognized as perceptible difference in global image scope
+			-->
+			<!-- 0-768 -->
+			<global-difference-treshold>10</global-difference-treshold>
+			<!-- amount of pixels perceptually different -->
+			<!-- % of image surface / 0-* of pixels differ  -->
+			<global-difference-pixel-amount>1%</global-difference-pixel-amount>
+		</perception>
+		<masks type="ignore-bitmap">
+			<mask id="xxx" source="xxx.png" />
+		</masks>
+		<masks type="selective-alpha">
+			<mask id="yyy" source="yyy.png" vertical-align="bottom" />
+		</masks>
+	</global-configuration>
+
+	<test name="AjaxSupportTestCase.testEmpty">
+		<pattern name="AjaxSupportTestCase.testEmpty.1">
+			<image source="AjaxSupportTestCase.testEmpty.1.png" />
+		</pattern>
+		<pattern name="AjaxSupportTestCase.testEmpty.2">
+			<image source="AjaxSupportTestCase.testEmpty.2.png" />
+		</pattern>
+	</test>
+
+	<test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
+		<pattern name="BeanValidatorTestCase.testAgeIntegerOnly:168.1">
+			<image>
+				<xxx>BeanValidatorTestCase.testAgeIntegerOnly:168.png</xxx>
+				<yyy>10</yyy>
+			</image>
+			<perception>
+				<global-difference-pixel-amount>10px</global-difference-pixel-amount>
+			</perception>
+		</pattern>
+	</test>
+</visual-suite>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.jboss.org/test/visual-suite" xmlns:tns="http://www.jboss.org/test/visual-suite"
+	xmlns:vs="http://www.jboss.org/test/visual-suite" elementFormDefault="qualified"
+	version="1.0">
+
+	<xs:element name="visual-suite">
+		<xs:annotation>
+			<xs:documentation>Visual Suite, the base of visual test configuration
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="global-configuration" type="vs:ConfigurationType" />
+				<xs:element name="test" type="vs:TestType" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:integer" />
+		</xs:complexType>
+		<xs:unique name="TestNameUnique">
+			<xs:annotation>
+				<xs:documentation>Test name must be unique across the suite
+				</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="vs:test" />
+			<xs:field xpath="@name" />
+		</xs:unique>
+		<xs:unique name="TestPatternNameUnique">
+			<xs:annotation>
+				<xs:documentation>Pattern name must be unique across the suite
+					(implies uniqueness across all tests and patterns)
+				</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="vs:test/vs:pattern" />
+			<xs:field xpath="@name" />
+		</xs:unique>
+	</xs:element>
+
+	<xs:complexType name="ConfigurationType">
+		<xs:annotation>
+			<xs:documentation>Configuration of suite including images and masks
+				retrieving and global perception settings</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="image-retriever" type="vs:ImageRetrieverType"
+				minOccurs="0" />
+			<xs:element name="mask-retriever" type="vs:MaskRetrieverType"
+				minOccurs="0" />
+			<xs:element name="perception" type="vs:PerceptionType"
+				minOccurs="0" />
+			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MasksType">
+		<xs:annotation>
+			<xs:documentation>List of masks of given type </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mask" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="vs:SourceType">
+							<xs:attribute name="id" type="xs:Name" use="required" />
+							<xs:attribute name="vertical-align" type="vs:VerticalAlignType"
+								use="optional" />
+							<xs:attribute name="horizontal-align" type="vs:HorizontalAlignType"
+								use="optional" />
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="selective-alpha" />
+					<xs:enumeration value="ignore-bitmap" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:simpleType name="VerticalAlignType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="top" />
+			<xs:enumeration value="bottom" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="HorizontalAlignType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="left" />
+			<xs:enumeration value="right" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ImageRetrieverType">
+		<xs:complexContent>
+			<xs:extension base="vs:RetrieverPropertiesType">
+				<xs:attribute name="class" type="vs:RetrieverClassType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MaskRetrieverType">
+		<xs:attribute name="class" type="vs:RetrieverClassType" />
+	</xs:complexType>
+
+	<xs:simpleType name="RetrieverClassType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="RetrieverPropertiesType">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PerceptionType">
+		<xs:sequence>
+			<xs:element name="one-pixel-treshold" type="vs:ColorTresholdType"
+				minOccurs="0" />
+			<xs:element name="global-difference-treshold" type="vs:ColorTresholdType"
+				minOccurs="0" />
+			<xs:element name="global-difference-pixel-amount" type="vs:SizeType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ColorTresholdType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxExclusive value="768" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SizeType">
+		<xs:union memberTypes="vs:PercentSizeType vs:PixelSizeType" />
+	</xs:simpleType>
+
+	<xs:simpleType name="PercentSizeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{1,2}|100)%" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="PixelSizeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d+px" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="TestType">
+		<xs:sequence>
+			<xs:element name="pattern" type="vs:TestPatternType"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:Name" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="TestPatternType">
+		<xs:sequence>
+			<xs:element name="image" type="vs:SourceType" />
+			<xs:element name="perception" type="vs:PerceptionType"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:Name" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="SourceType">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+		</xs:sequence>
+		<xs:attribute name="source">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"></xs:minLength>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+</xs:schema>

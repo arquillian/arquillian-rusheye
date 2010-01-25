@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.jboss.org/test/visual-suite-result"
+	xmlns:tns="http://www.jboss.org/test/visual-suite-result" xmlns:vsr="http://www.jboss.org/test/visual-suite-result"
+	elementFormDefault="qualified" version="1.0">
+
+	<xs:element name="visual-suite-result">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="test" type="vsr:TestType" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="TestNameUnique">
+			<xs:selector xpath="vsr:test" />
+			<xs:field xpath="@name" />
+		</xs:unique>
+		<xs:unique name="TestPatternNameUnique">
+			<xs:selector xpath="vsr:test/vsr:pattern" />
+			<xs:field xpath="@name" />
+		</xs:unique>
+	</xs:element>
+
+	<xs:complexType name="TestType">
+		<xs:sequence>
+			<xs:element name="pattern" type="vsr:PatternType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:Name" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="PatternType">
+		<xs:sequence>
+			<xs:element name="perception" type="vsr:PerceptionType"
+				minOccurs="0" />
+			<xs:element name="error-output" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:Name" use="required" />
+		<xs:attribute name="result" type="vsr:ResultType" use="required" />
+		<xs:attribute name="output" type="xs:string" />
+	</xs:complexType>
+
+	<xs:simpleType name="ResultType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="same" />
+			<xs:enumeration value="perceptually-same" />
+			<xs:enumeration value="differ" />
+			<xs:enumeration value="error" />
+			<xs:enumeration value="not-tested" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="PerceptionType">
+		<xs:sequence>
+			<xs:element name="area" type="vsr:AreaType" />
+			<xs:element name="rectangle" type="vsr:RectangleType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="total-pixels" type="vsr:PixelAmountType" />
+			<xs:element name="masked-pixels" type="vsr:PixelAmountType" />
+			<xs:element name="perceptible-different-pixels" type="vsr:PixelAmountType" />
+			<xs:element name="global-different-pixels" type="vsr:PixelAmountType" />
+			<xs:element name="unperceptible-different-pixels" type="vsr:PixelAmountType" />
+			<xs:element name="same-pixels" type="vsr:PixelAmountType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AreaType">
+		<xs:attribute name="width" type="xs:nonNegativeInteger" use="required" />
+		<xs:attribute name="height" type="xs:nonNegativeInteger" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="RectangleType">
+		<xs:sequence>
+			<xs:element name="vertex" minOccurs="2" maxOccurs="2">
+				<xs:complexType>
+					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
+					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="PixelAmountType">
+		<xs:restriction base="xs:nonNegativeInteger" />
+	</xs:simpleType>
+</xs:schema>
