@@ -1,0 +1,1 @@
+for file in *; do test=`echo $file | sed -r 's#\.[^.]+$##'`; dir=../tests/$test; mkdir -p $dir || true; cp $file $dir/$test.1.png; done
