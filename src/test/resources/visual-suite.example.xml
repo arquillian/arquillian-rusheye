@@ -39,6 +39,9 @@
 		<pattern name="AjaxSupportTestCase.testEmpty.2">
 			<image source="AjaxSupportTestCase.testEmpty.2.png" />
 		</pattern>
+		<masks type="ignore-bitmap">
+			<mask id="xxx" source="xxx.png" />
+		</masks>
 	</test>
 
 	<test name="BeanValidatorTestCase.testAgeIntegerOnly:168">

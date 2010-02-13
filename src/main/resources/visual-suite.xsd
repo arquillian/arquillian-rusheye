@@ -157,6 +157,8 @@
 		<xs:sequence>
 			<xs:element name="pattern" type="vs:TestPatternType"
 				maxOccurs="unbounded" />
+			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
+				maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:Name" use="required" />
 	</xs:complexType>
