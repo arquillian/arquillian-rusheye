@@ -24,10 +24,6 @@ public class ConfigurationStub {
 	Element imageRetriever = globalConfiguration.addElement(IMAGE_RETRIEVER)
 			.addAttribute("class", "org.jboss.lupic.retriever.FileRetriever");
 	Element perception = globalConfiguration.addElement(PERCEPTION);
-	// Element ignoreBitmapMasks = globalConfiguration.addElement(MASKS)
-	// .addAttribute("type", "ignore-bitmap");
-	// Element selectiveAlphaMasks = globalConfiguration.addElement(MASKS)
-	// .addAttribute("type", "selective-alpha");
 
 	Element defaultTest = visualSuite.addElement(TEST).addAttribute("name",
 			"default-test");
