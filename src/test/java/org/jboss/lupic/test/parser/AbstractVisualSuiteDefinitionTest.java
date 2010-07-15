@@ -1,5 +1,6 @@
-package org.jboss.lupic.test.configuration;
+package org.jboss.lupic.test.parser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
@@ -26,7 +27,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import static org.testng.Assert.*;
 
 @SuppressWarnings("unused")
-public class TestConfigurationParsing {
+public class AbstractVisualSuiteDefinitionTest {
 
 	String validationFeature = "http://xml.org/sax/features/validation";
 	String schemaFeature = "http://apache.org/xml/features/validation/schema";
@@ -36,6 +37,8 @@ public class TestConfigurationParsing {
 	XMLReader reader;
 	Handler handler;
 	InputSource inputSource;
+	String generatedDocument;
+	ByteArrayOutputStream documentOutputStream;
 
 	@BeforeMethod
 	public void prepareEnvironment() throws SAXException, IOException {
@@ -44,7 +47,9 @@ public class TestConfigurationParsing {
 
 		PipedInputStream in = new PipedInputStream();
 		PipedOutputStream writerOut = new PipedOutputStream(in);
-		TeeOutputStream out = new TeeOutputStream(writerOut, System.out);
+		documentOutputStream = new ByteArrayOutputStream();
+		TeeOutputStream out = new TeeOutputStream(writerOut, documentOutputStream);
+		
 		OutputFormat format = new OutputFormat("\t", true);
 		writer = new XMLWriter(out, format);
 		inputSource = new InputSource(in);
@@ -76,9 +81,10 @@ public class TestConfigurationParsing {
 		@Override
 		public void run() {
 			try {
-				TestConfigurationParsing.this.writer
-						.write(TestConfigurationParsing.this.document);
-				TestConfigurationParsing.this.writer.close();
+				AbstractVisualSuiteDefinitionTest.this.writer
+						.write(AbstractVisualSuiteDefinitionTest.this.document);
+				AbstractVisualSuiteDefinitionTest.this.writer.close();
+				generatedDocument = new String(documentOutputStream.toByteArray());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -86,37 +92,9 @@ public class TestConfigurationParsing {
 	}
 
 	@BeforeMethod
-	private void startWriter() {
+	public void startWriter() {
 		Thread writerThread = new Thread(new WriterRunnable());
 		writerThread.start();
-	}
-
-	@Test
-	public void testSimpleParse() {
-		try {
-			reader.setContentHandler(handler);
-			reader.parse(inputSource);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testGoThroughAllPhases() {
-		try {
-			AssertedListener assertedListener = new AssertedListener();
-			handler.registerListener(assertedListener);
-
-			reader.setContentHandler(handler);
-			reader.parse(inputSource);
-
-			assertEquals(assertedListener.state, 4);
-		} catch (SAXException e) {
-			fail();
-		} catch (IOException e) {
-			fail();
-		}
 	}
 
 	public class AssertedListener implements ParserListener {

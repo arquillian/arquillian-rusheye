@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.configuration;
+package org.jboss.lupic.test.parser;
 
 import java.util.Iterator;
 
@@ -7,7 +7,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import static org.jboss.lupic.test.configuration.VisualSuiteDefinitions.*;
+import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.*;
 
 @SuppressWarnings("unchecked")
 public class ConfigurationStub {

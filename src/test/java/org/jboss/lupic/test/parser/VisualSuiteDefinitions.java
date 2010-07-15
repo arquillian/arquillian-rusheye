@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.configuration;
+package org.jboss.lupic.test.parser;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;
@@ -17,5 +17,5 @@ public class VisualSuiteDefinitions {
 	public static final QName TEST = new QName("test", LUPIC_NS);
 	public static final QName PATTERN = new QName("pattern", LUPIC_NS);
 	public static final QName IMAGE = new QName("image", LUPIC_NS);
-	
+
 }
