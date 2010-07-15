@@ -27,7 +27,7 @@ public class ImageRetrieverProcessor extends Processor {
 	
 	@Override
 	public void end() {
-		retriever.setDefaultProperties(getProperties());
+		retriever.setGlobalProperties(getProperties());
 	}
 
 	private Retriever getRetrieverInstance(String retrieverClassName) {

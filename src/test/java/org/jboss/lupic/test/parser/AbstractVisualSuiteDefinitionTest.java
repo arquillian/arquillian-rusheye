@@ -34,7 +34,7 @@ public class AbstractVisualSuiteDefinitionTest {
 	String validationFeature = "http://xml.org/sax/features/validation";
 	String schemaFeature = "http://apache.org/xml/features/validation/schema";
 
-	Document document;
+	VisualSuiteStub stub;
 	XMLWriter writer;
 	XMLReader reader;
 	Handler handler;
@@ -44,8 +44,7 @@ public class AbstractVisualSuiteDefinitionTest {
 
 	@BeforeMethod
 	public void prepareEnvironment() throws SAXException, IOException {
-		VisualSuiteStub configurationSample = new VisualSuiteStub();
-		document = configurationSample.document;
+		stub = new VisualSuiteStub();
 
 		PipedInputStream in = new PipedInputStream();
 		PipedOutputStream writerOut = new PipedOutputStream(in);
@@ -84,7 +83,7 @@ public class AbstractVisualSuiteDefinitionTest {
 		public void run() {
 			try {
 				AbstractVisualSuiteDefinitionTest.this.writer
-						.write(AbstractVisualSuiteDefinitionTest.this.document);
+						.write(AbstractVisualSuiteDefinitionTest.this.stub.document);
 				AbstractVisualSuiteDefinitionTest.this.writer.close();
 				generatedDocument = new String(documentOutputStream.toByteArray());
 			} catch (IOException e) {
@@ -92,11 +91,15 @@ public class AbstractVisualSuiteDefinitionTest {
 			}
 		}
 	}
-
-	@BeforeMethod
+	
 	public void startWriter() {
 		Thread writerThread = new Thread(new WriterRunnable());
 		writerThread.start();
+	}
+	
+	public void parse() throws SAXException, IOException {
+		reader.setContentHandler(handler);
+		reader.parse(inputSource);
 	}
 
 	public class AssertedListener implements ParserListener {

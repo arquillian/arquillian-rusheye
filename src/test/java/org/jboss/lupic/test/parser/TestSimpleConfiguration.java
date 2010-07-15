@@ -12,8 +12,8 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
 	@Test
 	public void testSimpleParse() {
 		try {
-			reader.setContentHandler(handler);
-			reader.parse(inputSource);
+			startWriter();
+			parse();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -26,8 +26,8 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
 			AssertedListener assertedListener = new AssertedListener();
 			handler.registerListener(assertedListener);
 
-			reader.setContentHandler(handler);
-			reader.parse(inputSource);
+			startWriter();
+			parse();
 
 			assertEquals(assertedListener.state, 4);
 		} catch (SAXException e) {

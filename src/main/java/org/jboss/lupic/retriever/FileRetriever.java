@@ -9,8 +9,9 @@ import javax.imageio.ImageIO;
 
 public class FileRetriever extends AbstractRetriever {
 	
-	public BufferedImage retrieve(String source) {
-		String baseDirectory = (String) getProperties().get("base-directory");
+	public BufferedImage retrieve(String source, Properties localProperties) {
+		Properties properties = mergeProperties(localProperties);
+		String baseDirectory = (String) properties.get("base-directory");
 		
 		File file;
 		
@@ -25,9 +26,5 @@ public class FileRetriever extends AbstractRetriever {
 		} catch (IOException e) {
 			throw new IllegalArgumentException("Source is unreachable - " + file);
 		}
-	}
-
-	public BufferedImage retrieve(Properties properties) {
-		throw new UnsupportedOperationException("This retriever does support only simple source retrieving");
 	}
 }

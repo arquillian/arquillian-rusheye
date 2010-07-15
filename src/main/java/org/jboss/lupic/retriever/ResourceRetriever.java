@@ -6,14 +6,8 @@ import java.util.Properties;
 public class ResourceRetriever extends AbstractRetriever {
 
 	@Override
-	public BufferedImage retrieve(String source) {
+	public BufferedImage retrieve(String source, Properties properties) {
 		// TODO
 		return null;
-	}
-
-	@Override
-	public BufferedImage retrieve(Properties properties) {
-		throw new UnsupportedOperationException(
-				"This retriever does support only simple source retrieving");
 	}
 }

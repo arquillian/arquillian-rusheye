@@ -102,7 +102,6 @@ public class Handler extends DefaultHandler {
 			return wrappedListener;
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 				throws Throwable {
@@ -126,5 +125,9 @@ public class Handler extends DefaultHandler {
 
 			return null;
 		}
+	}
+	
+	public VisualSuite getVisualSuite() {
+		return visualSuite;
 	}
 }

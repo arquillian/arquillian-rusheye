@@ -20,11 +20,7 @@ public class Mask extends FutureTask<BufferedImage> {
 		super(new Callable<BufferedImage>() {
 			@Override
 			public BufferedImage call() throws Exception {
-				if (source != null) {
-					return retriever.retrieve(source);
-				} else {
-					return retriever.retrieve(maskProperties);
-				}
+				return retriever.retrieve(source, maskProperties);
 			}
 		});
 		this.id = id;

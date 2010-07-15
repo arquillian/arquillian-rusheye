@@ -12,6 +12,7 @@ public class PropertiesProcessor extends Processor {
 	public PropertiesProcessor(Properties properties, String tagName) {
 		this.properties = properties;
 		this.tagName = tagName;
+		this.properties.put(tagName, "");
 	}
 	
 	@Override
