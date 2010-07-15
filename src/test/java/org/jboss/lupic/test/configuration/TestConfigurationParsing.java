@@ -1,6 +1,13 @@
+package org.jboss.lupic.test.configuration;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.UnsupportedEncodingException;
 
+import org.dom4j.Document;
+import org.dom4j.io.XMLWriter;
 import org.jboss.lupic.parser.Handler;
 import org.jboss.lupic.parser.Parser;
 import org.jboss.lupic.parser.ParserListener;
@@ -13,23 +20,45 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import static org.testng.Assert.*;
 
+@SuppressWarnings("unused")
 public class TestConfigurationParsing {
 
+	Document document;
+	XMLWriter writer;
 	XMLReader parser;
 	Handler handler;
 	InputSource inputSource;
 
 	@BeforeMethod
-	public void prepareEnvironment() throws SAXException {
-		final String resourceName = "parser-input/configuration.xml";
+	public void prepareEnvironment() throws SAXException, IOException {
+		ConfigurationStub configurationSample = new ConfigurationStub();
+		document = configurationSample.document;
 
-		InputStream inputStream = Parser.class.getClassLoader()
-				.getResourceAsStream(resourceName);
-		inputSource = new InputSource(inputStream);
-
+		PipedInputStream in = new PipedInputStream();
+		PipedOutputStream out = new PipedOutputStream(in);
+		writer = new XMLWriter(out);
+		inputSource = new InputSource(in);
 		parser = XMLReaderFactory.createXMLReader();
-
 		handler = new Handler();
+	}
+
+	private class WriterRunnable implements Runnable {
+		@Override
+		public void run() {
+			try {
+				TestConfigurationParsing.this.writer
+						.write(TestConfigurationParsing.this.document);
+				TestConfigurationParsing.this.writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	@BeforeMethod
+	private void startWriter() {
+		Thread writerThread = new Thread(new WriterRunnable());
+		writerThread.start();
 	}
 
 	@Test
@@ -40,17 +69,20 @@ public class TestConfigurationParsing {
 		} catch (SAXException e) {
 			fail();
 		} catch (IOException e) {
-			fail();
+			e.printStackTrace();
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	public void testListening() {
+	public void testGoThroughAllPhases() {
 		try {
 			AssertedListener assertedListener = new AssertedListener();
 			handler.registerListener(assertedListener);
+
 			parser.setContentHandler(handler);
 			parser.parse(inputSource);
+
 			assertEquals(assertedListener.state, 3);
 		} catch (SAXException e) {
 			fail();

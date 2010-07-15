@@ -17,7 +17,7 @@ public class MasksProcessor extends Processor {
 		} else if ("selective-alpha".equals(type)) {
 			getContext().setCurrentMasks(getVisualSuite().getGlobalConfiguration().getSelectiveAlphaMasks());
 		} else {
-			throw new IllegalStateException();
+			throw new IllegalStateException("The Mask must define it's type (ignore-bitmap|selective-alpha)");
 		}
 	}
 }
