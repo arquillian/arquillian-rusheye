@@ -15,6 +15,8 @@ import org.dom4j.io.XMLWriter;
 import org.jboss.lupic.parser.Handler;
 import org.jboss.lupic.parser.Parser;
 import org.jboss.lupic.parser.ParserListener;
+import org.jboss.lupic.suite.Image;
+import org.jboss.lupic.suite.VisualSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.xml.sax.ErrorHandler;
@@ -42,7 +44,7 @@ public class AbstractVisualSuiteDefinitionTest {
 
 	@BeforeMethod
 	public void prepareEnvironment() throws SAXException, IOException {
-		ConfigurationStub configurationSample = new ConfigurationStub();
+		VisualSuiteStub configurationSample = new VisualSuiteStub();
 		document = configurationSample.document;
 
 		PipedInputStream in = new PipedInputStream();
@@ -102,25 +104,25 @@ public class AbstractVisualSuiteDefinitionTest {
 		int state = 0;
 
 		@Override
-		public void suiteStarted() {
+		public void suiteStarted(VisualSuite visualSuite) {
 			assertEquals(state, 0);
 			nextState();
 		}
 
 		@Override
-		public void configurationParsed() {
+		public void configurationParsed(VisualSuite visualSuite) {
 			assertEquals(state, 1);
 			nextState();
 		}
 
 		@Override
-		public void imageParsed() {
+		public void imageParsed(VisualSuite visualSuite, Image image) {
 			assertEquals(state, 2);
 			nextState();
 		}
 
 		@Override
-		public void suiteCompleted() {
+		public void suiteCompleted(VisualSuite visualSuite) {
 			assertEquals(state, 3);
 			nextState();
 		}

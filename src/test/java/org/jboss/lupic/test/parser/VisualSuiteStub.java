@@ -10,7 +10,7 @@ import org.dom4j.Element;
 import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.*;
 
 @SuppressWarnings("unchecked")
-public class ConfigurationStub {
+public class VisualSuiteStub {
 
 	Document document = DocumentHelper.createDocument();
 

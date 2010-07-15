@@ -9,6 +9,7 @@ public class ImageProcessor extends Processor {
 	
 	@Override
 	public void end() {
-		getContext().getListener().imageParsed();
+		// FIXME should provide the real image representation
+		getContext().getListener().imageParsed(getVisualSuite(), null);
 	}
 }

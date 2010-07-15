@@ -26,12 +26,12 @@ public class Handler extends DefaultHandler {
 	public void startDocument() throws SAXException {
 		context = new ListeningContext();
 		visualSuite = new VisualSuite();
-		context.getListener().suiteStarted();
+		context.getListener().suiteStarted(visualSuite);
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		context.getListener().suiteCompleted();
+		context.getListener().suiteCompleted(visualSuite);
 	}
 
 	@Override
@@ -102,18 +102,15 @@ public class Handler extends DefaultHandler {
 			return wrappedListener;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 				throws Throwable {
-			if (args != null && args.length > 0) {
-				throw new IllegalStateException(
-						"listener should have non-parametric methods");
-			}
 			for (ParserListener listener : listeners) {
 				Method wrappedMethod = listener.getClass().getMethod(
-						method.getName());
+						method.getName(), method.getParameterTypes());
 				try {
-					wrappedMethod.invoke(listener);
+					wrappedMethod.invoke(listener, args);
 				} catch (InvocationTargetException e) {
 					if (e.getCause() instanceof RuntimeException) {
 						throw (RuntimeException) e.getCause();

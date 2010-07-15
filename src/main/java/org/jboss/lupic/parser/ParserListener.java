@@ -1,11 +1,14 @@
 package org.jboss.lupic.parser;
 
+import org.jboss.lupic.suite.Image;
+import org.jboss.lupic.suite.VisualSuite;
+
 public interface ParserListener {
-	void configurationParsed();
+	void configurationParsed(VisualSuite visualSuite);
 
-	void imageParsed();
+	void imageParsed(VisualSuite visualSuite, Image image);
 
-	void suiteStarted();
+	void suiteStarted(VisualSuite visualSuite);
 
-	void suiteCompleted();
+	void suiteCompleted(VisualSuite visualSuite);
 }
