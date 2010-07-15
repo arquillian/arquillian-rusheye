@@ -4,13 +4,16 @@ import java.util.Properties;
 
 public abstract class AbstractRetriever implements Retriever {
 
-	private Properties properties;
+	private Properties properties = new Properties();
 
-	protected Properties getProperties() {
-		return this.properties;
+	@Override
+	public void setDefaultProperties(Properties properties) {
+		if (properties != null) {
+			this.properties = properties;
+		}
 	}
 	
-	public Properties setProperties() {
-		return this.properties;
+	public Properties getProperties() {
+		return properties;
 	}
 }

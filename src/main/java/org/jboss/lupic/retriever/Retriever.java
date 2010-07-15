@@ -5,6 +5,8 @@ import java.util.Properties;
 
 public interface Retriever {
 	
+	public void setDefaultProperties(Properties properties);
+	
 	public BufferedImage retrieve(String source);
 
 	public BufferedImage retrieve(Properties properties);
