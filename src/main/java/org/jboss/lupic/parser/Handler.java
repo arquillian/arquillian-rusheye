@@ -21,6 +21,7 @@ public class Handler extends DefaultHandler {
 	private VisualSuite visualSuite;
 	private Deque<Processor> processors = new LinkedList<Processor>();
 	private Set<ParserListener> listeners = new HashSet<ParserListener>();
+	private String characters = null;
 
 	@Override
 	public void startDocument() throws SAXException {
@@ -61,12 +62,14 @@ public class Handler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		processors.getFirst().process(new String(ch, start, length));
+		characters = new String(ch, start, length);
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		processors.getFirst().process(characters);
+		characters = null;
 
 		Processor currentProcessor = processors.getFirst();
 		currentProcessor.end();

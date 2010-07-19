@@ -1,16 +1,18 @@
 package org.jboss.lupic.test.parser;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.jboss.lupic.parser.Handler;
 import org.jboss.lupic.parser.Parser;
@@ -22,8 +24,10 @@ import org.testng.annotations.Test;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import static org.testng.Assert.*;
@@ -33,6 +37,7 @@ public class AbstractVisualSuiteDefinitionTest {
 
 	String validationFeature = "http://xml.org/sax/features/validation";
 	String schemaFeature = "http://apache.org/xml/features/validation/schema";
+	String schemaFullChecking = "http://apache.org/xml/features/validation/schema-full-checking";
 
 	VisualSuiteStub stub;
 	XMLWriter writer;
@@ -43,22 +48,24 @@ public class AbstractVisualSuiteDefinitionTest {
 	ByteArrayOutputStream documentOutputStream;
 
 	@BeforeMethod
-	public void prepareEnvironment() throws SAXException, IOException {
+	public void prepareEnvironment() throws IOException, SAXException {
 		stub = new VisualSuiteStub();
 
 		PipedInputStream in = new PipedInputStream();
 		PipedOutputStream writerOut = new PipedOutputStream(in);
 		documentOutputStream = new ByteArrayOutputStream();
-		TeeOutputStream out = new TeeOutputStream(writerOut, documentOutputStream);
-		
+		TeeOutputStream out = new TeeOutputStream(writerOut,
+				documentOutputStream);
+
 		OutputFormat format = new OutputFormat("\t", true);
 		writer = new XMLWriter(out, format);
 		inputSource = new InputSource(in);
+
 		reader = XMLReaderFactory.createXMLReader();
 		reader.setFeature(validationFeature, true);
 		reader.setFeature(schemaFeature, true);
+		reader.setFeature(schemaFullChecking, true);
 		reader.setErrorHandler(new ErrorHandler() {
-
 			@Override
 			public void warning(SAXParseException e) throws SAXException {
 				throw e;
@@ -74,7 +81,7 @@ public class AbstractVisualSuiteDefinitionTest {
 				throw e;
 			}
 		});
-
+		
 		handler = new Handler();
 	}
 
@@ -85,19 +92,20 @@ public class AbstractVisualSuiteDefinitionTest {
 				AbstractVisualSuiteDefinitionTest.this.writer
 						.write(AbstractVisualSuiteDefinitionTest.this.stub.document);
 				AbstractVisualSuiteDefinitionTest.this.writer.close();
-				generatedDocument = new String(documentOutputStream.toByteArray());
+				generatedDocument = new String(documentOutputStream
+						.toByteArray());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
-	
+
 	public void startWriter() {
 		Thread writerThread = new Thread(new WriterRunnable());
 		writerThread.start();
 	}
-	
-	public void parse() throws SAXException, IOException {
+
+	public void parse() throws IOException, SAXException {
 		reader.setContentHandler(handler);
 		reader.parse(inputSource);
 	}

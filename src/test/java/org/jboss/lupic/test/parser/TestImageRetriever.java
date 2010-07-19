@@ -14,8 +14,9 @@ import static org.testng.Assert.*;
 public class TestImageRetriever extends AbstractVisualSuiteDefinitionTest {
 
 	private final static String SOURCE = "source";
+	
 	@Test
-	public void testProperties() throws SAXException, IOException {
+	public void testPropertiesShouldPass() throws SAXException, IOException {
 		String retrieverImpl = AssertingRetriever.class.getName();
 		stub.imageRetriever.addAttribute("class", retrieverImpl);
 		
