@@ -19,5 +19,7 @@ public class VisualSuiteDefinitions {
 	public static final QName IMAGE = new QName("image", LUPIC_NS);
 	
 	public static final QName ONE_PIXEL_TRESHOLD = new QName("one-pixel-treshold", LUPIC_NS);
+	public static final QName GLOBAL_DIFFERENCE_TRESHOLD = new QName("global-difference-treshold", LUPIC_NS);
+	public static final QName GLOBAL_DIFFERENCE_PIXEL_AMOUNT = new QName("global-difference-pixel-amount", LUPIC_NS);
 
 }
