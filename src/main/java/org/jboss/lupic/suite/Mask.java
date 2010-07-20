@@ -32,6 +32,14 @@ public class Mask extends FutureTask<BufferedImage> {
 		return id;
 	}
 
+	public HorizontalAlignment getHorizontalAlignment() {
+		return horizontalAlignment;
+	}
+
+	public VerticalAlignment getVerticalAlignment() {
+		return verticalAlignment;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
