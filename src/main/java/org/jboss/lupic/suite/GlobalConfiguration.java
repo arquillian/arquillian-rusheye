@@ -1,10 +1,11 @@
 package org.jboss.lupic.suite;
 
+import org.jboss.lupic.retriever.FileRetriever;
 import org.jboss.lupic.retriever.Retriever;
 
 public class GlobalConfiguration extends Configuration {
-	Retriever imageRetriever;
-	Retriever maskRetriever;
+	Retriever imageRetriever = new FileRetriever();
+	Retriever maskRetriever = new FileRetriever();
 
 	public Retriever getImageRetriever() {
 		return imageRetriever;
