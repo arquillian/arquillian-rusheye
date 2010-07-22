@@ -21,6 +21,6 @@ public class GlobalConfigurationProcessor extends Processor {
 
 	@Override
 	public void end() {
-		getContext().getListener().configurationParsed(getVisualSuite());
+		getContext().invokeListeners().configurationParsed(getVisualSuite());
 	}
 }

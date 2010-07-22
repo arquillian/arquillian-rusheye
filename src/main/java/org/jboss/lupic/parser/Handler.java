@@ -27,12 +27,12 @@ public class Handler extends DefaultHandler {
 	public void startDocument() throws SAXException {
 		context = new ListeningContext();
 		visualSuite = new VisualSuite();
-		context.getListener().suiteStarted(visualSuite);
+		context.invokeListeners().suiteStarted(visualSuite);
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		context.getListener().suiteCompleted(visualSuite);
+		context.invokeListeners().suiteCompleted(visualSuite);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class Handler extends DefaultHandler {
 						new Class<?>[] { ParserListener.class }, this);
 
 		@Override
-		public ParserListener getListener() {
+		public ParserListener invokeListeners() {
 			return wrappedListener;
 		}
 

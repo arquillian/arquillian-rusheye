@@ -41,5 +41,5 @@ public abstract class Context {
 		return maskIds;
 	}
 
-	public abstract ParserListener getListener();
+	public abstract ParserListener invokeListeners();
 }

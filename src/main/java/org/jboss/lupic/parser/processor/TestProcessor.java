@@ -22,6 +22,6 @@ public class TestProcessor extends Processor {
 
 	@Override
 	public void end() {
-		getContext().getListener().testParsed(test);
+		getContext().invokeListeners().testParsed(test);
 	}
 }
