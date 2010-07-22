@@ -1,6 +1,5 @@
 package org.jboss.lupic.test.parser;
 
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.IMAGE;
 import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.PATTERN;
 import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.TEST;
 
@@ -18,7 +17,6 @@ public class AbstractTestOfTestElement extends
 	
 	protected Element test;
 	protected Element pattern;
-	protected Element image;
 
 	protected void addTest(String name) {
 		test = stub.visualSuite.addElement(TEST);
@@ -31,13 +29,6 @@ public class AbstractTestOfTestElement extends
 		pattern = test.addElement(PATTERN);
 		if (name != null) {
 			pattern.addAttribute("name", name);
-		}
-	}
-
-	protected void addImage(String source) {
-		image = pattern.addElement(IMAGE);
-		if (source != null) {
-			image.addAttribute("source", source);
 		}
 	}
 }

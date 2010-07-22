@@ -18,11 +18,9 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
 			SAXException {
 		addTest(TEST1_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		addTest(TEST1_NAME);
 		addPattern(PATTERN2_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -31,9 +29,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
 	@Test(expectedExceptions = SAXParseException.class)
 	public void testWithoutNameShouldRaiseException() throws IOException,
 			SAXException {
-		addTest(null);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -44,7 +40,6 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
 			SAXException {
 		addTest("");
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -62,11 +57,9 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
 	public void testTwoTestsShouldPass() throws IOException, SAXException {
 		addTest(TEST1_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		addTest(TEST2_NAME);
 		addPattern(PATTERN2_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();

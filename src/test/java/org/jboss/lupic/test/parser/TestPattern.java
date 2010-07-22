@@ -12,11 +12,9 @@ public class TestPattern extends AbstractTestOfTestElement {
 			throws IOException, SAXException {
 		addTest(TEST1_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		addTest(TEST2_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -27,9 +25,7 @@ public class TestPattern extends AbstractTestOfTestElement {
 			throws IOException, SAXException {
 		addTest(TEST1_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -40,7 +36,6 @@ public class TestPattern extends AbstractTestOfTestElement {
 			SAXException {
 		addTest(TEST1_NAME);
 		addPattern("");
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -51,7 +46,6 @@ public class TestPattern extends AbstractTestOfTestElement {
 			SAXException {
 		addTest(TEST1_NAME);
 		addPattern(null);
-		addImage(null);
 
 		startWriter();
 		parse();
@@ -61,18 +55,7 @@ public class TestPattern extends AbstractTestOfTestElement {
 	public void testTwoPatternsShouldPass() throws IOException, SAXException {
 		addTest(TEST1_NAME);
 		addPattern(PATTERN1_NAME);
-		addImage(null);
 		addPattern(PATTERN2_NAME);
-		addImage(null);
-
-		startWriter();
-		parse();
-	}
-
-	@Test(expectedExceptions = SAXParseException.class)
-	public void testNoImageRaiseException() throws IOException, SAXException {
-		addTest(TEST1_NAME);
-		addPattern(PATTERN1_NAME);
 
 		startWriter();
 		parse();

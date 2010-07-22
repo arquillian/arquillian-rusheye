@@ -16,7 +16,6 @@ public class VisualSuiteDefinitions {
 	public static final QName MASKS = new QName("masks", LUPIC_NS);
 	public static final QName TEST = new QName("test", LUPIC_NS);
 	public static final QName PATTERN = new QName("pattern", LUPIC_NS);
-	public static final QName IMAGE = new QName("image", LUPIC_NS);
 	
 	public static final QName ONE_PIXEL_TRESHOLD = new QName("one-pixel-treshold", LUPIC_NS);
 	public static final QName GLOBAL_DIFFERENCE_TRESHOLD = new QName("global-difference-treshold", LUPIC_NS);

@@ -31,8 +31,6 @@ public class VisualSuiteStub {
 	Element defaultPattern = defaultTest.addElement(PATTERN).addAttribute(
 			"name", "default-test-pattern");
 
-	Element defaultImage = defaultPattern.addElement(IMAGE);
-
 	{
 		Iterator<Element> iterator = visualSuite.elementIterator(TEST);
 		if (iterator.next() != defaultTest) {

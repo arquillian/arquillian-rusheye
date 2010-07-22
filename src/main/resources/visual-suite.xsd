@@ -167,17 +167,18 @@
 				maxOccurs="unbounded" />
 			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
 				maxOccurs="unbounded" />
+			<xs:element name="perception" type="vs:PerceptionType"
+				minOccurs="0" />
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:Name" use="required" />
 	</xs:complexType>
 
 	<xs:complexType name="TestPatternType">
-		<xs:sequence>
-			<xs:element name="image" type="vs:SourceType" />
-			<xs:element name="perception" type="vs:PerceptionType"
-				minOccurs="0" />
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:Name" use="required" />
+		<xs:complexContent>
+			<xs:extension base="vs:SourceType">
+				<xs:attribute name="name" type="xs:Name" use="required" />
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="SourceType">
@@ -192,5 +193,4 @@
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
-
 </xs:schema>

@@ -33,12 +33,8 @@
 	</global-configuration>
 
 	<test name="AjaxSupportTestCase.testEmpty">
-		<pattern name="AjaxSupportTestCase.testEmpty.1">
-			<image source="AjaxSupportTestCase.testEmpty.1.png" />
-		</pattern>
-		<pattern name="AjaxSupportTestCase.testEmpty.2">
-			<image source="AjaxSupportTestCase.testEmpty.2.png" />
-		</pattern>
+		<pattern name="AjaxSupportTestCase.testEmpty.1" source="AjaxSupportTestCase.testEmpty.1.png" />
+		<pattern name="AjaxSupportTestCase.testEmpty.2" source="AjaxSupportTestCase.testEmpty.2.png" />
 		<masks type="ignore-bitmap">
 			<mask id="xxx" source="xxx.png" />
 		</masks>
@@ -46,13 +42,11 @@
 
 	<test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
 		<pattern name="BeanValidatorTestCase.testAgeIntegerOnly:168.1">
-			<image>
-				<xxx>BeanValidatorTestCase.testAgeIntegerOnly:168.png</xxx>
-				<yyy>10</yyy>
-			</image>
-			<perception>
-				<global-difference-pixel-amount>10px</global-difference-pixel-amount>
-			</perception>
+			<xxx>BeanValidatorTestCase.testAgeIntegerOnly:168.png</xxx>
+			<yyy>10</yyy>
 		</pattern>
+		<perception>
+			<global-difference-pixel-amount>10px</global-difference-pixel-amount>
+		</perception>
 	</test>
 </visual-suite>

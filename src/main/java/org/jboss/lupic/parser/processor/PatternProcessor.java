@@ -4,7 +4,12 @@ import org.jboss.lupic.parser.Processor;
 
 public class PatternProcessor extends Processor {
 	{
-		supportProcessor("image", ImageProcessor.class);
-		supportProcessor("perception", PerceptionProcessor.class);
+		setPropertiesEnabled(true);
+	}
+
+	@Override
+	public void end() {
+		// FIXME should provide the real pattern representation
+		getContext().getListener().patternParsed(getVisualSuite(), null);
 	}
 }
