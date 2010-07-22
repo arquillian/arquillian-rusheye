@@ -110,7 +110,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 	public void testMaskFullyEquiped() throws IOException, SAXException,
 			InterruptedException, ExecutionException {
 		String retrieverImpl = AssertingRetriever.class.getName();
-		stub.imageRetriever.addAttribute("class", retrieverImpl);
+		stub.maskRetriever.addAttribute("class", retrieverImpl);
 
 		addMasks(MaskType.IGNORE_BITMAP.toXmlId());
 		addMask(MASK1_ID, MASK1_SOURCE);

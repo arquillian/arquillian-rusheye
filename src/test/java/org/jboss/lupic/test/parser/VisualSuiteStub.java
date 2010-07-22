@@ -23,6 +23,8 @@ public class VisualSuiteStub {
 
 	Element imageRetriever = globalConfiguration.addElement(IMAGE_RETRIEVER)
 			.addAttribute("class", "org.jboss.lupic.retriever.FileRetriever");
+	Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER)
+			.addAttribute("class", "org.jboss.lupic.retriever.FileRetriever");
 	Element perception = globalConfiguration.addElement(PERCEPTION);
 
 	Element defaultTest = visualSuite.addElement(TEST).addAttribute("name",
