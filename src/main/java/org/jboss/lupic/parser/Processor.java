@@ -13,6 +13,7 @@ public abstract class Processor {
 	private Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>();
 	private boolean propertiesEnabled = false;
 
+	private String tagName;
 	private Context context;
 	private VisualSuite visualSuite;
 	private Attributes attributes;
@@ -27,6 +28,10 @@ public abstract class Processor {
 	public void end() {
 	}
 
+	protected String getTagName() {
+		return tagName;
+	}
+
 	protected String getAttribute(String localName) {
 		return attributes.getValue("", localName);
 	}
@@ -34,11 +39,11 @@ public abstract class Processor {
 	protected Properties getProperties() {
 		return properties;
 	}
-	
+
 	void setContext(Context context) {
 		this.context = context;
 	}
-	
+
 	protected Context getContext() {
 		return context;
 	}
@@ -81,7 +86,9 @@ public abstract class Processor {
 		}
 
 		try {
-			return processorClass.newInstance();
+			Processor processor = processorClass.newInstance();
+			processor.tagName = tagName;
+			return processor;
 		} catch (InstantiationException e) {
 			throw new IllegalStateException();
 		} catch (IllegalAccessException e) {

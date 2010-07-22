@@ -4,7 +4,7 @@ import org.jboss.lupic.retriever.Retriever;
 
 public class GlobalConfiguration extends Configuration {
 	Retriever imageRetriever;
-	
+	Retriever maskRetriever;
 
 	public Retriever getImageRetriever() {
 		return imageRetriever;
@@ -14,5 +14,11 @@ public class GlobalConfiguration extends Configuration {
 		this.imageRetriever = imageRetriever;
 	}
 
-	
+	public Retriever getMaskRetriever() {
+		return maskRetriever;
+	}
+
+	public void setMaskRetriever(Retriever maskRetriever) {
+		this.maskRetriever = maskRetriever;
+	}
 }

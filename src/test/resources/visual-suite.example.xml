@@ -8,6 +8,7 @@
 			<xxx></xxx>
 			<yyy></yyy>
 		</image-retriever>
+		<mask-retriever class="org.jboss.visualTesting.FileSourceRetriever" />
 		<perception>
 			<!--
 				unperceptible treshold of color difference in scope of one pixel

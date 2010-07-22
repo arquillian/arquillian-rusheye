@@ -3,15 +3,16 @@ package org.jboss.lupic.parser.processor;
 import org.apache.commons.lang.Validate;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.suite.GlobalConfiguration;
 
-public class ImageRetrieverProcessor extends Processor {
-	
+public class RetrieverProcessor extends Processor {
+
 	Retriever retriever;
-	
+
 	{
 		setPropertiesEnabled(true);
 	}
-	
+
 	@Override
 	public void start() {
 		String retrieverClassName = getAttribute("class");
@@ -22,9 +23,20 @@ public class ImageRetrieverProcessor extends Processor {
 
 		retriever = getRetrieverInstance(retrieverClassName);
 
-		getVisualSuite().getGlobalConfiguration().setImageRetriever(retriever);
+		String tagName = getTagName();
+		GlobalConfiguration globalConfiguration = getVisualSuite()
+				.getGlobalConfiguration();
+
+		if ("mask-retriever".equals(tagName)) {
+			globalConfiguration.setMaskRetriever(retriever);
+		} else if ("image-retriever".equals(tagName)) {
+			globalConfiguration.setImageRetriever(retriever);
+		} else {
+			throw new IllegalStateException("unsupported retriever tag name '"
+					+ tagName + "'");
+		}
 	}
-	
+
 	@Override
 	public void end() {
 		retriever.setGlobalProperties(getProperties());

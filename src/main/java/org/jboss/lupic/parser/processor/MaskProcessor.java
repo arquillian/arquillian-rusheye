@@ -26,7 +26,7 @@ public class MaskProcessor extends Processor {
 		}
 
 		Retriever retriever = getVisualSuite().getGlobalConfiguration()
-				.getImageRetriever();
+				.getMaskRetriever();
 		Mask mask = new Mask(id, source, getProperties(), retriever, verticalAlignment, horizontalAlignment);
 		getContext().getCurrentMasks().add(mask);
 		getContext().getMaskIds().add(id);

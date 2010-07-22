@@ -6,7 +6,8 @@ import org.jboss.lupic.suite.GlobalConfiguration;
 public class GlobalConfigurationProcessor extends Processor {
 
 	{
-		supportProcessor("image-retriever", ImageRetrieverProcessor.class);
+		supportProcessor("image-retriever", RetrieverProcessor.class);
+		supportProcessor("mask-retriever", RetrieverProcessor.class);
 		supportProcessor("perception", PerceptionProcessor.class);
 		supportProcessor("masks", MasksProcessor.class);
 	}
