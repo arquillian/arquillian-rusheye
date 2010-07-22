@@ -1,12 +1,15 @@
 package org.jboss.lupic.suite;
 
 public class Perception {
-	short onePixelTreshold = 0;
-	short globalDifferenceTreshold = 0;
-	Long globalDifferencePixelAmount = 0l;
+	Short onePixelTreshold = null;
+	Short globalDifferenceTreshold = null;
+	Long globalDifferencePixelAmount = null;
 	Short globalDifferencePercentage = null;
 
-	public short getOnePixelTreshold() {
+	public Perception() {
+	}
+
+	public Short getOnePixelTreshold() {
 		return onePixelTreshold;
 	}
 
@@ -14,7 +17,7 @@ public class Perception {
 		this.onePixelTreshold = onePixelTreshold;
 	}
 
-	public short getGlobalDifferenceTreshold() {
+	public Short getGlobalDifferenceTreshold() {
 		return globalDifferenceTreshold;
 	}
 
@@ -40,4 +43,29 @@ public class Perception {
 		this.globalDifferencePercentage = globalDifferencePercentage;
 	}
 
+	public void setDefaultValuesForUnset() {
+		if (onePixelTreshold == null) {
+			onePixelTreshold = 0;
+		}
+		if (globalDifferenceTreshold == null) {
+			globalDifferenceTreshold = 0;
+		}
+		if (globalDifferencePercentage == null
+				&& globalDifferencePixelAmount == null) {
+			globalDifferencePixelAmount = 0l;
+		}
+	}
+
+	public void setValuesFromParent(Perception parent) {
+		this.onePixelTreshold = parent.onePixelTreshold;
+		this.globalDifferenceTreshold = parent.globalDifferenceTreshold;
+		if (parent.globalDifferencePixelAmount != null) {
+			this
+					.setGlobalDifferencePixelAmount(parent.globalDifferencePixelAmount);
+		}
+		if (parent.globalDifferencePercentage != null) {
+			this
+					.setGlobalDifferencePercentage(parent.globalDifferencePercentage);
+		}
+	}
 }

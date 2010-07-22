@@ -163,12 +163,12 @@
 
 	<xs:complexType name="TestType">
 		<xs:sequence>
-			<xs:element name="pattern" type="vs:TestPatternType"
-				maxOccurs="unbounded" />
-			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
-				maxOccurs="unbounded" />
 			<xs:element name="perception" type="vs:PerceptionType"
 				minOccurs="0" />
+			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="pattern" type="vs:TestPatternType"
+				maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:Name" use="required" />
 	</xs:complexType>

@@ -10,6 +10,7 @@ import org.jboss.lupic.retriever.Retriever;
 public class Mask extends FutureTask<BufferedImage> {
 
 	private String id;
+	private Properties properties;
 	private VerticalAlignment verticalAlignment;
 	private HorizontalAlignment horizontalAlignment;
 
@@ -24,12 +25,17 @@ public class Mask extends FutureTask<BufferedImage> {
 			}
 		});
 		this.id = id;
+		this.properties = maskProperties;
 		this.verticalAlignment = verticalAlignment;
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
 	public String getId() {
 		return id;
+	}
+
+	public Properties getProperties() {
+		return properties;
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {

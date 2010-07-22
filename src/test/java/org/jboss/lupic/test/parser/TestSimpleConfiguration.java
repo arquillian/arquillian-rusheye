@@ -6,6 +6,7 @@ import static org.testng.Assert.fail;
 import java.io.IOException;
 
 import org.jboss.lupic.parser.ParserListener;
+import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.VisualSuite;
 import org.testng.annotations.Test;
@@ -57,14 +58,13 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
 		}
 
 		@Override
-		public void patternParsed(VisualSuite visualSuite, Pattern pattern) {
+		public void patternParsed(Configuration configuration, Pattern pattern) {
 			assertEquals(state, 2);
 			nextState();
 		}
 
 		@Override
-		public void testParsed(VisualSuite visualSuite,
-				org.jboss.lupic.suite.Test test) {
+		public void testParsed(org.jboss.lupic.suite.Test test) {
 			assertEquals(state, 3);
 			nextState();
 		}

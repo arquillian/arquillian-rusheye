@@ -14,7 +14,9 @@ public class GlobalConfigurationProcessor extends Processor {
 	@Override
 	public void start() {
 		GlobalConfiguration globalConfiguration = new GlobalConfiguration();
+		
 		getVisualSuite().setGlobalConfiguration(globalConfiguration);
+		getContext().setCurrentConfiguration(globalConfiguration);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class MaskProcessor extends Processor {
 		Validate.notNull(id);
 
 		if (getContext().getMaskIds().contains(id)) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("mask with id '" + id + "' already defined");
 		}
 
 		Retriever retriever = getVisualSuite().getGlobalConfiguration()

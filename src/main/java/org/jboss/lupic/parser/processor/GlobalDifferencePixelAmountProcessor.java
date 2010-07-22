@@ -14,8 +14,7 @@ public class GlobalDifferencePixelAmountProcessor extends Processor {
 	@Override
 	public void process(String content) {
 		Matcher matcher;
-		Perception perception = getVisualSuite().getGlobalConfiguration()
-				.getPerception();
+		Perception perception = getContext().getCurrentConfiguration().getPerception();
 		for (Pattern pattern : new Pattern[] { percentPattern, pixelPattern }) {
 			matcher = pattern.matcher(content);
 			if (matcher.lookingAt()) {
