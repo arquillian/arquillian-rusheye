@@ -2,29 +2,32 @@ package org.jboss.lupic.core;
 
 import java.awt.Color;
 
-public class ColorModelRGBA {
-    final static int aMask = 0xFF000000;
-    final static int rMask = 0x00FF0000;
-    final static int gMask = 0x0000FF00;
-    final static int bMask = 0x000000FF;
-    final static int rShift = 16;
-    final static int gShift = 8;
-    final static int bShift = 0;
+public final class ColorModelRGBA {
+    static final int ALPHA_MASK = 0xFF000000;
+    static final int RED_MASK = 0x00FF0000;
+    static final int GREEN_MASK = 0x0000FF00;
+    static final int BLUE_MASK = 0x000000FF;
+    static final int RED_SHIFT = 16;
+    static final int GREEN_SHIFT = 8;
+    static final int BLUE_SHIFT = 0;
+
+    private ColorModelRGBA() {
+    }
 
     public static int colorComponent(int color, int mask, int shift) {
         return (color & mask) >> shift;
     }
 
     public static int getR(int color) {
-        return colorComponent(color, rMask, rShift);
+        return colorComponent(color, RED_MASK, RED_SHIFT);
     }
 
     public static int getG(int color) {
-        return colorComponent(color, gMask, gShift);
+        return colorComponent(color, GREEN_MASK, GREEN_SHIFT);
     }
 
     public static int getB(int color) {
-        return colorComponent(color, bMask, bShift);
+        return colorComponent(color, BLUE_MASK, BLUE_SHIFT);
     }
 
     public static int compare(int color1, int color2) {

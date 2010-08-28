@@ -23,6 +23,8 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 
     static final String MASK1_ID = "mask1_id";
     static final String MASK1_SOURCE = "mask1_source";
+    static final BufferedImage SAMPLE_IMAGE = new BufferedImage(1, 1, 1);
+
     Element masks;
     Element mask;
 
@@ -122,22 +124,11 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         // mask needs to be ran first before obtaining image
         givenMask.run();
 
-        assertEquals(givenMask.get(), image);
+        assertEquals(givenMask.get(), SAMPLE_IMAGE);
     }
 
     Set<Mask> getCurrentIgnoreBitmapMasks() {
         return handler.getVisualSuite().getGlobalConfiguration().getIgnoreBitmapMasks();
-    }
-
-    final static BufferedImage image = new BufferedImage(1, 1, 1);
-
-    public static class AssertingRetriever extends AbstractRetriever {
-        @Override
-        public BufferedImage retrieve(String source, Properties localProperties) {
-
-            assertEquals(source, MASK1_SOURCE);
-            return image;
-        }
     }
 
     @Test(expectedExceptions = SAXParseException.class)
@@ -173,6 +164,15 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         }
         if (source != null) {
             mask.addAttribute("source", source);
+        }
+    }
+
+    public static class AssertingRetriever extends AbstractRetriever {
+        @Override
+        public BufferedImage retrieve(String source, Properties localProperties) {
+
+            assertEquals(source, MASK1_SOURCE);
+            return SAMPLE_IMAGE;
         }
     }
 }

@@ -3,7 +3,8 @@ package org.jboss.lupic.parser;
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 
-public class VisualSuiteDefinitions {
+public final class VisualSuiteDefinitions {
+
     public static final Namespace LUPIC_NS = new Namespace("", "http://www.jboss.org/test/visual-suite");
 
     public static final QName VISUAL_SUITE = new QName("visual-suite", LUPIC_NS);
@@ -20,4 +21,7 @@ public class VisualSuiteDefinitions {
     public static final QName GLOBAL_DIFFERENCE_PIXEL_AMOUNT = new QName("global-difference-pixel-amount", LUPIC_NS);
 
     public static final QName MASK = new QName("mask", LUPIC_NS);
+
+    private VisualSuiteDefinitions() {
+    }
 }

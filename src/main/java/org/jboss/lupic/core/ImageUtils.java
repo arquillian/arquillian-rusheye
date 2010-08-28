@@ -8,7 +8,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-public class ImageUtils {
+public final class ImageUtils {
+    
+    private ImageUtils() {
+    }
+
     private static BufferedImage readImage(File directory, String fileName) throws IOException {
         File imageFile = new File(directory, fileName);
         return ImageIO.read(imageFile);

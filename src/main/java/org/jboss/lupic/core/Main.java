@@ -7,11 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Main {
+    
     private int errorsCounter = 0;
     private int differentImageCounter = 0;
     private int sameImageCounter = 0;
 
-    public void Run(String[] args) throws Exception {
+    public void run(String[] args) throws Exception {
         Configuration configuration = new Configuration(args);
         List<MaskImage> maskImages = ImageUtils.readMaskImages(configuration.getMaskDirectory());
 
@@ -86,7 +87,7 @@ public class Main {
         long t1 = System.currentTimeMillis();
         try {
             Log.logMain("started at %s", new Date().toString());
-            new Main().Run(args);
+            new Main().run(args);
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

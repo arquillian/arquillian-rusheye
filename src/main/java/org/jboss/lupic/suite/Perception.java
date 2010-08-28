@@ -51,7 +51,7 @@ public class Perception {
             globalDifferenceTreshold = 0;
         }
         if (globalDifferencePercentage == null && globalDifferencePixelAmount == null) {
-            globalDifferencePixelAmount = 0l;
+            globalDifferencePixelAmount = 0L;
         }
     }
 

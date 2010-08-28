@@ -8,7 +8,6 @@ import java.io.PipedOutputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import org.jboss.lupic.parser.Handler;
 import org.testng.annotations.BeforeMethod;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;

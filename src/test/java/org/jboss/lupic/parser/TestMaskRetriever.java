@@ -11,7 +11,7 @@ import static org.testng.Assert.*;
 
 public class TestMaskRetriever extends AbstractVisualSuiteDefinitionTest {
 
-    private final static String SOURCE = "source";
+    private static final String SOURCE = "source";
 
     @Test
     public void testPropertiesShouldPass() throws SAXException, IOException {

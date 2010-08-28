@@ -1,6 +1,10 @@
 package org.jboss.lupic.core;
 
-public class Log {
+public final class Log {
+
+    private Log() {
+    }
+
     public static void log(String format, Object... o) {
         System.out.format(format, o);
         System.out.println();

@@ -29,7 +29,7 @@ public class Configuration {
     private File maskDirectory = null;
     private File htmlOutputDirectory = null;
 
-    public Configuration(String args[]) {
+    public Configuration(String[] args) {
         Log.logConfig("command line parameters: %d", args.length);
         readCommandLineParameters(args);
         printParameters();
@@ -48,7 +48,7 @@ public class Configuration {
         return directory == null ? "not set" : directory.getAbsolutePath();
     }
 
-    private void readCommandLineParameters(String args[]) {
+    private void readCommandLineParameters(String[] args) {
         Map<String, String> options = resolveAllOptions(args);
         this.firstSourceDirectory = getPath(options, "s1");
         this.secondSourceDirectory = getPath(options, "s2");

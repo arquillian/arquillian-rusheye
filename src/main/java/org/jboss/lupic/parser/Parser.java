@@ -8,8 +8,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-public class Parser {
+public final class Parser {
+
     public static final String URI = "http://www.jboss.org/test/visual-suite";
+
+    private Parser() {
+    }
 
     public static void parse(String resourceName) throws SAXException, IOException {
         InputStream inputStream = Parser.class.getClassLoader().getResourceAsStream(resourceName);

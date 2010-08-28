@@ -5,7 +5,6 @@ import static org.testng.Assert.fail;
 
 import java.io.IOException;
 
-import org.jboss.lupic.parser.ParserListener;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.VisualSuite;
