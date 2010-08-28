@@ -5,8 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Configuration
-{
+public class Configuration {
     private boolean useCorrelation = true;
     private int correlationRange = 20;
 
@@ -30,15 +29,13 @@ public class Configuration
     private File maskDirectory = null;
     private File htmlOutputDirectory = null;
 
-    public Configuration(String args[])
-    {
+    public Configuration(String args[]) {
         Log.logConfig("command line parameters: %d", args.length);
         readCommandLineParameters(args);
         printParameters();
     }
 
-    private void printParameters()
-    {
+    private void printParameters() {
         Log.logConfig("first source directory:  %s", getAbsolutePath(this.firstSourceDirectory));
         Log.logConfig("second source directory: %s", getAbsolutePath(this.secondSourceDirectory));
         Log.logConfig("diffs directory:         %s", getAbsolutePath(this.diffDirectory));
@@ -47,13 +44,11 @@ public class Configuration
         Log.logConfig("html output directory:   %s", getAbsolutePath(this.htmlOutputDirectory));
     }
 
-    private String getAbsolutePath(File directory)
-    {
+    private String getAbsolutePath(File directory) {
         return directory == null ? "not set" : directory.getAbsolutePath();
     }
 
-    private void readCommandLineParameters(String args[])
-    {
+    private void readCommandLineParameters(String args[]) {
         Map<String, String> options = resolveAllOptions(args);
         this.firstSourceDirectory = getPath(options, "s1");
         this.secondSourceDirectory = getPath(options, "s2");
@@ -63,177 +58,141 @@ public class Configuration
         this.htmlOutputDirectory = getPath(options, "htmlout");
     }
 
-    private File getPath(Map<String, String> options, String optionName)
-    {
+    private File getPath(Map<String, String> options, String optionName) {
         String fileName = options.get(optionName);
-        if (fileName == null)
-        {
+        if (fileName == null) {
             return null;
         }
         return new File(fileName);
     }
 
-    private Map<String, String> resolveAllOptions(String[] args)
-    {
+    private Map<String, String> resolveAllOptions(String[] args) {
         Map<String, String> options = new HashMap<String, String>();
-        for (String arg : args)
-        {
+        for (String arg : args) {
             String[] splittedArg = arg.split("=");
-            if (splittedArg.length == 2 && splittedArg[0].length() > 2)
-            {
+            if (splittedArg.length == 2 && splittedArg[0].length() > 2) {
                 Log.logConfig("found option %s", arg);
                 options.put(splittedArg[0].substring(1), splittedArg[1]);
-            }
-            else
-            {
+            } else {
                 Log.logWarning("unknown option %s", arg);
             }
         }
         return options;
     }
 
-    public boolean isUseCorrelation()
-    {
+    public boolean isUseCorrelation() {
         return this.useCorrelation;
     }
 
-    public void setUseCorrelation(boolean useCorrelation)
-    {
+    public void setUseCorrelation(boolean useCorrelation) {
         this.useCorrelation = useCorrelation;
     }
 
-    public int getCorrelationRange()
-    {
+    public int getCorrelationRange() {
         return this.correlationRange;
     }
 
-    public void setCorrelationRange(int correlationRange)
-    {
+    public void setCorrelationRange(int correlationRange) {
         this.correlationRange = correlationRange;
     }
 
-    public boolean isConvertDiffImageToGrayscale()
-    {
+    public boolean isConvertDiffImageToGrayscale() {
         return this.convertDiffImageToGrayscale;
     }
 
-    public void setConvertDiffImageToGrayscale(boolean convertDiffImageToGrayscale)
-    {
+    public void setConvertDiffImageToGrayscale(boolean convertDiffImageToGrayscale) {
         this.convertDiffImageToGrayscale = convertDiffImageToGrayscale;
     }
 
-    public int getPixelValueThreshold()
-    {
+    public int getPixelValueThreshold() {
         return this.pixelValueThreshold;
     }
 
-    public void setPixelValueThreshold(int pixelValueThreshold)
-    {
+    public void setPixelValueThreshold(int pixelValueThreshold) {
         this.pixelValueThreshold = pixelValueThreshold;
     }
 
-    public int getDifferentPixelsThreshold()
-    {
+    public int getDifferentPixelsThreshold() {
         return this.differentPixelsThreshold;
     }
 
-    public void setDifferentPixelsThreshold(int differentPixelsThreshold)
-    {
+    public void setDifferentPixelsThreshold(int differentPixelsThreshold) {
         this.differentPixelsThreshold = differentPixelsThreshold;
     }
 
-    public int getPerceptiblePixelValueThreshold()
-    {
+    public int getPerceptiblePixelValueThreshold() {
         return this.perceptiblePixelValueThreshold;
     }
 
-    public void setPerceptiblePixelValueThreshold(int perceptiblePixelValueThreshold)
-    {
+    public void setPerceptiblePixelValueThreshold(int perceptiblePixelValueThreshold) {
         this.perceptiblePixelValueThreshold = perceptiblePixelValueThreshold;
     }
 
-    public Color getDiffColorPixelValueUnderThreshold()
-    {
+    public Color getDiffColorPixelValueUnderThreshold() {
         return this.diffColorPixelValueUnderThreshold;
     }
 
-    public void setDiffColorPixelValueUnderThreshold(Color diffColorPixelValueUnderThreshold)
-    {
+    public void setDiffColorPixelValueUnderThreshold(Color diffColorPixelValueUnderThreshold) {
         this.diffColorPixelValueUnderThreshold = diffColorPixelValueUnderThreshold;
     }
 
-    public Color getDiffColorPixelValueAboveThreshold()
-    {
+    public Color getDiffColorPixelValueAboveThreshold() {
         return this.diffColorPixelValueAboveThreshold;
     }
 
-    public void setDiffColorPixelValueAboveThreshold(Color diffColorPixelValueAboveThreshold)
-    {
+    public void setDiffColorPixelValueAboveThreshold(Color diffColorPixelValueAboveThreshold) {
         this.diffColorPixelValueAboveThreshold = diffColorPixelValueAboveThreshold;
     }
 
-    public Color getDiffColorPerceptiblePixelDifference()
-    {
+    public Color getDiffColorPerceptiblePixelDifference() {
         return this.diffColorPerceptiblePixelDifference;
     }
 
-    public void setDiffColorPerceptiblePixelDifference(Color diffColorPerceptiblePixelDifference)
-    {
+    public void setDiffColorPerceptiblePixelDifference(Color diffColorPerceptiblePixelDifference) {
         this.diffColorPerceptiblePixelDifference = diffColorPerceptiblePixelDifference;
     }
 
-    public int getBoundarySize()
-    {
+    public int getBoundarySize() {
         return this.boundarySize;
     }
 
-    public void setBoundarySize(int boundarySize)
-    {
+    public void setBoundarySize(int boundarySize) {
         this.boundarySize = boundarySize;
     }
 
-    public Color getBoundaryColor()
-    {
+    public Color getBoundaryColor() {
         return this.boundaryColor;
     }
 
-    public void setBoundaryColor(Color boundaryColor)
-    {
+    public void setBoundaryColor(Color boundaryColor) {
         this.boundaryColor = boundaryColor;
     }
 
-    public boolean isUseMaskImages()
-    {
+    public boolean isUseMaskImages() {
         return this.useMaskImages;
     }
 
-    public File getFirstSourceDirectory()
-    {
+    public File getFirstSourceDirectory() {
         return this.firstSourceDirectory;
     }
 
-    public File getSecondSourceDirectory()
-    {
+    public File getSecondSourceDirectory() {
         return this.secondSourceDirectory;
     }
 
-    public File getDiffDirectory()
-    {
+    public File getDiffDirectory() {
         return this.diffDirectory;
     }
 
-    public File getMaskDirectory()
-    {
+    public File getMaskDirectory() {
         return this.maskDirectory;
     }
 
-    public File getHtmlOutputDirectory()
-    {
+    public File getHtmlOutputDirectory() {
         return this.htmlOutputDirectory;
     }
 
-    public File getStructDiffDirectory()
-    {
+    public File getStructDiffDirectory() {
         return this.structDiffDirectory;
     }
 

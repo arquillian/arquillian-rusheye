@@ -5,10 +5,10 @@ import java.util.Properties;
 
 public interface Retriever {
 
-	public BufferedImage retrieve(String source, Properties localProperties);
+    public BufferedImage retrieve(String source, Properties localProperties);
 
-	public Properties mergeProperties(Properties localProperties);
+    public Properties mergeProperties(Properties localProperties);
 
-	public void setGlobalProperties(Properties properties);
+    public void setGlobalProperties(Properties properties);
 
 }

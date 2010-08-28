@@ -6,13 +6,13 @@ import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 
 public interface ParserListener {
-	void suiteStarted(VisualSuite visualSuite);
+    void suiteStarted(VisualSuite visualSuite);
 
-	void suiteCompleted(VisualSuite visualSuite);
+    void suiteCompleted(VisualSuite visualSuite);
 
-	void configurationParsed(VisualSuite visualSuite);
+    void configurationParsed(VisualSuite visualSuite);
 
-	void testParsed(Test test);
+    void testParsed(Test test);
 
-	void patternParsed(Configuration configuration, Pattern pattern);
+    void patternParsed(Configuration configuration, Pattern pattern);
 }

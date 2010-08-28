@@ -5,23 +5,23 @@ import org.jboss.lupic.suite.Test;
 
 public class TestProcessor extends Processor {
 
-	Test test;
-	
-	{
-		supportProcessor("perception", PerceptionProcessor.class);
-		supportProcessor("masks", MasksProcessor.class);
-		supportProcessor("pattern", PatternProcessor.class);
-	}
-	
-	@Override
-	public void start() {
-		test = new Test();
-		getContext().setCurrentTest(test);
-		getContext().setCurrentConfiguration(test);
-	}
+    Test test;
 
-	@Override
-	public void end() {
-		getContext().invokeListeners().testParsed(test);
-	}
+    {
+        supportProcessor("perception", PerceptionProcessor.class);
+        supportProcessor("masks", MasksProcessor.class);
+        supportProcessor("pattern", PatternProcessor.class);
+    }
+
+    @Override
+    public void start() {
+        test = new Test();
+        getContext().setCurrentTest(test);
+        getContext().setCurrentConfiguration(test);
+    }
+
+    @Override
+    public void end() {
+        getContext().invokeListeners().testParsed(test);
+    }
 }

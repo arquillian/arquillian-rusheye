@@ -4,19 +4,19 @@ import java.util.Properties;
 
 public abstract class AbstractRetriever implements Retriever {
 
-	private Properties properties = new Properties();
+    private Properties properties = new Properties();
 
-	@Override
-	public void setGlobalProperties(Properties properties) {
-		if (properties != null) {
-			this.properties = properties;
-		}
-	}
-	
-	public Properties mergeProperties(Properties localProperties) {
-		Properties result = new Properties();
-		result.putAll(properties);
-		result.putAll(localProperties);
-		return result;
-	}
+    @Override
+    public void setGlobalProperties(Properties properties) {
+        if (properties != null) {
+            this.properties = properties;
+        }
+    }
+
+    public Properties mergeProperties(Properties localProperties) {
+        Properties result = new Properties();
+        result.putAll(properties);
+        result.putAll(localProperties);
+        return result;
+    }
 }

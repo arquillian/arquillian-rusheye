@@ -3,8 +3,7 @@ package org.jboss.lupic.core;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class ComparisonResult
-{
+public class ComparisonResult {
     private boolean equalsImages;
     private BufferedImage diffImage;
     private Point rectangleMin;
@@ -19,10 +18,9 @@ public class ComparisonResult
     private int equalPixels;
     private String testName;
 
-    public ComparisonResult(String testName, boolean equalsImages, BufferedImage diffImage, Point rectangleMin, Point rectangleMax,
-            int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs,
-            int differentPixels, int smallDifferences, int equalPixels)
-    {
+    public ComparisonResult(String testName, boolean equalsImages, BufferedImage diffImage, Point rectangleMin,
+        Point rectangleMax, int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs,
+        int differentPixels, int smallDifferences, int equalPixels) {
         super();
         this.testName = testName;
         this.equalsImages = equalsImages;
@@ -39,84 +37,68 @@ public class ComparisonResult
         this.equalPixels = equalPixels;
     }
 
-    public boolean isEqualsImages()
-    {
+    public boolean isEqualsImages() {
         return equalsImages;
     }
 
-    public BufferedImage getDiffImage()
-    {
+    public BufferedImage getDiffImage() {
         return diffImage;
     }
 
-    public Point getRectangleMin()
-    {
+    public Point getRectangleMin() {
         return rectangleMin;
     }
 
-    public Point getRectangleMax()
-    {
+    public Point getRectangleMax() {
         return rectangleMax;
     }
 
-    public int getAreaWidth()
-    {
+    public int getAreaWidth() {
         return areaWidth;
     }
 
-    public int getAreaHeight()
-    {
+    public int getAreaHeight() {
         return areaHeight;
     }
 
-    public int getTotalPixels()
-    {
+    public int getTotalPixels() {
         return totalPixels;
     }
 
-    public int getMaskedPixels()
-    {
+    public int getMaskedPixels() {
         return maskedPixels;
     }
 
-    public int getPerceptibleDiffs()
-    {
+    public int getPerceptibleDiffs() {
         return perceptibleDiffs;
     }
 
-    public int getDifferentPixels()
-    {
+    public int getDifferentPixels() {
         return differentPixels;
     }
 
-    public int getSmallDifferences()
-    {
+    public int getSmallDifferences() {
         return smallDifferences;
     }
 
-    public int getEqualPixels()
-    {
+    public int getEqualPixels() {
         return equalPixels;
     }
 
-    public String getTestName()
-    {
+    public String getTestName() {
         return testName;
     }
-    
-    public String getComparisonStatus()
-    {
+
+    public String getComparisonStatus() {
         return this.isEqualsImages() ? "same" : "different";
     }
 
-    public String getAreaAsString()
-    {
+    public String getAreaAsString() {
         return String.format("%d&times;%d", this.getAreaWidth(), this.getAreaHeight());
     }
 
-    public String getRectangleAsString()
-    {
-        return String.format("[%d, %d] - [%d, %d]", this.getRectangleMin().x, this.getRectangleMin().y, this
-                .getRectangleMax().x, this.getRectangleMax().y);
+    public String getRectangleAsString() {
+        return String.format("[%d, %d] - [%d, %d]", this.getRectangleMin().x, this.getRectangleMin().y,
+            this.getRectangleMax().x, this.getRectangleMax().y);
     }
 }

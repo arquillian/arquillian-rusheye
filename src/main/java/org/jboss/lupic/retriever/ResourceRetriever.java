@@ -5,9 +5,9 @@ import java.util.Properties;
 
 public class ResourceRetriever extends AbstractRetriever {
 
-	@Override
-	public BufferedImage retrieve(String source, Properties properties) {
-		// TODO
-		return null;
-	}
+    @Override
+    public BufferedImage retrieve(String source, Properties properties) {
+        // TODO
+        return null;
+    }
 }

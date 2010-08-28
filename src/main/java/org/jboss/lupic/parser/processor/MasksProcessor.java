@@ -4,25 +4,20 @@ import org.jboss.lupic.parser.Processor;
 
 public class MasksProcessor extends Processor {
 
-	{
-		supportProcessor("mask", MaskProcessor.class);
-	}
+    {
+        supportProcessor("mask", MaskProcessor.class);
+    }
 
-	@Override
-	public void start() {
-		String type = getAttribute("type");
+    @Override
+    public void start() {
+        String type = getAttribute("type");
 
-		if ("ignore-bitmap".equals(type)) {
-			getContext().setCurrentMasks(
-					getContext().getCurrentConfiguration()
-							.getIgnoreBitmapMasks());
-		} else if ("selective-alpha".equals(type)) {
-			getContext().setCurrentMasks(
-					getContext().getCurrentConfiguration()
-							.getSelectiveAlphaMasks());
-		} else {
-			throw new IllegalStateException(
-					"The Mask must define it's type (ignore-bitmap|selective-alpha)");
-		}
-	}
+        if ("ignore-bitmap".equals(type)) {
+            getContext().setCurrentMasks(getContext().getCurrentConfiguration().getIgnoreBitmapMasks());
+        } else if ("selective-alpha".equals(type)) {
+            getContext().setCurrentMasks(getContext().getCurrentConfiguration().getSelectiveAlphaMasks());
+        } else {
+            throw new IllegalStateException("The Mask must define it's type (ignore-bitmap|selective-alpha)");
+        }
+    }
 }

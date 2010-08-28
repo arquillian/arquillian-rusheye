@@ -19,78 +19,76 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class AbstractVisualSuiteDefinitionTest {
 
-	String validationFeature = "http://xml.org/sax/features/validation";
-	String schemaFeature = "http://apache.org/xml/features/validation/schema";
-	String schemaFullChecking = "http://apache.org/xml/features/validation/schema-full-checking";
+    String validationFeature = "http://xml.org/sax/features/validation";
+    String schemaFeature = "http://apache.org/xml/features/validation/schema";
+    String schemaFullChecking = "http://apache.org/xml/features/validation/schema-full-checking";
 
-	VisualSuiteStub stub;
-	XMLWriter writer;
-	XMLReader reader;
-	Handler handler;
-	InputSource inputSource;
-	String generatedDocument;
-	ByteArrayOutputStream documentOutputStream;
+    VisualSuiteStub stub;
+    XMLWriter writer;
+    XMLReader reader;
+    Handler handler;
+    InputSource inputSource;
+    String generatedDocument;
+    ByteArrayOutputStream documentOutputStream;
 
-	@BeforeMethod
-	public void prepareEnvironment() throws IOException, SAXException {
-		stub = new VisualSuiteStub();
+    @BeforeMethod
+    public void prepareEnvironment() throws IOException, SAXException {
+        stub = new VisualSuiteStub();
 
-		PipedInputStream in = new PipedInputStream();
-		PipedOutputStream writerOut = new PipedOutputStream(in);
-		documentOutputStream = new ByteArrayOutputStream();
-		TeeOutputStream out = new TeeOutputStream(writerOut,
-				documentOutputStream);
+        PipedInputStream in = new PipedInputStream();
+        PipedOutputStream writerOut = new PipedOutputStream(in);
+        documentOutputStream = new ByteArrayOutputStream();
+        TeeOutputStream out = new TeeOutputStream(writerOut, documentOutputStream);
 
-		OutputFormat format = new OutputFormat("\t", true);
-		writer = new XMLWriter(out, format);
-		inputSource = new InputSource(in);
+        OutputFormat format = new OutputFormat("\t", true);
+        writer = new XMLWriter(out, format);
+        inputSource = new InputSource(in);
 
-		reader = XMLReaderFactory.createXMLReader();
-		reader.setFeature(validationFeature, true);
-		reader.setFeature(schemaFeature, true);
-		reader.setFeature(schemaFullChecking, true);
-		reader.setErrorHandler(new ErrorHandler() {
-			@Override
-			public void warning(SAXParseException e) throws SAXException {
-				throw e;
-			}
+        reader = XMLReaderFactory.createXMLReader();
+        reader.setFeature(validationFeature, true);
+        reader.setFeature(schemaFeature, true);
+        reader.setFeature(schemaFullChecking, true);
+        reader.setErrorHandler(new ErrorHandler() {
+            @Override
+            public void warning(SAXParseException e) throws SAXException {
+                throw e;
+            }
 
-			@Override
-			public void fatalError(SAXParseException e) throws SAXException {
-				throw e;
-			}
+            @Override
+            public void fatalError(SAXParseException e) throws SAXException {
+                throw e;
+            }
 
-			@Override
-			public void error(SAXParseException e) throws SAXException {
-				throw e;
-			}
-		});
+            @Override
+            public void error(SAXParseException e) throws SAXException {
+                throw e;
+            }
+        });
 
-		handler = new Handler();
-	}
+        handler = new Handler();
+    }
 
-	private class WriterRunnable implements Runnable {
-		@Override
-		public void run() {
-			try {
-				AbstractVisualSuiteDefinitionTest.this.writer
-						.write(AbstractVisualSuiteDefinitionTest.this.stub.document);
-				AbstractVisualSuiteDefinitionTest.this.writer.close();
-				generatedDocument = new String(documentOutputStream
-						.toByteArray());
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
+    private class WriterRunnable implements Runnable {
+        @Override
+        public void run() {
+            try {
+                AbstractVisualSuiteDefinitionTest.this.writer
+                    .write(AbstractVisualSuiteDefinitionTest.this.stub.document);
+                AbstractVisualSuiteDefinitionTest.this.writer.close();
+                generatedDocument = new String(documentOutputStream.toByteArray());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
-	public void startWriter() {
-		Thread writerThread = new Thread(new WriterRunnable());
-		writerThread.start();
-	}
+    public void startWriter() {
+        Thread writerThread = new Thread(new WriterRunnable());
+        writerThread.start();
+    }
 
-	public void parse() throws IOException, SAXException {
-		reader.setContentHandler(handler);
-		reader.parse(inputSource);
-	}
+    public void parse() throws IOException, SAXException {
+        reader.setContentHandler(handler);
+        reader.parse(inputSource);
+    }
 }
