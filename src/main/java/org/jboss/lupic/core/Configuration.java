@@ -1,4 +1,4 @@
-package cz.tisnik.ImageDiff;
+package org.jboss.lupic.core;
 
 import java.awt.Color;
 import java.io.File;

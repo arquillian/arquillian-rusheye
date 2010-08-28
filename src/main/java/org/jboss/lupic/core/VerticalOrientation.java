@@ -1,4 +1,4 @@
-package cz.tisnik.ImageDiff;
+package org.jboss.lupic.core;
 
 /**
  * Mask image vertical orientation.
