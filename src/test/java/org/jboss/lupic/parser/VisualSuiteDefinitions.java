@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;

@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -16,13 +16,13 @@ import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.*;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 import static org.testng.Assert.*;
 
 public class TestMask extends AbstractVisualSuiteDefinitionTest {
 
-	private static final String MASK1_ID = "mask1_id";
-	private static final String MASK1_SOURCE = "mask1_source";
+	static final String MASK1_ID = "mask1_id";
+	static final String MASK1_SOURCE = "mask1_source";
 	Element masks;
 	Element mask;
 
@@ -119,8 +119,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 		startWriter();
 		parse();
 
-		Set<Mask> ignoreBitmapMasks = handler.getVisualSuite()
-				.getGlobalConfiguration().getIgnoreBitmapMasks();
+		Set<Mask> ignoreBitmapMasks = getCurrentIgnoreBitmapMasks();
 		assertEquals(ignoreBitmapMasks.size(), 1);
 
 		Mask givenMask = ignoreBitmapMasks.iterator().next();
@@ -136,7 +135,12 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 		assertEquals(givenMask.get(), image);
 	}
 
-	private final static BufferedImage image = new BufferedImage(1, 1, 1);
+	Set<Mask> getCurrentIgnoreBitmapMasks() {
+		return handler.getVisualSuite().getGlobalConfiguration()
+				.getIgnoreBitmapMasks();
+	}
+
+	final static BufferedImage image = new BufferedImage(1, 1, 1);
 
 	public static class AssertingRetriever extends AbstractRetriever {
 		@Override
@@ -165,7 +169,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 		parse();
 	}
 
-	private void addMasks(String type) {
+	void addMasks(String type) {
 		masks = stub.globalConfiguration.addElement(MASKS);
 
 		if (type != null) {
@@ -173,7 +177,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 		}
 	}
 
-	private void addMask(String id, String source) {
+	void addMask(String id, String source) {
 		mask = masks.addElement(MASK);
 		if (id != null) {
 			mask.addAttribute("id", id);

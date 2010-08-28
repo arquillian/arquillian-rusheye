@@ -1,7 +1,7 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.PATTERN;
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.TEST;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.PATTERN;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.TEST;
 
 import org.dom4j.Element;
 

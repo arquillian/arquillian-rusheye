@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

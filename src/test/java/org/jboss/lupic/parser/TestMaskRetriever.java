@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import java.io.IOException;
 import java.util.Properties;

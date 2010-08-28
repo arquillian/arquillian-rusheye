@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import java.util.Iterator;
 
@@ -7,7 +7,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.*;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
 @SuppressWarnings("unchecked")
 public class VisualSuiteStub {

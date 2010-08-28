@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;

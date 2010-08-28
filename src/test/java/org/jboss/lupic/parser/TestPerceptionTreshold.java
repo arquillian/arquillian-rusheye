@@ -1,4 +1,4 @@
-package org.jboss.lupic.test.parser;
+package org.jboss.lupic.parser;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import static org.jboss.lupic.test.parser.VisualSuiteDefinitions.*;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
 public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
 
