@@ -12,7 +12,16 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="global-configuration" type="vs:ConfigurationType" />
-				<xs:element name="test" type="vs:TestType" maxOccurs="unbounded" />
+				<xs:element name="test" type="vs:TestType" maxOccurs="unbounded">
+					<xs:unique name="TestMasksMaskIdUnique">
+						<xs:annotation>
+							<xs:documentation>Mask ID have to be unique across all particular tests
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="vs:masks/vs:mask" />
+						<xs:field xpath="@id" />
+					</xs:unique>
+				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="id" type="xs:integer" />
 		</xs:complexType>
@@ -35,7 +44,7 @@
 		</xs:unique>
 		<xs:unique name="MasksMaskIdUnique">
 			<xs:annotation>
-				<xs:documentation>Mask ID have to be unique across the suite
+				<xs:documentation>Mask ID have to be unique across global configuration
 				</xs:documentation>
 			</xs:annotation>
 			<xs:selector xpath="vs:global-configuration/vs:masks/vs:mask" />

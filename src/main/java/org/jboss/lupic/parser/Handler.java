@@ -133,4 +133,8 @@ public class Handler extends DefaultHandler {
 	public VisualSuite getVisualSuite() {
 		return visualSuite;
 	}
+
+	Context getContext() {
+		return context;
+	}
 }
