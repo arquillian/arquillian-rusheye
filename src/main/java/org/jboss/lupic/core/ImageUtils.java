@@ -24,17 +24,28 @@ package org.jboss.lupic.core;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
+
+import org.jboss.lupic.retriever.FileRetriever;
+import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.suite.HorizontalAlignment;
+import org.jboss.lupic.suite.Mask;
+import org.jboss.lupic.suite.VerticalAlignment;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @version $Revision$
  */
 public final class ImageUtils {
-    
+
+    private static Retriever imageRetriever = new FileRetriever();
+
     private ImageUtils() {
     }
 
@@ -62,14 +73,37 @@ public final class ImageUtils {
         return images;
     }
 
-    public static List<MaskImage> readMaskImages(File maskDirectory) throws Exception {
-        List<MaskImage> images = new ArrayList<MaskImage>();
+    public static Set<Mask> readMaskImages(File maskDirectory) throws Exception {
+        Set<Mask> masks = new HashSet<Mask>();
 
         for (String imageFileName : maskDirectory.list()) {
+            File imageFile = new File(maskDirectory, imageFileName);
             Log.logSetup("read mask image %s", imageFileName);
-            images.add(new MaskImage(maskDirectory.getAbsolutePath(), imageFileName));
+            masks.add(readMaskImage(imageFile));
         }
-        return images;
+        return masks;
     }
 
+    public static Mask readMaskImage(File maskFile) throws Exception {
+        String maskFilename = maskFile.getName();
+        Mask mask = new Mask(maskFile.getName(), maskFile.toString(), new Properties(), imageRetriever,
+            resolveVerticalOrientation(maskFilename), resolveHorizontalOrientation(maskFilename));
+        mask.run();
+        return mask;
+    }
+
+    private static HorizontalAlignment resolveHorizontalOrientation(String fileName) {
+        return getFileFlags(fileName).contains("right") ? HorizontalAlignment.RIGHT : HorizontalAlignment.LEFT;
+    }
+
+    private static VerticalAlignment resolveVerticalOrientation(String fileName) {
+        return getFileFlags(fileName).contains("bottom") ? VerticalAlignment.BOTTOM : VerticalAlignment.TOP;
+    }
+
+    private static List<String> getFileFlags(String fileName) {
+        String[] parts = fileName.split("\\.");
+        // middle parts is composed of file flags, for example "top-left", "bottom-right" etc.
+        String[] flags = parts[1].split("-");
+        return Arrays.asList(flags);
+    }
 }

@@ -24,12 +24,14 @@ package org.jboss.lupic.suite;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import org.jboss.lupic.retriever.Retriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @version $Revision$
  */
 public class Mask extends FutureTask<BufferedImage> {
@@ -67,6 +69,35 @@ public class Mask extends FutureTask<BufferedImage> {
 
     public VerticalAlignment getVerticalAlignment() {
         return verticalAlignment;
+    }
+
+    private BufferedImage getMask() {
+        try {
+            return get();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isPixelMasked(BufferedImage pattern, int x, int y) {
+        final BufferedImage mask = getMask();
+
+        int patternWidth = pattern.getWidth();
+        int patternHeight = pattern.getHeight();
+        int maskWidth = mask.getWidth();
+        int maskHeight = mask.getHeight();
+
+        int maskX = this.horizontalAlignment == HorizontalAlignment.LEFT ? x : x - (patternWidth - maskWidth);
+        int maskY = this.verticalAlignment == VerticalAlignment.TOP ? y : y - (patternHeight - maskHeight);
+
+        // we are outside the mask
+        if (maskX < 0 || maskX >= maskWidth || maskY < 0 || maskY >= maskHeight) {
+            return false;
+        }
+
+        return (getMask().getRGB(maskX, maskY) & 0xff000000) != 0;
     }
 
     @Override

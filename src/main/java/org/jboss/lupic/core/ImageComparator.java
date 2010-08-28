@@ -25,7 +25,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.util.Set;
+
+import org.jboss.lupic.suite.Mask;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -51,9 +53,9 @@ public class ImageComparator {
         g.dispose();
     }
 
-    private boolean isMaskedPixel(BufferedImage image, List<MaskImage> maskImages, int x, int y) {
-        for (MaskImage maskImage : maskImages) {
-            if (maskImage.isPixelMasked(image, x, y)) {
+    private boolean isMaskedPixel(BufferedImage image, Set<Mask> masks, int x, int y) {
+        for (Mask mask : masks) {
+            if (mask.isPixelMasked(image, x, y)) {
                 return true;
             }
         }
@@ -67,7 +69,7 @@ public class ImageComparator {
         return new Color(red, green, blue);
     }
 
-    public ComparisonResult diffImages(String imageFileName, BufferedImage[] images, List<MaskImage> maskImages,
+    public ComparisonResult diffImages(String imageFileName, BufferedImage[] images, Set<Mask> maskImages,
         Configuration configuration) {
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);

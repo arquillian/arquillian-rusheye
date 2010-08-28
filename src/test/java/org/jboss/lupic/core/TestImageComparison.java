@@ -21,17 +21,19 @@
  */
 package org.jboss.lupic.core;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.jboss.lupic.suite.Mask;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -112,7 +114,7 @@ public class TestImageComparison {
     }
 
     @DataProvider(name = "real-samples")
-    private Object[][] provideRealSampleNames() {
+    Object[][] provideRealSampleNames() {
         Object[][] configuration = new Object[5][1];
         for (int i = 1; i <= 5; i++) {
             configuration[i - 1][0] = "real-sample-" + i;
@@ -136,7 +138,7 @@ public class TestImageComparison {
         File[] maskFiles = testDirectory.listFiles(new FilenamePrefixFilter("mask"));
         File[] diffFiles = testDirectory.listFiles(new FilenamePrefixFilter("diff"));
 
-        List<MaskImage> masks = getMaskImages(maskFiles);
+        Set<Mask> masks = getMaskImages(maskFiles);
 
         assertEquals(patternFiles.length, 1);
         assertEquals(screenshotFiles.length, 1);
@@ -158,18 +160,18 @@ public class TestImageComparison {
 
     private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
         ComparisonResult result = comparator.diffImages("", new BufferedImage[] { actualDiff, expectedDiff },
-            new LinkedList<MaskImage>(), new Configuration(new String[] {}));
+            new HashSet<Mask>(), new Configuration(new String[] {}));
         assertTrue(result.isEqualsImages());
     }
 
-    private List<MaskImage> getMaskImages(File[] maskFiles) {
+    private Set<Mask> getMaskImages(File[] maskFiles) {
         try {
-            List<MaskImage> list = new LinkedList<MaskImage>();
+            Set<Mask> set = new HashSet<Mask>();
             for (File maskFile : maskFiles) {
-                list.add(new MaskImage(maskFile.getParent(), maskFile.getName()));
+                set.add(ImageUtils.readMaskImage(maskFile));
             }
-            return list;
-        } catch (IOException e) {
+            return set;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

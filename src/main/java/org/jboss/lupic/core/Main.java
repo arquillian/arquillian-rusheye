@@ -25,21 +25,23 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
+
+import org.jboss.lupic.suite.Mask;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @version $Revision$
  */
 public class Main {
-    
+
     private int errorsCounter = 0;
     private int differentImageCounter = 0;
     private int sameImageCounter = 0;
 
     public void run(String[] args) throws Exception {
         Configuration configuration = new Configuration(args);
-        List<MaskImage> maskImages = ImageUtils.readMaskImages(configuration.getMaskDirectory());
+        Set<Mask> maskImages = ImageUtils.readMaskImages(configuration.getMaskDirectory());
 
         XmlWriter xmlWriter = new XmlWriter(configuration.getHtmlOutputDirectory());
 
@@ -48,6 +50,7 @@ public class Main {
                 testImage(configuration, maskImages, imageFileName, xmlWriter);
             }
         } catch (Exception e) {
+            throw new RuntimeException(e);
         } finally {
             xmlWriter.printXmlFooter();
             xmlWriter.close();
@@ -58,8 +61,7 @@ public class Main {
         Log.logStatistic("errors:           %d", errorsCounter);
     }
 
-    private void testImage(Configuration configuration, List<MaskImage> maskImages, String imageFileName,
-        XmlWriter xmlWriter) {
+    private void testImage(Configuration configuration, Set<Mask> maskImages, String imageFileName, XmlWriter xmlWriter) {
         Log.logProcess("testing image %s", imageFileName);
         try {
             BufferedImage[] sourceImages = ImageUtils.readSourceImages(configuration.getFirstSourceDirectory(),
