@@ -112,7 +112,11 @@
 	</xs:complexType>
 
 	<xs:complexType name="MaskRetrieverType">
-		<xs:attribute name="class" type="vs:RetrieverClassType" />
+		<xs:complexContent>
+			<xs:extension base="vs:RetrieverPropertiesType">
+				<xs:attribute name="class" type="vs:RetrieverClassType" />
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:simpleType name="RetrieverClassType">
