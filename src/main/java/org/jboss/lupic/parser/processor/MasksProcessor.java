@@ -23,6 +23,10 @@ package org.jboss.lupic.parser.processor;
 
 import org.jboss.lupic.parser.Processor;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class MasksProcessor extends Processor {
 
     {

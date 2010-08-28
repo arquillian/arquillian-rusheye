@@ -30,6 +30,10 @@ import org.dom4j.Element;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @SuppressWarnings("unchecked")
 public class VisualSuiteStub {
 

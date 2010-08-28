@@ -24,7 +24,8 @@ package org.jboss.lupic.core;
 /**
  * Mask image vertical orientation.
  * 
- * @author Pavel Tisnovsky
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
  */
 public enum VerticalOrientation {
     TOP, BOTTOM

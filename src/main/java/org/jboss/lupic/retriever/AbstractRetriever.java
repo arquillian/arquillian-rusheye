@@ -23,6 +23,10 @@ package org.jboss.lupic.retriever;
 
 import java.util.Properties;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public abstract class AbstractRetriever implements Retriever {
 
     private Properties properties = new Properties();

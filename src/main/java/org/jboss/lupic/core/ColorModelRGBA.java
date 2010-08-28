@@ -23,6 +23,10 @@ package org.jboss.lupic.core;
 
 import java.awt.Color;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public final class ColorModelRGBA {
     static final int ALPHA_MASK = 0xFF000000;
     static final int RED_MASK = 0x00FF0000;

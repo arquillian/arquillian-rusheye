@@ -27,6 +27,10 @@ import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestPattern extends AbstractTestOfTestElement {
     @Test(expectedExceptions = SAXParseException.class)
     public void testNotUniqueNameAcrossTestsShouldRaiseException() throws IOException, SAXException {

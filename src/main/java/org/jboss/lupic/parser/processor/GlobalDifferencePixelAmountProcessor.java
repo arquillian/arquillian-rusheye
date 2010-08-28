@@ -27,6 +27,10 @@ import java.util.regex.Pattern;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.Perception;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class GlobalDifferencePixelAmountProcessor extends Processor {
 
     Pattern percentPattern = Pattern.compile("([0-9]{1,2}|100)%");

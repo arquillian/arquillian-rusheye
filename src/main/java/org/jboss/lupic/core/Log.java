@@ -21,6 +21,10 @@
  */
 package org.jboss.lupic.core;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public final class Log {
 
     private Log() {

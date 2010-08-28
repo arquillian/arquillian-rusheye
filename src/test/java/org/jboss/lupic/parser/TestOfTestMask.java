@@ -29,6 +29,10 @@ import java.util.Set;
 import org.jboss.lupic.suite.Mask;
 import org.testng.annotations.Test;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @Test
 public class TestOfTestMask extends TestMask {
     @Override

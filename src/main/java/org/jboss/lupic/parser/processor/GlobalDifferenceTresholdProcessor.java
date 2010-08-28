@@ -24,6 +24,10 @@ package org.jboss.lupic.parser.processor;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.Perception;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class GlobalDifferenceTresholdProcessor extends Processor {
     @Override
     public void process(String content) {

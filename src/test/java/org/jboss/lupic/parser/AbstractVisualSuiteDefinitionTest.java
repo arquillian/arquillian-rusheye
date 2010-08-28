@@ -37,6 +37,10 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class AbstractVisualSuiteDefinitionTest {
 
     String validationFeature = "http://xml.org/sax/features/validation";

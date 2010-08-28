@@ -40,6 +40,10 @@ import org.xml.sax.SAXParseException;
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 import static org.testng.Assert.*;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestMask extends AbstractVisualSuiteDefinitionTest {
 
     static final String MASK1_ID = "mask1_id";

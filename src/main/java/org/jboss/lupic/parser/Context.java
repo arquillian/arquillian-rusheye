@@ -28,6 +28,10 @@ import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Test;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public abstract class Context {
     private Test currentTest;
     private Configuration currentConfiguration;

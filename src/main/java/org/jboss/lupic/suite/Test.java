@@ -24,6 +24,10 @@ package org.jboss.lupic.suite;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class Test extends Configuration {
     Set<Pattern> patterns = new LinkedHashSet<Pattern>();
 

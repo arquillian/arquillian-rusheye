@@ -29,6 +29,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public final class ImageUtils {
     
     private ImageUtils() {

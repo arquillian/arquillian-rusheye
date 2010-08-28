@@ -26,6 +26,10 @@ import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class PatternProcessor extends Processor {
     {
         setPropertiesEnabled(true);

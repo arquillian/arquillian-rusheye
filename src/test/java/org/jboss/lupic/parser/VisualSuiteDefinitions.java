@@ -24,6 +24,10 @@ package org.jboss.lupic.parser;
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public final class VisualSuiteDefinitions {
 
     public static final Namespace LUPIC_NS = new Namespace("", "http://www.jboss.org/test/visual-suite");

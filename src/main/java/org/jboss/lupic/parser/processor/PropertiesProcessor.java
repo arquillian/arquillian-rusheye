@@ -25,6 +25,10 @@ import java.util.Properties;
 
 import org.jboss.lupic.parser.Processor;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class PropertiesProcessor extends Processor {
 
     private String tagName;

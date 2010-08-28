@@ -29,6 +29,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public class MaskImage {
     private BufferedImage mask;
     private HorizontalOrientation horizontalOrientation;

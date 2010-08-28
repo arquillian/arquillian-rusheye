@@ -30,6 +30,10 @@ import org.xml.sax.SAXParseException;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestPerceptionAmount extends AbstractVisualSuiteDefinitionTest {
     private static final long MAX_PIXEL_AMOUNT = Long.MAX_VALUE;
 

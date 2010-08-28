@@ -26,6 +26,10 @@ import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public interface ParserListener {
     void suiteStarted(VisualSuite visualSuite);
 

@@ -26,6 +26,10 @@ import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.suite.GlobalConfiguration;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class RetrieverProcessor extends Processor {
 
     Retriever retriever;

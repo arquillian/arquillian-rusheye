@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public class Main {
     
     private int errorsCounter = 0;

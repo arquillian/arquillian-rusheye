@@ -32,6 +32,10 @@ import org.jboss.lupic.suite.VisualSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
     @Test
     public void testSimpleParse() {

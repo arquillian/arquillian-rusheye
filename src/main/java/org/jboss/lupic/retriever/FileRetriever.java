@@ -28,6 +28,10 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class FileRetriever extends AbstractRetriever {
 
     public BufferedImage retrieve(String source, Properties localProperties) {

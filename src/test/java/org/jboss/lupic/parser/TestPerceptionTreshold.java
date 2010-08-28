@@ -31,6 +31,10 @@ import org.xml.sax.SAXParseException;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
 
     private static final int MAX_PIXEL_TRESHOLD = 767;

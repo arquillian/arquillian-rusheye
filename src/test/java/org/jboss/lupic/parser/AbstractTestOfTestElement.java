@@ -26,6 +26,10 @@ import static org.jboss.lupic.parser.VisualSuiteDefinitions.TEST;
 
 import org.dom4j.Element;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class AbstractTestOfTestElement extends AbstractVisualSuiteDefinitionTest {
     protected static final String TEST1_NAME = "test1-name";
     protected static final String PATTERN1_NAME = "pattern1-name";

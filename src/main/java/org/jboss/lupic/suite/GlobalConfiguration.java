@@ -24,6 +24,10 @@ package org.jboss.lupic.suite;
 import org.jboss.lupic.retriever.FileRetriever;
 import org.jboss.lupic.retriever.Retriever;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class GlobalConfiguration extends Configuration {
     Retriever imageRetriever = new FileRetriever();
     Retriever maskRetriever = new FileRetriever();

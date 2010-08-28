@@ -24,6 +24,10 @@ package org.jboss.lupic.retriever;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class ResourceRetriever extends AbstractRetriever {
 
     @Override

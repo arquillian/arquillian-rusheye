@@ -26,6 +26,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public class Configuration {
     private boolean useCorrelation = true;
     private int correlationRange = 20;

@@ -24,6 +24,10 @@ package org.jboss.lupic.core;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public class ComparisonResult {
     private boolean equalsImages;
     private BufferedImage diffImage;

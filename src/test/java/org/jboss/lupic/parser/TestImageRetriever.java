@@ -32,6 +32,10 @@ import org.xml.sax.SAXException;
 
 import static org.testng.Assert.*;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestImageRetriever extends AbstractVisualSuiteDefinitionTest {
 
     private static final String SOURCE = "source";

@@ -21,6 +21,10 @@
  */
 package org.jboss.lupic.suite;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public enum MaskType {
     IGNORE_BITMAP, SELECTIVE_ALPHA;
 

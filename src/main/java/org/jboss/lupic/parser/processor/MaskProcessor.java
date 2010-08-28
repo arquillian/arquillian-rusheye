@@ -28,6 +28,10 @@ import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.VerticalAlignment;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class MaskProcessor extends Processor {
     {
         setPropertiesEnabled(true);

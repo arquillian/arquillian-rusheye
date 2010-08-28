@@ -29,6 +29,10 @@ import org.jboss.lupic.parser.processor.PropertiesProcessor;
 import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.Attributes;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public abstract class Processor {
 
     private Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>();

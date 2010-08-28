@@ -24,6 +24,10 @@ package org.jboss.lupic.parser.processor;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.GlobalConfiguration;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class GlobalConfigurationProcessor extends Processor {
 
     {

@@ -28,6 +28,10 @@ import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class TestOfTestElement extends AbstractTestOfTestElement {
     @BeforeMethod
     public void removeDefaultTestElement() {

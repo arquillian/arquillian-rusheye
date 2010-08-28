@@ -27,6 +27,10 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @version $Revision$
+ */
 public class ImageComparator {
     private void updateBoundary(Point min, Point max, int x, int y) {
         min.x = Math.min(min.x, x);

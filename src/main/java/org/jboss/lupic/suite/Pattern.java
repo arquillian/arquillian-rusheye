@@ -28,6 +28,10 @@ import java.util.concurrent.FutureTask;
 
 import org.jboss.lupic.retriever.Retriever;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class Pattern extends FutureTask<BufferedImage> {
 
     private String name;
