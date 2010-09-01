@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.core;
+package org.jboss.lupic.oneoff;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jboss.lupic.core.ComparisonResult;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -79,8 +81,8 @@ public class XmlWriter {
         this.writer.write("\n");
     }
 
-    public void printResultForOneImage(Configuration configuration, String imageFileName, BufferedImage[] sourceImages,
-        ComparisonResult comparisonResult) throws IOException {
+    public void printResultForOneImage(OneOffConfiguration configuration, String imageFileName,
+        BufferedImage[] sourceImages, ComparisonResult comparisonResult) throws IOException {
         String dirName = imageFileName.substring(0, imageFileName.lastIndexOf('.'));
 
         printComparisonResult(comparisonResult, dirName);
@@ -120,7 +122,7 @@ public class XmlWriter {
         this.println("            </perception>");
     }
 
-    private void createAndFillResultDirectory(Configuration configuration, BufferedImage[] sourceImages,
+    private void createAndFillResultDirectory(OneOffConfiguration configuration, BufferedImage[] sourceImages,
         ComparisonResult comparisonResult, String dirName) throws IOException {
         File newDir = new File(configuration.getHtmlOutputDirectory(), dirName);
         Log.logProcess("creating directory %s", newDir.getAbsolutePath());

@@ -27,6 +27,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 
+import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 
 /**
@@ -77,6 +78,7 @@ public class ImageComparator {
 
     public ComparisonResult diffImages(String imageFileName, BufferedImage[] images, Set<Mask> maskImages,
         Configuration configuration) {
+        configuration.setDefaultValuesForUnset();
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         int width = Math.min(images[0].getWidth(), images[1].getWidth());
@@ -96,11 +98,11 @@ public class ImageComparator {
                 if (isMaskedPixel(images[0], maskImages, i, j)) {
                     maskedPixels++;
                     color = getMaskedPixelColor(color);
-                } else if (cmp > configuration.getPerceptiblePixelValueThreshold()) {
+                } else if (cmp > configuration.getPerception().getOnePixelTreshold()) {
                     perceptibleDiffs++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_PERCEPTIBLE;
-                } else if (cmp > configuration.getDifferentPixelsThreshold()) {
+                } else if (cmp > configuration.getPerception().getGlobalDifferenceTreshold()) {
                     differentPixels++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_ABOVE_TRESHOLD;

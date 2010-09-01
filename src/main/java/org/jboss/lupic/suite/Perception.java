@@ -70,10 +70,10 @@ public class Perception {
 
     public void setDefaultValuesForUnset() {
         if (onePixelTreshold == null) {
-            onePixelTreshold = 0;
+            onePixelTreshold = 50;
         }
         if (globalDifferenceTreshold == null) {
-            globalDifferenceTreshold = 0;
+            globalDifferenceTreshold = 10;
         }
         if (globalDifferencePercentage == null && globalDifferencePixelAmount == null) {
             globalDifferencePixelAmount = 0L;

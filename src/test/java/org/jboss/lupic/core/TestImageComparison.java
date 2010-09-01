@@ -28,11 +28,14 @@ import static org.testng.Assert.assertTrue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.jboss.lupic.oneoff.ImageUtils;
+import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -50,7 +53,7 @@ public class TestImageComparison {
 
     @BeforeMethod
     public void configure() {
-        configuration = new Configuration(new String[] {});
+        configuration = new Configuration();
     }
 
     @Test
@@ -73,7 +76,7 @@ public class TestImageComparison {
 
     @Test
     public void testPerceptible() {
-        configuration.setPerceptiblePixelValueThreshold(2);
+        configuration.getPerception().setOnePixelTreshold((short) 2);
         ComparisonResult result = diffImages("perceptible");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -86,8 +89,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferent() {
-        configuration.setPerceptiblePixelValueThreshold(200);
-        configuration.setDifferentPixelsThreshold(2);
+        configuration.getPerception().setOnePixelTreshold((short) 200);
+        configuration.getPerception().setGlobalDifferenceTreshold((short) 2);
         ComparisonResult result = diffImages("different");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -100,8 +103,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferentMasked() {
-        configuration.setPerceptiblePixelValueThreshold(200);
-        configuration.setDifferentPixelsThreshold(2);
+        configuration.getPerception().setOnePixelTreshold((short) 200);
+        configuration.getPerception().setGlobalDifferenceTreshold((short) 2);
         ComparisonResult result = diffImages("different-masked");
         assertTrue(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -115,15 +118,15 @@ public class TestImageComparison {
 
     @DataProvider(name = "real-samples")
     Object[][] provideRealSampleNames() {
-        Object[][] configuration = new Object[5][1];
+        Object[][] provide = new Object[5][1];
         for (int i = 1; i <= 5; i++) {
-            configuration[i - 1][0] = "real-sample-" + i;
+            provide[i - 1][0] = "real-sample-" + i;
         }
-        return configuration;
+        return provide;
     }
 
     @Test(dataProvider = "real-samples")
-    public void testRealSamples(String testName) {
+    public void testRealSamples(String testName) throws IOException {
         ComparisonResult result = diffImages(testName);
         assertFalse(result.isEqualsImages());
         assertSame(result.getDiffImage(), expectedDiff);
@@ -159,8 +162,12 @@ public class TestImageComparison {
     }
 
     private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
+        Configuration strictConfiguration = new Configuration();
+        strictConfiguration.getPerception().setOnePixelTreshold((short) 0);
+        strictConfiguration.getPerception().setGlobalDifferenceTreshold((short) 0);
+
         ComparisonResult result = comparator.diffImages("", new BufferedImage[] { actualDiff, expectedDiff },
-            new HashSet<Mask>(), new Configuration(new String[] {}));
+            new HashSet<Mask>(), strictConfiguration);
         assertTrue(result.isEqualsImages());
     }
 

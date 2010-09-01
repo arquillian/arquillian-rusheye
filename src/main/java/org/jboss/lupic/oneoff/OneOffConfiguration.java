@@ -19,21 +19,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.core;
+package org.jboss.lupic.oneoff;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jboss.lupic.suite.Configuration;
+
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @version $Revision$
  */
-public class Configuration {
-
-    private int differentPixelsThreshold = 10;
-    private int perceptiblePixelValueThreshold = 50;
-
+public class OneOffConfiguration extends Configuration {
     private File firstSourceDirectory = null;
     private File secondSourceDirectory = null;
     private File diffDirectory = null;
@@ -41,7 +39,7 @@ public class Configuration {
     private File maskDirectory = null;
     private File htmlOutputDirectory = null;
 
-    public Configuration(String[] args) {
+    public OneOffConfiguration(String[] args) {
         Log.logConfig("command line parameters: %d", args.length);
         readCommandLineParameters(args);
         printParameters();
@@ -92,22 +90,6 @@ public class Configuration {
         return options;
     }
 
-    public int getDifferentPixelsThreshold() {
-        return this.differentPixelsThreshold;
-    }
-
-    public void setDifferentPixelsThreshold(int differentPixelsThreshold) {
-        this.differentPixelsThreshold = differentPixelsThreshold;
-    }
-
-    public int getPerceptiblePixelValueThreshold() {
-        return this.perceptiblePixelValueThreshold;
-    }
-
-    public void setPerceptiblePixelValueThreshold(int perceptiblePixelValueThreshold) {
-        this.perceptiblePixelValueThreshold = perceptiblePixelValueThreshold;
-    }
-
     public File getFirstSourceDirectory() {
         return this.firstSourceDirectory;
     }
@@ -131,5 +113,4 @@ public class Configuration {
     public File getStructDiffDirectory() {
         return this.structDiffDirectory;
     }
-
 }

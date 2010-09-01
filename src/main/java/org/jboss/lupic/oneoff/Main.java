@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.core;
+package org.jboss.lupic.oneoff;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 
+import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.suite.Mask;
 
 /**
@@ -40,7 +42,7 @@ public class Main {
     private int sameImageCounter = 0;
 
     public void run(String[] args) throws Exception {
-        Configuration configuration = new Configuration(args);
+        OneOffConfiguration configuration = new OneOffConfiguration(args);
         Set<Mask> maskImages = ImageUtils.readMaskImages(configuration.getMaskDirectory());
 
         XmlWriter xmlWriter = new XmlWriter(configuration.getHtmlOutputDirectory());
@@ -61,7 +63,8 @@ public class Main {
         Log.logStatistic("errors:           %d", errorsCounter);
     }
 
-    private void testImage(Configuration configuration, Set<Mask> maskImages, String imageFileName, XmlWriter xmlWriter) {
+    private void testImage(OneOffConfiguration configuration, Set<Mask> maskImages, String imageFileName,
+        XmlWriter xmlWriter) {
         Log.logProcess("testing image %s", imageFileName);
         try {
             BufferedImage[] sourceImages = ImageUtils.readSourceImages(configuration.getFirstSourceDirectory(),
@@ -89,8 +92,8 @@ public class Main {
         }
     }
 
-    private void writeStructDiffImage(Configuration configuration, String imageFileName, BufferedImage[] sourceImages,
-        BufferedImage diffImage) throws IOException {
+    private void writeStructDiffImage(OneOffConfiguration configuration, String imageFileName,
+        BufferedImage[] sourceImages, BufferedImage diffImage) throws IOException {
         String dirName = imageFileName.substring(0, imageFileName.lastIndexOf('.'));
         File newDir = new File(configuration.getDiffDirectory(), dirName);
         Log.logProcess("creating directory %s", newDir.getAbsolutePath());
@@ -101,7 +104,7 @@ public class Main {
         ImageUtils.writeImage(diffImage, newDir, "diff.png");
     }
 
-    private void writeDiffImage(Configuration configuration, String imageFileName, BufferedImage diffImage)
+    private void writeDiffImage(OneOffConfiguration configuration, String imageFileName, BufferedImage diffImage)
         throws IOException {
         ImageUtils.writeImage(diffImage, configuration.getDiffDirectory(), imageFileName);
         Log.logProcess("writing diff image %s", imageFileName);
