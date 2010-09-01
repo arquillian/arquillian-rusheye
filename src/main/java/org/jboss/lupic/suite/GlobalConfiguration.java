@@ -21,6 +21,10 @@
  */
 package org.jboss.lupic.suite;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.jboss.lupic.parser.ParserListener;
 import org.jboss.lupic.retriever.FileRetriever;
 import org.jboss.lupic.retriever.Retriever;
 
@@ -31,6 +35,7 @@ import org.jboss.lupic.retriever.Retriever;
 public class GlobalConfiguration extends Configuration {
     Retriever imageRetriever = new FileRetriever();
     Retriever maskRetriever = new FileRetriever();
+    Set<ParserListener> configuredListeners = new LinkedHashSet<ParserListener>();
 
     public Retriever getImageRetriever() {
         return imageRetriever;
@@ -46,5 +51,9 @@ public class GlobalConfiguration extends Configuration {
 
     public void setMaskRetriever(Retriever maskRetriever) {
         this.maskRetriever = maskRetriever;
+    }
+    
+    public Set<ParserListener> getConfiguredListeners() {
+        return configuredListeners;
     }
 }

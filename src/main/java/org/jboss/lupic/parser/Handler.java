@@ -26,7 +26,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -45,8 +44,13 @@ public class Handler extends DefaultHandler {
     private Context context;
     private VisualSuite visualSuite;
     private Deque<Processor> processors = new LinkedList<Processor>();
-    private Set<ParserListener> listeners = new HashSet<ParserListener>();
+    private Set<ParserListener> parserListeners;
+
     private String characters = null;
+
+    public Handler(Set<ParserListener> parserListeners) {
+        this.parserListeners = parserListeners;
+    }
 
     @Override
     public void startDocument() throws SAXException {
@@ -98,24 +102,6 @@ public class Handler extends DefaultHandler {
         processors.removeFirst();
     }
 
-    public void registerListener(ParserListener parserListener) {
-        synchronized (parserListener) {
-            if (listeners.contains(parserListener)) {
-                return;
-            }
-            listeners.add(parserListener);
-        }
-    }
-
-    public void unregisterListener(ParserListener parserListener) {
-        synchronized (listeners) {
-            if (listeners.contains(parserListener)) {
-                listeners.remove(parserListener);
-            }
-        }
-        throw new IllegalStateException("Given parser isn't registered");
-    }
-
     private class ListeningContext extends Context implements InvocationHandler {
 
         ParserListener wrappedListener = (ParserListener) Proxy.newProxyInstance(Handler.this.getClass()
@@ -128,7 +114,7 @@ public class Handler extends DefaultHandler {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            for (ParserListener listener : listeners) {
+            for (ParserListener listener : parserListeners) {
                 Method wrappedMethod = listener.getClass().getMethod(method.getName(), method.getParameterTypes());
                 try {
                     wrappedMethod.invoke(listener, args);

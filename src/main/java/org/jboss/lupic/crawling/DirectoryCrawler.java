@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 import static org.apache.commons.lang.StringUtils.*;
 import static java.text.MessageFormat.format;
+import static jargs.gnu.CmdLineParser.Option;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.dom4j.Document;
@@ -39,6 +40,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.jboss.lupic.suite.MaskType;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -46,8 +48,8 @@ import org.dom4j.io.XMLWriter;
  */
 public class DirectoryCrawler {
 
-    int onePixelTreshold;
-    int globalDifferenceTreshold;
+    Integer onePixelTreshold;
+    Integer globalDifferenceTreshold;
     String globalDifferencePixelAmount;
 
     Document document;
@@ -62,11 +64,11 @@ public class DirectoryCrawler {
     public void crawl(String[] args) {
         CmdLineParser parser = new CmdLineParser();
 
-        CmdLineParser.Option output = parser.addStringOption('o', "output");
-        CmdLineParser.Option force = parser.addBooleanOption('f', "force");
-        CmdLineParser.Option onePixelTreshold = parser.addIntegerOption("one-pixel-treshold");
-        CmdLineParser.Option globalDifferenceTreshold = parser.addIntegerOption("global-difference-treshold");
-        CmdLineParser.Option globalDifferencePixelAmount = parser.addStringOption("global-difference-pixel-amount");
+        Option oOutput = parser.addStringOption('o', "output");
+        Option oForce = parser.addBooleanOption('f', "force");
+        Option oOnePixelTreshold = parser.addIntegerOption("one-pixel-treshold");
+        Option oGlobalDifferenceTreshold = parser.addIntegerOption("global-difference-treshold");
+        Option oGlobalDifferencePixelAmount = parser.addStringOption("global-difference-pixel-amount");
 
         try {
             parser.parse(args);
@@ -88,18 +90,18 @@ public class DirectoryCrawler {
         checkBaseDirectory();
 
         // parse force option
-        this.force = (Boolean) parser.getOptionValue(force, Boolean.FALSE);
+        this.force = (Boolean) parser.getOptionValue(oForce, Boolean.FALSE);
 
         // create and check output file
-        String parsedOutput = (String) parser.getOptionValue(output);
+        String parsedOutput = (String) parser.getOptionValue(oOutput);
         this.output = (parsedOutput == null) ? null : new File(parsedOutput);
 
         checkOutputFile();
 
         // parse and check perception settings
-        this.onePixelTreshold = (Integer) parser.getOptionValue(onePixelTreshold, 0);
-        this.globalDifferenceTreshold = (Integer) parser.getOptionValue(globalDifferenceTreshold, 0);
-        this.globalDifferencePixelAmount = (String) parser.getOptionValue(globalDifferencePixelAmount, "0px");
+        this.onePixelTreshold = (Integer) parser.getOptionValue(oOnePixelTreshold);
+        this.globalDifferenceTreshold = (Integer) parser.getOptionValue(oGlobalDifferenceTreshold);
+        this.globalDifferencePixelAmount = (String) parser.getOptionValue(oGlobalDifferencePixelAmount);
 
         checkPerceptionSettings();
 
@@ -164,30 +166,33 @@ public class DirectoryCrawler {
     }
 
     private void checkPerceptionSettings() {
-        if (onePixelTreshold < 0 || onePixelTreshold > 768) {
+        if (onePixelTreshold != null && (onePixelTreshold < 0 || onePixelTreshold > 768)) {
             System.err.println("One pixel treshold must be integer in range 0-768");
             System.exit(5);
         }
 
-        if (globalDifferenceTreshold < 0 || globalDifferenceTreshold > 768) {
+        if (globalDifferenceTreshold != null && (globalDifferenceTreshold < 0 || globalDifferenceTreshold > 768)) {
             System.err.println("Global difference treshold must be integer in range 0-768");
             System.exit(5);
         }
 
-        boolean matches = false;
-        Pattern[] pixelAmountPatterns = new Pattern[] { Pattern.compile("\\d+px"), Pattern.compile("([0-9]{1,2}|100)%") };
-        for (Pattern pattern : pixelAmountPatterns) {
-            if (pattern.matcher(globalDifferencePixelAmount).matches()) {
-                matches = true;
-                break;
+        if (globalDifferencePixelAmount != null) {
+            boolean matches = false;
+            Pattern[] pixelAmountPatterns = new Pattern[] { Pattern.compile("\\d+px"),
+                Pattern.compile("([0-9]{1,2}|100)%") };
+            for (Pattern pattern : pixelAmountPatterns) {
+                if (pattern.matcher(globalDifferencePixelAmount).matches()) {
+                    matches = true;
+                    break;
+                }
+            }
+            if (!matches) {
+                System.err
+                    .println("Global difference pixel must be amount of pixels perceptually different - % of image surface or integer of pixels differ");
+                System.exit(5);
             }
         }
 
-        if (!matches) {
-            System.err
-                .println("Global difference pixel must be amount of pixels perceptually different - % of image surface or integer of pixels differ");
-            System.exit(5);
-        }
     }
 
     private void addDocumentRoot() {
@@ -197,9 +202,7 @@ public class DirectoryCrawler {
         addImageRetriever(globalConfiguration);
         addPerception(globalConfiguration);
         addMasksByType(baseDirectory, globalConfiguration);
-
-        File testsDir = new File(baseDirectory, "tests");
-        addTests(testsDir, root);
+        addTests(baseDirectory, root);
     }
 
     private void addImageRetriever(Element globalConfiguration) {
@@ -211,17 +214,23 @@ public class DirectoryCrawler {
     private void addPerception(Element base) {
         Element perception = base.addElement("perception");
 
-        perception.addElement("one-pixel-treshold").addText("0");
-        perception.addElement("global-difference-treshold").addText("0");
-        perception.addElement("global-difference-pixel-amount").addText("0");
+        if (onePixelTreshold != null) {
+            perception.addElement("one-pixel-treshold").addText(String.valueOf(onePixelTreshold));
+        }
+        if (globalDifferenceTreshold != null) {
+            perception.addElement("global-difference-treshold").addText(String.valueOf(globalDifferenceTreshold));
+        }
+        if (globalDifferencePixelAmount != null) {
+            perception.addElement("global-difference-pixel-amount").addText(globalDifferencePixelAmount);
+        }
     }
 
     private void addMasksByType(File dir, Element base) {
-        for (Mask mask : Mask.values()) {
-            File maskDir = new File(dir, mask.getDirectory());
+        for (MaskType mask : MaskType.values()) {
+            File maskDir = new File(dir, "masks-" + mask.toXmlId());
 
             if (maskDir.exists() && maskDir.isDirectory() && maskDir.listFiles().length > 0) {
-                Element masks = base.addElement("masks").addAttribute("type", mask.getType());
+                Element masks = base.addElement("masks").addAttribute("type", mask.toXmlId());
                 addMasks(maskDir, masks);
             }
         }
@@ -251,8 +260,8 @@ public class DirectoryCrawler {
     private void addTests(File dir, Element root) {
         if (dir.exists() && dir.isDirectory()) {
             for (File testDir : dir.listFiles()) {
-                for (Mask mask : Mask.values()) {
-                    if (mask.getDirectory().equals(testDir.getName())) {
+                for (MaskType mask : MaskType.values()) {
+                    if (testDir.getName().equals("masks-" + mask.toXmlId())) {
                         continue;
                     }
                 }
@@ -289,23 +298,4 @@ public class DirectoryCrawler {
     private String getRelativePath(File file) {
         return substringAfter(file.getPath(), baseDirectory.getPath()).replaceFirst("^/", "");
     }
-
-    private enum Mask {
-        IGNORE_BITMAP("ignore-bitmap"), SELECTIVE_ALPHA("selective-alpha");
-
-        private String type;
-
-        private Mask(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return this.type;
-        }
-
-        public String getDirectory() {
-            return "masks-" + this.type;
-        }
-    }
-
 }

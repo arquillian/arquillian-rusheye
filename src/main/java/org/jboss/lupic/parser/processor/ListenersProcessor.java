@@ -22,32 +22,14 @@
 package org.jboss.lupic.parser.processor;
 
 import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
+public class ListenersProcessor extends Processor {
 
     {
-        supportProcessor("listeners", RetrieverProcessor.class);
-        supportProcessor("image-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
-    }
-
-    @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
-
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
-    }
-
-    @Override
-    public void end() {
-        getContext().invokeListeners().configurationParsed(getVisualSuite());
+        supportProcessor("listener", ListenerProcessor.class);
     }
 }

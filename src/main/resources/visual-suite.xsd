@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
-
-@author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
-@version $Revision$
-
--->
+<!-- JBoss, Home of Professional Open Source Copyright 2010, Red Hat, Inc. 
+	and individual contributors by the @authors tag. See the copyright.txt in 
+	the distribution for a full listing of individual contributors. This is free 
+	software; you can redistribute it and/or modify it under the terms of the 
+	GNU Lesser General Public License as published by the Free Software Foundation; 
+	either version 2.1 of the License, or (at your option) any later version. 
+	This software is distributed in the hope that it will be useful, but WITHOUT 
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+	FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more 
+	details. You should have received a copy of the GNU Lesser General Public 
+	License along with this software; if not, write to the Free Software Foundation, 
+	Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
+	FSF site: http://www.fsf.org. @author <a href="mailto:lfryc@redhat.com">Lukas 
+	Fryc</a> @version $Revision$ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.jboss.org/test/visual-suite" xmlns:tns="http://www.jboss.org/test/visual-suite"
 	xmlns:vs="http://www.jboss.org/test/visual-suite" elementFormDefault="qualified"
@@ -43,7 +29,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				<xs:element name="test" type="vs:TestType" maxOccurs="unbounded">
 					<xs:unique name="TestMasksMaskIdUnique">
 						<xs:annotation>
-							<xs:documentation>Mask ID have to be unique across all particular tests
+							<xs:documentation>Mask ID have to be unique across all particular
+								tests
 							</xs:documentation>
 						</xs:annotation>
 						<xs:selector xpath="vs:masks/vs:mask" />
@@ -72,7 +59,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		</xs:unique>
 		<xs:unique name="MasksMaskIdUnique">
 			<xs:annotation>
-				<xs:documentation>Mask ID have to be unique across global configuration
+				<xs:documentation>Mask ID have to be unique across global
+					configuration
 				</xs:documentation>
 			</xs:annotation>
 			<xs:selector xpath="vs:global-configuration/vs:masks/vs:mask" />
@@ -86,6 +74,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				retrieving and global perception settings</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="listeners" type="vs:ListenersType"
+				minOccurs="0" />
 			<xs:element name="image-retriever" type="vs:ImageRetrieverType"
 				minOccurs="0" />
 			<xs:element name="mask-retriever" type="vs:MaskRetrieverType"
@@ -94,6 +84,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				minOccurs="0" />
 			<xs:element name="masks" type="vs:MasksType" minOccurs="0"
 				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ListenersType">
+		<xs:annotation>
+			<xs:documentation>List of parser listeners executing the program
+				logic</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="listener" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="vs:InstancePropertiesType"></xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -139,30 +145,34 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 			<xs:enumeration value="right" />
 		</xs:restriction>
 	</xs:simpleType>
-
+	
 	<xs:complexType name="ImageRetrieverType">
 		<xs:complexContent>
-			<xs:extension base="vs:RetrieverPropertiesType">
-				<xs:attribute name="class" type="vs:RetrieverClassType" />
-			</xs:extension>
+			<xs:extension base="vs:InstancePropertiesType"></xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-
+	
 	<xs:complexType name="MaskRetrieverType">
 		<xs:complexContent>
-			<xs:extension base="vs:RetrieverPropertiesType">
-				<xs:attribute name="class" type="vs:RetrieverClassType" />
+			<xs:extension base="vs:InstancePropertiesType"></xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InstancePropertiesType">
+		<xs:complexContent>
+			<xs:extension base="vs:PropertiesType">
+				<xs:attribute name="class" type="vs:ClassType" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:simpleType name="RetrieverClassType">
+	<xs:simpleType name="ClassType">
 		<xs:restriction base="xs:string">
 			<xs:minLength value="1" />
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="RetrieverPropertiesType">
+	<xs:complexType name="PropertiesType">
 		<xs:sequence>
 			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
 		</xs:sequence>

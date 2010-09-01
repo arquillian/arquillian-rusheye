@@ -32,12 +32,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
 
 	<global-configuration>
+		<listeners>
+			<listener class="org.jboss.lupic.parser.listener.CompareListener">
+				<result-listener>org.jboss.lupic.result.ResultStorageListener</result-listener>
+				<storage-class>org.jboss.lupic.storage.FileStorage</storage-class>
+			</listener>
+		</listeners>
 		<!-- the image retriever, implementing SourceRetriever interface -->
-		<image-retriever class="org.jboss.visualTesting.FileSourceRetriever">
+		<image-retriever class="org.jboss.lupic.retriever.FileSourceRetriever">
 			<xxx></xxx>
 			<yyy></yyy>
 		</image-retriever>
-		<mask-retriever class="org.jboss.visualTesting.FileSourceRetriever" />
+		<mask-retriever class="org.jboss.lupic.retriever.FileSourceRetriever" />
 		<perception>
 			<!--
 				unperceptible treshold of color difference in scope of one pixel

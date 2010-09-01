@@ -19,35 +19,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser.processor;
+package org.jboss.lupic.parser;
 
-import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
+import java.util.Properties;
+
+import org.jboss.lupic.suite.Configuration;
+import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Test;
+import org.jboss.lupic.suite.VisualSuite;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
+public abstract class ParserListenerAdapter implements ParserListener {
 
-    {
-        supportProcessor("listeners", RetrieverProcessor.class);
-        supportProcessor("image-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
+    protected Properties properties;
+
+    @Override
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 
     @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
-
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
+    public void suiteStarted(VisualSuite visualSuite) {
     }
 
     @Override
-    public void end() {
-        getContext().invokeListeners().configurationParsed(getVisualSuite());
+    public void suiteCompleted(VisualSuite visualSuite) {
+    }
+
+    @Override
+    public void configurationParsed(VisualSuite visualSuite) {
+    }
+
+    @Override
+    public void testParsed(Test test) {
+    }
+
+    @Override
+    public void patternParsed(Configuration configuration, Pattern pattern) {
     }
 }

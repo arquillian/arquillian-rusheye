@@ -19,35 +19,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser.processor;
+package org.jboss.lupic;
 
-import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
+import java.io.File;
+import java.io.IOException;
+
+import org.jboss.lupic.parser.Parser;
+import org.jboss.lupic.parser.ParserListener;
+import org.jboss.lupic.parser.processor.ListenerProcessor;
+import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
-
-    {
-        supportProcessor("listeners", RetrieverProcessor.class);
-        supportProcessor("image-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
+public final class Main {
+    private Main() {
     }
 
-    @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
+    public static void main(String[] args) throws SAXException, IOException {
+        final String cmd = args[0];
 
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
-    }
-
-    @Override
-    public void end() {
-        getContext().invokeListeners().configurationParsed(getVisualSuite());
+        if (cmd.equals("parse")) {
+            File visualSuiteDefinition = new File(args[1]);
+            System.setProperty("user.dir", visualSuiteDefinition.getParent());
+            Parser parser = new Parser();
+            if (args.length > 2) {
+                ParserListener parserListener = ListenerProcessor.getParserListenerInstance(args[2]);
+                parser.registerListener(parserListener);
+            }
+            parser.parseFile(visualSuiteDefinition);
+        }
     }
 }

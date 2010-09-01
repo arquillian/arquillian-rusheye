@@ -25,6 +25,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.io.OutputFormat;
@@ -51,6 +53,7 @@ public class AbstractVisualSuiteDefinitionTest {
     XMLWriter writer;
     XMLReader reader;
     Handler handler;
+    Set<ParserListener> parserListeners = new LinkedHashSet<ParserListener>();
     InputSource inputSource;
     String generatedDocument;
     ByteArrayOutputStream documentOutputStream;
@@ -89,7 +92,8 @@ public class AbstractVisualSuiteDefinitionTest {
             }
         });
 
-        handler = new Handler();
+        parserListeners.clear();
+        handler = new Handler(parserListeners);
     }
 
     private class WriterRunnable implements Runnable {

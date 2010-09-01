@@ -21,9 +21,14 @@
  */
 package org.jboss.lupic.parser;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -37,19 +42,64 @@ public final class Parser {
 
     public static final String URI = "http://www.jboss.org/test/visual-suite";
 
-    private Parser() {
+    private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
+    private Handler handler = new Handler(listeners);
+
+    {
+        this.registerListener(new ParserListenerRegistrationListener());
     }
 
-    public static void parse(String resourceName) throws SAXException, IOException {
-        InputStream inputStream = Parser.class.getClassLoader().getResourceAsStream(resourceName);
+    public void parseResource(String resourceName) throws SAXException, IOException {
+        InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName);
+        parseStream(inputStream);
+    }
+
+    public void parseFile(File file) throws SAXException, IOException {
+        InputStream inputStream = new FileInputStream(file);
+        parseStream(inputStream);
+    }
+
+    public void parseStream(InputStream inputStream) throws SAXException, IOException {
         InputSource inputSource = new InputSource(inputStream);
-        parse(inputSource);
-
+        parseSource(inputSource);
     }
 
-    public static void parse(InputSource input) throws SAXException, IOException {
+    public void parseSource(InputSource input) throws SAXException, IOException {
         XMLReader parser = XMLReaderFactory.createXMLReader();
-        parser.setContentHandler(new Handler());
+        parser.setContentHandler(handler);
         parser.parse(input);
+    }
+
+    public void registerListener(ParserListener parserListener) {
+        synchronized (parserListener) {
+            if (listeners.contains(parserListener)) {
+                return;
+            }
+            listeners.add(parserListener);
+        }
+    }
+
+    public void unregisterListener(ParserListener parserListener) {
+        synchronized (listeners) {
+            if (listeners.contains(parserListener)) {
+                listeners.remove(parserListener);
+            }
+        }
+        throw new IllegalStateException("Given parser isn't registered");
+    }
+
+    public class ParserListenerRegistrationListener extends ParserListenerAdapter {
+        @Override
+        public void configurationParsed(VisualSuite visualSuite) {
+            for (ParserListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
+                listener.suiteStarted(visualSuite);
+                listener.configurationParsed(visualSuite);
+                Parser.this.registerListener(listener);
+            }
+
+            if (listeners.size() == 1) {
+                throw new IllegalStateException("no additional parser listener was registered to process parsed tests");
+            }
+        }
     }
 }

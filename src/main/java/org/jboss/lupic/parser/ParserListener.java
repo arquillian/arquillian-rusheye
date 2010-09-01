@@ -21,6 +21,8 @@
  */
 package org.jboss.lupic.parser;
 
+import java.util.Properties;
+
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
@@ -31,6 +33,8 @@ import org.jboss.lupic.suite.VisualSuite;
  * @version $Revision$
  */
 public interface ParserListener {
+    void setProperties(Properties properties);
+    
     void suiteStarted(VisualSuite visualSuite);
 
     void suiteCompleted(VisualSuite visualSuite);

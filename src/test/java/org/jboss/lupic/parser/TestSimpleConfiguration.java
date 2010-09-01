@@ -52,7 +52,7 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
     public void testGoThroughAllPhases() {
         try {
             AssertedListener assertedListener = new AssertedListener();
-            handler.registerListener(assertedListener);
+            parserListeners.add(assertedListener);
 
             startWriter();
             parse();
@@ -65,7 +65,7 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         }
     }
 
-    public class AssertedListener implements ParserListener {
+    public class AssertedListener extends ParserListenerAdapter {
 
         int state = 0;
 
@@ -102,6 +102,5 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         private void nextState() {
             state += 1;
         }
-
     }
 }
