@@ -31,13 +31,9 @@ import java.util.Map;
  * @version $Revision$
  */
 public class Configuration {
-    private boolean useCorrelation = true;
-    private int correlationRange = 20;
 
-    private boolean convertDiffImageToGrayscale = true;
     private boolean useMaskImages = true;
-
-    private int pixelValueThreshold = 10;
+    
     private int differentPixelsThreshold = 10;
     private int perceptiblePixelValueThreshold = 50;
     private Color diffColorPixelValueUnderThreshold = new Color(0, 0, 255);
@@ -103,38 +99,6 @@ public class Configuration {
             }
         }
         return options;
-    }
-
-    public boolean isUseCorrelation() {
-        return this.useCorrelation;
-    }
-
-    public void setUseCorrelation(boolean useCorrelation) {
-        this.useCorrelation = useCorrelation;
-    }
-
-    public int getCorrelationRange() {
-        return this.correlationRange;
-    }
-
-    public void setCorrelationRange(int correlationRange) {
-        this.correlationRange = correlationRange;
-    }
-
-    public boolean isConvertDiffImageToGrayscale() {
-        return this.convertDiffImageToGrayscale;
-    }
-
-    public void setConvertDiffImageToGrayscale(boolean convertDiffImageToGrayscale) {
-        this.convertDiffImageToGrayscale = convertDiffImageToGrayscale;
-    }
-
-    public int getPixelValueThreshold() {
-        return this.pixelValueThreshold;
-    }
-
-    public void setPixelValueThreshold(int pixelValueThreshold) {
-        this.pixelValueThreshold = pixelValueThreshold;
     }
 
     public int getDifferentPixelsThreshold() {
