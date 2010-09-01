@@ -34,6 +34,12 @@ import org.jboss.lupic.suite.Mask;
  * @version $Revision$
  */
 public class ImageComparator {
+    private static final int BOUNDARY_SIZE = 5;
+    private static final Color BOUNDARY_COLOR = new Color(0, 128, 255);
+    private static final Color DIFF_COLOR_UNDER_TRESSHOLD = new Color(0, 0, 255);
+    private static final Color DIFF_COLOR_ABOVE_TRESHOLD = new Color(255, 0, 255);
+    private static final Color DIFF_COLOR_PERCEPTIBLE = new Color(255, 0, 0);
+
     private void updateBoundary(Point min, Point max, int x, int y) {
         min.x = Math.min(min.x, x);
         min.y = Math.min(min.y, y);
@@ -43,12 +49,12 @@ public class ImageComparator {
 
     private void drawRectangleAroundDifferentPixels(Configuration configuration, Point min, Point max, int width,
         int height, BufferedImage diffImage) {
-        int x1 = Math.max(0, min.x - configuration.getBoundarySize());
-        int y1 = Math.max(0, min.y - configuration.getBoundarySize());
-        int x2 = Math.min(width - 1, max.x + configuration.getBoundarySize());
-        int y2 = Math.min(height - 1, max.y + configuration.getBoundarySize());
+        int x1 = Math.max(0, min.x - BOUNDARY_SIZE);
+        int y1 = Math.max(0, min.y - BOUNDARY_SIZE);
+        int x2 = Math.min(width - 1, max.x + BOUNDARY_SIZE);
+        int y2 = Math.min(height - 1, max.y + BOUNDARY_SIZE);
         Graphics g = diffImage.createGraphics();
-        g.setColor(configuration.getBoundaryColor());
+        g.setColor(BOUNDARY_COLOR);
         g.drawRect(x1, y1, x2 - x1, y2 - y1);
         g.dispose();
     }
@@ -93,15 +99,15 @@ public class ImageComparator {
                 } else if (cmp > configuration.getPerceptiblePixelValueThreshold()) {
                     perceptibleDiffs++;
                     updateBoundary(min, max, i, j);
-                    color = configuration.getDiffColorPerceptiblePixelDifference();
+                    color = DIFF_COLOR_PERCEPTIBLE;
                 } else if (cmp > configuration.getDifferentPixelsThreshold()) {
                     differentPixels++;
                     updateBoundary(min, max, i, j);
-                    color = configuration.getDiffColorPixelValueAboveThreshold();
+                    color = DIFF_COLOR_ABOVE_TRESHOLD;
                 } else if (cmp > 0) {
                     smallDifferences++;
                     updateBoundary(min, max, i, j);
-                    color = configuration.getDiffColorPixelValueUnderThreshold();
+                    color = DIFF_COLOR_UNDER_TRESSHOLD;
                 } else {
                     equalPixels++;
                 }

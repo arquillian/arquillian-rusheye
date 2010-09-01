@@ -21,7 +21,6 @@
  */
 package org.jboss.lupic.core;
 
-import java.awt.Color;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,15 +32,9 @@ import java.util.Map;
 public class Configuration {
 
     private boolean useMaskImages = true;
-    
+
     private int differentPixelsThreshold = 10;
     private int perceptiblePixelValueThreshold = 50;
-    private Color diffColorPixelValueUnderThreshold = new Color(0, 0, 255);
-    private Color diffColorPixelValueAboveThreshold = new Color(255, 0, 255);
-    private Color diffColorPerceptiblePixelDifference = new Color(255, 0, 0);
-    private Color boundaryColor = new Color(0, 128, 255);
-
-    private int boundarySize = 5;
 
     private File firstSourceDirectory = null;
     private File secondSourceDirectory = null;
@@ -115,46 +108,6 @@ public class Configuration {
 
     public void setPerceptiblePixelValueThreshold(int perceptiblePixelValueThreshold) {
         this.perceptiblePixelValueThreshold = perceptiblePixelValueThreshold;
-    }
-
-    public Color getDiffColorPixelValueUnderThreshold() {
-        return this.diffColorPixelValueUnderThreshold;
-    }
-
-    public void setDiffColorPixelValueUnderThreshold(Color diffColorPixelValueUnderThreshold) {
-        this.diffColorPixelValueUnderThreshold = diffColorPixelValueUnderThreshold;
-    }
-
-    public Color getDiffColorPixelValueAboveThreshold() {
-        return this.diffColorPixelValueAboveThreshold;
-    }
-
-    public void setDiffColorPixelValueAboveThreshold(Color diffColorPixelValueAboveThreshold) {
-        this.diffColorPixelValueAboveThreshold = diffColorPixelValueAboveThreshold;
-    }
-
-    public Color getDiffColorPerceptiblePixelDifference() {
-        return this.diffColorPerceptiblePixelDifference;
-    }
-
-    public void setDiffColorPerceptiblePixelDifference(Color diffColorPerceptiblePixelDifference) {
-        this.diffColorPerceptiblePixelDifference = diffColorPerceptiblePixelDifference;
-    }
-
-    public int getBoundarySize() {
-        return this.boundarySize;
-    }
-
-    public void setBoundarySize(int boundarySize) {
-        this.boundarySize = boundarySize;
-    }
-
-    public Color getBoundaryColor() {
-        return this.boundaryColor;
-    }
-
-    public void setBoundaryColor(Color boundaryColor) {
-        this.boundaryColor = boundaryColor;
     }
 
     public boolean isUseMaskImages() {
