@@ -93,7 +93,7 @@ public class ImageComparator {
                 totalPixels++;
                 int cmp = ColorModelRGBA.compare(images[0].getRGB(i, j), images[1].getRGB(i, j));
                 Color color = ColorModelRGBA.rgb2grayscale(images[0].getRGB(i, j));
-                if (configuration.isUseMaskImages() && isMaskedPixel(images[0], maskImages, i, j)) {
+                if (isMaskedPixel(images[0], maskImages, i, j)) {
                     maskedPixels++;
                     color = getMaskedPixelColor(color);
                 } else if (cmp > configuration.getPerceptiblePixelValueThreshold()) {

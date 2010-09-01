@@ -31,8 +31,6 @@ import java.util.Map;
  */
 public class Configuration {
 
-    private boolean useMaskImages = true;
-
     private int differentPixelsThreshold = 10;
     private int perceptiblePixelValueThreshold = 50;
 
@@ -108,10 +106,6 @@ public class Configuration {
 
     public void setPerceptiblePixelValueThreshold(int perceptiblePixelValueThreshold) {
         this.perceptiblePixelValueThreshold = perceptiblePixelValueThreshold;
-    }
-
-    public boolean isUseMaskImages() {
-        return this.useMaskImages;
     }
 
     public File getFirstSourceDirectory() {
