@@ -67,7 +67,7 @@ public class ListenerProcessor extends Processor {
         try {
             return (Class<? extends ParserListener>) Class.forName(retrieverClassName);
         } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("The configured ParserListener class was not found", e);
         }
     }
 }

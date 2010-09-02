@@ -32,7 +32,7 @@ import org.jboss.lupic.suite.VisualSuite;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class ParserListenerAdapter implements ParserListener {
+public class ParserListenerAdapter implements ParserListener {
 
     protected Properties properties;
 

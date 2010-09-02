@@ -27,7 +27,7 @@ import org.dom4j.Document;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.jboss.lupic.parser.listener.CompareListener;
+import org.jboss.lupic.retriever.FileRetriever;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
@@ -47,12 +47,13 @@ public class VisualSuiteStub {
     Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
     Element listeners = globalConfiguration.addElement(LISTENERS);
     Element imageRetriever = globalConfiguration.addElement(IMAGE_RETRIEVER).addAttribute("class",
-        "org.jboss.lupic.retriever.FileRetriever");
+        FileRetriever.class.getName());
     Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("class",
-        "org.jboss.lupic.retriever.FileRetriever");
+        FileRetriever.class.getName());
     Element perception = globalConfiguration.addElement(PERCEPTION);
 
-    Element listener = listeners.addElement(LISTENER).addAttribute("class", CompareListener.class.getName());
+    Element defaultListener = listeners.addElement(LISTENER).addAttribute("class",
+        ParserListenerAdapter.class.getName());
 
     Element defaultTest = visualSuite.addElement(TEST).addAttribute("name", "default-test");
 
