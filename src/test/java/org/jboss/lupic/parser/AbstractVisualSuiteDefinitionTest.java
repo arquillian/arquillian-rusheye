@@ -43,10 +43,6 @@ import org.xml.sax.SAXParseException;
  */
 public class AbstractVisualSuiteDefinitionTest {
 
-    String validationFeature = "http://xml.org/sax/features/validation";
-    String schemaFeature = "http://apache.org/xml/features/validation/schema";
-    String schemaFullChecking = "http://apache.org/xml/features/validation/schema-full-checking";
-
     VisualSuiteStub stub;
     XMLWriter writer;
     Parser parser;
@@ -69,9 +65,6 @@ public class AbstractVisualSuiteDefinitionTest {
         inputSource = new InputSource(in);
 
         parser = new Parser();
-        parser.getXMLReader().setFeature(validationFeature, true);
-        parser.getXMLReader().setFeature(schemaFeature, true);
-        parser.getXMLReader().setFeature(schemaFullChecking, true);
         parser.getXMLReader().setErrorHandler(new ErrorHandler() {
             @Override
             public void warning(SAXParseException e) throws SAXException {
