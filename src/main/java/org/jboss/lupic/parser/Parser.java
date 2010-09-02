@@ -44,9 +44,16 @@ public final class Parser {
 
     private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
     private Handler handler = new Handler(listeners);
+    private XMLReader reader;
 
-    {
+    public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
+        try {
+            reader = XMLReaderFactory.createXMLReader();
+        } catch (SAXException e) {
+            throw new IllegalStateException("Cannot create XMLReader", e);
+        }
+        reader.setContentHandler(handler);
     }
 
     public void parseResource(String resourceName) throws SAXException, IOException {
@@ -65,9 +72,7 @@ public final class Parser {
     }
 
     public void parseSource(InputSource input) throws SAXException, IOException {
-        XMLReader parser = XMLReaderFactory.createXMLReader();
-        parser.setContentHandler(handler);
-        parser.parse(input);
+        reader.parse(input);
     }
 
     public void registerListener(ParserListener parserListener) {
@@ -88,7 +93,15 @@ public final class Parser {
         throw new IllegalStateException("Given parser isn't registered");
     }
 
-    public class ParserListenerRegistrationListener extends ParserListenerAdapter {
+    public XMLReader getXMLReader() {
+        return reader;
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    private class ParserListenerRegistrationListener extends ParserListenerAdapter {
         @Override
         public void configurationParsed(VisualSuite visualSuite) {
             for (ParserListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
@@ -98,7 +111,7 @@ public final class Parser {
             }
 
             if (listeners.size() == 1) {
-                throw new IllegalStateException("no additional parser listener was registered to process parsed tests");
+                throw new IllegalStateException("No ParserListener was registered to process parsed tests");
             }
         }
     }

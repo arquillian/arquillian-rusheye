@@ -25,19 +25,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -51,9 +49,8 @@ public class AbstractVisualSuiteDefinitionTest {
 
     VisualSuiteStub stub;
     XMLWriter writer;
-    XMLReader reader;
+    Parser parser;
     Handler handler;
-    Set<ParserListener> parserListeners = new LinkedHashSet<ParserListener>();
     InputSource inputSource;
     String generatedDocument;
     ByteArrayOutputStream documentOutputStream;
@@ -71,11 +68,11 @@ public class AbstractVisualSuiteDefinitionTest {
         writer = new XMLWriter(out, format);
         inputSource = new InputSource(in);
 
-        reader = XMLReaderFactory.createXMLReader();
-        reader.setFeature(validationFeature, true);
-        reader.setFeature(schemaFeature, true);
-        reader.setFeature(schemaFullChecking, true);
-        reader.setErrorHandler(new ErrorHandler() {
+        parser = new Parser();
+        parser.getXMLReader().setFeature(validationFeature, true);
+        parser.getXMLReader().setFeature(schemaFeature, true);
+        parser.getXMLReader().setFeature(schemaFullChecking, true);
+        parser.getXMLReader().setErrorHandler(new ErrorHandler() {
             @Override
             public void warning(SAXParseException e) throws SAXException {
                 throw e;
@@ -92,8 +89,14 @@ public class AbstractVisualSuiteDefinitionTest {
             }
         });
 
-        parserListeners.clear();
-        handler = new Handler(parserListeners);
+        handler = parser.getHandler();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void printDocumentOnFailure(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            System.err.println(generatedDocument);
+        }
     }
 
     private class WriterRunnable implements Runnable {
@@ -116,7 +119,6 @@ public class AbstractVisualSuiteDefinitionTest {
     }
 
     public void parse() throws IOException, SAXException {
-        reader.setContentHandler(handler);
-        reader.parse(inputSource);
+        parser.parseSource(inputSource);
     }
 }

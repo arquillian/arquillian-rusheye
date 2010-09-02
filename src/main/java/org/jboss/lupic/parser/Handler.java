@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Deque;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -114,7 +115,8 @@ public class Handler extends DefaultHandler {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            for (ParserListener listener : parserListeners) {
+            Set<ParserListener> listeners = new LinkedHashSet<ParserListener>(parserListeners);
+            for (ParserListener listener : listeners) {
                 Method wrappedMethod = listener.getClass().getMethod(method.getName(), method.getParameterTypes());
                 try {
                     wrappedMethod.invoke(listener, args);

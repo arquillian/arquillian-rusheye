@@ -52,7 +52,7 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
     public void testGoThroughAllPhases() {
         try {
             AssertedListener assertedListener = new AssertedListener();
-            parserListeners.add(assertedListener);
+            parser.registerListener(assertedListener);
 
             startWriter();
             parse();
