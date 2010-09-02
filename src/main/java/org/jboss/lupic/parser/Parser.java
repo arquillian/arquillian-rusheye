@@ -114,10 +114,10 @@ public final class Parser {
 
     private class ParserListenerRegistrationListener extends ParserListenerAdapter {
         @Override
-        public void configurationParsed(VisualSuite visualSuite) {
+        public void onConfigurationParsed(VisualSuite visualSuite) {
             for (ParserListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
-                listener.suiteStarted(visualSuite);
-                listener.configurationParsed(visualSuite);
+                listener.onSuiteStarted(visualSuite);
+                listener.onConfigurationParsed(visualSuite);
                 Parser.this.registerListener(listener);
             }
 

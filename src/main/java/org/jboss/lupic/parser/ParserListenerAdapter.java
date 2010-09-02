@@ -42,22 +42,22 @@ public class ParserListenerAdapter implements ParserListener {
     }
 
     @Override
-    public void suiteStarted(VisualSuite visualSuite) {
+    public void onSuiteStarted(VisualSuite visualSuite) {
     }
 
     @Override
-    public void suiteCompleted(VisualSuite visualSuite) {
+    public void onSuiteCompleted(VisualSuite visualSuite) {
     }
 
     @Override
-    public void configurationParsed(VisualSuite visualSuite) {
+    public void onConfigurationParsed(VisualSuite visualSuite) {
     }
 
     @Override
-    public void testParsed(Test test) {
+    public void onTestParsed(Test test) {
     }
 
     @Override
-    public void patternParsed(Configuration configuration, Pattern pattern) {
+    public void onPatternParsed(Configuration configuration, Pattern pattern) {
     }
 }

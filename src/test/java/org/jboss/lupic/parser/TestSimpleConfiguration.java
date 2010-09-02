@@ -70,31 +70,31 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         int state = 0;
 
         @Override
-        public void suiteStarted(VisualSuite visualSuite) {
+        public void onSuiteStarted(VisualSuite visualSuite) {
             assertEquals(state, 0);
             nextState();
         }
 
         @Override
-        public void configurationParsed(VisualSuite visualSuite) {
+        public void onConfigurationParsed(VisualSuite visualSuite) {
             assertEquals(state, 1);
             nextState();
         }
 
         @Override
-        public void patternParsed(Configuration configuration, Pattern pattern) {
+        public void onPatternParsed(Configuration configuration, Pattern pattern) {
             assertEquals(state, 2);
             nextState();
         }
 
         @Override
-        public void testParsed(org.jboss.lupic.suite.Test test) {
+        public void onTestParsed(org.jboss.lupic.suite.Test test) {
             assertEquals(state, 3);
             nextState();
         }
 
         @Override
-        public void suiteCompleted(VisualSuite visualSuite) {
+        public void onSuiteCompleted(VisualSuite visualSuite) {
             assertEquals(state, 4);
             nextState();
         }

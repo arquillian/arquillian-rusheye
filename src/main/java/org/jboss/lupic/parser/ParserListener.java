@@ -34,14 +34,14 @@ import org.jboss.lupic.suite.VisualSuite;
  */
 public interface ParserListener {
     void setProperties(Properties properties);
-    
-    void suiteStarted(VisualSuite visualSuite);
 
-    void suiteCompleted(VisualSuite visualSuite);
+    void onSuiteStarted(VisualSuite visualSuite);
 
-    void configurationParsed(VisualSuite visualSuite);
+    void onSuiteCompleted(VisualSuite visualSuite);
 
-    void testParsed(Test test);
+    void onConfigurationParsed(VisualSuite visualSuite);
 
-    void patternParsed(Configuration configuration, Pattern pattern);
+    void onTestParsed(Test test);
+
+    void onPatternParsed(Configuration configuration, Pattern pattern);
 }

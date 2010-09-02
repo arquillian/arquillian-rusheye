@@ -47,6 +47,6 @@ public class TestProcessor extends Processor {
 
     @Override
     public void end() {
-        getContext().invokeListeners().testParsed(test);
+        getContext().invokeListeners().onTestParsed(test);
     }
 }

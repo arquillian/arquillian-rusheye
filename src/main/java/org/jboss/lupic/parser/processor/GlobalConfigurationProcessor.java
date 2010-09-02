@@ -48,6 +48,6 @@ public class GlobalConfigurationProcessor extends Processor {
 
     @Override
     public void end() {
-        getContext().invokeListeners().configurationParsed(getVisualSuite());
+        getContext().invokeListeners().onConfigurationParsed(getVisualSuite());
     }
 }

@@ -57,12 +57,12 @@ public class Handler extends DefaultHandler {
     public void startDocument() throws SAXException {
         context = new ListeningContext();
         visualSuite = new VisualSuite();
-        context.invokeListeners().suiteStarted(visualSuite);
+        context.invokeListeners().onSuiteStarted(visualSuite);
     }
 
     @Override
     public void endDocument() throws SAXException {
-        context.invokeListeners().suiteCompleted(visualSuite);
+        context.invokeListeners().onSuiteCompleted(visualSuite);
     }
 
     @Override

@@ -51,6 +51,6 @@ public class PatternProcessor extends Processor {
         patternConfiguration.setValuesFromParent(testConfiguration);
         patternConfiguration.setDefaultValuesForUnset();
 
-        getContext().invokeListeners().patternParsed(patternConfiguration, pattern);
+        getContext().invokeListeners().onPatternParsed(patternConfiguration, pattern);
     }
 }

@@ -96,31 +96,31 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         static int state = 0;
 
         @Override
-        public void suiteStarted(VisualSuite visualSuite) {
+        public void onSuiteStarted(VisualSuite visualSuite) {
             assertTrue(state < 1);
             state = 1;
         }
 
         @Override
-        public void configurationParsed(VisualSuite visualSuite) {
+        public void onConfigurationParsed(VisualSuite visualSuite) {
             assertTrue(state < 2);
             state = 2;
         }
 
         @Override
-        public void patternParsed(Configuration configuration, Pattern pattern) {
+        public void onPatternParsed(Configuration configuration, Pattern pattern) {
             assertTrue(state < 3);
             state = 3;
         }
 
         @Override
-        public void testParsed(org.jboss.lupic.suite.Test test) {
+        public void onTestParsed(org.jboss.lupic.suite.Test test) {
             assertTrue(state < 4);
             state = 4;
         }
 
         @Override
-        public void suiteCompleted(VisualSuite visualSuite) {
+        public void onSuiteCompleted(VisualSuite visualSuite) {
             assertTrue(state < 5);
             state = 5;
         }
@@ -141,7 +141,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
     public static class PropertiesCheckingListener extends ParserListenerAdapter {
         @Override
-        public void suiteStarted(VisualSuite visualSuite) {
+        public void onSuiteStarted(VisualSuite visualSuite) {
             assertEquals(properties.size(), 1);
             assertEquals(properties.get("xyz"), "abc");
         }
