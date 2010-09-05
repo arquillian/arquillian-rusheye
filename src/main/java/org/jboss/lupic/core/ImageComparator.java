@@ -29,6 +29,8 @@ import java.util.Set;
 
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
+import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Test;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -48,8 +50,7 @@ public class ImageComparator {
         max.y = Math.max(max.y, y);
     }
 
-    private void drawRectangleAroundDifferentPixels(Configuration configuration, Point min, Point max, int width,
-        int height, BufferedImage diffImage) {
+    private void drawRectangleAroundDifferentPixels(Point min, Point max, int width, int height, BufferedImage diffImage) {
         int x1 = Math.max(0, min.x - BOUNDARY_SIZE);
         int y1 = Math.max(0, min.y - BOUNDARY_SIZE);
         int x2 = Math.min(width - 1, max.x + BOUNDARY_SIZE);
@@ -76,13 +77,14 @@ public class ImageComparator {
         return new Color(red, green, blue);
     }
 
-    public ComparisonResult diffImages(String imageFileName, BufferedImage[] images, Set<Mask> maskImages,
-        Configuration configuration) {
-        configuration.setDefaultValuesForUnset();
+    public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
+        Set<Mask> selectiveAlphaMasks) {
+        // TODO
+        // test.setDefaultValuesForUnset();
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        int width = Math.min(images[0].getWidth(), images[1].getWidth());
-        int height = Math.min(images[0].getHeight(), images[1].getHeight());
+        int width = Math.min(patternImage.getWidth(), sampleImage.getWidth());
+        int height = Math.min(patternImage.getHeight(), sampleImage.getHeight());
         int totalPixels = 0;
         int maskedPixels = 0;
         int perceptibleDiffs = 0;
@@ -93,16 +95,16 @@ public class ImageComparator {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
                 totalPixels++;
-                int cmp = ColorModelRGBA.compare(images[0].getRGB(i, j), images[1].getRGB(i, j));
-                Color color = ColorModelRGBA.rgb2grayscale(images[0].getRGB(i, j));
-                if (isMaskedPixel(images[0], maskImages, i, j)) {
+                int cmp = ColorModelRGBA.compare(patternImage.getRGB(i, j), sampleImage.getRGB(i, j));
+                Color color = ColorModelRGBA.rgb2grayscale(patternImage.getRGB(i, j));
+                if (isMaskedPixel(patternImage, selectiveAlphaMasks, i, j)) {
                     maskedPixels++;
                     color = getMaskedPixelColor(color);
-                } else if (cmp > configuration.getPerception().getOnePixelTreshold()) {
+                } else if (cmp > perception.getOnePixelTreshold()) {
                     perceptibleDiffs++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_PERCEPTIBLE;
-                } else if (cmp > configuration.getPerception().getGlobalDifferenceTreshold()) {
+                } else if (cmp > perception.getGlobalDifferenceTreshold()) {
                     differentPixels++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_ABOVE_TRESHOLD;
@@ -118,13 +120,13 @@ public class ImageComparator {
         }
         boolean equalImages = min.x == Integer.MAX_VALUE;
         if (!equalImages) {
-            drawRectangleAroundDifferentPixels(configuration, min, max, width, height, diffImage);
+            drawRectangleAroundDifferentPixels(min, max, width, height, diffImage);
         } else {
             min = new Point(-1, -1);
             max = new Point(-1, -1);
         }
-        return new ComparisonResult(imageFileName, equalImages, diffImage, min, max, width, height, totalPixels,
-            maskedPixels, perceptibleDiffs, differentPixels, smallDifferences, equalPixels);
+        return new ComparisonResult(equalImages, diffImage, min, max, width, height, totalPixels, maskedPixels,
+            perceptibleDiffs, differentPixels, smallDifferences, equalPixels);
     }
 
 }

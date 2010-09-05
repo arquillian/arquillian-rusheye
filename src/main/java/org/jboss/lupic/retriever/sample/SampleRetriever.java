@@ -19,36 +19,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser.processor;
+package org.jboss.lupic.retriever.sample;
 
-import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Properties;
+
+import org.jboss.lupic.retriever.Retriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
+public interface SampleRetriever extends Retriever {
+    BufferedImage retrieve(String source, Properties localProperties) throws NotSuchSampleException;
 
-    {
-        supportProcessor("listeners", ListenersProcessor.class);
-        supportProcessor("pattern-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("sample-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
-    }
-
-    @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
-
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
-    }
-
-    @Override
-    public void end() {
-        getContext().invokeListeners().onConfigurationParsed(getVisualSuite());
-    }
+    List<String> getNewSamples();
 }

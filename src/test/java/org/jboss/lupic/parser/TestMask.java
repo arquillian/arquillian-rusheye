@@ -29,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.dom4j.Element;
 import org.jboss.lupic.retriever.AbstractRetriever;
+import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.MaskType;
@@ -192,7 +193,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         }
     }
 
-    public static class AssertingRetriever extends AbstractRetriever {
+    public static class AssertingRetriever extends AbstractRetriever implements MaskRetriever {
         @Override
         public BufferedImage retrieve(String source, Properties localProperties) {
 

@@ -76,9 +76,11 @@
 		<xs:sequence>
 			<xs:element name="listeners" type="vs:ListenersType"
 				minOccurs="0" />
-			<xs:element name="image-retriever" type="vs:ImageRetrieverType"
+			<xs:element name="pattern-retriever" type="vs:PatternRetrieverType"
 				minOccurs="0" />
 			<xs:element name="mask-retriever" type="vs:MaskRetrieverType"
+				minOccurs="0" />
+			<xs:element name="sample-retriever" type="vs:SampleRetrieverType"
 				minOccurs="0" />
 			<xs:element name="perception" type="vs:PerceptionType"
 				minOccurs="0" />
@@ -146,13 +148,19 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:complexType name="ImageRetrieverType">
+	<xs:complexType name="PatternRetrieverType">
 		<xs:complexContent>
 			<xs:extension base="vs:InstancePropertiesType"></xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
 	<xs:complexType name="MaskRetrieverType">
+		<xs:complexContent>
+			<xs:extension base="vs:InstancePropertiesType"></xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="SampleRetrieverType">
 		<xs:complexContent>
 			<xs:extension base="vs:InstancePropertiesType"></xs:extension>
 		</xs:complexContent>

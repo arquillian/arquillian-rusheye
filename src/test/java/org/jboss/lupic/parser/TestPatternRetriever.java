@@ -21,9 +21,13 @@
  */
 package org.jboss.lupic.parser;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.jboss.lupic.retriever.AbstractRetriever;
+import org.jboss.lupic.retriever.MaskRetriever;
+import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.testng.annotations.Test;
@@ -35,28 +39,41 @@ import static org.testng.Assert.*;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class TestMaskRetriever extends AbstractVisualSuiteDefinitionTest {
+public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
 
 	private static final String SOURCE = "source";
 
 	@Test
 	public void testPropertiesShouldPass() throws SAXException, IOException {
-		String retrieverImpl = TestPatternRetriever.AssertingRetriever.class
-				.getName();
-		stub.maskRetriever.addAttribute("class", retrieverImpl);
+		String retrieverImpl = AssertingRetriever.class.getName();
+		stub.patternRetriever.addAttribute("class", retrieverImpl);
 
-		stub.maskRetriever.addElement("xxx").setText("1");
-		stub.maskRetriever.addElement("yyy").setText("2");
+		stub.patternRetriever.addElement("xxx").setText("1");
+		stub.patternRetriever.addElement("yyy").setText("2");
 
 		startWriter();
 		parse();
 
 		Retriever retriever = handler.getVisualSuite().getGlobalConfiguration()
-				.getMaskRetriever();
+				.getPatternRetriever();
 		try {
 			assertNull(retriever.retrieve(SOURCE, new Properties()));
 		} catch (RetrieverException e) {
 			fail();
+		}
+
+	}
+
+	public static class AssertingRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
+		@Override
+		public BufferedImage retrieve(String source, Properties localProperties) {
+			final Properties properties = mergeProperties(localProperties);
+
+			assertSame(source, SOURCE);
+			assertEquals(properties.get("xxx"), "1");
+			assertEquals(properties.get("yyy"), "2");
+
+			return null;
 		}
 	}
 }

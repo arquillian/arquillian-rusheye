@@ -23,13 +23,32 @@ package org.jboss.lupic.suite;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class Test extends Configuration {
-    Set<Pattern> patterns = new LinkedHashSet<Pattern>();
+
+    private String name;
+    private Sample sample;
+    private Set<Pattern> patterns = new LinkedHashSet<Pattern>();
+
+    public Test(String name, SampleRetriever sampleRetriever) {
+        this.name = name;
+        this.sample = new Sample(name, sampleRetriever);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Sample getSample() {
+        return sample;
+    }
 
     public Set<Pattern> getPatterns() {
         return patterns;

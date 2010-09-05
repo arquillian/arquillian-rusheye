@@ -41,13 +41,10 @@ public class ComparisonResult {
     private int differentPixels;
     private int smallDifferences;
     private int equalPixels;
-    private String testName;
 
-    public ComparisonResult(String testName, boolean equalsImages, BufferedImage diffImage, Point rectangleMin,
-        Point rectangleMax, int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs,
-        int differentPixels, int smallDifferences, int equalPixels) {
-        super();
-        this.testName = testName;
+    public ComparisonResult(boolean equalsImages, BufferedImage diffImage, Point rectangleMin, Point rectangleMax,
+        int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs, int differentPixels,
+        int smallDifferences, int equalPixels) {
         this.equalsImages = equalsImages;
         this.diffImage = diffImage;
         this.rectangleMin = rectangleMin;
@@ -108,10 +105,6 @@ public class ComparisonResult {
 
     public int getEqualPixels() {
         return equalPixels;
-    }
-
-    public String getTestName() {
-        return testName;
     }
 
     public String getComparisonStatus() {

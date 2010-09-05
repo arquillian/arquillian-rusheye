@@ -25,34 +25,45 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jboss.lupic.parser.ParserListener;
-import org.jboss.lupic.retriever.FileRetriever;
+import org.jboss.lupic.retriever.MaskRetriever;
+import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class GlobalConfiguration extends Configuration {
-    Retriever imageRetriever = new FileRetriever();
-    Retriever maskRetriever = new FileRetriever();
+    PatternRetriever patternRetriever;
+    MaskRetriever maskRetriever;
+    SampleRetriever sampleRetriever;
     Set<ParserListener> configuredListeners = new LinkedHashSet<ParserListener>();
 
-    public Retriever getImageRetriever() {
-        return imageRetriever;
+    public PatternRetriever getPatternRetriever() {
+        return patternRetriever;
     }
 
-    public void setImageRetriever(Retriever imageRetriever) {
-        this.imageRetriever = imageRetriever;
+    public void setPatternRetriever(PatternRetriever patternRetriever) {
+        this.patternRetriever = patternRetriever;
     }
 
-    public Retriever getMaskRetriever() {
+    public MaskRetriever getMaskRetriever() {
         return maskRetriever;
     }
 
-    public void setMaskRetriever(Retriever maskRetriever) {
+    public void setMaskRetriever(MaskRetriever maskRetriever) {
         this.maskRetriever = maskRetriever;
     }
-    
+
+    public SampleRetriever getSampleRetriever() {
+        return sampleRetriever;
+    }
+
+    public void setSampleRetriever(SampleRetriever sampleRetriever) {
+        this.sampleRetriever = sampleRetriever;
+    }
+
     public Set<ParserListener> getConfiguredListeners() {
         return configuredListeners;
     }

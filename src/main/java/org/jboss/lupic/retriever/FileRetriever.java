@@ -32,9 +32,9 @@ import javax.imageio.ImageIO;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class FileRetriever extends AbstractRetriever {
+public class FileRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
 
-    public BufferedImage retrieve(String source, Properties localProperties) {
+    public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         Properties properties = mergeProperties(localProperties);
         String baseDirectory = (String) properties.get("base-directory");
 
@@ -49,7 +49,7 @@ public class FileRetriever extends AbstractRetriever {
         try {
             return ImageIO.read(file);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Source is unreachable - " + file);
+            throw new RetrieverException("Source file is unreachable - " + file);
         }
     }
 }

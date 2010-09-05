@@ -37,11 +37,12 @@ public class Pattern extends FutureTask<BufferedImage> {
     private String name;
     private Properties properties;
 
-    public Pattern(String name, final String source, final Properties patternProperties, final Retriever retriever) {
+    public Pattern(String name, final String source, final Properties patternProperties,
+        final Retriever patternRetriever) {
         super(new Callable<BufferedImage>() {
             @Override
             public BufferedImage call() throws Exception {
-                return retriever.retrieve(source, patternProperties);
+                return patternRetriever.retrieve(source, patternProperties);
             }
         });
         this.name = name;

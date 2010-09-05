@@ -34,8 +34,9 @@ public final class VisualSuiteDefinitions {
 
     public static final QName VISUAL_SUITE = new QName("visual-suite", LUPIC_NS);
     public static final QName GLOBAL_CONFIGURATION = new QName("global-configuration", LUPIC_NS);
-    public static final QName IMAGE_RETRIEVER = new QName("image-retriever", LUPIC_NS);
+    public static final QName PATTERN_RETRIEVER = new QName("pattern-retriever", LUPIC_NS);
     public static final QName MASK_RETRIEVER = new QName("mask-retriever", LUPIC_NS);
+    public static final QName SAMPLE_RETRIEVER = new QName("sample-retriever", LUPIC_NS);
     public static final QName PERCEPTION = new QName("perception", LUPIC_NS);
     public static final QName MASKS = new QName("masks", LUPIC_NS);
     public static final QName TEST = new QName("test", LUPIC_NS);

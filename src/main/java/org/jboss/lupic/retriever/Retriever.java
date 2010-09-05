@@ -30,7 +30,7 @@ import java.util.Properties;
  */
 public interface Retriever {
 
-    public BufferedImage retrieve(String source, Properties localProperties);
+    public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException;
 
     public Properties mergeProperties(Properties localProperties);
 

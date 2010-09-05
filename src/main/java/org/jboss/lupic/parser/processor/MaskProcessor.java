@@ -23,6 +23,7 @@ package org.jboss.lupic.parser.processor;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.lupic.parser.Processor;
+import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
@@ -50,8 +51,8 @@ public class MaskProcessor extends Processor {
             throw new IllegalStateException("mask with id '" + id + "' already defined");
         }
 
-        Retriever retriever = getVisualSuite().getGlobalConfiguration().getMaskRetriever();
-        Mask mask = new Mask(id, source, getProperties(), retriever, verticalAlignment, horizontalAlignment);
+        MaskRetriever maskRetriever = getVisualSuite().getGlobalConfiguration().getMaskRetriever();
+        Mask mask = new Mask(id, source, getProperties(), maskRetriever, verticalAlignment, horizontalAlignment);
         getContext().getCurrentMasks().add(mask);
         getContext().getMaskIds().add(id);
     }

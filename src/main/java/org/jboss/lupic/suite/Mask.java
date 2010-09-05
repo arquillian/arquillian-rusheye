@@ -27,7 +27,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.retriever.MaskRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -41,12 +41,12 @@ public class Mask extends FutureTask<BufferedImage> {
     private VerticalAlignment verticalAlignment;
     private HorizontalAlignment horizontalAlignment;
 
-    public Mask(String id, final String source, final Properties maskProperties, final Retriever retriever,
+    public Mask(String id, final String source, final Properties maskProperties, final MaskRetriever maskRetriever,
         VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) {
         super(new Callable<BufferedImage>() {
             @Override
             public BufferedImage call() throws Exception {
-                return retriever.retrieve(source, maskProperties);
+                return maskRetriever.retrieve(source, maskProperties);
             }
         });
         this.id = id;

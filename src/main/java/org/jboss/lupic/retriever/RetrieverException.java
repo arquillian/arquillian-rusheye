@@ -19,36 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser.processor;
-
-import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
+package org.jboss.lupic.retriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
+public class RetrieverException extends Exception {
 
-    {
-        supportProcessor("listeners", ListenersProcessor.class);
-        supportProcessor("pattern-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("sample-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
+    public RetrieverException() {
+        super();
     }
 
-    @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
-
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
+    public RetrieverException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    @Override
-    public void end() {
-        getContext().invokeListeners().onConfigurationParsed(getVisualSuite());
+    public RetrieverException(String message) {
+        super(message);
     }
+
+    public RetrieverException(Throwable cause) {
+        super(cause);
+    }
+
 }

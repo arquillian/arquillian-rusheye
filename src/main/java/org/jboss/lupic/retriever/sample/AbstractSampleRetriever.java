@@ -19,20 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.retriever;
+package org.jboss.lupic.retriever.sample;
 
-import java.awt.image.BufferedImage;
-import java.util.Properties;
+import org.jboss.lupic.retriever.AbstractRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class ResourceRetriever extends AbstractRetriever {
+public abstract class AbstractSampleRetriever extends AbstractRetriever implements SampleRetriever {
 
-    @Override
-    public BufferedImage retrieve(String source, Properties properties) {
-        // TODO
-        return null;
-    }
 }

@@ -19,36 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser.processor;
+package org.jboss.lupic.suite;
 
-import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.suite.GlobalConfiguration;
+import java.awt.image.BufferedImage;
+import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class GlobalConfigurationProcessor extends Processor {
+public class Sample extends FutureTask<BufferedImage> {
 
-    {
-        supportProcessor("listeners", ListenersProcessor.class);
-        supportProcessor("pattern-retriever", RetrieverProcessor.class);
-        supportProcessor("mask-retriever", RetrieverProcessor.class);
-        supportProcessor("sample-retriever", RetrieverProcessor.class);
-        supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
-    }
-
-    @Override
-    public void start() {
-        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
-
-        getVisualSuite().setGlobalConfiguration(globalConfiguration);
-        getContext().setCurrentConfiguration(globalConfiguration);
-    }
-
-    @Override
-    public void end() {
-        getContext().invokeListeners().onConfigurationParsed(getVisualSuite());
+    public Sample(final String source, final SampleRetriever sampleRetriever) {
+        super(new Callable<BufferedImage>() {
+            @Override
+            public BufferedImage call() throws Exception {
+                return sampleRetriever.retrieve(source, new Properties());
+            }
+        });
     }
 }

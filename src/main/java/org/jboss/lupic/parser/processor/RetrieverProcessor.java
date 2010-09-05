@@ -22,8 +22,12 @@
 package org.jboss.lupic.parser.processor;
 
 import org.apache.commons.lang.Validate;
+import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.parser.Processor;
+import org.jboss.lupic.retriever.MaskRetriever;
+import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.jboss.lupic.suite.GlobalConfiguration;
 
 /**
@@ -50,11 +54,25 @@ public class RetrieverProcessor extends Processor {
         GlobalConfiguration globalConfiguration = getVisualSuite().getGlobalConfiguration();
 
         if ("mask-retriever".equals(tagName)) {
-            globalConfiguration.setMaskRetriever(retriever);
-        } else if ("image-retriever".equals(tagName)) {
-            globalConfiguration.setImageRetriever(retriever);
+            if (!MaskRetriever.class.isAssignableFrom(retriever.getClass())) {
+                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
+                    + " is not instance of MaskRetriever");
+            }
+            globalConfiguration.setMaskRetriever((MaskRetriever) retriever);
+        } else if ("pattern-retriever".equals(tagName)) {
+            if (!PatternRetriever.class.isAssignableFrom(retriever.getClass())) {
+                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
+                    + " is not instance of PatternRetriever");
+            }
+            globalConfiguration.setPatternRetriever((PatternRetriever) retriever);
+        } else if ("sample-retriever".equals(tagName)) {
+            if (!SampleRetriever.class.isAssignableFrom(retriever.getClass())) {
+                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
+                    + " is not instance of SampleRetriever");
+            }
+            globalConfiguration.setSampleRetriever((SampleRetriever) retriever);
         } else {
-            throw new IllegalStateException("unsupported retriever tag name '" + tagName + "'");
+            throw new LupicConfigurationException("unsupported retriever tag name '" + tagName + "'");
         }
     }
 
@@ -67,9 +85,9 @@ public class RetrieverProcessor extends Processor {
         try {
             return getRetriverClass(retrieverClassName).newInstance();
         } catch (InstantiationException e) {
-            throw new IllegalStateException(e);
+            throw new LupicConfigurationException(e);
         } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
+            throw new LupicConfigurationException(e);
         }
     }
 
@@ -78,7 +96,7 @@ public class RetrieverProcessor extends Processor {
         try {
             return (Class<? extends Retriever>) Class.forName(retrieverClassName);
         } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(e);
+            throw new LupicConfigurationException(e);
         }
     }
 }

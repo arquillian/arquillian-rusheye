@@ -40,7 +40,7 @@ public class TestProcessor extends Processor {
 
     @Override
     public void start() {
-        test = new Test();
+        test = new Test(getAttribute("name"), getVisualSuite().getGlobalConfiguration().getSampleRetriever());
         getContext().setCurrentTest(test);
         getContext().setCurrentConfiguration(test);
     }

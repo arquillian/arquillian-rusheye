@@ -39,11 +39,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 			</listener>
 		</listeners>
 		<!-- the image retriever, implementing SourceRetriever interface -->
-		<image-retriever class="org.jboss.lupic.retriever.FileSourceRetriever">
+		<pattern-retriever class="org.jboss.lupic.retriever.FileRetriever">
 			<xxx></xxx>
 			<yyy></yyy>
-		</image-retriever>
-		<mask-retriever class="org.jboss.lupic.retriever.FileSourceRetriever" />
+		</pattern-retriever>
+		<mask-retriever class="org.jboss.lupic.retriever.FileRetriever" />
+		<sample-retriever class="org.jboss.lupic.retriever.sample.FileSampleRetriever" />
 		<perception>
 			<!--
 				unperceptible treshold of color difference in scope of one pixel

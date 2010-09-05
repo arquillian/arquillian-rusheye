@@ -69,8 +69,8 @@ public class Main {
         try {
             BufferedImage[] sourceImages = ImageUtils.readSourceImages(configuration.getFirstSourceDirectory(),
                 configuration.getSecondSourceDirectory(), imageFileName);
-            ComparisonResult comparisonResult = new ImageComparator().diffImages(imageFileName, sourceImages,
-                maskImages, configuration);
+            ComparisonResult comparisonResult = new ImageComparator().compare(sourceImages[0], sourceImages[1],
+                configuration.getPerception(), maskImages);
             if (!comparisonResult.isEqualsImages()) {
                 differentImageCounter++;
                 Log.logResult("DIFFER: %s", imageFileName);
