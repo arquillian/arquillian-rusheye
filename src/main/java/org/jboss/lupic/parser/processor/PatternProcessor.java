@@ -23,7 +23,6 @@ package org.jboss.lupic.parser.processor;
 
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.PatternRetriever;
-import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 

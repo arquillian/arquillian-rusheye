@@ -35,7 +35,6 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.jboss.lupic.oneoff.ImageUtils;
-import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
 import org.testng.annotations.BeforeMethod;
@@ -47,162 +46,154 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestImageComparison {
-	Perception perception;
-	ImageComparator comparator = new ImageComparator();
+    Perception perception;
+    ImageComparator comparator = new ImageComparator();
 
-	BufferedImage expectedDiff;
+    BufferedImage expectedDiff;
 
-	@BeforeMethod
-	public void configure() {
-		perception = new Perception();
-	}
+    @BeforeMethod
+    public void configure() {
+        perception = new Perception();
+    }
 
-	@Test
-	public void testSame() {
-		ComparisonResult result = diffImages("same");
-		assertTrue(result.isEqualsImages());
-	}
+    @Test
+    public void testSame() {
+        ComparisonResult result = diffImages("same");
+        assertTrue(result.isEqualsImages());
+    }
 
-	@Test
-	public void testNotSame() {
-		ComparisonResult result = diffImages("not-same");
-		assertFalse(result.isEqualsImages());
-		assertEquals(result.getEqualPixels(), 97);
-		assertEquals(result.getSmallDifferences(), 3);
-		assertEquals(result.getDifferentPixels(), 0);
-		assertEquals(result.getPerceptibleDiffs(), 0);
-		assertEquals(result.getComparisonStatus(), "different");
-		assertSame(result.getDiffImage(), expectedDiff);
-	}
+    @Test
+    public void testNotSame() {
+        ComparisonResult result = diffImages("not-same");
+        assertFalse(result.isEqualsImages());
+        assertEquals(result.getEqualPixels(), 97);
+        assertEquals(result.getSmallDifferences(), 3);
+        assertEquals(result.getDifferentPixels(), 0);
+        assertEquals(result.getPerceptibleDiffs(), 0);
+        assertEquals(result.getComparisonStatus(), "different");
+        assertSame(result.getDiffImage(), expectedDiff);
+    }
 
-	@Test
-	public void testPerceptible() {
-		perception.setOnePixelTreshold((short) 2);
-		ComparisonResult result = diffImages("perceptible");
-		assertFalse(result.isEqualsImages());
-		assertEquals(result.getEqualPixels(), 97);
-		assertEquals(result.getSmallDifferences(), 0);
-		assertEquals(result.getDifferentPixels(), 0);
-		assertEquals(result.getPerceptibleDiffs(), 3);
-		assertEquals(result.getComparisonStatus(), "different");
-		assertSame(result.getDiffImage(), expectedDiff);
-	}
+    @Test
+    public void testPerceptible() {
+        perception.setOnePixelTreshold((short) 2);
+        ComparisonResult result = diffImages("perceptible");
+        assertFalse(result.isEqualsImages());
+        assertEquals(result.getEqualPixels(), 97);
+        assertEquals(result.getSmallDifferences(), 0);
+        assertEquals(result.getDifferentPixels(), 0);
+        assertEquals(result.getPerceptibleDiffs(), 3);
+        assertEquals(result.getComparisonStatus(), "different");
+        assertSame(result.getDiffImage(), expectedDiff);
+    }
 
-	@Test
-	public void testDifferent() {
-		perception.setOnePixelTreshold((short) 200);
-		perception.setGlobalDifferenceTreshold((short) 2);
-		ComparisonResult result = diffImages("different");
-		assertFalse(result.isEqualsImages());
-		assertEquals(result.getEqualPixels(), 97);
-		assertEquals(result.getSmallDifferences(), 0);
-		assertEquals(result.getDifferentPixels(), 3);
-		assertEquals(result.getPerceptibleDiffs(), 0);
-		assertEquals(result.getComparisonStatus(), "different");
-		assertSame(result.getDiffImage(), expectedDiff);
-	}
+    @Test
+    public void testDifferent() {
+        perception.setOnePixelTreshold((short) 200);
+        perception.setGlobalDifferenceTreshold((short) 2);
+        ComparisonResult result = diffImages("different");
+        assertFalse(result.isEqualsImages());
+        assertEquals(result.getEqualPixels(), 97);
+        assertEquals(result.getSmallDifferences(), 0);
+        assertEquals(result.getDifferentPixels(), 3);
+        assertEquals(result.getPerceptibleDiffs(), 0);
+        assertEquals(result.getComparisonStatus(), "different");
+        assertSame(result.getDiffImage(), expectedDiff);
+    }
 
-	@Test
-	public void testDifferentMasked() {
-		perception.setOnePixelTreshold((short) 200);
-		perception.setGlobalDifferenceTreshold((short) 2);
-		ComparisonResult result = diffImages("different-masked");
-		assertTrue(result.isEqualsImages());
-		assertEquals(result.getEqualPixels(), 97);
-		assertEquals(result.getSmallDifferences(), 0);
-		assertEquals(result.getDifferentPixels(), 0);
-		assertEquals(result.getPerceptibleDiffs(), 0);
-		assertEquals(result.getMaskedPixels(), 3);
-		assertEquals(result.getComparisonStatus(), "same");
-		assertSame(result.getDiffImage(), expectedDiff);
-	}
+    @Test
+    public void testDifferentMasked() {
+        perception.setOnePixelTreshold((short) 200);
+        perception.setGlobalDifferenceTreshold((short) 2);
+        ComparisonResult result = diffImages("different-masked");
+        assertTrue(result.isEqualsImages());
+        assertEquals(result.getEqualPixels(), 97);
+        assertEquals(result.getSmallDifferences(), 0);
+        assertEquals(result.getDifferentPixels(), 0);
+        assertEquals(result.getPerceptibleDiffs(), 0);
+        assertEquals(result.getMaskedPixels(), 3);
+        assertEquals(result.getComparisonStatus(), "same");
+        assertSame(result.getDiffImage(), expectedDiff);
+    }
 
-	@DataProvider(name = "real-samples")
-	Object[][] provideRealSampleNames() {
-		Object[][] provide = new Object[5][1];
-		for (int i = 1; i <= 5; i++) {
-			provide[i - 1][0] = "real-sample-" + i;
-		}
-		return provide;
-	}
+    @DataProvider(name = "real-samples")
+    Object[][] provideRealSampleNames() {
+        Object[][] provide = new Object[5][1];
+        for (int i = 1; i <= 5; i++) {
+            provide[i - 1][0] = "real-sample-" + i;
+        }
+        return provide;
+    }
 
-	@Test(dataProvider = "real-samples")
-	public void testRealSamples(String testName) throws IOException {
-		ComparisonResult result = diffImages(testName);
-		assertFalse(result.isEqualsImages());
-		assertSame(result.getDiffImage(), expectedDiff);
-	}
+    @Test(dataProvider = "real-samples")
+    public void testRealSamples(String testName) throws IOException {
+        ComparisonResult result = diffImages(testName);
+        assertFalse(result.isEqualsImages());
+        assertSame(result.getDiffImage(), expectedDiff);
+    }
 
-	private ComparisonResult diffImages(String testName) {
-		File parentDirectory = new File(
-				"./target/test-classes/image-comparator");
-		File testDirectory = new File(parentDirectory, testName);
+    private ComparisonResult diffImages(String testName) {
+        File parentDirectory = new File("./target/test-classes/image-comparator");
+        File testDirectory = new File(parentDirectory, testName);
 
-		File[] patternFiles = testDirectory.listFiles(new FilenamePrefixFilter(
-				"pattern"));
-		File[] screenshotFiles = testDirectory
-				.listFiles(new FilenamePrefixFilter("screenshot"));
-		File[] maskFiles = testDirectory.listFiles(new FilenamePrefixFilter(
-				"mask"));
-		File[] diffFiles = testDirectory.listFiles(new FilenamePrefixFilter(
-				"diff"));
+        File[] patternFiles = testDirectory.listFiles(new FilenamePrefixFilter("pattern"));
+        File[] screenshotFiles = testDirectory.listFiles(new FilenamePrefixFilter("screenshot"));
+        File[] maskFiles = testDirectory.listFiles(new FilenamePrefixFilter("mask"));
+        File[] diffFiles = testDirectory.listFiles(new FilenamePrefixFilter("diff"));
 
-		Set<Mask> masks = getMaskImages(maskFiles);
+        Set<Mask> masks = getMaskImages(maskFiles);
 
-		assertEquals(patternFiles.length, 1);
-		assertEquals(screenshotFiles.length, 1);
-		assertTrue(diffFiles.length >= 0 && diffFiles.length <= 1);
+        assertEquals(patternFiles.length, 1);
+        assertEquals(screenshotFiles.length, 1);
+        assertTrue(diffFiles.length >= 0 && diffFiles.length <= 1);
 
-		try {
-			BufferedImage pattern = ImageIO.read(patternFiles[0]);
-			BufferedImage screenshot = ImageIO.read(screenshotFiles[0]);
-			expectedDiff = diffFiles.length == 1 ? ImageIO.read(diffFiles[0])
-					: null;
+        try {
+            BufferedImage pattern = ImageIO.read(patternFiles[0]);
+            BufferedImage screenshot = ImageIO.read(screenshotFiles[0]);
+            expectedDiff = diffFiles.length == 1 ? ImageIO.read(diffFiles[0]) : null;
 
-			perception.setDefaultValuesForUnset();
-			ComparisonResult result = comparator.compare(pattern,
-					screenshot, perception, masks);
+            perception.setDefaultValuesForUnset();
+            ComparisonResult result = comparator.compare(pattern, screenshot, perception, masks);
 
-			return result;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
-		Perception strictPerception = new Perception();
-		strictPerception.setOnePixelTreshold((short) 0);
-		strictPerception.setGlobalDifferenceTreshold((short) 0);
+    private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
+        Perception strictPerception = new Perception();
+        strictPerception.setOnePixelTreshold((short) 0);
+        strictPerception.setGlobalDifferenceTreshold((short) 0);
 
-		ComparisonResult result = comparator.compare(actualDiff,
-				expectedDiff, strictPerception, new HashSet<Mask>());
-		assertTrue(result.isEqualsImages());
-	}
+        ComparisonResult result = comparator.compare(actualDiff, expectedDiff, strictPerception, new HashSet<Mask>());
+        assertTrue(result.isEqualsImages());
+    }
 
-	private Set<Mask> getMaskImages(File[] maskFiles) {
-		try {
-			Set<Mask> set = new HashSet<Mask>();
-			for (File maskFile : maskFiles) {
-				set.add(ImageUtils.readMaskImage(maskFile));
-			}
-			return set;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private Set<Mask> getMaskImages(File[] maskFiles) {
+        try {
+            Set<Mask> set = new HashSet<Mask>();
+            for (File maskFile : maskFiles) {
+                set.add(ImageUtils.readMaskImage(maskFile));
+            }
+            return set;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private static class FilenamePrefixFilter implements FilenameFilter {
-		private String prefix;
+    private static class FilenamePrefixFilter implements FilenameFilter {
+        private String prefix;
 
-		public FilenamePrefixFilter(String prefix) {
-			super();
-			this.prefix = prefix;
-		}
+        public FilenamePrefixFilter(String prefix) {
+            super();
+            this.prefix = prefix;
+        }
 
-		@Override
-		public boolean accept(File dir, String name) {
-			return name.startsWith(prefix);
-		}
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.startsWith(prefix);
+        }
 
-	}
+    }
 }

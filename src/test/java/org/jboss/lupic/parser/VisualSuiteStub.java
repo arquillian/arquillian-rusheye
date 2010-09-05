@@ -39,42 +39,37 @@ import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 @SuppressWarnings("unchecked")
 public class VisualSuiteStub {
 
-	Document document = DocumentHelper.createDocument();
+    Document document = DocumentHelper.createDocument();
 
-	Element visualSuite = document
-			.addElement(VISUAL_SUITE)
-			.addNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")
-			.addAttribute("xsi:schemaLocation",
-					LUPIC_NS.getURI() + " src/main/resources/visual-suite.xsd");
+    Element visualSuite = document.addElement(VISUAL_SUITE)
+        .addNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")
+        .addAttribute("xsi:schemaLocation", LUPIC_NS.getURI() + " src/main/resources/visual-suite.xsd");
 
-	Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
-	Element listeners = globalConfiguration.addElement(LISTENERS);
-	Element patternRetriever = globalConfiguration
-			.addElement(PATTERN_RETRIEVER).addAttribute("class",
-					FileRetriever.class.getName());
-	Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER)
-			.addAttribute("class", FileRetriever.class.getName());
-	Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER)
-			.addAttribute("class", FileSampleRetriever.class.getName());
-	Element perception = globalConfiguration.addElement(PERCEPTION);
+    Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
+    Element listeners = globalConfiguration.addElement(LISTENERS);
+    Element patternRetriever = globalConfiguration.addElement(PATTERN_RETRIEVER).addAttribute("class",
+        FileRetriever.class.getName());
+    Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("class",
+        FileRetriever.class.getName());
+    Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER).addAttribute("class",
+        FileSampleRetriever.class.getName());
+    Element perception = globalConfiguration.addElement(PERCEPTION);
 
-	Element defaultListener = listeners.addElement(LISTENER).addAttribute(
-			"class", ParserListenerAdapter.class.getName());
+    Element defaultListener = listeners.addElement(LISTENER).addAttribute("class",
+        ParserListenerAdapter.class.getName());
 
-	Element defaultTest = visualSuite.addElement(TEST).addAttribute("name",
-			"default-test");
+    Element defaultTest = visualSuite.addElement(TEST).addAttribute("name", "default-test");
 
-	Element defaultPattern = defaultTest.addElement(PATTERN).addAttribute(
-			"name", "default-test-pattern");
+    Element defaultPattern = defaultTest.addElement(PATTERN).addAttribute("name", "default-test-pattern");
 
-	{
-		Iterator<Element> iterator = visualSuite.elementIterator(TEST);
-		if (iterator.next() != defaultTest) {
-			throw new IllegalStateException();
-		}
-		if (iterator.hasNext()) {
-			visualSuite.remove(defaultTest);
-		}
-	}
+    {
+        Iterator<Element> iterator = visualSuite.elementIterator(TEST);
+        if (iterator.next() != defaultTest) {
+            throw new IllegalStateException();
+        }
+        if (iterator.hasNext()) {
+            visualSuite.remove(defaultTest);
+        }
+    }
 
 }

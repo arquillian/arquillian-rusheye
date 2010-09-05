@@ -27,8 +27,6 @@ import java.util.concurrent.ExecutionException;
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.parser.ParserListenerAdapter;
-import org.jboss.lupic.retriever.RetrieverException;
-import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Sample;

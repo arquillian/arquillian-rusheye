@@ -27,7 +27,6 @@ import java.util.Set;
 import org.jboss.lupic.parser.ParserListener;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.PatternRetriever;
-import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 /**

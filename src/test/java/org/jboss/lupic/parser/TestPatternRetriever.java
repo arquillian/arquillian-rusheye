@@ -41,39 +41,38 @@ import static org.testng.Assert.*;
  */
 public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
 
-	private static final String SOURCE = "source";
+    private static final String SOURCE = "source";
 
-	@Test
-	public void testPropertiesShouldPass() throws SAXException, IOException {
-		String retrieverImpl = AssertingRetriever.class.getName();
-		stub.patternRetriever.addAttribute("class", retrieverImpl);
+    @Test
+    public void testPropertiesShouldPass() throws SAXException, IOException {
+        String retrieverImpl = AssertingRetriever.class.getName();
+        stub.patternRetriever.addAttribute("class", retrieverImpl);
 
-		stub.patternRetriever.addElement("xxx").setText("1");
-		stub.patternRetriever.addElement("yyy").setText("2");
+        stub.patternRetriever.addElement("xxx").setText("1");
+        stub.patternRetriever.addElement("yyy").setText("2");
 
-		startWriter();
-		parse();
+        startWriter();
+        parse();
 
-		Retriever retriever = handler.getVisualSuite().getGlobalConfiguration()
-				.getPatternRetriever();
-		try {
-			assertNull(retriever.retrieve(SOURCE, new Properties()));
-		} catch (RetrieverException e) {
-			fail();
-		}
+        Retriever retriever = handler.getVisualSuite().getGlobalConfiguration().getPatternRetriever();
+        try {
+            assertNull(retriever.retrieve(SOURCE, new Properties()));
+        } catch (RetrieverException e) {
+            fail();
+        }
 
-	}
+    }
 
-	public static class AssertingRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
-		@Override
-		public BufferedImage retrieve(String source, Properties localProperties) {
-			final Properties properties = mergeProperties(localProperties);
+    public static class AssertingRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
+        @Override
+        public BufferedImage retrieve(String source, Properties localProperties) {
+            final Properties properties = mergeProperties(localProperties);
 
-			assertSame(source, SOURCE);
-			assertEquals(properties.get("xxx"), "1");
-			assertEquals(properties.get("yyy"), "2");
+            assertSame(source, SOURCE);
+            assertEquals(properties.get("xxx"), "1");
+            assertEquals(properties.get("yyy"), "2");
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 }

@@ -23,7 +23,6 @@ package org.jboss.lupic.suite;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 

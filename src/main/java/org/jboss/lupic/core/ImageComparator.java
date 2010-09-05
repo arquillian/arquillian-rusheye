@@ -27,10 +27,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 
-import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
-import org.jboss.lupic.suite.Test;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>

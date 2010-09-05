@@ -24,7 +24,6 @@ package org.jboss.lupic.parser.processor;
 import org.apache.commons.lang.Validate;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.MaskRetriever;
-import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.VerticalAlignment;
