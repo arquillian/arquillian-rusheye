@@ -19,36 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic;
+package org.jboss.lupic.result;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.jboss.lupic.parser.Parser;
-import org.jboss.lupic.parser.listener.ParserListener;
-import org.jboss.lupic.parser.processor.ListenerProcessor;
-import org.xml.sax.SAXException;
+import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.parser.listener.ParserListenerAdapter;
+import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Test;
+import org.jboss.lupic.suite.VisualSuite;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public final class Main {
-    private Main() {
+public abstract class ResultCollectorAdapter extends ParserListenerAdapter implements ResultCollector {
+
+    public void onConfigurationParsed(VisualSuite visualSuite) {
     }
 
-    public static void main(String[] args) throws SAXException, IOException {
-        final String cmd = args[0];
+    public void onSampleStarted(Test test) {
+    }
 
-        if (cmd.equals("parse")) {
-            File visualSuiteDefinition = new File(args[1]);
-            System.setProperty("user.dir", visualSuiteDefinition.getParent());
-            Parser parser = new Parser();
-            if (args.length > 2) {
-                ParserListener parserListener = ListenerProcessor.getParserListenerInstance(args[2]);
-                parser.registerListener(parserListener);
-            }
-            parser.parseFile(visualSuiteDefinition);
-        }
+    public void onSampleLoaded(Test test) {
+    }
+
+    public void onPatternStarted(Pattern pattern) {
+    }
+
+    public void onPatternLoaded(Test test, Pattern pattern) {
+    }
+
+    public void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult) {
+    }
+
+    public void onTestStarted(Test test) {
+    }
+
+    public void onTestCompleted(Test test) {
+    }
+
+    public void onSuiteCompleted(VisualSuite visualSuite) {
     }
 }

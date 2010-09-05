@@ -19,11 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser;
+package org.jboss.lupic.result;
 
 import java.util.Properties;
 
-import org.jboss.lupic.suite.Configuration;
+import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
@@ -32,16 +33,24 @@ import org.jboss.lupic.suite.VisualSuite;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public interface ParserListener {
+public interface ResultCollector extends ParserListener {
     void setProperties(Properties properties);
-
-    void onSuiteStarted(VisualSuite visualSuite);
-
-    void onSuiteCompleted(VisualSuite visualSuite);
 
     void onConfigurationParsed(VisualSuite visualSuite);
 
-    void onTestParsed(Test test);
+    void onSampleStarted(Test test);
 
-    void onPatternParsed(Configuration configuration, Pattern pattern);
+    void onSampleLoaded(Test test);
+
+    void onPatternStarted(Pattern pattern);
+
+    void onPatternLoaded(Test test, Pattern pattern);
+
+    void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult);
+
+    void onTestStarted(Test test);
+
+    void onTestCompleted(Test test);
+    
+    void onSuiteCompleted(VisualSuite visualSuite);
 }

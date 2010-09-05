@@ -19,45 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser;
-
-import java.util.Properties;
-
-import org.jboss.lupic.suite.Configuration;
-import org.jboss.lupic.suite.Pattern;
-import org.jboss.lupic.suite.Test;
-import org.jboss.lupic.suite.VisualSuite;
+package org.jboss.lupic.result;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class ParserListenerAdapter implements ParserListener {
+public class ResultCollectorImpl extends ResultCollectorAdapter {
 
-    protected Properties properties;
-
-    @Override
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-
-    @Override
-    public void onSuiteStarted(VisualSuite visualSuite) {
-    }
-
-    @Override
-    public void onSuiteCompleted(VisualSuite visualSuite) {
-    }
-
-    @Override
-    public void onConfigurationParsed(VisualSuite visualSuite) {
-    }
-
-    @Override
-    public void onTestParsed(Test test) {
-    }
-
-    @Override
-    public void onPatternParsed(Configuration configuration, Pattern pattern) {
-    }
 }

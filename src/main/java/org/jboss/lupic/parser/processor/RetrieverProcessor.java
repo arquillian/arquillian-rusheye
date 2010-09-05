@@ -29,6 +29,7 @@ import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.utils.Instantiator;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -48,7 +49,7 @@ public class RetrieverProcessor extends Processor {
         Validate.notNull(retrieverClassName,
             "image-retriever must have class attribute defined pointing to Retriever implementation");
 
-        retriever = getRetrieverInstance(retrieverClassName);
+        retriever = new Instantiator<Retriever>().getInstance(retrieverClassName);
 
         String tagName = getTagName();
         GlobalConfiguration globalConfiguration = getVisualSuite().getGlobalConfiguration();
@@ -81,22 +82,5 @@ public class RetrieverProcessor extends Processor {
         retriever.setGlobalProperties(getProperties());
     }
 
-    private Retriever getRetrieverInstance(String retrieverClassName) {
-        try {
-            return getRetriverClass(retrieverClassName).newInstance();
-        } catch (InstantiationException e) {
-            throw new LupicConfigurationException(e);
-        } catch (IllegalAccessException e) {
-            throw new LupicConfigurationException(e);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private Class<? extends Retriever> getRetriverClass(String retrieverClassName) {
-        try {
-            return (Class<? extends Retriever>) Class.forName(retrieverClassName);
-        } catch (ClassNotFoundException e) {
-            throw new LupicConfigurationException(e);
-        }
-    }
+    
 }

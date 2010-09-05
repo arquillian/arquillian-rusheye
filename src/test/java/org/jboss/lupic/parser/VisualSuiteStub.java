@@ -27,6 +27,7 @@ import org.dom4j.Document;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.retriever.FileRetriever;
 import org.jboss.lupic.retriever.sample.FileSampleRetriever;
 

@@ -30,6 +30,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.processor.VisualSuiteProcessor;
 import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.Attributes;
@@ -62,7 +63,7 @@ public class Handler extends DefaultHandler {
 
     @Override
     public void endDocument() throws SAXException {
-        context.invokeListeners().onSuiteCompleted(visualSuite);
+        context.invokeListeners().onSuiteParsed(visualSuite);
     }
 
     @Override

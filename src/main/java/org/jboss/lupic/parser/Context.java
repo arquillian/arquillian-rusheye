@@ -24,6 +24,7 @@ package org.jboss.lupic.parser;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Test;

@@ -24,6 +24,7 @@ package org.jboss.lupic.parser;
 import java.io.IOException;
 
 import org.dom4j.Element;
+import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.VisualSuite;
@@ -120,7 +121,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         }
 
         @Override
-        public void onSuiteCompleted(VisualSuite visualSuite) {
+        public void onSuiteParsed(VisualSuite visualSuite) {
             assertTrue(state < 5);
             state = 5;
         }

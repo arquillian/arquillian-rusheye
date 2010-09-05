@@ -19,12 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.parser;
+package org.jboss.lupic.suite.utils;
+
+import org.jboss.lupic.exception.LupicConfigurationException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public interface ResultListener {
+public class Instantiator<T> {
+    public T getInstance(String className) {
+        try {
+            return getInstanceClass(className).newInstance();
+        } catch (InstantiationException e) {
+            throw new LupicConfigurationException(e);
+        } catch (IllegalAccessException e) {
+            throw new LupicConfigurationException(e);
+        }
+    }
 
+    @SuppressWarnings("unchecked")
+    private Class<? extends T> getInstanceClass(String className) {
+        try {
+            return (Class<? extends T>) Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new LupicConfigurationException(e);
+        }
+    }
 }

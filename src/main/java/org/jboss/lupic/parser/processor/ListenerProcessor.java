@@ -22,8 +22,8 @@
 package org.jboss.lupic.parser.processor;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.lupic.parser.ParserListener;
 import org.jboss.lupic.parser.Processor;
+import org.jboss.lupic.parser.listener.ParserListener;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

@@ -19,36 +19,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic;
+package org.jboss.lupic.parser.listener;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Properties;
 
-import org.jboss.lupic.parser.Parser;
-import org.jboss.lupic.parser.listener.ParserListener;
-import org.jboss.lupic.parser.processor.ListenerProcessor;
-import org.xml.sax.SAXException;
+import org.jboss.lupic.suite.Configuration;
+import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Test;
+import org.jboss.lupic.suite.VisualSuite;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public final class Main {
-    private Main() {
-    }
+public interface ParserListener {
+    void setProperties(Properties properties);
 
-    public static void main(String[] args) throws SAXException, IOException {
-        final String cmd = args[0];
+    void onSuiteStarted(VisualSuite visualSuite);
 
-        if (cmd.equals("parse")) {
-            File visualSuiteDefinition = new File(args[1]);
-            System.setProperty("user.dir", visualSuiteDefinition.getParent());
-            Parser parser = new Parser();
-            if (args.length > 2) {
-                ParserListener parserListener = ListenerProcessor.getParserListenerInstance(args[2]);
-                parser.registerListener(parserListener);
-            }
-            parser.parseFile(visualSuiteDefinition);
-        }
-    }
+    void onConfigurationParsed(VisualSuite visualSuite);
+
+    void onSuiteParsed(VisualSuite visualSuite);
+
+    void onTestParsed(Test test);
+
+    void onPatternParsed(Configuration configuration, Pattern pattern);
 }

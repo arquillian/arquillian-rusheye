@@ -24,7 +24,7 @@ package org.jboss.lupic.suite;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.jboss.lupic.parser.ParserListener;
+import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.sample.SampleRetriever;

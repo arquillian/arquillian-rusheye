@@ -28,6 +28,8 @@ import java.io.InputStream;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.jboss.lupic.parser.listener.ParserListener;
+import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

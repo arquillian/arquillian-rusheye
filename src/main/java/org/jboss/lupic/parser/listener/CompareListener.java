@@ -22,37 +22,82 @@
 package org.jboss.lupic.parser.listener;
 
 import java.awt.image.BufferedImage;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.ImageComparator;
-import org.jboss.lupic.parser.ParserListenerAdapter;
+import org.jboss.lupic.result.ResultCollector;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Sample;
 import org.jboss.lupic.suite.Test;
+import org.jboss.lupic.suite.VisualSuite;
+import org.jboss.lupic.suite.utils.Instantiator;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class CompareListener extends ParserListenerAdapter {
+public class CompareListener implements ParserListener {
+    Properties properties;
     ImageComparator imageComparator = new ImageComparator();
+    VisualSuite visualSuite;
+    ResultCollector resultListener;
+    boolean suiteParsed = false;
+
+    @Override
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    @Override
+    public void onSuiteStarted(VisualSuite visualSuite) {
+        this.visualSuite = visualSuite;
+        String resultListenerClass = properties.getProperty("result-listener");
+        resultListener = new Instantiator<ResultCollector>().getInstance(resultListenerClass);
+        resultListener.setProperties(properties);
+        resultListener.onSuiteStarted(visualSuite);
+    }
+
+    @Override
+    public void onConfigurationParsed(VisualSuite visualSuite) {
+        resultListener.onConfigurationParsed(visualSuite);
+    }
+
+    @Override
+    public void onSuiteParsed(VisualSuite visualSuite) {
+        resultListener.onSuiteParsed(visualSuite);
+        suiteParsed = true;
+    }
 
     @Override
     public void onPatternParsed(Configuration configuration, Pattern pattern) {
+        onPatternParsed(configuration, pattern);
         pattern.run();
+        resultListener.onPatternStarted(pattern);
     }
 
     @Override
     public void onTestParsed(Test test) {
+        resultListener.onTestStarted(test);
+
+        resultListener.onSampleStarted(test);
         BufferedImage sampleImage = getSampleImage(test.getSample());
+        resultListener.onSampleLoaded(test);
 
         for (Pattern pattern : test.getPatterns()) {
             BufferedImage patternImage = getPatternImage(pattern);
+            resultListener.onPatternLoaded(test, pattern);
 
             ComparisonResult comparisonResult = imageComparator.compare(patternImage, sampleImage,
                 test.getPerception(), test.getSelectiveAlphaMasks());
+            resultListener.onPatternCompleted(test, pattern, comparisonResult);
+        }
+        resultListener.onTestCompleted(test);
+
+        if (suiteParsed) {
+            resultListener.onSuiteCompleted(visualSuite);
         }
     }
 
