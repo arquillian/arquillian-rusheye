@@ -1,8 +1,10 @@
 package org.jboss.lupic.parser.listener;
 
-import static org.mockito.Mockito.*;
-import static org.testng.Assert.*;
-import static org.jboss.lupic.parser.listener.TestCompareListener.State.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashSet;
@@ -12,7 +14,7 @@ import java.util.Set;
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.result.ResultCollector;
-import org.jboss.lupic.suite.Configuration;
+import org.jboss.lupic.result.ResultCollectorAdapter;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
 import org.jboss.lupic.suite.Sample;
@@ -21,7 +23,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -33,6 +34,10 @@ public class TestCompareListener {
     @Spy
     CompareListener compareListener = new CompareListener();
 
+    @Spy
+    ResultCollector resultCollector = new OrderTestingResultCollector();
+    InOrder collectorOrder;
+
     @Mock
     VisualSuite visualSuite;
 
@@ -41,19 +46,17 @@ public class TestCompareListener {
 
     @Mock
     Pattern pattern;
+    InOrder patternOrder;
 
     @Mock
     BufferedImage patternImage;
 
-    InOrder patternOrder;
-
     @Mock
     Sample sample;
+    InOrder sampleOrder;
 
     @Mock
     BufferedImage sampleImage;
-
-    InOrder sampleOrder;
 
     @Mock
     ComparisonResult comparisonResult;
@@ -72,7 +75,7 @@ public class TestCompareListener {
                 any(Set.class))).thenReturn(comparisonResult);
 
         Properties properties = new Properties();
-        properties.setProperty("result-collector", AssertingResultCollector.class.getName());
+        properties.setProperty("result-collector", InvocationPassingResultCollector.class.getName());
 
         LinkedHashSet<Pattern> patterns = new LinkedHashSet<Pattern>();
         patterns.add(pattern);
@@ -85,119 +88,59 @@ public class TestCompareListener {
 
         sampleOrder = inOrder(sample);
         patternOrder = inOrder(pattern);
+        collectorOrder = inOrder(resultCollector);
 
         compareListener.setProperties(properties);
         compareListener.imageComparator = imageComparator;
     }
 
     @Test
-    public void testOrdering() throws Exception {
+    public void testOrder() throws Exception {
+        // run
         compareListener.onSuiteStarted(visualSuite);
+        compareListener.resultCollector = resultCollector;
         compareListener.onConfigurationParsed(visualSuite);
         compareListener.onPatternParsed(test, pattern);
         compareListener.onTestParsed(test);
         compareListener.onSuiteParsed(visualSuite);
-
+        
+        // order verification
         sampleOrder.verify(sample).run();
         sampleOrder.verify(sample).get();
         patternOrder.verify(pattern).run();
         patternOrder.verify(pattern).get();
+
+        ResultCollector col = collectorOrder.verify(resultCollector);
+        col.setProperties(any(Properties.class));
+        col.onSuiteStarted(visualSuite);
+        col.onConfigurationParsed(visualSuite);
+        col.onPatternParsed(test, pattern);
+        col.onPatternStarted(pattern);
+        col.onTestParsed(test);
+        col.onTestStarted(test);
+        col.onSampleStarted(test);
+        col.onSampleLoaded(test);
+        col.onPatternLoaded(test, pattern);
+        col.onPatternCompleted(test, pattern, comparisonResult);
+        col.onTestCompleted(test);
+        col.onSuiteParsed(visualSuite);
+        col.onSuiteCompleted(visualSuite);
     }
 
     static TestCompareListener parent;
 
-    public static enum State {
-        SET_PROPERTIES,
-        SUITE_STARTED,
-        CONFIGURATION_PARSED,
-        PATTERN_PARSED,
-        PATTERN_STARTED,
-        TEST_PARSED,
-        TEST_STARTED,
-        SAMPLE_STARTED,
-        SAMPLE_LOADED,
-        PATTERN_LOADED,
-        PATTERN_COMPLETED,
-        TEST_COMPLETED,
-        SUITE_PARSED,
-        SUITE_COMPLETED
+    public static class OrderTestingResultCollector extends ResultCollectorAdapter {
     }
 
-    public static class AssertingResultCollector implements ResultCollector {
-
-        State state = null;
-
+    public static class InvocationPassingResultCollector extends ResultCollectorAdapter {
+        @Override
         public void setProperties(Properties properties) {
-            assertState(SET_PROPERTIES);
+            parent.resultCollector.setProperties(properties);
         }
 
+        @Override
         public void onSuiteStarted(VisualSuite visualSuite) {
-            assertState(SUITE_STARTED);
-        }
-
-        public void onConfigurationParsed(VisualSuite visualSuite) {
-            assertState(CONFIGURATION_PARSED);
-        }
-
-        public void onTestStarted(org.jboss.lupic.suite.Test test) {
-            assertState(TEST_STARTED);
-        }
-
-        public void onSampleStarted(org.jboss.lupic.suite.Test test) {
-            assertState(SAMPLE_STARTED);
-        }
-
-        public void onSampleLoaded(org.jboss.lupic.suite.Test test) {
-            assertState(SAMPLE_LOADED);
-        }
-
-        public void onPatternParsed(Configuration configuration, Pattern pattern) {
-            assertState(PATTERN_PARSED);
-        }
-
-        public void onPatternStarted(Pattern pattern) {
-            assertState(PATTERN_STARTED);
-        }
-
-        public void onPatternLoaded(org.jboss.lupic.suite.Test test, Pattern pattern) {
-            assertState(PATTERN_LOADED);
-        }
-
-        public void onPatternCompleted(org.jboss.lupic.suite.Test test, Pattern pattern,
-            ComparisonResult comparisonResult) {
-            assertState(PATTERN_COMPLETED);
-        }
-
-        public void onTestParsed(org.jboss.lupic.suite.Test test) {
-            assertState(TEST_PARSED);
-        }
-
-        public void onTestCompleted(org.jboss.lupic.suite.Test test) {
-            assertState(TEST_COMPLETED);
-        }
-
-        public void onSuiteParsed(VisualSuite visualSuite) {
-            assertState(SUITE_PARSED);
-        }
-
-        public void onSuiteCompleted(VisualSuite visualSuite) {
-            assertState(SUITE_COMPLETED);
-        }
-
-        public void assertState(State expectedState) {
-            assertSame(incrementAndGetState(), expectedState);
-        }
-
-        public State incrementAndGetState() {
-            if (state == null) {
-                state = SET_PROPERTIES;
-            } else if (State.values().length == state.ordinal()) {
-                state = null;
-            } else {
-                state = State.values()[state.ordinal() + 1];
-            }
-            return state;
+            parent.resultCollector.onSuiteStarted(visualSuite);
         }
     }
-
 }
