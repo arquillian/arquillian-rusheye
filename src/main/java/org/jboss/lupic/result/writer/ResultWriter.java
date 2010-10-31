@@ -34,7 +34,7 @@ import org.jboss.lupic.suite.Test;
 public interface ResultWriter {
     public void setProperties(Properties properties);
     
-    public void write(Test test, List<ResultDetail> detail);
+    public void write(Test test, List<ResultDetail> details);
     
     public void close();
 }

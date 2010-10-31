@@ -55,7 +55,7 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
 
     @Override
     public void setProperties(Properties properties) {
-        super.setProperties(properties);
+        this.properties = properties;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
         detail.setConclusion(conclusion);
 
         if (conclusion == ResultConclusion.DIFFER || conclusion == ResultConclusion.PERCEPTUALLY_SAME) {
-            String location = storage.write(test, pattern, comparisonResult.getDiffImage());
+            String location = storage.store(test, pattern, comparisonResult.getDiffImage());
             detail.setLocation(location);
         }
 
@@ -114,5 +114,6 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
     public void onSuiteCompleted(VisualSuite visualSuite) {
         writer.close();
         statistics.onSuiteCompleted();
+        storage.end();
     }
 }

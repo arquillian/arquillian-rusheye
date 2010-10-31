@@ -34,5 +34,7 @@ import org.jboss.lupic.suite.Test;
 public interface ResultStorage {
     public void setProperties(Properties properties);
 
-    public String write(Test test, Pattern pattern, BufferedImage differenceImage);
+    public String store(Test test, Pattern pattern, BufferedImage differenceImage);
+    
+    public void end();
 }
