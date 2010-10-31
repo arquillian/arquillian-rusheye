@@ -29,5 +29,6 @@ public enum ResultConclusion {
     SAME,
     PERCEPTUALLY_SAME,
     DIFFER,
-    NOT_TESTED
+    NOT_TESTED,
+    ERROR
 }

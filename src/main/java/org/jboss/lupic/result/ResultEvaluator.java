@@ -41,7 +41,12 @@ public class ResultEvaluator {
             BigDecimal totalPixels = new BigDecimal(comparisonResult.getTotalPixels());
             BigDecimal differentPixels = new BigDecimal(comparisonResult.getDifferentPixels());
 
-            BigDecimal ratio = differentPixels.multiply(new BigDecimal(100)).divide(totalPixels);
+            BigDecimal ratio;
+            if (comparisonResult.getTotalPixels() != 0) {
+                ratio = differentPixels.multiply(new BigDecimal(100)).divide(totalPixels);
+            } else {
+                ratio = BigDecimal.ZERO;
+            }
 
             int result = ratio.compareTo(new BigDecimal(perception.getGlobalDifferencePercentage()));
 
@@ -53,7 +58,7 @@ public class ResultEvaluator {
                 return ResultConclusion.PERCEPTUALLY_SAME;
             }
         } else {
-            throw new IllegalStateException();
+            return ResultConclusion.ERROR;
         }
 
         return ResultConclusion.DIFFER;
