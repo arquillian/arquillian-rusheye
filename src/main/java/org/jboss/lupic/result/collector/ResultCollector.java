@@ -19,10 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.result;
+package org.jboss.lupic.result.collector;
+
+import java.util.Properties;
 
 import org.jboss.lupic.core.ComparisonResult;
-import org.jboss.lupic.parser.listener.ParserListenerAdapter;
+import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
@@ -31,32 +33,24 @@ import org.jboss.lupic.suite.VisualSuite;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class ResultCollectorAdapter extends ParserListenerAdapter implements ResultCollector {
+public interface ResultCollector extends ParserListener {
+    void setProperties(Properties properties);
 
-    public void onConfigurationParsed(VisualSuite visualSuite) {
-    }
+    void onConfigurationParsed(VisualSuite visualSuite);
 
-    public void onSampleStarted(Test test) {
-    }
+    void onSampleStarted(Test test);
 
-    public void onSampleLoaded(Test test) {
-    }
+    void onSampleLoaded(Test test);
 
-    public void onPatternStarted(Pattern pattern) {
-    }
+    void onPatternStarted(Pattern pattern);
 
-    public void onPatternLoaded(Test test, Pattern pattern) {
-    }
+    void onPatternLoaded(Test test, Pattern pattern);
 
-    public void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult) {
-    }
+    void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult);
 
-    public void onTestStarted(Test test) {
-    }
+    void onTestStarted(Test test);
 
-    public void onTestCompleted(Test test) {
-    }
-
-    public void onSuiteCompleted(VisualSuite visualSuite) {
-    }
+    void onTestCompleted(Test test);
+    
+    void onSuiteCompleted(VisualSuite visualSuite);
 }
