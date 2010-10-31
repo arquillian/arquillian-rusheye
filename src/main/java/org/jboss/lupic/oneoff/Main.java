@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.Set;
 
 import org.jboss.lupic.core.ComparisonResult;
-import org.jboss.lupic.core.ImageComparator;
+import org.jboss.lupic.core.DefaultImageComparator;
 import org.jboss.lupic.suite.Mask;
 
 /**
@@ -69,7 +69,7 @@ public class Main {
         try {
             BufferedImage[] sourceImages = ImageUtils.readSourceImages(configuration.getFirstSourceDirectory(),
                 configuration.getSecondSourceDirectory(), imageFileName);
-            ComparisonResult comparisonResult = new ImageComparator().compare(sourceImages[0], sourceImages[1],
+            ComparisonResult comparisonResult = new DefaultImageComparator().compare(sourceImages[0], sourceImages[1],
                 configuration.getPerception(), maskImages);
             if (!comparisonResult.isEqualsImages()) {
                 differentImageCounter++;

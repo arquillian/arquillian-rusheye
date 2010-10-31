@@ -32,7 +32,9 @@ public class Instantiator<T> {
         try {
             return getInstanceClass(className).newInstance();
         } catch (InstantiationException e) {
+            e.printStackTrace();
             throw new LupicConfigurationException(e);
+            
         } catch (IllegalAccessException e) {
             throw new LupicConfigurationException(e);
         }

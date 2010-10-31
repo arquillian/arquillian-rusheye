@@ -47,7 +47,7 @@ import org.testng.annotations.Test;
  */
 public class TestImageComparison {
     Perception perception;
-    ImageComparator comparator = new ImageComparator();
+    DefaultImageComparator comparator = new DefaultImageComparator();
 
     BufferedImage expectedDiff;
 
