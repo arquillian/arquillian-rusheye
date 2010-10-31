@@ -93,12 +93,21 @@ public class AbstractVisualSuiteDefinitionTest {
     }
 
     private class WriterRunnable implements Runnable {
+
+        XMLWriter writer;
+        VisualSuiteStub stub;
+
+        public WriterRunnable(VisualSuiteStub stub, XMLWriter writer) {
+            super();
+            this.stub = stub;
+            this.writer = writer;
+        }
+
         @Override
         public void run() {
             try {
-                AbstractVisualSuiteDefinitionTest.this.writer
-                    .write(AbstractVisualSuiteDefinitionTest.this.stub.document);
-                AbstractVisualSuiteDefinitionTest.this.writer.close();
+                writer.write(stub.document);
+                writer.close();
                 generatedDocument = new String(documentOutputStream.toByteArray());
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -107,7 +116,7 @@ public class AbstractVisualSuiteDefinitionTest {
     }
 
     public void startWriter() {
-        Thread writerThread = new Thread(new WriterRunnable());
+        Thread writerThread = new Thread(new WriterRunnable(stub, writer));
         writerThread.start();
     }
 
