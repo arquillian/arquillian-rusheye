@@ -62,8 +62,8 @@ public class Configuration {
     }
 
     public void setValuesFromParent(Configuration parent) {
-        perception.setValuesFromParent(parent.perception);
-        ignoreBitmapMasks.addAll(parent.ignoreBitmapMasks);
-        selectiveAlphaMasks.addAll(parent.selectiveAlphaMasks);
+        perception.setValuesFromParent(parent.getPerception());
+        ignoreBitmapMasks.addAll(parent.getIgnoreBitmapMasks());
+        selectiveAlphaMasks.addAll(parent.getSelectiveAlphaMasks());
     }
 }
