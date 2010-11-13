@@ -114,7 +114,7 @@ public abstract class XmlResultWriter implements ResultWriter {
 
     private XMLStreamWriter createXMLStreamWriter() throws XMLStreamException {
         XMLOutputFactory factory = XMLOutputFactory.newFactory();
-        return factory.createXMLStreamWriter(out);
+        return PrettyXMLStreamWriter.pretty(factory.createXMLStreamWriter(out));
     }
 
     protected abstract OutputStream openOutputStream() throws Exception;
