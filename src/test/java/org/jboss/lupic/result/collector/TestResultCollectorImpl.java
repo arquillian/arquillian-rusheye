@@ -27,6 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -45,6 +46,9 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -84,9 +88,33 @@ public class TestResultCollectorImpl {
     @Mock
     ComparisonResult comparisonResult;
 
+    @Mock
+    Perception perception;
+
+    @Mock
+    BufferedImage image;
+
+    @Mock
+    List<ResultDetail> resultDetails;
+
+    @Mock
+    ConcurrentMap<org.jboss.lupic.suite.Test, List<ResultDetail>> map;
+
     @BeforeMethod
     public void beforeClass() {
         MockitoAnnotations.initMocks(this);
+
+        when(test1.getPerception()).thenReturn(perception);
+        when(test2.getPerception()).thenReturn(perception);
+        when(perception.getGlobalDifferencePercentage()).thenReturn((short) 5);
+        when(perception.getGlobalDifferencePixelAmount()).thenReturn(null);
+        when(comparisonResult.isEqualsImages()).thenReturn(false);
+        when(comparisonResult.getTotalPixels()).thenReturn(100);
+        when(comparisonResult.getDifferentPixels()).thenReturn(4);
+        when(comparisonResult.getDiffImage()).thenReturn(image);
+        when(map.get(any(org.jboss.lupic.suite.Test.class))).thenReturn(resultDetails);
+
+        collector.details = map;
     }
 
     @Test
@@ -113,22 +141,29 @@ public class TestResultCollectorImpl {
     }
 
     @Test
-    public void testOrder() {
-        Perception perception = mock(Perception.class);
-        BufferedImage image = mock(BufferedImage.class);
-        List<ResultDetail> resultDetails = mock(List.class);
-        ConcurrentMap<org.jboss.lupic.suite.Test, List<ResultDetail>> map = mock(ConcurrentMap.class);
-        when(test1.getPerception()).thenReturn(perception);
-        when(test2.getPerception()).thenReturn(perception);
-        when(perception.getGlobalDifferencePercentage()).thenReturn((short) 5);
-        when(perception.getGlobalDifferencePixelAmount()).thenReturn(null);
-        when(comparisonResult.isEqualsImages()).thenReturn(false);
-        when(comparisonResult.getTotalPixels()).thenReturn(100);
-        when(comparisonResult.getDifferentPixels()).thenReturn(4);
-        when(comparisonResult.getDiffImage()).thenReturn(image);
-        when(map.get(any(org.jboss.lupic.suite.Test.class))).thenReturn(resultDetails);
+    public void testRsultDetailNotNullValues() {
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
 
-        collector.details = map;
+                ResultDetail resultDetail = (ResultDetail) args[0];
+
+                Assert.assertNotNull(resultDetail.getConclusion());
+                Assert.assertNotNull(resultDetail.getPattern());
+                Assert.assertNotNull(resultDetail.getComparisonResult());
+
+                return null;
+            }
+        }).when(statistics).onPatternCompleted(any(ResultDetail.class));
+
+        setupProperties();
+        collector.onConfigurationParsed(visualSuite);
+        collector.onPatternCompleted(test1, pattern1, comparisonResult);
+    }
+
+    @Test
+    public void testOrder() {
         setupProperties();
         collector.onConfigurationParsed(visualSuite);
         collector.onPatternCompleted(test1, pattern1, comparisonResult);
