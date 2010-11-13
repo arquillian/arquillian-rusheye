@@ -21,16 +21,17 @@
  */
 package org.jboss.lupic.suite;
 
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.fail;
+
 import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.Properties;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.jboss.lupic.retriever.sample.AbstractSampleRetriever;
-import org.jboss.lupic.retriever.sample.NotSuchSampleException;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -46,7 +47,7 @@ public class TestSample {
     private final SampleRetriever sampleRetriever = new AbstractSampleRetriever() {
 
         @Override
-        public BufferedImage retrieve(String source, Properties localProperties) throws NotSuchSampleException {
+        protected BufferedImage loadSource(String source) throws org.jboss.lupic.retriever.RetrieverException {
             if (source.equals(TEST_NAME1)) {
                 return BUFFERED_IMAGE1;
             } else if (source.equals(TEST_NAME2)) {
@@ -57,8 +58,8 @@ public class TestSample {
         }
 
         @Override
-        public List<String> getNewSamples() {
-            return null;
+        public Set<String> getAllSources() {
+            return new HashSet<String>(Arrays.asList(new String[] { TEST_NAME1, TEST_NAME2 }));
         }
     };
 

@@ -22,25 +22,43 @@
 package org.jboss.lupic.retriever.sample;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.Properties;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.imageio.ImageIO;
+
+import org.jboss.lupic.retriever.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class FileSampleRetriever extends AbstractSampleRetriever {
-
     @Override
-    public BufferedImage retrieve(String source, Properties localProperties) throws NotSuchSampleException {
-        // TODO Auto-generated method stub
-        return null;
+    protected Set<String> getAllSources() {
+        final File samplesDirectory = getProperty("sample-directory", File.class);
+
+        if (samplesDirectory == null) {
+            throw new IllegalArgumentException(
+                "the 'samples' argument have to be set in order to load list of available sources");
+        }
+        
+        Set<String> sources = new TreeSet<String>();
+        sources.addAll(Arrays.asList(samplesDirectory.list()));
+
+        return Collections.unmodifiableSet(sources);
     }
 
     @Override
-    public List<String> getNewSamples() {
-        // TODO Auto-generated method stub
-        return null;
+    protected BufferedImage loadSource(String source) throws RetrieverException {
+        try {
+            return ImageIO.read(new File(source));
+        } catch (IOException e) {
+            throw new RetrieverException("can't load sample from source '" + source + "'", e);
+        }
     }
-
 }

@@ -21,37 +21,30 @@
  */
 package org.jboss.lupic.retriever;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
-import org.jboss.lupic.suite.utils.ConvertingProperties;
+import javax.imageio.ImageIO;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class AbstractRetriever implements Retriever {
-
-    private ConvertingProperties properties = new ConvertingProperties();
-
+public class ResourceRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
     @Override
-    public void setGlobalProperties(Properties properties) {
-        if (properties != null) {
-            this.properties = new ConvertingProperties(properties);
+    public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        URL resourceURL = this.getClass().getClassLoader().getResource(source);
+        BufferedImage bufferedImage;
+
+        try {
+            bufferedImage = ImageIO.read(resourceURL);
+        } catch (IOException e) {
+            throw new RetrieverException(ResourceRetriever.class.getSimpleName()
+                + " wasn't able to retrieve image from resourceURL '" + resourceURL + "'", e);
         }
-    }
 
-    public Properties mergeProperties(Properties localProperties) {
-        Properties result = new Properties();
-        result.putAll(properties);
-        result.putAll(localProperties);
-        return result;
-    }
-
-    protected <T> T getProperty(String propertyKey, Class<T> tClass) {
-        return properties.getProperty(propertyKey, tClass);
-    }
-    
-    protected <T> T getProperty(String propertyKey, T defaultValue,  Class<T> tClass) {
-        return properties.getProperty(propertyKey, defaultValue, tClass);
+        return bufferedImage;
     }
 }

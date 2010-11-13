@@ -21,17 +21,20 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -44,10 +47,10 @@ public class TestSampleRetriever extends AbstractVisualSuiteDefinitionTest {
     @Test
     public void testPropertiesShouldPass() throws SAXException, IOException {
         String retrieverImpl = AssertingRetriever.class.getName();
-        stub.maskRetriever.addAttribute("class", retrieverImpl);
+        stub.sampleRetriever.addAttribute("class", retrieverImpl);
 
-        stub.maskRetriever.addElement("xxx").setText("1");
-        stub.maskRetriever.addElement("yyy").setText("2");
+        stub.sampleRetriever.addElement("xxx").setText("1");
+        stub.sampleRetriever.addElement("yyy").setText("2");
 
         startWriter();
         parse();
@@ -62,8 +65,8 @@ public class TestSampleRetriever extends AbstractVisualSuiteDefinitionTest {
 
     public static class AssertingRetriever extends TestPatternRetriever.AssertingRetriever implements SampleRetriever {
         @Override
-        public List<String> getNewSamples() {
-            return null;
+        public Set<String> getNewSources() {
+            return new HashSet<String>(Arrays.asList(new String[] { SOURCE }));
         }
     }
 }

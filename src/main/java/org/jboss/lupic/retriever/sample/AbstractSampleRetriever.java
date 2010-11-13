@@ -21,7 +21,15 @@
  */
 package org.jboss.lupic.retriever.sample;
 
+import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.Properties;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.jboss.lupic.retriever.AbstractRetriever;
+import org.jboss.lupic.retriever.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -29,4 +37,44 @@ import org.jboss.lupic.retriever.AbstractRetriever;
  */
 public abstract class AbstractSampleRetriever extends AbstractRetriever implements SampleRetriever {
 
+    private SortedSet<String> allSources = null;
+    private SortedSet<String> unretrievedSources = null;
+
+    @Override
+    public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        if (allSources == null) {
+            synchronized (this) {
+                if (allSources == null) {
+                    allSources = new TreeSet<String>(getAllSources());
+                    unretrievedSources = new TreeSet<String>(allSources);
+                }
+            }
+        }
+
+        int retries = getProperty("load-source-retries", 1, Integer.class);
+
+        if (!allSources.contains(source)) {
+            throw new NotSuchSampleException("source '" + source
+                + "' wasn't found when listing all of available samples");
+        }
+
+        for (int i = 0; i < retries; i++) {
+            try {
+                return loadSource(source);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+
+        throw new RetrieverException("can't load the source '" + source + "'");
+    }
+
+    protected abstract Set<String> getAllSources();
+
+    protected abstract BufferedImage loadSource(String source) throws RetrieverException;
+
+    @Override
+    public Set<String> getNewSources() {
+        return Collections.unmodifiableSet(unretrievedSources);
+    }
 }
