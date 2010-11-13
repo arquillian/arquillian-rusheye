@@ -21,18 +21,27 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.PATTERN;
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.TEST;
+
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Properties;
 
+import org.dom4j.Element;
 import org.jboss.lupic.parser.listener.CompareListener;
 import org.jboss.lupic.result.collector.ResultCollectorImpl;
 import org.jboss.lupic.result.statistics.OverallStatistics;
 import org.jboss.lupic.result.storage.ObjectMapStorage;
 import org.jboss.lupic.result.writer.XmlResultWriter;
 import org.jboss.lupic.retriever.ResourceRetriever;
+import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.retriever.sample.ResourceSampleRetriever;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -40,13 +49,24 @@ import org.xml.sax.SAXException;
  */
 public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
-    @Test
-    public void test() throws IOException, SAXException {
+    private final static String[] samples = new String[] { "different", "different-masked", "not-same", "perceptible",
+        "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
+
+    @DataProvider
+    public Object[][] provideSamples() {
+        Object[][] result = new Object[samples.length][1];
+        int i = 0;
+        for (String sample : samples) {
+            result[i++][0] = sample;
+        }
+        return result;
+    }
+
+    private void setup() {
         stub.patternRetriever.addAttribute("class", ResourceRetriever.class.getName());
         stub.maskRetriever.addAttribute("class", ResourceRetriever.class.getName());
-        stub.sampleRetriever.addAttribute("class", ResourceSampleRetriever.class.getName());
-        stub.sampleRetriever.addElement(ResourceSampleRetriever.RESOURCES_LOCATION).addText("image-comparator/same");
-        stub.sampleRetriever.addElement(ResourceSampleRetriever.RESOURCE_EXTENSION).addText("png");
+        stub.sampleRetriever.addAttribute("class", ScreenshotResourceSampleRetriever.class.getName());
+        stub.sampleRetriever.addElement(ResourceSampleRetriever.RESOURCE_EXTENSION).addText("");
 
         stub.defaultListener.addAttribute("class", CompareListener.class.getName());
         stub.defaultListener.addElement("result-collector").addText(ResultCollectorImpl.class.getName());
@@ -55,8 +75,35 @@ public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
         stub.defaultListener.addElement("result-writer").addText(StdOutXmlResultWriter.class.getName());
         stub.defaultListener.addElement("result-statistics").addText(OverallStatistics.class.getName());
 
-        stub.defaultPattern.addAttribute("source", "image-comparator/same/pattern.png");
-        stub.defaultTest.addAttribute("name", "screenshot");
+        stub.sampleRetriever.addElement(ResourceSampleRetriever.RESOURCES_LOCATION).addText("image-comparator");
+    }
+
+    @Test(dataProvider = "provideSamples")
+    public void testSample(String sample) throws IOException, SAXException {
+        setup();
+
+        stub.defaultTest.addAttribute("name", sample);
+
+        stub.defaultPattern.addAttribute("name", "pattern");
+        stub.defaultPattern.addAttribute("source", "image-comparator/" + sample + "/pattern.png");
+
+        startWriter();
+        parse();
+    }
+
+    @Test
+    public void testAllSamplesAtOnce() throws IOException, SAXException {
+        setup();
+
+        stub.visualSuite.remove(stub.defaultTest);
+
+        for (String sample : samples) {
+            Element test = stub.visualSuite.addElement(TEST).addAttribute("name", sample);
+
+            Element pattern = test.addElement(PATTERN);
+            pattern.addAttribute("name", sample + "-pattern");
+            pattern.addAttribute("source", "image-comparator/" + sample + "/pattern.png");
+        }
 
         startWriter();
         parse();
@@ -70,6 +117,13 @@ public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
         @Override
         protected void closeOutputStream() throws Exception {
+        }
+    }
+
+    public static class ScreenshotResourceSampleRetriever extends ResourceSampleRetriever {
+        @Override
+        public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+            return super.retrieve(source + "/screenshot.png", localProperties);
         }
     }
 }
