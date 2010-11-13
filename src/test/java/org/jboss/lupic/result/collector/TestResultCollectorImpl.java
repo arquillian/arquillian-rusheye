@@ -211,8 +211,8 @@ public class TestResultCollectorImpl {
         }
 
         @Override
-        public void write(org.jboss.lupic.suite.Test test, List<ResultDetail> details) {
-            writer.write(test, details);
+        public boolean write(org.jboss.lupic.suite.Test test, List<ResultDetail> details) {
+            return writer.write(test, details);
         }
 
         @Override

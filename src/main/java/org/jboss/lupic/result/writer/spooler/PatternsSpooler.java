@@ -19,22 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.result.writer;
+package org.jboss.lupic.result.writer.spooler;
 
-import java.util.List;
-import java.util.Properties;
-
-import org.jboss.lupic.result.ResultDetail;
-import org.jboss.lupic.suite.Test;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public interface ResultWriter {
-    public void setProperties(Properties properties);
-    
-    public boolean write(Test test, List<ResultDetail> details);
-    
-    public void close();
+public class PatternsSpooler implements XmlSpooler {
+
+    @Override
+    public void write(XMLStreamWriter writer, SpoolerContext context) throws XMLStreamException {
+        PatternSpooler patternProcessor = new PatternSpooler();
+        
+        while (context.hasNextDetail()) {
+            patternProcessor.write(writer, context);
+        }
+    }
+
 }

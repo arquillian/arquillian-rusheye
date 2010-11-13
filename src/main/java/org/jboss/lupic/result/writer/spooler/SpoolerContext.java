@@ -19,10 +19,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.result.writer;
+package org.jboss.lupic.result.writer.spooler;
 
-import java.util.List;
-import java.util.Properties;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.suite.Test;
@@ -31,10 +31,30 @@ import org.jboss.lupic.suite.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public interface ResultWriter {
-    public void setProperties(Properties properties);
-    
-    public boolean write(Test test, List<ResultDetail> details);
-    
-    public void close();
+public class SpoolerContext {
+    private Test test;
+    private Iterator<ResultDetail> detailIterator;
+    private ResultDetail currentDetail;
+
+    public SpoolerContext(Test test, Collection<ResultDetail> details) {
+        this.test = test;
+        this.detailIterator = details.iterator();
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public boolean hasNextDetail() {
+        return detailIterator.hasNext();
+    }
+
+    public ResultDetail getNextDetail() {
+        currentDetail = detailIterator.next();
+        return currentDetail;
+    }
+
+    public ResultDetail getCurrentDetail() {
+        return currentDetail;
+    }
 }

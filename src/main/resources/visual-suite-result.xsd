@@ -56,12 +56,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	</xs:complexType>
 
 	<xs:complexType name="PatternType">
-		<xs:sequence>
-			<xs:element name="perception" type="vsr:PerceptionType"
+		<xs:choice>
+			<xs:element name="comparison-result" type="vsr:ComparisonResultType"
 				minOccurs="0" />
 			<xs:element name="error-output" type="xs:string"
 				minOccurs="0" />
-		</xs:sequence>
+		</xs:choice>
 		<xs:attribute name="name" type="xs:Name" use="required" />
 		<xs:attribute name="result" type="vsr:ResultType" use="required" />
 		<xs:attribute name="output" type="xs:string" />
@@ -69,15 +69,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 	<xs:simpleType name="ResultType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="same" />
-			<xs:enumeration value="perceptually-same" />
-			<xs:enumeration value="differ" />
-			<xs:enumeration value="error" />
-			<xs:enumeration value="not-tested" />
+			<xs:enumeration value="SAME" />
+			<xs:enumeration value="PERCEPTUALLY_SAME" />
+			<xs:enumeration value="DIFFER" />
+			<xs:enumeration value="ERROR" />
+			<xs:enumeration value="NOT_TESTED" />
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="PerceptionType">
+	<xs:complexType name="ComparisonResultType">
 		<xs:sequence>
 			<xs:element name="area" type="vsr:AreaType" />
 			<xs:element name="rectangle" type="vsr:RectangleType" minOccurs="0" maxOccurs="unbounded" />
@@ -97,7 +97,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	
 	<xs:complexType name="RectangleType">
 		<xs:sequence>
-			<xs:element name="vertex" minOccurs="2" maxOccurs="2">
+			<xs:element name="point" minOccurs="2" maxOccurs="2">
 				<xs:complexType>
 					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
 					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />
