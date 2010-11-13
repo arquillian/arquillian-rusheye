@@ -36,13 +36,19 @@ public class ResourceRetriever extends AbstractRetriever implements PatternRetri
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         URL resourceURL = this.getClass().getClassLoader().getResource(source);
+
+        if (resourceURL == null) {
+            throw new RetrieverException(this.getClass().getSimpleName() + " wasn't able to retrieve image source '"
+                + source + "' - given source doesn't exist");
+        }
+
         BufferedImage bufferedImage;
 
         try {
             bufferedImage = ImageIO.read(resourceURL);
         } catch (IOException e) {
-            throw new RetrieverException(ResourceRetriever.class.getSimpleName()
-                + " wasn't able to retrieve image from resourceURL '" + resourceURL + "'", e);
+            throw new RetrieverException(this.getClass().getSimpleName() + " wasn't able to retrieve image source '"
+                + source + "' from resourceURL '" + resourceURL + "'", e);
         }
 
         return bufferedImage;
