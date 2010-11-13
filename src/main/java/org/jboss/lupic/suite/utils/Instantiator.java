@@ -33,10 +33,10 @@ public class Instantiator<T> {
             return getInstanceClass(className).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
-            throw new LupicConfigurationException(e);
-            
+            throw new LupicConfigurationException(getMessage(className), e);
+
         } catch (IllegalAccessException e) {
-            throw new LupicConfigurationException(e);
+            throw new LupicConfigurationException(getMessage(className), e);
         }
     }
 
@@ -45,7 +45,11 @@ public class Instantiator<T> {
         try {
             return (Class<? extends T>) Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new LupicConfigurationException(e);
+            throw new LupicConfigurationException(getMessage(className), e);
         }
+    }
+
+    private String getMessage(String className) {
+        return "Error when trying to create instance of class '" + className + "'";
     }
 }
