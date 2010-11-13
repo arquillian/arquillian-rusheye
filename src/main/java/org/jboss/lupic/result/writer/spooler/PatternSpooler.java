@@ -39,11 +39,13 @@ public class PatternSpooler implements XmlSpooler {
         writer.writeStartElement("pattern");
         writer.writeAttribute("name", detail.getPattern().getName());
         writer.writeAttribute("result", detail.getConclusion().toString());
-        writer.writeAttribute("output", detail.getLocation());
+        
+        if (detail.getLocation() != null) {
+            writer.writeAttribute("output", detail.getLocation());
+        }
         
         new ComparisonResultSpooler().write(writer, context);
         
         writer.writeEndElement();
     }
-
 }
