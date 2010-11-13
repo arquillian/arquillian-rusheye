@@ -47,6 +47,7 @@ public class TestProcessor extends Processor {
 
     @Override
     public void end() {
+        test.getPerception().setDefaultValuesForUnset();
         getContext().invokeListeners().onTestParsed(test);
     }
 }
