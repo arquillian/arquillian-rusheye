@@ -29,13 +29,12 @@ import java.io.PipedOutputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.jboss.lupic.PassingSAXErrorHandler;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -65,22 +64,7 @@ public class AbstractVisualSuiteDefinitionTest {
         inputSource = new InputSource(in);
 
         parser = new Parser();
-        parser.getXMLReader().setErrorHandler(new ErrorHandler() {
-            @Override
-            public void warning(SAXParseException e) throws SAXException {
-                throw e;
-            }
-
-            @Override
-            public void fatalError(SAXParseException e) throws SAXException {
-                throw e;
-            }
-
-            @Override
-            public void error(SAXParseException e) throws SAXException {
-                throw e;
-            }
-        });
+        parser.getXMLReader().setErrorHandler(new PassingSAXErrorHandler());
 
         handler = parser.getHandler();
     }

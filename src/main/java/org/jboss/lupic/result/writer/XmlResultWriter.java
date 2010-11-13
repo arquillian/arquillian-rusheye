@@ -70,8 +70,13 @@ public abstract class XmlResultWriter implements ResultWriter {
     private void tryWriteStartDocument() {
         if (!writerFailed && !writtenStartDocument) {
             try {
-                writer.writeStartDocument();
+
+                writer.writeStartDocument("UTF-8", "1.0");
                 writer.writeStartElement("visual-suite-result");
+                writer.writeDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
+                writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                writer.writeAttribute("xsi:schemaLocation",
+                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
                 writtenStartDocument = true;
             } catch (XMLStreamException e) {
                 writerFailed = true;

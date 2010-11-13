@@ -21,16 +21,18 @@
  */
 package org.jboss.lupic.result;
 
-import static org.mockito.Mockito.*;
-import static org.testng.Assert.*;
-import static org.jboss.lupic.result.ResultConclusion.*;
+import static org.jboss.lupic.result.ResultConclusion.DIFFER;
+import static org.jboss.lupic.result.ResultConclusion.ERROR;
+import static org.jboss.lupic.result.ResultConclusion.PERCEPTUALLY_SAME;
+import static org.jboss.lupic.result.ResultConclusion.SAME;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.suite.Perception;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
