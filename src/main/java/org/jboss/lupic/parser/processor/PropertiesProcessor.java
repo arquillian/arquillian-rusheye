@@ -42,6 +42,6 @@ public class PropertiesProcessor extends Processor {
 
     @Override
     public void process(String content) {
-        properties.put(tagName, content);
+        properties.put(tagName, content != null ? content : "");
     }
 }
