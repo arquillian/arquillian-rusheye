@@ -90,7 +90,7 @@ public abstract class XmlResultWriter implements ResultWriter {
     }
 
     private boolean tryInitializeWriter() {
-        if (!writerFailedToInitialize && out != null && writer != null) {
+        if (!writerFailedToInitialize && out == null && writer == null) {
             try {
                 out = openOutputStream();
             } catch (Exception e) {
@@ -100,35 +100,38 @@ public abstract class XmlResultWriter implements ResultWriter {
             try {
                 writer = createXMLStreamWriter();
             } catch (XMLStreamException e) {
+                writerFailedToInitialize = true;
                 try {
                     out.close();
                 } catch (IOException ioe) {
-                    writerFailedToInitialize = true;
+                    // not need to close
                 }
             }
         }
 
-        return writerFailedToInitialize;
+        return !writerFailedToInitialize;
     }
 
     private XMLStreamWriter createXMLStreamWriter() throws XMLStreamException {
         XMLOutputFactory factory = XMLOutputFactory.newFactory();
-        factory.setProperty("javax.xml.stream.isPrefixDefaulting", true);
         return factory.createXMLStreamWriter(out);
     }
 
     protected abstract OutputStream openOutputStream() throws Exception;
 
+    protected abstract void closeOutputStream() throws Exception;
+
     public void close() {
         try {
             writer.writeEndElement();
+            writer.close();
         } catch (XMLStreamException e) {
             // needs to be logged
         }
 
         try {
-            out.close();
-        } catch (IOException e) {
+            closeOutputStream();
+        } catch (Exception e) {
             // needs to be logged
         }
 
