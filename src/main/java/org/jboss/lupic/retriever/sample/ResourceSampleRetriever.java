@@ -59,7 +59,7 @@ public class ResourceSampleRetriever extends AbstractRetriever implements Sample
                 + "' have to be set in order to obtain resources");
         }
 
-        final File sourceFile = new File(resourcesLocation, source + "." + resourceExtension);
+        final File sourceFile = new File(resourcesLocation, source + resourceExtension);
 
         URL resourceURL = this.getClass().getClassLoader().getResource(sourceFile.getPath());
         BufferedImage bufferedImage;
