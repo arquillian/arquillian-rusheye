@@ -24,6 +24,8 @@ package org.jboss.lupic.suite;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
@@ -33,6 +35,7 @@ public class Configuration {
     Set<Mask> ignoreBitmapMasks = new LinkedHashSet<Mask>();
     Set<Mask> selectiveAlphaMasks = new LinkedHashSet<Mask>();
 
+    @XmlTransient
     public Perception getPerception() {
         return perception;
     }
@@ -41,6 +44,7 @@ public class Configuration {
         this.perception = perception;
     }
 
+    @XmlTransient
     public Set<Mask> getIgnoreBitmapMasks() {
         return ignoreBitmapMasks;
     }
@@ -49,6 +53,7 @@ public class Configuration {
         this.ignoreBitmapMasks = ignoreBitmapMasks;
     }
 
+    @XmlTransient
     public Set<Mask> getSelectiveAlphaMasks() {
         return selectiveAlphaMasks;
     }

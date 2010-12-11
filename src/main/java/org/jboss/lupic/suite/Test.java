@@ -24,6 +24,10 @@ package org.jboss.lupic.suite;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 /**
@@ -36,19 +40,25 @@ public class Test extends Configuration {
     private Sample sample;
     private Set<Pattern> patterns = new LinkedHashSet<Pattern>();
 
+    public Test() {
+    }
+
     public Test(String name, SampleRetriever sampleRetriever) {
         this.name = name;
         this.sample = new Sample(name, sampleRetriever);
     }
 
+    @XmlAttribute(required = true)
     public String getName() {
         return name;
     }
 
+    @XmlTransient
     public Sample getSample() {
         return sample;
     }
-
+    
+    @XmlElement(name="pattern")
     public Set<Pattern> getPatterns() {
         return patterns;
     }

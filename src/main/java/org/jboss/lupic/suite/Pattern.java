@@ -22,39 +22,93 @@
 package org.jboss.lupic.suite;
 
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.dom4j.dom.DOMElement;
+import org.dom4j.dom.DOMText;
 import org.jboss.lupic.retriever.Retriever;
+import org.jboss.lupic.suite.utils.Nullify;
+import org.jboss.lupic.suite.utils.VisualSuiteResult;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class Pattern extends FutureTask<BufferedImage> {
+public class Pattern {
 
     private String name;
-    private Properties properties;
+    private String source;
+    private Properties properties = new Properties();
+    private Retriever retriever;
 
-    public Pattern(String name, final String source, final Properties patternProperties,
-        final Retriever patternRetriever) {
-        super(new Callable<BufferedImage>() {
-            @Override
-            public BufferedImage call() throws Exception {
-                return patternRetriever.retrieve(source, patternProperties);
-            }
-        });
-        this.name = name;
-        this.properties = patternProperties;
-    }
-
+    FutureTask<BufferedImage> futureTask = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
+        @Override
+        public BufferedImage call() throws Exception {
+            return retriever.retrieve(source, properties);
+        }
+    });
+    
+    @XmlAttribute
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    @XmlAttribute
+    @Nullify(VisualSuiteResult.class)
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+    
+    @XmlAnyElement(lax=true)
+    public List<Object> getOthers() {
+        List<Object> elements = new LinkedList<Object>();
+        for (Entry<Object, Object> entry : properties.entrySet()) {
+            DOMElement element = new DOMElement((String) entry.getKey());
+            DOMText text = new DOMText((String) entry.getValue());
+            element.appendChild(text);
+            elements.add(element);
+        }
+        return elements;
+    }
+    
+    public void setOthers(List<Object> others) {
+        // TODO
+    }
+    
+    @XmlTransient
     public Properties getProperties() {
         return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    @XmlTransient
+    public Retriever getRetriever() {
+        return retriever;
+    }
+
+    public void setRetriever(Retriever retriever) {
+        this.retriever = retriever;
     }
 
     @Override
@@ -85,5 +139,13 @@ public class Pattern extends FutureTask<BufferedImage> {
             return false;
         }
         return true;
+    }
+
+    public void run() {
+        futureTask.run();
+    }
+
+    public BufferedImage get() throws InterruptedException, ExecutionException {
+        return futureTask.get();
     }
 }

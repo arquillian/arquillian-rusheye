@@ -45,7 +45,12 @@ public class PatternProcessor extends Processor {
         Configuration globalConfiguration = getVisualSuite().getGlobalConfiguration();
         Test test = getContext().getCurrentTest();
 
-        Pattern pattern = new Pattern(name, source, getProperties(), patternRetriever);
+        Pattern pattern = new Pattern();
+        pattern.setName(name);
+        pattern.setSource(source);
+        pattern.setProperties(getProperties());
+        pattern.setRetriever(patternRetriever);
+        
         test.getPatterns().add(pattern);
 
         Configuration patternConfiguration = new Configuration();

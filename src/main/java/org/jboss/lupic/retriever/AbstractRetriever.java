@@ -29,7 +29,7 @@ import org.jboss.lupic.suite.utils.ConvertingProperties;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class AbstractRetriever implements Retriever {
+public abstract class AbstractRetriever extends RetrieverAdapter {
 
     private ConvertingProperties properties = new ConvertingProperties();
 
