@@ -46,7 +46,7 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
     @Test
     public void testPropertiesShouldPass() throws SAXException, IOException {
         String retrieverImpl = AssertingRetriever.class.getName();
-        stub.patternRetriever.addAttribute("class", retrieverImpl);
+        stub.patternRetriever.addAttribute("type", retrieverImpl);
 
         stub.patternRetriever.addElement("xxx").setText("1");
         stub.patternRetriever.addElement("yyy").setText("2");

@@ -33,7 +33,7 @@
 								tests
 							</xs:documentation>
 						</xs:annotation>
-						<xs:selector xpath="vs:masks/vs:mask" />
+						<xs:selector xpath="vs:mask" />
 						<xs:field xpath="@id" />
 					</xs:unique>
 				</xs:element>
@@ -63,7 +63,7 @@
 					configuration
 				</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="vs:global-configuration/vs:masks/vs:mask" />
+			<xs:selector xpath="vs:global-configuration/vs:mask" />
 			<xs:field xpath="@id" />
 		</xs:unique>
 	</xs:element>
@@ -73,20 +73,20 @@
 			<xs:documentation>Configuration of suite including images and masks
 				retrieving and global perception settings</xs:documentation>
 		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="vs:Configuration">
-				<xs:sequence>
-					<xs:element name="listeners" type="vs:Listener"
-						minOccurs="0" maxOccurs="unbounded" />
-					<xs:element name="pattern-retriever" type="vs:Retriever"
-						minOccurs="0" />
-					<xs:element name="mask-retriever" type="vs:Retriever"
-						minOccurs="0" />
-					<xs:element name="sample-retriever" type="vs:SampleRetriever"
-						minOccurs="0" />
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
+		<xs:sequence>
+			<xs:element name="listener" type="vs:Listener"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="pattern-retriever" type="vs:Retriever"
+				minOccurs="0" />
+			<xs:element name="mask-retriever" type="vs:Retriever"
+				minOccurs="0" />
+			<xs:element name="sample-retriever" type="vs:SampleRetriever"
+				minOccurs="0" />
+			<xs:element name="perception" type="vs:Perception"
+				minOccurs="0" />
+			<xs:element name="mask" type="vs:Mask" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="Listener">
@@ -134,7 +134,7 @@
 			<xs:extension base="vs:Retriever" />
 		</xs:complexContent>
 	</xs:complexType>
-	
+
 	<xs:complexType name="Retriever">
 		<xs:complexContent>
 			<xs:extension base="vs:TypeProperties" />
@@ -195,21 +195,22 @@
 	</xs:simpleType>
 
 	<xs:complexType name="Test">
-		<xs:complexContent>
-			<xs:extension base="vs:Configuration">
-				<xs:sequence>
-					<xs:element name="pattern" type="vs:Pattern" maxOccurs="unbounded" />
-				</xs:sequence>
-				<xs:attribute name="name" type="xs:Name" use="required" />
-			</xs:extension>
-		</xs:complexContent>
+		<xs:sequence>
+			<xs:element name="perception" type="vs:Perception"
+				minOccurs="0" />
+			<xs:element name="mask" type="vs:Mask" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="pattern" type="vs:Pattern" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:Name" use="required" />
 	</xs:complexType>
 
 	<xs:complexType name="Configuration" abstract="true">
 		<xs:sequence>
 			<xs:element name="perception" type="vs:Perception"
 				minOccurs="0" />
-			<xs:element name="mask" type="vs:Mask" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="mask" type="vs:Mask" minOccurs="0"
+				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -220,7 +221,7 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	
+
 	<xs:complexType name="Sample">
 		<xs:attribute name="source">
 			<xs:simpleType>

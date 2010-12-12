@@ -36,42 +36,35 @@ import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-;
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
-    @Test(expectedExceptions = { IllegalStateException.class }, expectedExceptionsMessageRegExp = "No ParserListener was registered to process parsed tests")
-    public void testNoListeners() throws IOException, SAXException {
-        stub.globalConfiguration.remove(stub.listeners);
-        startWriter();
-        parse();
-    }
-
-    @Test(expectedExceptions = { SAXParseException.class }, expectedExceptionsMessageRegExp = ".* The content of element 'listeners' is not complete. .*")
-    public void testEmptyListeners() throws IOException, SAXException {
-        stub.listeners.remove(stub.defaultListener);
+    @Test(expectedExceptions = { SAXParseException.class }, expectedExceptionsMessageRegExp = ".* Invalid content was found starting with element 'pattern-retriever'. .*")
+    public void testNoListener() throws IOException, SAXException {
+        stub.globalConfiguration.remove(stub.defaultListener);
         startWriter();
         parse();
     }
 
     @Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "The configured ParserListener class was not found")
     public void testListenerClassNotOnClassPath() throws IOException, SAXException {
-        stub.listeners.remove(stub.defaultListener);
-        Element listener = stub.listeners.addElement(LISTENER);
-        listener.addAttribute("class", "non.existent.Class");
+        stub.globalConfiguration.remove(stub.defaultListener);
+        Element listener = stub.globalConfiguration.addElement(LISTENER);
+        listener.addAttribute("type", "non.existent.Class");
+        reoderElements();
         startWriter();
         parse();
     }
 
     @Test(expectedExceptions = UnsupportedOperationException.class, expectedExceptionsMessageRegExp = "for assertion purposes")
     public void testListenerCreation() throws IOException, SAXException {
-        stub.listeners.remove(stub.defaultListener);
-        Element listener = stub.listeners.addElement(LISTENER);
-        listener.addAttribute("class", ExceptionThrowingListener.class.getName());
+        stub.globalConfiguration.remove(stub.defaultListener);
+        Element listener = stub.globalConfiguration.addElement(LISTENER);
+        listener.addAttribute("type", ExceptionThrowingListener.class.getName());
+        reoderElements();
         startWriter();
         parse();
     }
@@ -84,9 +77,11 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
     @Test
     public void testAssertingEventOrder() throws IOException, SAXException {
-        stub.listeners.remove(stub.defaultListener);
-        Element listener = stub.listeners.addElement(LISTENER);
-        listener.addAttribute("class", AssertingListener.class.getName());
+        stub.globalConfiguration.remove(stub.defaultListener);
+        Element listener = stub.globalConfiguration.addElement(LISTENER);
+        listener.addAttribute("type", AssertingListener.class.getName());
+        reoderElements();
+
         startWriter();
         parse();
         assertEquals(AssertingListener.state, 5);
@@ -129,9 +124,10 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
     @Test
     public void testListenerProperties() throws IOException, SAXException {
-        stub.listeners.remove(stub.defaultListener);
-        Element listener = stub.listeners.addElement(LISTENER);
-        listener.addAttribute("class", PropertiesCheckingListener.class.getName());
+        stub.globalConfiguration.remove(stub.defaultListener);
+        Element listener = stub.globalConfiguration.addElement(LISTENER);
+        listener.addAttribute("type", PropertiesCheckingListener.class.getName());
+        reoderElements();
 
         Element xyz = listener.addElement("xyz");
         xyz.addText("abc");
@@ -146,5 +142,17 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
             assertEquals(properties.size(), 1);
             assertEquals(properties.get("xyz"), "abc");
         }
+    }
+    
+    private void reoderElements() {
+        stub.globalConfiguration.remove(stub.patternRetriever);
+        stub.globalConfiguration.remove(stub.maskRetriever);
+        stub.globalConfiguration.remove(stub.sampleRetriever);
+        stub.globalConfiguration.remove(stub.perception);
+        
+        stub.globalConfiguration.add(stub.patternRetriever);
+        stub.globalConfiguration.add(stub.maskRetriever);
+        stub.globalConfiguration.add(stub.sampleRetriever);
+        stub.globalConfiguration.add(stub.perception);
     }
 }

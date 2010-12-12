@@ -208,7 +208,7 @@ public class DirectoryCrawler {
     private void addImageRetriever(Element globalConfiguration) {
         Element imageRetriever = globalConfiguration.addElement("image-retriever");
 
-        imageRetriever.addAttribute("class", "org.jboss.lupic.retriever.FileRetriever");
+        imageRetriever.addAttribute("type", "org.jboss.lupic.retriever.FileRetriever");
     }
 
     private void addPerception(Element base) {

@@ -47,14 +47,6 @@ public abstract class Context {
         this.currentConfiguration = currentConfiguration;
     }
 
-    public Set<Mask> getCurrentMasks() {
-        return currentMasks;
-    }
-
-    public void setCurrentMasks(Set<Mask> currentMasks) {
-        this.currentMasks = currentMasks;
-    }
-
     public Test getCurrentTest() {
         return currentTest;
     }

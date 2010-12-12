@@ -35,6 +35,7 @@ import javax.imageio.ImageIO;
 import org.jboss.lupic.retriever.FileRetriever;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
+import org.jboss.lupic.suite.MaskType;
 import org.jboss.lupic.suite.VerticalAlignment;
 
 /**
@@ -85,7 +86,7 @@ public final class ImageUtils {
 
     public static Mask readMaskImage(File maskFile) throws Exception {
         String maskFilename = maskFile.getName();
-        Mask mask = new Mask(maskFile.getName(), maskFile.toString(), new Properties(), fileRetriever,
+        Mask mask = new Mask(maskFile.getName(), MaskType.SELECTIVE_ALPHA, maskFile.toString(), new Properties(), fileRetriever,
             resolveVerticalOrientation(maskFilename), resolveHorizontalOrientation(maskFilename));
         mask.run();
         return mask;

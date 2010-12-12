@@ -37,11 +37,12 @@ import org.jboss.lupic.retriever.MaskRetriever;
 public class Mask extends FutureTask<BufferedImage> {
 
     private String id;
+    private MaskType type;
     private Properties properties;
     private VerticalAlignment verticalAlignment;
     private HorizontalAlignment horizontalAlignment;
 
-    public Mask(String id, final String source, final Properties maskProperties, final MaskRetriever maskRetriever,
+    public Mask(String id, MaskType type, final String source, final Properties maskProperties, final MaskRetriever maskRetriever,
         VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) {
         super(new Callable<BufferedImage>() {
             @Override
@@ -50,6 +51,7 @@ public class Mask extends FutureTask<BufferedImage> {
             }
         });
         this.id = id;
+        this.type = type;
         this.properties = maskProperties;
         this.verticalAlignment = verticalAlignment;
         this.horizontalAlignment = horizontalAlignment;
@@ -57,6 +59,10 @@ public class Mask extends FutureTask<BufferedImage> {
 
     public String getId() {
         return id;
+    }
+    
+    public MaskType getType() {
+        return type;
     }
 
     public Properties getProperties() {

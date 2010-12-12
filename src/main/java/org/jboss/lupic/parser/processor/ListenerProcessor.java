@@ -39,11 +39,11 @@ public class ListenerProcessor extends Processor {
 
     @Override
     public void start() {
-        String listenerClassName = getAttribute("class");
-        Validate.notNull(listenerClassName,
-            "listener must have class attribute defined pointing to Retriever implementation");
+        String listenerType = getAttribute("type");
+        Validate.notNull(listenerType,
+            "listener must have 'type' attribute defined pointing to Retriever implementation");
 
-        parserListener = getParserListenerInstance(listenerClassName);
+        parserListener = getParserListenerInstance(listenerType);
         getVisualSuite().getGlobalConfiguration().getConfiguredListeners().add(parserListener);
     }
 

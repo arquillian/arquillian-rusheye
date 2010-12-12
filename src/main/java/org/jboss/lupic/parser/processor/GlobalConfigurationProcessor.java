@@ -31,12 +31,12 @@ import org.jboss.lupic.suite.GlobalConfiguration;
 public class GlobalConfigurationProcessor extends Processor {
 
     {
-        supportProcessor("listeners", ListenersProcessor.class);
+        supportProcessor("listener", ListenerProcessor.class);
         supportProcessor("pattern-retriever", RetrieverProcessor.class);
         supportProcessor("mask-retriever", RetrieverProcessor.class);
         supportProcessor("sample-retriever", RetrieverProcessor.class);
         supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
+        supportProcessor("mask", MaskProcessor.class);
     }
 
     @Override

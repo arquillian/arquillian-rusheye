@@ -1,78 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
-
-@author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
-@version $Revision$
-
--->
+<!-- JBoss, Home of Professional Open Source Copyright 2010, Red Hat, Inc. 
+	and individual contributors by the @authors tag. See the copyright.txt in 
+	the distribution for a full listing of individual contributors. This is free 
+	software; you can redistribute it and/or modify it under the terms of the 
+	GNU Lesser General Public License as published by the Free Software Foundation; 
+	either version 2.1 of the License, or (at your option) any later version. 
+	This software is distributed in the hope that it will be useful, but WITHOUT 
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+	FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more 
+	details. You should have received a copy of the GNU Lesser General Public 
+	License along with this software; if not, write to the Free Software Foundation, 
+	Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
+	FSF site: http://www.fsf.org. @author <a href="mailto:lfryc@redhat.com">Lukas 
+	Fryc</a> @version $Revision$ -->
 <visual-suite xmlns="http://www.jboss.org/test/visual-suite"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
 
 	<global-configuration>
-		<listeners>
-			<listener class="org.jboss.lupic.parser.listener.CompareListener">
-				<result-listener>org.jboss.lupic.result.ResultStorageListener</result-listener>
-				<storage-class>org.jboss.lupic.storage.FileStorage</storage-class>
-			</listener>
-		</listeners>
+		
+		<listener type="org.jboss.lupic.parser.listener.CompareListener">
+			<result-listener>org.jboss.lupic.result.ResultStorageListener</result-listener>
+			<storage-class>org.jboss.lupic.storage.FileStorage</storage-class>
+		</listener>
 		<!-- the image retriever, implementing SourceRetriever interface -->
-		<pattern-retriever class="org.jboss.lupic.retriever.FileRetriever">
+		<pattern-retriever type="org.jboss.lupic.retriever.FileRetriever">
 			<xxx></xxx>
 			<yyy></yyy>
 		</pattern-retriever>
-		<mask-retriever class="org.jboss.lupic.retriever.FileRetriever" />
-		<sample-retriever class="org.jboss.lupic.retriever.sample.FileSampleRetriever" />
+		<mask-retriever type="org.jboss.lupic.retriever.FileRetriever" />
+		<sample-retriever
+			type="org.jboss.lupic.retriever.sample.FileSampleRetriever" />
 		<perception>
-			<!--
-				unperceptible treshold of color difference in scope of one pixel
-			-->
+			<!-- unperceptible treshold of color difference in scope of one pixel -->
 			<!-- 0-768 -->
 			<one-pixel-treshold>5</one-pixel-treshold>
-			<!--
-				unperceptible treshold of color difference of one pixel to be
-				recognized as perceptible difference in global image scope
-			-->
+			<!-- unperceptible treshold of color difference of one pixel to be recognized 
+				as perceptible difference in global image scope -->
 			<!-- 0-768 -->
 			<global-difference-treshold>10</global-difference-treshold>
 			<!-- amount of pixels perceptually different -->
-			<!-- % of image surface / 0-* of pixels differ  -->
+			<!-- % of image surface / 0-* of pixels differ -->
 			<global-difference-pixel-amount>1%</global-difference-pixel-amount>
 		</perception>
-		<masks type="ignore-bitmap">
-			<mask id="xxx" source="xxx.png" />
-		</masks>
-		<masks type="selective-alpha">
-			<mask id="yyy" source="yyy.png" vertical-align="bottom" />
-		</masks>
+		<mask id="xxx" type="ignore-bitmap" source="xxx.png" />
+		<mask id="yyy" type="selective-alpha" source="yyy.png" vertical-align="bottom" />
 	</global-configuration>
 
 	<test name="AjaxSupportTestCase.testEmpty">
-		<masks type="ignore-bitmap">
-			<mask id="xxx" source="xxx.png" />
-		</masks>
+		<mask id="xxx" type="ignore-bitmap" source="xxx.png" />
 		<pattern name="AjaxSupportTestCase.testEmpty.1" source="AjaxSupportTestCase.testEmpty.1.png" />
 		<pattern name="AjaxSupportTestCase.testEmpty.2" source="AjaxSupportTestCase.testEmpty.2.png" />
 	</test>

@@ -45,11 +45,11 @@ public class RetrieverProcessor extends Processor {
 
     @Override
     public void start() {
-        String retrieverClassName = getAttribute("class");
-        Validate.notNull(retrieverClassName,
-            "image-retriever must have class attribute defined pointing to Retriever implementation");
+        String retrieverType = getAttribute("type");
+        Validate.notNull(retrieverType,
+            "image-retriever must have 'type' attribute defined pointing to Retriever implementation");
 
-        retriever = new Instantiator<Retriever>().getInstance(retrieverClassName);
+        retriever = new Instantiator<Retriever>().getInstance(retrieverType);
 
         String tagName = getTagName();
         GlobalConfiguration globalConfiguration = getVisualSuite().getGlobalConfiguration();
@@ -82,5 +82,4 @@ public class RetrieverProcessor extends Processor {
         retriever.setGlobalProperties(getProperties());
     }
 
-    
 }

@@ -40,6 +40,7 @@ import org.xml.sax.SAXParseException;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 import static org.testng.Assert.*;
+import static org.jboss.lupic.suite.MaskType.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -51,77 +52,41 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
     static final String MASK1_SOURCE = "mask1_source";
     static final BufferedImage SAMPLE_IMAGE = new BufferedImage(1, 1, 1);
 
-    Element masks;
     Element mask;
-
-    @Test(expectedExceptions = SAXParseException.class)
-    public void testEmptyMasksShouldRaiseException() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        startWriter();
-        parse();
-    }
-
-    @Test(expectedExceptions = SAXParseException.class)
-    public void testMasksWithNoTypeShouldRaiseException() throws IOException, SAXException {
-        addMasks(null);
-        startWriter();
-        parse();
-    }
-
-    @Test(expectedExceptions = SAXParseException.class)
-    public void testMasksWithNotExistingType() throws IOException, SAXException {
-        addMasks("not-existing-type");
-        startWriter();
-        parse();
-    }
 
     @Test
     public void testMasksWithMaskDefinedShouldPass() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         startWriter();
         parse();
     }
 
     @Test(expectedExceptions = SAXParseException.class)
     public void testMaskWithNoIdRaiseException() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(null, MASK1_SOURCE);
+        addMask(null, IGNORE_BITMAP, MASK1_SOURCE);
         startWriter();
         parse();
     }
 
     @Test
     public void testMaskWithNoSourceShouldPass() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, null);
+        addMask(MASK1_ID, IGNORE_BITMAP, null);
         startWriter();
         parse();
     }
 
     @Test(expectedExceptions = SAXParseException.class)
     public void testNonUniqueMaskIdInsideOneMasksElementRaiseException() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
-        addMask(MASK1_ID, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         startWriter();
         parse();
     }
 
     @Test(expectedExceptions = SAXParseException.class)
     public void testNonUniqueMaskIdAcrossTwoMasksElementsRaiseException() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
-        addMasks(MaskType.SELECTIVE_ALPHA.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
-        startWriter();
-        parse();
-    }
-
-    @Test(expectedExceptions = SAXParseException.class)
-    public void testDoubledMasksElementWithSameTypeRaiseException() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
+        addMask(MASK1_ID, SELECTIVE_ALPHA, MASK1_SOURCE);
         startWriter();
         parse();
     }
@@ -129,10 +94,9 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
     @Test
     public void testMaskFullyEquiped() throws IOException, SAXException, InterruptedException, ExecutionException {
         String retrieverImpl = AssertingRetriever.class.getName();
-        stub.maskRetriever.addAttribute("class", retrieverImpl);
+        stub.maskRetriever.addAttribute("type", retrieverImpl);
 
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("vertical-align", "bottom");
         mask.addAttribute("horizontal-align", "left");
         startWriter();
@@ -159,8 +123,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 
     @Test(expectedExceptions = SAXParseException.class)
     public void testMaskWrongVerticalAlign() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("vertical-align", "left");
         startWriter();
         parse();
@@ -168,25 +131,19 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
 
     @Test(expectedExceptions = SAXParseException.class)
     public void testMaskWrongHorizontalAlign() throws IOException, SAXException {
-        addMasks(MaskType.IGNORE_BITMAP.toXmlId());
-        addMask(MASK1_ID, MASK1_SOURCE);
+        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("horizontal-align", "bottom");
         startWriter();
         parse();
     }
 
-    void addMasks(String type) {
-        masks = stub.globalConfiguration.addElement(MASKS);
-
-        if (type != null) {
-            masks.addAttribute("type", type);
-        }
-    }
-
-    void addMask(String id, String source) {
-        mask = masks.addElement(MASK);
+    void addMask(String id, MaskType type, String source) {
+        mask = stub.globalConfiguration.addElement(MASK);
         if (id != null) {
             mask.addAttribute("id", id);
+        }
+        if (type != null) {
+            mask.addAttribute("type", type.toXmlId());
         }
         if (source != null) {
             mask.addAttribute("source", source);

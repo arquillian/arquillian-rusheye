@@ -47,17 +47,18 @@ public class VisualSuiteStub {
         .addAttribute("xsi:schemaLocation", LUPIC_NS.getURI() + " src/main/resources/visual-suite.xsd");
 
     Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
-    Element listeners = globalConfiguration.addElement(LISTENERS);
-    Element patternRetriever = globalConfiguration.addElement(PATTERN_RETRIEVER).addAttribute("class",
+    Element defaultListener = globalConfiguration.addElement(LISTENER).addAttribute("type",
+        ParserListenerAdapter.class.getName());
+    Element patternRetriever = globalConfiguration.addElement(PATTERN_RETRIEVER).addAttribute("type",
         FileRetriever.class.getName());
-    Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("class",
+    Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("type",
         FileRetriever.class.getName());
-    Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER).addAttribute("class",
+    Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER).addAttribute("type",
         FileSampleRetriever.class.getName());
     Element perception = globalConfiguration.addElement(PERCEPTION);
+    
 
-    Element defaultListener = listeners.addElement(LISTENER).addAttribute("class",
-        ParserListenerAdapter.class.getName());
+    
 
     Element defaultTest = visualSuite.addElement(TEST).addAttribute("name", "default-test");
 

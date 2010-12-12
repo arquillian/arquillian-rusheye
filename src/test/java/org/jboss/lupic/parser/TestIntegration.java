@@ -63,12 +63,12 @@ public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
     }
 
     private void setup() {
-        stub.patternRetriever.addAttribute("class", ResourceRetriever.class.getName());
-        stub.maskRetriever.addAttribute("class", ResourceRetriever.class.getName());
-        stub.sampleRetriever.addAttribute("class", ScreenshotResourceSampleRetriever.class.getName());
+        stub.patternRetriever.addAttribute("type", ResourceRetriever.class.getName());
+        stub.maskRetriever.addAttribute("type", ResourceRetriever.class.getName());
+        stub.sampleRetriever.addAttribute("type", ScreenshotResourceSampleRetriever.class.getName());
         stub.sampleRetriever.addElement(ResourceSampleRetriever.RESOURCE_EXTENSION).addText("");
 
-        stub.defaultListener.addAttribute("class", CompareListener.class.getName());
+        stub.defaultListener.addAttribute("type", CompareListener.class.getName());
         stub.defaultListener.addElement("result-collector").addText(ResultCollectorImpl.class.getName());
 
         stub.defaultListener.addElement("result-storage").addText(ObjectMapStorage.class.getName());

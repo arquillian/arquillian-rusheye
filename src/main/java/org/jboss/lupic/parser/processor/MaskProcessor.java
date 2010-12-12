@@ -26,6 +26,7 @@ import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
+import org.jboss.lupic.suite.MaskType;
 import org.jboss.lupic.suite.VerticalAlignment;
 
 /**
@@ -41,6 +42,7 @@ public class MaskProcessor extends Processor {
     public void end() {
         String id = getAttribute("id");
         String source = getAttribute("source");
+        MaskType maskType = MaskType.fromXmlId(getAttribute("type"));
         VerticalAlignment verticalAlignment = getVerticalAlignment();
         HorizontalAlignment horizontalAlignment = getHorizontalAlignment();
 
@@ -51,8 +53,12 @@ public class MaskProcessor extends Processor {
         }
 
         MaskRetriever maskRetriever = getVisualSuite().getGlobalConfiguration().getMaskRetriever();
-        Mask mask = new Mask(id, source, getProperties(), maskRetriever, verticalAlignment, horizontalAlignment);
-        getContext().getCurrentMasks().add(mask);
+        Mask mask = new Mask(id, maskType, source, getProperties(), maskRetriever, verticalAlignment, horizontalAlignment);
+        if (MaskType.IGNORE_BITMAP.equals(maskType)) {
+            getContext().getCurrentConfiguration().getIgnoreBitmapMasks().add(mask);
+        } else {
+            getContext().getCurrentConfiguration().getSelectiveAlphaMasks().add(mask);
+        }
         getContext().getMaskIds().add(id);
     }
 

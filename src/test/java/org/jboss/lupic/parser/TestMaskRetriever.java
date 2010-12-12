@@ -42,7 +42,7 @@ public class TestMaskRetriever extends AbstractVisualSuiteDefinitionTest {
     @Test
     public void testPropertiesShouldPass() throws SAXException, IOException {
         String retrieverImpl = TestPatternRetriever.AssertingRetriever.class.getName();
-        stub.maskRetriever.addAttribute("class", retrieverImpl);
+        stub.maskRetriever.addAttribute("type", retrieverImpl);
 
         stub.maskRetriever.addElement("xxx").setText("1");
         stub.maskRetriever.addElement("yyy").setText("2");

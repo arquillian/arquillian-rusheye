@@ -34,7 +34,7 @@ public class TestProcessor extends Processor {
 
     {
         supportProcessor("perception", PerceptionProcessor.class);
-        supportProcessor("masks", MasksProcessor.class);
+        supportProcessor("mask", MaskProcessor.class);
         supportProcessor("pattern", PatternProcessor.class);
     }
 
