@@ -23,7 +23,8 @@ package org.jboss.lupic.suite.utils;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
-import java.util.Properties;
+
+import org.jboss.lupic.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -31,17 +32,18 @@ import java.util.Properties;
  */
 public class ConvertingProperties extends Properties {
 
+    Properties properties;
+    
     public ConvertingProperties() {
     }
 
-    public ConvertingProperties(Map<? extends Object, ? extends Object> properties) {
-        this.putAll(properties);
+    public ConvertingProperties(Properties properties) {
     }
 
     private static final long serialVersionUID = 9212012944902693011L;
 
     public <T> T getProperty(String propertyKey, Class<T> tClass) {
-        Object object = this.getProperty(propertyKey);
+        Object object = properties.getProperty(propertyKey);
 
         if (object == null) {
             return null;

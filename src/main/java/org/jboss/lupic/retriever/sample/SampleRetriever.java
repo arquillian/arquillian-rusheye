@@ -21,19 +21,15 @@
  */
 package org.jboss.lupic.retriever.sample;
 
-import java.awt.image.BufferedImage;
-import java.util.Properties;
 import java.util.Set;
 
 import org.jboss.lupic.retriever.Retriever;
-import org.jboss.lupic.retriever.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public interface SampleRetriever extends Retriever {
-    BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException;
 
     /**
      * Returns the list of samples, which wasn't in test suite definition.

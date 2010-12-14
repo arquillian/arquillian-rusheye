@@ -1,74 +1,59 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.jboss.lupic.suite;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 
-import javax.xml.bind.annotation.XmlTransient;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision$
- */
-public class Configuration {
-    Perception perception = new Perception();
-    Set<Mask> ignoreBitmapMasks = new LinkedHashSet<Mask>();
-    Set<Mask> selectiveAlphaMasks = new LinkedHashSet<Mask>();
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Configuration", propOrder = { "perception", "mask" })
+@XmlSeeAlso({ GlobalConfiguration.class, Test.class })
+public abstract class Configuration {
 
-    @XmlTransient
+    protected Perception perception;
+    @XmlElement(name="mask")
+    protected List<Mask> masks;
+
     public Perception getPerception() {
         return perception;
     }
 
-    public void setPerception(Perception perception) {
-        this.perception = perception;
+    public void setPerception(Perception value) {
+        this.perception = value;
     }
 
-    @XmlTransient
-    public Set<Mask> getIgnoreBitmapMasks() {
-        return ignoreBitmapMasks;
+    public List<Mask> getMasks() {
+        if (masks == null) {
+            masks = new ArrayList<Mask>();
+        }
+        return this.masks;
     }
-
-    public void setIgnoreBitmapMasks(Set<Mask> ignoreBitmapMasks) {
-        this.ignoreBitmapMasks = ignoreBitmapMasks;
+    
+    /*
+     * logic
+     */
+    public Collection<Mask> getSelectiveAlphaMasks() {
+        return Collections2.filter(masks, new Predicate<Mask>() {
+            @Override
+            public boolean apply(Mask mask) {
+                return MaskType.SELECTIVE_ALPHA.equals(mask.getType());
+            }
+        });
     }
-
-    @XmlTransient
-    public Set<Mask> getSelectiveAlphaMasks() {
-        return selectiveAlphaMasks;
-    }
-
-    public void setSelectiveAlphaMasks(Set<Mask> selectiveAlphaMasks) {
-        this.selectiveAlphaMasks = selectiveAlphaMasks;
-    }
-
-    public void setDefaultValuesForUnset() {
-        perception.setDefaultValuesForUnset();
-    }
-
-    public void setValuesFromParent(Configuration parent) {
-        perception.setValuesFromParent(parent.getPerception());
-        ignoreBitmapMasks.addAll(parent.getIgnoreBitmapMasks());
-        selectiveAlphaMasks.addAll(parent.getSelectiveAlphaMasks());
+    
+    public Collection<Mask> getIgnoreBitmapMasks() {
+        return Collections2.filter(masks, new Predicate<Mask>() {
+            @Override
+            public boolean apply(Mask mask) {
+                return MaskType.IGNORE_BITMAP.equals(mask.getType());
+            }
+        });
     }
 }

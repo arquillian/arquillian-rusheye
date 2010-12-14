@@ -1,82 +1,82 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.jboss.lupic.suite;
 
 import java.awt.image.BufferedImage;
-import java.util.Properties;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+
+import javax.annotation.Resource;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.jboss.lupic.retriever.MaskRetriever;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
- * @version $Revision$
- */
-public class Mask extends FutureTask<BufferedImage> {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Mask")
+public class Mask extends ImageSource {
 
-    private String id;
-    private MaskType type;
-    private Properties properties;
-    private VerticalAlignment verticalAlignment;
-    private HorizontalAlignment horizontalAlignment;
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "Name")
+    protected String id;
+    @XmlAttribute(required = true)
+    protected MaskType type;
+    @XmlAttribute(name = "vertical-align")
+    protected VerticalAlign verticalAlign;
+    @XmlAttribute(name = "horizontal-align")
+    protected HorizontalAlign horizontalAlign;
 
-    public Mask(String id, MaskType type, final String source, final Properties maskProperties, final MaskRetriever maskRetriever,
-        VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) {
-        super(new Callable<BufferedImage>() {
-            @Override
-            public BufferedImage call() throws Exception {
-                return maskRetriever.retrieve(source, maskProperties);
-            }
-        });
-        this.id = id;
-        this.type = type;
-        this.properties = maskProperties;
-        this.verticalAlignment = verticalAlignment;
-        this.horizontalAlignment = horizontalAlignment;
-    }
-
+    @Resource
+    @XmlTransient
+    public MaskRetriever maskRetriever;
+    
+    /*
+     * accessors
+     */
     public String getId() {
         return id;
     }
-    
+
+    public void setId(String value) {
+        this.id = value;
+    }
+
     public MaskType getType() {
         return type;
     }
 
-    public Properties getProperties() {
-        return properties;
+    public void setType(MaskType value) {
+        this.type = value;
     }
 
-    public HorizontalAlignment getHorizontalAlignment() {
-        return horizontalAlignment;
+    public VerticalAlign getVerticalAlign() {
+        return verticalAlign;
     }
 
-    public VerticalAlignment getVerticalAlignment() {
-        return verticalAlignment;
+    public void setVerticalAlign(VerticalAlign value) {
+        this.verticalAlign = value;
     }
 
+    public HorizontalAlign getHorizontalAlign() {
+        return horizontalAlign;
+    }
+
+    public void setHorizontalAlign(HorizontalAlign value) {
+        this.horizontalAlign = value;
+    }
+
+    /*
+     * logic
+     */
+    @Override
+    public BufferedImage retrieve() throws Exception {
+        return maskRetriever.retrieve(source, this);
+    }
+    
     private BufferedImage getMask() {
         try {
             return get();
@@ -95,44 +95,15 @@ public class Mask extends FutureTask<BufferedImage> {
         int maskWidth = mask.getWidth();
         int maskHeight = mask.getHeight();
 
-        int maskX = this.horizontalAlignment == HorizontalAlignment.LEFT ? x : x - (patternWidth - maskWidth);
-        int maskY = this.verticalAlignment == VerticalAlignment.TOP ? y : y - (patternHeight - maskHeight);
+        int maskX = this.horizontalAlign == HorizontalAlign.LEFT ? x : x - (patternWidth - maskWidth);
+        int maskY = this.verticalAlign == VerticalAlign.TOP ? y : y - (patternHeight - maskHeight);
 
         // we are outside the mask
         if (maskX < 0 || maskX >= maskWidth || maskY < 0 || maskY >= maskHeight) {
             return false;
         }
 
-        return (getMask().getRGB(maskX, maskY) & 0xff000000) != 0;
+        return (mask.getRGB(maskX, maskY) & 0xff000000) != 0;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Mask other = (Mask) obj;
-        if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
-            return false;
-        }
-        return true;
-    }
 }

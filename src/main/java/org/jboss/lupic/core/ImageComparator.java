@@ -22,7 +22,7 @@
 package org.jboss.lupic.core;
 
 import java.awt.image.BufferedImage;
-import java.util.Set;
+import java.util.Collection;
 
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
@@ -33,5 +33,5 @@ import org.jboss.lupic.suite.Perception;
  */
 public interface ImageComparator {
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
-        Set<Mask> selectiveAlphaMasks);
+        Collection<Mask> selectiveAlphaMasks);
 }

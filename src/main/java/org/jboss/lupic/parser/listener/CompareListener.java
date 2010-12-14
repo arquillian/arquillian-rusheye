@@ -22,7 +22,6 @@
 package org.jboss.lupic.parser.listener;
 
 import java.awt.image.BufferedImage;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import org.jboss.lupic.core.ComparisonResult;
@@ -31,6 +30,7 @@ import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.result.collector.ResultCollector;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Sample;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;

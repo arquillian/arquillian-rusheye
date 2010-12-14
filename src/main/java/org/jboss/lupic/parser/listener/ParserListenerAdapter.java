@@ -21,10 +21,9 @@
  */
 package org.jboss.lupic.parser.listener;
 
-import java.util.Properties;
-
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 

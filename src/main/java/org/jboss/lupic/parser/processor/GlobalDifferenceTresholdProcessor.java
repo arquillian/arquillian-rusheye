@@ -32,6 +32,6 @@ public class GlobalDifferenceTresholdProcessor extends Processor {
     @Override
     public void process(String content) {
         Perception perception = getContext().getCurrentConfiguration().getPerception();
-        perception.setGlobalDifferenceTreshold(Short.valueOf(content));
+        perception.setGlobalDifferenceTreshold(Integer.valueOf(content));
     }
 }

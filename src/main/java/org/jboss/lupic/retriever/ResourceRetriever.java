@@ -24,9 +24,10 @@ package org.jboss.lupic.retriever;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
+
+import org.jboss.lupic.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

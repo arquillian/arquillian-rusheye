@@ -4,16 +4,16 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "MaskType")
+@XmlType(name = "HorizontalAlign")
 @XmlEnum
-public enum MaskType {
+public enum HorizontalAlign {
 
-    @XmlEnumValue("selective-alpha")
-    SELECTIVE_ALPHA("selective-alpha"), @XmlEnumValue("ignore-bitmap")
-    IGNORE_BITMAP("ignore-bitmap");
+    @XmlEnumValue("left")
+    LEFT("left"), @XmlEnumValue("right")
+    RIGHT("right");
     private final String value;
 
-    MaskType(String v) {
+    HorizontalAlign(String v) {
         value = v;
     }
 
@@ -21,8 +21,8 @@ public enum MaskType {
         return value;
     }
 
-    public static MaskType fromValue(String v) {
-        for (MaskType c : MaskType.values()) {
+    public static HorizontalAlign fromValue(String v) {
+        for (HorizontalAlign c : HorizontalAlign.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

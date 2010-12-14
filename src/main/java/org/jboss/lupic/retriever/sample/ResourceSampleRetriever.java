@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -34,6 +33,7 @@ import javax.imageio.ImageIO;
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.ResourceRetriever;
 import org.jboss.lupic.retriever.RetrieverException;
+import org.jboss.lupic.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

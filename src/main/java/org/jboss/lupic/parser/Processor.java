@@ -23,9 +23,9 @@ package org.jboss.lupic.parser;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.jboss.lupic.parser.processor.PropertiesProcessor;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.Attributes;
 

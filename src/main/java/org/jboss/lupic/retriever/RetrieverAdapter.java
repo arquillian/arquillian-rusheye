@@ -1,7 +1,8 @@
 package org.jboss.lupic.retriever;
 
 import java.awt.image.BufferedImage;
-import java.util.Properties;
+
+import org.jboss.lupic.suite.Properties;
 
 public class RetrieverAdapter implements Retriever {
 

@@ -24,9 +24,11 @@ package org.jboss.lupic.parser.processor;
 import org.apache.commons.lang.Validate;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.MaskRetriever;
+import org.jboss.lupic.suite.HorizontalAlign;
 import org.jboss.lupic.suite.HorizontalAlignment;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.MaskType;
+import org.jboss.lupic.suite.VerticalAlign;
 import org.jboss.lupic.suite.VerticalAlignment;
 
 /**
@@ -42,9 +44,9 @@ public class MaskProcessor extends Processor {
     public void end() {
         String id = getAttribute("id");
         String source = getAttribute("source");
-        MaskType maskType = MaskType.fromXmlId(getAttribute("type"));
-        VerticalAlignment verticalAlignment = getVerticalAlignment();
-        HorizontalAlignment horizontalAlignment = getHorizontalAlignment();
+        MaskType maskType = MaskType.fromValue(getAttribute("type"));
+        VerticalAlign verticalAlign = getVerticalAlign();
+        HorizontalAlign horizontalAlign = getHorizontalAlign();
 
         Validate.notNull(id);
 
@@ -53,7 +55,15 @@ public class MaskProcessor extends Processor {
         }
 
         MaskRetriever maskRetriever = getVisualSuite().getGlobalConfiguration().getMaskRetriever();
-        Mask mask = new Mask(id, maskType, source, getProperties(), maskRetriever, verticalAlignment, horizontalAlignment);
+        Mask mask = new Mask();
+        mask.setId(id);
+        mask.setType(maskType);
+        mask.setSource(source);
+        mask.getAny().addAll(getProperties().getAny());
+        mask.maskRetriever = maskRetriever;
+        mask.setHorizontalAlign(horizontalAlign);
+        mask.setVerticalAlign(verticalAlign);
+        
         if (MaskType.IGNORE_BITMAP.equals(maskType)) {
             getContext().getCurrentConfiguration().getIgnoreBitmapMasks().add(mask);
         } else {
@@ -62,13 +72,13 @@ public class MaskProcessor extends Processor {
         getContext().getMaskIds().add(id);
     }
 
-    VerticalAlignment getVerticalAlignment() {
+    VerticalAlign getVerticalAlign() {
         String verticalAlignment = getAttribute("vertical-align");
-        return verticalAlignment == null ? null : VerticalAlignment.valueOf(verticalAlignment.toUpperCase());
+        return verticalAlignment == null ? null : VerticalAlign.fromValue(verticalAlignment.toUpperCase());
     }
 
-    HorizontalAlignment getHorizontalAlignment() {
+    HorizontalAlign getHorizontalAlign() {
         String horizontalAlignment = getAttribute("horizontal-align");
-        return horizontalAlignment == null ? null : HorizontalAlignment.valueOf(horizontalAlignment.toUpperCase());
+        return horizontalAlignment == null ? null : HorizontalAlign.fromValue(horizontalAlignment.toUpperCase());
     }
 }

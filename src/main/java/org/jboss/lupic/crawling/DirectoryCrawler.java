@@ -227,10 +227,10 @@ public class DirectoryCrawler {
 
     private void addMasksByType(File dir, Element base) {
         for (MaskType mask : MaskType.values()) {
-            File maskDir = new File(dir, "masks-" + mask.toXmlId());
+            File maskDir = new File(dir, "masks-" + mask.value());
 
             if (maskDir.exists() && maskDir.isDirectory() && maskDir.listFiles().length > 0) {
-                Element masks = base.addElement("masks").addAttribute("type", mask.toXmlId());
+                Element masks = base.addElement("masks").addAttribute("type", mask.value());
                 addMasks(maskDir, masks);
             }
         }
@@ -261,7 +261,7 @@ public class DirectoryCrawler {
         if (dir.exists() && dir.isDirectory()) {
             for (File testDir : dir.listFiles()) {
                 for (MaskType mask : MaskType.values()) {
-                    if (testDir.getName().equals("masks-" + mask.toXmlId())) {
+                    if (testDir.getName().equals("masks-" + mask.value())) {
                         continue;
                     }
                 }

@@ -32,6 +32,6 @@ public class OnePixelTresholdProcessor extends Processor {
     @Override
     public void process(String content) {
         Perception perception = getContext().getCurrentConfiguration().getPerception();
-        perception.setOnePixelTreshold(Short.valueOf(content));
+        perception.setOnePixelTreshold(Integer.valueOf(content));
     }
 }

@@ -1,69 +1,80 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.jboss.lupic.suite;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.PatternRetriever;
-import org.jboss.lupic.retriever.sample.SampleRetriever;
+import org.jboss.lupic.suite.utils.Instantiator;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision$
- */
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
+    "sampleRetriever" })
 public class GlobalConfiguration extends Configuration {
-    PatternRetriever patternRetriever;
-    MaskRetriever maskRetriever;
-    SampleRetriever sampleRetriever;
-    Set<ParserListener> configuredListeners = new LinkedHashSet<ParserListener>();
 
-    public PatternRetriever getPatternRetriever() {
+    protected List<Listener> listeners;
+    @XmlElement(name = "pattern-retriever")
+    protected Retriever patternRetriever;
+    @XmlElement(name = "mask-retriever")
+    protected Retriever maskRetriever;
+    @XmlElement(name = "sample-retriever")
+    protected SampleRetriever sampleRetriever;
+
+    /*
+     * accessors
+     */
+    public List<Listener> getListeners() {
+        if (listeners == null) {
+            listeners = new ArrayList<Listener>();
+        }
+        return this.listeners;
+    }
+
+    public Retriever getPatternRetriever() {
         return patternRetriever;
     }
 
-    public void setPatternRetriever(PatternRetriever patternRetriever) {
-        this.patternRetriever = patternRetriever;
+    public void setPatternRetriever(Retriever value) {
+        this.patternRetriever = value;
     }
 
-    public MaskRetriever getMaskRetriever() {
+    public Retriever getMaskRetriever() {
         return maskRetriever;
     }
 
-    public void setMaskRetriever(MaskRetriever maskRetriever) {
-        this.maskRetriever = maskRetriever;
+    public void setMaskRetriever(Retriever value) {
+        this.maskRetriever = value;
     }
 
     public SampleRetriever getSampleRetriever() {
         return sampleRetriever;
     }
 
-    public void setSampleRetriever(SampleRetriever sampleRetriever) {
-        this.sampleRetriever = sampleRetriever;
+    public void setSampleRetriever(SampleRetriever value) {
+        this.sampleRetriever = value;
     }
 
-    public Set<ParserListener> getConfiguredListeners() {
-        return configuredListeners;
+    /*
+     * logic
+     */
+    public Collection<ParserListener> getConfiguredListeners() {
+        return Collections2.transform(listeners, new Function<Listener, ParserListener>() {
+            @Override
+            public ParserListener apply(Listener listener) {
+                String type = listener.getType();
+                ParserListener parserListener = new Instantiator<ParserListener>().getInstance(type);
+                parserListener.setProperties(listener);
+                return parserListener;
+            }
+        });
     }
 }

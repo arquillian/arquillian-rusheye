@@ -24,9 +24,10 @@ package org.jboss.lupic.retriever;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
+
+import org.jboss.lupic.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -36,7 +37,7 @@ public class FileRetriever extends AbstractRetriever implements PatternRetriever
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         Properties properties = mergeProperties(localProperties);
-        String baseDirectory = (String) properties.get("base-directory");
+        String baseDirectory = (String) properties.getProperty("base-directory");
 
         File file;
 

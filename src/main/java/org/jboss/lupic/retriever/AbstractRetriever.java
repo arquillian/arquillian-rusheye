@@ -21,8 +21,7 @@
  */
 package org.jboss.lupic.retriever;
 
-import java.util.Properties;
-
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.utils.ConvertingProperties;
 
 /**
@@ -42,8 +41,8 @@ public abstract class AbstractRetriever extends RetrieverAdapter {
 
     public Properties mergeProperties(Properties localProperties) {
         Properties result = new Properties();
-        result.putAll(properties);
-        result.putAll(localProperties);
+        result.getAny().addAll(localProperties.getAny());
+        result.getAny().addAll(properties.getAny());
         return result;
     }
 

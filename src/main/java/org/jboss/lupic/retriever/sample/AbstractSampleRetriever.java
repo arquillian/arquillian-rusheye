@@ -23,13 +23,13 @@ package org.jboss.lupic.retriever.sample;
 
 import java.awt.image.BufferedImage;
 import java.util.Collections;
-import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.RetrieverException;
+import org.jboss.lupic.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

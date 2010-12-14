@@ -1,65 +1,53 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.jboss.lupic.suite;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.lupic.retriever.sample.SampleRetriever;
-
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision$
- */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Test", propOrder = { "pattern" })
 public class Test extends Configuration {
 
-    private String name;
-    private Sample sample;
-    private Set<Pattern> patterns = new LinkedHashSet<Pattern>();
-
-    public Test() {
-    }
-
-    public Test(String name, SampleRetriever sampleRetriever) {
-        this.name = name;
-        this.sample = new Sample(name, sampleRetriever);
-    }
-
+    @XmlElement(name="pattern", required = true)
+    protected List<Pattern> patterns;
     @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "Name")
+    protected String name;
+
+    /*
+     * accessors
+     */
+    public List<Pattern> getPatterns() {
+        if (patterns == null) {
+            patterns = new ArrayList<Pattern>();
+        }
+        return this.patterns;
+    }
+
     public String getName() {
         return name;
     }
 
-    @XmlTransient
+    public void setName(String value) {
+        this.name = value;
+    }
+    
+    /*
+     * logic
+     */
     public Sample getSample() {
+        Sample sample = new Sample();
+        sample.setSource(name);
         return sample;
     }
     
-    @XmlElement(name="pattern")
-    public Set<Pattern> getPatterns() {
-        return patterns;
-    }
+
 }

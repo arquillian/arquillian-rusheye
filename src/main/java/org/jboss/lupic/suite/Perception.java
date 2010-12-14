@@ -1,93 +1,87 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.jboss.lupic.suite;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision$
- */
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold",
+    "globalDifferencePixelAmount" })
 public class Perception {
-    Short onePixelTreshold = null;
-    Short globalDifferenceTreshold = null;
-    Long globalDifferencePixelAmount = null;
-    Short globalDifferencePercentage = null;
 
-    public Perception() {
-    }
+    Pattern percentPattern = Pattern.compile("([0-9]{1,2}|100)%");
+    Pattern pixelPattern = Pattern.compile("(\\d)+px");
+    
+    @XmlElement(name = "one-pixel-treshold")
+    protected Integer onePixelTreshold;
+    @XmlElement(name = "global-difference-treshold")
+    protected Integer globalDifferenceTreshold;
+    @XmlElement(name = "global-difference-pixel-amount")
+    protected String globalDifferenceAmount;
 
-    public Short getOnePixelTreshold() {
+    public Integer getOnePixelTreshold() {
         return onePixelTreshold;
     }
 
-    public void setOnePixelTreshold(short onePixelTreshold) {
-        this.onePixelTreshold = onePixelTreshold;
+    public void setOnePixelTreshold(Integer value) {
+        this.onePixelTreshold = value;
     }
 
-    public Short getGlobalDifferenceTreshold() {
+    public Integer getGlobalDifferenceTreshold() {
         return globalDifferenceTreshold;
     }
 
-    public void setGlobalDifferenceTreshold(short globalDifferenceTreshold) {
-        this.globalDifferenceTreshold = globalDifferenceTreshold;
+    public void setGlobalDifferenceTreshold(Integer value) {
+        this.globalDifferenceTreshold = value;
     }
 
+    public String getGlobalDifferenceAmount() {
+        return globalDifferenceAmount;
+    }
+
+    public void setGlobalDifferenceAmount(String value) {
+        this.globalDifferenceAmount = value;
+    }
+    
+    /*
+     * 
+     */
     public Long getGlobalDifferencePixelAmount() {
-        return globalDifferencePixelAmount;
+        return getGlobalDifferenceAmount(AmountType.PIXEL).longValue();
     }
 
     public void setGlobalDifferencePixelAmount(long globalDifferencePixelAmount) {
-        this.globalDifferencePercentage = null;
-        this.globalDifferencePixelAmount = globalDifferencePixelAmount;
+        this.globalDifferenceAmount = Long.toString(globalDifferencePixelAmount) + "px";
     }
 
     public Short getGlobalDifferencePercentage() {
-        return globalDifferencePercentage;
+        return getGlobalDifferenceAmount(AmountType.PERCENTAGE).shortValue();
     }
 
     public void setGlobalDifferencePercentage(short globalDifferencePercentage) {
-        this.globalDifferencePixelAmount = null;
-        this.globalDifferencePercentage = globalDifferencePercentage;
+        this.globalDifferenceAmount = Short.valueOf(globalDifferencePercentage) + "%";
     }
-
-    public void setDefaultValuesForUnset() {
-        if (onePixelTreshold == null) {
-            onePixelTreshold = 50;
-        }
-        if (globalDifferenceTreshold == null) {
-            globalDifferenceTreshold = 10;
-        }
-        if (globalDifferencePercentage == null && globalDifferencePixelAmount == null) {
-            globalDifferencePixelAmount = 0L;
-        }
+    
+    private enum AmountType {
+        PERCENTAGE, PIXEL
     }
-
-    public void setValuesFromParent(Perception parent) {
-        this.onePixelTreshold = parent.onePixelTreshold;
-        this.globalDifferenceTreshold = parent.globalDifferenceTreshold;
-        if (parent.globalDifferencePixelAmount != null) {
-            this.setGlobalDifferencePixelAmount(parent.globalDifferencePixelAmount);
+    
+    private Number getGlobalDifferenceAmount(AmountType type) {
+        Matcher matcher;
+        for (Pattern pattern : new Pattern[] { percentPattern, pixelPattern }) {
+            matcher = pattern.matcher(globalDifferenceAmount);
+            if (matcher.lookingAt()) {
+                if (pattern == percentPattern) {
+                    return Short.valueOf(matcher.group(1));
+                } else {
+                    return Long.valueOf(matcher.group(1));
+                }
+            }
         }
-        if (parent.globalDifferencePercentage != null) {
-            this.setGlobalDifferencePercentage(parent.globalDifferencePercentage);
-        }
+        throw new IllegalStateException();
     }
 }
