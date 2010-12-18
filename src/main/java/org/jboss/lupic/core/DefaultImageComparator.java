@@ -77,8 +77,6 @@ public class DefaultImageComparator implements ImageComparator {
 
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
         Collection<Mask> selectiveAlphaMasks) {
-        // TODO
-        // test.setDefaultValuesForUnset();
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         int width = Math.min(patternImage.getWidth(), sampleImage.getWidth());

@@ -23,7 +23,7 @@ package org.jboss.lupic.parser.processor;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.parser.listener.ParserListener;
+import org.jboss.lupic.suite.Listener;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -31,7 +31,7 @@ import org.jboss.lupic.parser.listener.ParserListener;
  */
 public class ListenerProcessor extends Processor {
 
-    ParserListener parserListener;
+    Listener listener;
 
     {
         setPropertiesEnabled(true);
@@ -40,34 +40,19 @@ public class ListenerProcessor extends Processor {
     @Override
     public void start() {
         String listenerType = getAttribute("type");
+        
+        
         Validate.notNull(listenerType,
             "listener must have 'type' attribute defined pointing to Retriever implementation");
-
-        parserListener = getParserListenerInstance(listenerType);
-        getVisualSuite().getGlobalConfiguration().getConfiguredListeners().add(parserListener);
+        
+        listener = new Listener();
+        listener.setType(listenerType);
+        
+        getVisualSuite().getGlobalConfiguration().getListeners().add(listener);
     }
 
     @Override
     public void end() {
-        parserListener.setProperties(getProperties());
-    }
-
-    public static ParserListener getParserListenerInstance(String listenerClassName) {
-        try {
-            return getParserListenerClass(listenerClassName).newInstance();
-        } catch (InstantiationException e) {
-            throw new IllegalStateException(e);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static Class<? extends ParserListener> getParserListenerClass(String retrieverClassName) {
-        try {
-            return (Class<? extends ParserListener>) Class.forName(retrieverClassName);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException("The configured ParserListener class was not found", e);
-        }
+        listener.include(getProperties());
     }
 }

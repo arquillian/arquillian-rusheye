@@ -67,7 +67,7 @@ public class GlobalConfiguration extends Configuration {
      * logic
      */
     public Collection<ParserListener> getConfiguredListeners() {
-        return Collections2.transform(listeners, new Function<Listener, ParserListener>() {
+        return Collections2.transform(getListeners(), new Function<Listener, ParserListener>() {
             @Override
             public ParserListener apply(Listener listener) {
                 String type = listener.getType();

@@ -12,7 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold",
     "globalDifferencePixelAmount" })
 public class Perception {
-
+    
+    public final static Number NOT_THIS_TYPE = new Double("0");
+        
     @XmlElement(name = "one-pixel-treshold")
     protected Integer onePixelTreshold;
     @XmlElement(name = "global-difference-treshold")
@@ -49,7 +51,7 @@ public class Perception {
      */
     public Long getGlobalDifferencePixelAmount() {
         Number number = getGlobalDifferenceAmount(AmountType.PIXEL);
-        return (number != null) ? number.longValue() : null;
+        return (number != NOT_THIS_TYPE) ? number.longValue() : null;
     }
 
     public void setGlobalDifferencePixelAmount(long globalDifferencePixelAmount) {
@@ -58,15 +60,15 @@ public class Perception {
 
     public Short getGlobalDifferencePercentage() {
         Number number = getGlobalDifferenceAmount(AmountType.PERCENTAGE);
-        return (number != null) ? number.shortValue() : null;
+        return (number != NOT_THIS_TYPE) ? number.shortValue() : null;
     }
 
     public void setGlobalDifferencePercentage(short globalDifferencePercentage) {
         this.globalDifferenceAmount = Short.valueOf(globalDifferencePercentage) + "%";
     }
 
-    private enum AmountType {
-        PERCENTAGE("([0-9]{1,2}|100)%"), PIXEL("(\\d)+px");
+    public static enum AmountType {
+        PERCENTAGE("([0-9]{1,2}|100)%"), PIXEL("^([0-9]+)px$");
 
         private AmountType(String pattern) {
             this.pattern = Pattern.compile(pattern);
@@ -87,16 +89,17 @@ public class Perception {
         }
     }
 
-    private Number getGlobalDifferenceAmount(AmountType amountType) {
-        if (globalDifferenceAmount == null) {
+    public Number getGlobalDifferenceAmount(AmountType amountType) {
+        String amount = getGlobalDifferenceAmount();
+        if (amount == null) {
             return null;
         }
 
-        Matcher matcher = amountType.getPattern().matcher(globalDifferenceAmount);
+        Matcher matcher = amountType.getPattern().matcher(amount);
         if (matcher.lookingAt()) {
             return amountType.parseAmount(matcher.group(1));
         } else {
-            return null;
+            return NOT_THIS_TYPE;
         }
     }
 }

@@ -35,6 +35,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.jboss.lupic.oneoff.ImageUtils;
+import org.jboss.lupic.parser.ConfigurationCompiler;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
 import org.testng.annotations.BeforeMethod;
@@ -152,8 +153,12 @@ public class TestImageComparison {
             BufferedImage screenshot = ImageIO.read(screenshotFiles[0]);
             expectedDiff = diffFiles.length == 1 ? ImageIO.read(diffFiles[0]) : null;
 
-            // perception.setDefaultValuesForUnset();
-            ComparisonResult result = comparator.compare(pattern, screenshot, perception, masks);
+            ConfigurationCompiler configuration = new ConfigurationCompiler();
+            org.jboss.lupic.suite.Test test = new org.jboss.lupic.suite.Test();
+            test.setPerception(perception);
+            configuration.pushConfiguration(test);
+            
+            ComparisonResult result = comparator.compare(pattern, screenshot, configuration.getPerception(), masks);
 
             return result;
         } catch (Exception e) {

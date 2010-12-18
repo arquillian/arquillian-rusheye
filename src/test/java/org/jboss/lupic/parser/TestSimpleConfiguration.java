@@ -43,9 +43,10 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         try {
             startWriter();
             parse();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
+        } catch (SAXException e) {
+            fail();
+        } catch (IOException e) {
+            fail();
         }
     }
 

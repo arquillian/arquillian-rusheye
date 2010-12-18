@@ -94,9 +94,7 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
         detail.setPattern(pattern);
         detail.setComparisonResult(comparisonResult);
 
-        if (!details.containsKey(test)) {
-            details.putIfAbsent(test, new CopyOnWriteArrayList<ResultDetail>());
-        }
+        details.putIfAbsent(test, new CopyOnWriteArrayList<ResultDetail>());
         details.get(test).add(detail);
         
         statistics.onPatternCompleted(detail);

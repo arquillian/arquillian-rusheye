@@ -24,6 +24,7 @@ package org.jboss.lupic.parser;
 import java.io.IOException;
 
 import org.dom4j.Element;
+import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
@@ -49,7 +50,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "The configured ParserListener class was not found")
+    @Test(expectedExceptions = LupicConfigurationException.class, expectedExceptionsMessageRegExp = "Error when trying to create instance of class 'non.existent.Class'")
     public void testListenerClassNotOnClassPath() throws IOException, SAXException {
         stub.globalConfiguration.remove(stub.defaultListener);
         Element listener = stub.globalConfiguration.addElement(LISTENER);
@@ -139,7 +140,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
     public static class PropertiesCheckingListener extends ParserListenerAdapter {
         @Override
         public void onSuiteStarted(VisualSuite visualSuite) {
-            assertEquals(properties.getAny().size(), 1);
+            assertEquals(properties.size(), 1);
             assertEquals(properties.getProperty("xyz"), "abc");
         }
     }

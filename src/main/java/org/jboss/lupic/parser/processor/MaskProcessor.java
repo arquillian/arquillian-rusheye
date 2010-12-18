@@ -59,7 +59,7 @@ public class MaskProcessor extends Processor {
         mask.setId(id);
         mask.setType(maskType);
         mask.setSource(source);
-        mask.getAny().addAll(getProperties().getAny());
+        mask.include(getProperties());
         mask.maskRetriever = maskRetriever;
         mask.setHorizontalAlign(horizontalAlign);
         mask.setVerticalAlign(verticalAlign);
@@ -74,11 +74,11 @@ public class MaskProcessor extends Processor {
 
     VerticalAlign getVerticalAlign() {
         String verticalAlignment = getAttribute("vertical-align");
-        return verticalAlignment == null ? null : VerticalAlign.fromValue(verticalAlignment.toUpperCase());
+        return verticalAlignment == null ? null : VerticalAlign.fromValue(verticalAlignment);
     }
 
     HorizontalAlign getHorizontalAlign() {
         String horizontalAlignment = getAttribute("horizontal-align");
-        return horizontalAlignment == null ? null : HorizontalAlign.fromValue(horizontalAlignment.toUpperCase());
+        return horizontalAlignment == null ? null : HorizontalAlign.fromValue(horizontalAlignment);
     }
 }

@@ -49,7 +49,7 @@ public class PatternProcessor extends Processor {
         Pattern pattern = new Pattern();
         pattern.setName(name);
         pattern.setSource(source);
-        pattern.getAny().addAll(getProperties().getAny());
+        pattern.include(getProperties());
         pattern.patternRetriever = patternRetriever;
         
         test.getPatterns().add(pattern);

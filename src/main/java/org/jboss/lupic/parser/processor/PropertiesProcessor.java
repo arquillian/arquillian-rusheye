@@ -23,7 +23,6 @@ package org.jboss.lupic.parser.processor;
 
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.Properties;
-import org.w3c.dom.Element;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -31,18 +30,19 @@ import org.w3c.dom.Element;
  */
 public class PropertiesProcessor extends Processor {
 
+    private String tagName;
     private Properties properties;
 
     public PropertiesProcessor(Properties properties, String tagName) {
         this.properties = properties;
-        this.properties.getAny().add(new ElementAdapter(tagName));
+        this.tagName = tagName;
+        properties.setProperty(tagName, "");
     }
 
     @Override
     public void process(String content) {
         if (content != null) {
-            Element element = properties.getAny().get(properties.getAny().size() - 1);
-            element.setTextContent(content);
+            properties.setProperty(tagName, content);
         }
     }
 }

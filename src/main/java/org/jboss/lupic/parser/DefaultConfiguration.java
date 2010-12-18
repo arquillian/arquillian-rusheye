@@ -17,16 +17,10 @@ public class DefaultConfiguration extends Configuration {
         DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(0);
         DEFAULT_PERCEPTION.setGlobalDifferenceAmount("0px");
     }
-
-    @Override
-    public Perception getPerception() {
-        return DEFAULT_PERCEPTION;
-
-    }
-
-    @Override
-    public List<Mask> getMasks() {
-        return EMPTY_MASKS;
+    
+    {
+        perception = DEFAULT_PERCEPTION;
+        masks = EMPTY_MASKS;
     }
 
     @Override

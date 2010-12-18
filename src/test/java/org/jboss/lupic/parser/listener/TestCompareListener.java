@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jboss.lupic.core.ComparisonResult;
@@ -77,14 +78,11 @@ public class TestCompareListener {
         when(
             imageComparator.compare(any(BufferedImage.class), any(BufferedImage.class), any(Perception.class),
                 any(Set.class))).thenReturn(comparisonResult);
-
-        when(element.getTagName()).thenReturn("result-collector");
-        when(element.getTextContent()).thenReturn(InvocationPassingResultCollector.class.getName());
             
         Properties properties = new Properties();
-        properties.getAny().add(element);
+        properties.setProperty("result-collector", InvocationPassingResultCollector.class.getName());
 
-        LinkedHashSet<Pattern> patterns = new LinkedHashSet<Pattern>();
+        LinkedList<Pattern> patterns = new LinkedList<Pattern>();
         patterns.add(pattern);
 
         doReturn(sample).when(test).getSample();

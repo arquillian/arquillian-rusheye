@@ -26,7 +26,7 @@ import java.io.IOException;
 
 import org.jboss.lupic.parser.Parser;
 import org.jboss.lupic.parser.listener.ParserListener;
-import org.jboss.lupic.parser.processor.ListenerProcessor;
+import org.jboss.lupic.suite.utils.Instantiator;
 import org.xml.sax.SAXException;
 
 /**
@@ -45,7 +45,7 @@ public final class Main {
             System.setProperty("user.dir", visualSuiteDefinition.getParent());
             Parser parser = new Parser();
             if (args.length > 2) {
-                ParserListener parserListener = ListenerProcessor.getParserListenerInstance(args[2]);
+                ParserListener parserListener = new Instantiator<ParserListener>().getInstance(args[2]);
                 parser.registerListener(parserListener);
             }
             parser.parseFile(visualSuiteDefinition);

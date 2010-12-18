@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.RetrieverException;
@@ -20,7 +19,7 @@ import org.jboss.lupic.suite.utils.Instantiator;
 @XmlSeeAlso({ SampleRetriever.class })
 public class Retriever extends TypeProperties implements PatternRetriever, MaskRetriever {
 
-    Retriever retriever;
+    org.jboss.lupic.retriever.Retriever retriever;
     
     public Retriever() {
         
@@ -30,7 +29,7 @@ public class Retriever extends TypeProperties implements PatternRetriever, MaskR
     public void setType(String value) {
         super.setType(value);
         Validate.notNull(type);
-        retriever = new Instantiator<Retriever>().getInstance(type);
+        retriever = new Instantiator<org.jboss.lupic.retriever.Retriever>().getInstance(type);
     }
     
     @Override

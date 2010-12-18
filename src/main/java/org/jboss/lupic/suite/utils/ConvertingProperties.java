@@ -22,7 +22,6 @@
 package org.jboss.lupic.suite.utils;
 
 import java.lang.reflect.Constructor;
-import java.util.Map;
 
 import org.jboss.lupic.suite.Properties;
 
@@ -31,19 +30,18 @@ import org.jboss.lupic.suite.Properties;
  * @version $Revision$
  */
 public class ConvertingProperties extends Properties {
-
-    Properties properties;
     
     public ConvertingProperties() {
     }
 
     public ConvertingProperties(Properties properties) {
+        this.include(properties);
     }
 
     private static final long serialVersionUID = 9212012944902693011L;
 
     public <T> T getProperty(String propertyKey, Class<T> tClass) {
-        Object object = properties.getProperty(propertyKey);
+        Object object = getProperty(propertyKey);
 
         if (object == null) {
             return null;

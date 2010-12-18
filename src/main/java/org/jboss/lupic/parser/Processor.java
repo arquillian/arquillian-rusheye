@@ -42,7 +42,7 @@ public abstract class Processor {
     private Context context;
     private VisualSuite visualSuite;
     private Attributes attributes;
-    private Properties properties;
+    private Properties properties = new Properties();
 
     public void start() {
     }

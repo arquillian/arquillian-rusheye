@@ -23,6 +23,7 @@ package org.jboss.lupic.parser.processor;
 
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Perception;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -42,6 +43,7 @@ public class GlobalConfigurationProcessor extends Processor {
     @Override
     public void start() {
         GlobalConfiguration globalConfiguration = new GlobalConfiguration();
+        globalConfiguration.setPerception(new Perception());
 
         getVisualSuite().setGlobalConfiguration(globalConfiguration);
         getContext().setCurrentConfiguration(globalConfiguration);

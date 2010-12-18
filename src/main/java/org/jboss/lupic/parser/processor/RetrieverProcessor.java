@@ -24,6 +24,7 @@ package org.jboss.lupic.parser.processor;
 import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Retriever;
 import org.jboss.lupic.suite.SampleRetriever;
 
@@ -63,7 +64,8 @@ public class RetrieverProcessor extends Processor {
 
     @Override
     public void end() {
-        retriever.setGlobalProperties(getProperties());
+        Properties properties = getProperties();
+        retriever.setGlobalProperties(properties);
     }
 
 }

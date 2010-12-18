@@ -41,8 +41,8 @@ public abstract class AbstractRetriever extends RetrieverAdapter {
 
     public Properties mergeProperties(Properties localProperties) {
         Properties result = new Properties();
-        result.getAny().addAll(localProperties.getAny());
-        result.getAny().addAll(properties.getAny());
+        result.include(localProperties);
+        result.include(properties);
         return result;
     }
 

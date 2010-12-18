@@ -43,11 +43,38 @@ public class Test extends Configuration {
     /*
      * logic
      */
+    private Sample sample;
+    
     public Sample getSample() {
-        Sample sample = new Sample();
-        sample.setSource(name);
+        if (sample == null) {
+            sample = new Sample();
+            sample.setSource(name);
+        }
         return sample;
     }
-    
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Test))
+            return false;
+        Test other = (Test) obj;
+        if (getName() == null) {
+            if (other.getName() != null)
+                return false;
+        } else if (!getName().equals(other.getName()))
+            return false;
+        return true;
+    }
 }

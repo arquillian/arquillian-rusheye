@@ -21,7 +21,9 @@
  */
 package org.jboss.lupic.parser.processor;
 
+import org.jboss.lupic.parser.ConfigurationCompiler;
 import org.jboss.lupic.parser.Processor;
+import org.jboss.lupic.suite.Perception;
 import org.jboss.lupic.suite.Test;
 
 /**
@@ -41,8 +43,15 @@ public class TestProcessor extends Processor {
     @Override
     public void start() {
         test = new Test();
+        test.setPerception(new Perception());
         test.setName(getAttribute("name"));
         test.getSample().sampleRetriever = getVisualSuite().getGlobalConfiguration().getSampleRetriever();
+        if (getVisualSuite().getGlobalConfiguration().getSampleRetriever() == null) {
+            System.out.println("yyy");
+        }
+        if (test.getSample().sampleRetriever == null) {
+            System.out.println("xxx");
+        }
 
         getContext().setCurrentTest(test);
         getContext().setCurrentConfiguration(test);
@@ -50,6 +59,6 @@ public class TestProcessor extends Processor {
 
     @Override
     public void end() {
-        getContext().invokeListeners().onTestParsed(test);
+        getContext().invokeListeners().onTestParsed(ConfigurationCompiler.wrap(test, getVisualSuite().getGlobalConfiguration()));
     }
 }
