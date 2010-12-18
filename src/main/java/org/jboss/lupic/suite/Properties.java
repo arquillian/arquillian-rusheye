@@ -70,16 +70,4 @@ public class Properties {
     public int size() {
         return getAny().size();
     }
-    
-    @Override
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        for (Element element : getAny()) {
-            if (buffer.length() > 0) {
-                buffer.append(", ");
-            }
-            buffer.append(element.getLocalName() + "=" + element.getTextContent());
-        }
-        return "Properties[" + buffer.toString() + "]";  
-    }
 }

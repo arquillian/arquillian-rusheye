@@ -74,11 +74,11 @@
 				retrieving and global perception settings</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="listener" type="vs:Listener"
-				minOccurs="1" maxOccurs="unbounded" />
-			<xs:element name="pattern-retriever" type="vs:Retriever"
+			<xs:element name="listener" type="vs:Listener" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="pattern-retriever" type="vs:PatternRetriever"
 				minOccurs="0" />
-			<xs:element name="mask-retriever" type="vs:Retriever"
+			<xs:element name="mask-retriever" type="vs:MaskRetriever"
 				minOccurs="0" />
 			<xs:element name="sample-retriever" type="vs:SampleRetriever"
 				minOccurs="0" />
@@ -129,13 +129,19 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="SampleRetriever">
+	<xs:complexType name="MaskRetriever">
 		<xs:complexContent>
-			<xs:extension base="vs:Retriever" />
+			<xs:extension base="vs:TypeProperties" />
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:complexType name="Retriever">
+	<xs:complexType name="PatternRetriever">
+		<xs:complexContent>
+			<xs:extension base="vs:TypeProperties" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SampleRetriever">
 		<xs:complexContent>
 			<xs:extension base="vs:TypeProperties" />
 		</xs:complexContent>

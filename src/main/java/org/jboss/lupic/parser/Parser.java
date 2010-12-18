@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -40,6 +41,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.stax2.XMLEventReader2;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
@@ -51,12 +53,14 @@ import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 
 import com.ctc.wstx.exc.WstxParsingException;
 import com.ctc.wstx.exc.WstxValidationException;
+import com.google.inject.internal.cglib.core.ReflectUtils;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -65,7 +69,7 @@ import com.ctc.wstx.exc.WstxValidationException;
 public final class Parser {
 
     private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
-    private Handler handler = new Handler(listeners);
+    Handler handler = new Handler(listeners);
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
@@ -146,6 +150,12 @@ public final class Parser {
                         handler.getContext().setCurrentConfiguration(globalConfiguration);
                         visualSuite.setGlobalConfiguration(globalConfiguration);
                         handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
+
+                        RetriverRegistrator retriverRegistrator = new RetriverRegistrator(this);
+                        for (Mask mask : globalConfiguration.getMasks()) {
+                            retriverRegistrator.afterUnmarshal(mask, null);
+                        }
+                        um.setListener(retriverRegistrator);
                     }
                     if (o instanceof Test) {
                         Test test = (Test) o;

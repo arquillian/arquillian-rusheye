@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import org.dom4j.Element;
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.suite.HorizontalAlign;
@@ -62,7 +63,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"mask\" is missing \"id\" attribute .*")
     public void testMaskWithNoIdRaiseException() throws IOException, SAXException {
         addMask(null, IGNORE_BITMAP, MASK1_SOURCE);
         startWriter();
@@ -76,7 +77,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class)
     public void testNonUniqueMaskIdInsideOneMasksElementRaiseException() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
@@ -84,7 +85,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class)
     public void testNonUniqueMaskIdAcrossTwoMasksElementsRaiseException() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         addMask(MASK1_ID, SELECTIVE_ALPHA, MASK1_SOURCE);
@@ -122,7 +123,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         return handler.getVisualSuite().getGlobalConfiguration().getIgnoreBitmapMasks();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"vertical-align\" has a bad value: the value is not a member of the enumeration: .*")
     public void testMaskWrongVerticalAlign() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("vertical-align", "left");
@@ -130,7 +131,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp="attribute \"horizontal-align\" has a bad value: the value is not a member of the enumeration: .*")
     public void testMaskWrongHorizontalAlign() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("horizontal-align", "bottom");

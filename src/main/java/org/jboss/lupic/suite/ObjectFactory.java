@@ -40,8 +40,12 @@ public class ObjectFactory {
         return new Test();
     }
 
-    public Retriever createRetriever() {
-        return new Retriever();
+    public PatternRetriever createPatternRetriever() {
+        return new PatternRetriever();
+    }
+
+    public MaskRetriever createMaskRetriever() {
+        return new MaskRetriever();
     }
 
     public GlobalConfiguration createGlobalConfiguration() {

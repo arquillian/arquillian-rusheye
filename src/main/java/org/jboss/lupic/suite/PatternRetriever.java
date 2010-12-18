@@ -4,47 +4,40 @@ import java.awt.image.BufferedImage;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.lupic.retriever.MaskRetriever;
-import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.suite.utils.Instantiator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Retriever")
-@XmlSeeAlso({ SampleRetriever.class })
-public class Retriever extends TypeProperties implements PatternRetriever, MaskRetriever {
+@XmlType(name = "PatternRetriever")
+public class PatternRetriever extends TypeProperties implements org.jboss.lupic.retriever.PatternRetriever {
 
     @XmlTransient
-    org.jboss.lupic.retriever.Retriever retriever;
-    
-    public Retriever() {
-    }
-    
+    org.jboss.lupic.retriever.PatternRetriever patternRetriever;
+
     @Override
     public void setType(String value) {
         super.setType(value);
         Validate.notNull(type);
-        retriever = new Instantiator<org.jboss.lupic.retriever.Retriever>().getInstance(type);
+        patternRetriever = new Instantiator<org.jboss.lupic.retriever.PatternRetriever>().getInstance(type);
     }
-    
+
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
-        return retriever.retrieve(source, localProperties);
+        return patternRetriever.retrieve(source, localProperties);
     }
 
     @Override
     public Properties mergeProperties(Properties localProperties) {
-        return retriever.mergeProperties(localProperties);
+        return patternRetriever.mergeProperties(localProperties);
     }
 
     @Override
     public void setGlobalProperties(Properties properties) {
-        retriever.setGlobalProperties(properties);
+        patternRetriever.setGlobalProperties(properties);
     }
 
 }

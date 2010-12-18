@@ -25,9 +25,9 @@ public class GlobalConfiguration extends Configuration {
     @XmlElement(name = "listener")
     protected List<Listener> listeners;
     @XmlElement(name = "pattern-retriever")
-    protected Retriever patternRetriever;
+    protected PatternRetriever patternRetriever;
     @XmlElement(name = "mask-retriever")
-    protected Retriever maskRetriever;
+    protected MaskRetriever maskRetriever;
     @XmlElement(name = "sample-retriever")
     protected SampleRetriever sampleRetriever;
 
@@ -41,19 +41,19 @@ public class GlobalConfiguration extends Configuration {
         return this.listeners;
     }
 
-    public Retriever getPatternRetriever() {
+    public PatternRetriever getPatternRetriever() {
         return patternRetriever;
     }
 
-    public void setPatternRetriever(Retriever value) {
+    public void setPatternRetriever(PatternRetriever value) {
         this.patternRetriever = value;
     }
 
-    public Retriever getMaskRetriever() {
+    public MaskRetriever getMaskRetriever() {
         return maskRetriever;
     }
 
-    public void setMaskRetriever(Retriever value) {
+    public void setMaskRetriever(MaskRetriever value) {
         this.maskRetriever = value;
     }
 
