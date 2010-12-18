@@ -21,34 +21,38 @@
  */
 package org.jboss.lupic.parser;
 
-import static org.testng.Assert.assertEquals;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.EventFilter;
-import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.StreamFilter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.XMLStreamReader;
 
+import org.apache.commons.io.FileUtils;
+import org.codehaus.stax2.XMLInputFactory2;
+import org.codehaus.stax2.XMLStreamReader2;
+import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
+import org.codehaus.stax2.validation.XMLValidationSchema;
+import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.GlobalConfiguration;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+
+import com.ctc.wstx.exc.WstxParsingException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -68,40 +72,77 @@ public final class Parser {
         parseStream(inputStream);
     }
 
-    public void parseFile(File file) throws IOException {
-        InputStream inputStream = new FileInputStream(file);
-        parseStream(inputStream);
-    }
-
     public void parseStream(InputStream inputStream) {
         try {
-            XMLInputFactory factory = XMLInputFactory.newInstance();
-            
-            EventFilter filter = new EventFilter() {
-                public boolean accept(XMLEvent event) {
-                    return event.isStartElement();
+            File tmp = File.createTempFile(Parser.class.getName(), ".tmp");
+            BufferedInputStream in = new BufferedInputStream(inputStream);
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(tmp));
+
+            byte buf[] = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+            parseFileTempFile(tmp);
+        } catch (IOException e) {
+            throw new ParsingException(e);
+        }
+    }
+
+    public void parseFile(File file) {
+        parseFile(file, false);
+    }
+
+    public void parseFileTempFile(File file) {
+        parseFile(file, true);
+    }
+
+    private void parseFile(File file, boolean tmpfile) {
+        try {
+            XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
+                .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
+            URL schemaURL = getClass().getClassLoader().getResource("visual-suite.xsd");
+            XMLValidationSchema schema = schemaFactory.createSchema(schemaURL);
+
+            XMLInputFactory2 factory = (XMLInputFactory2) XMLInputFactory.newInstance();
+
+            StreamFilter filter = new StreamFilter() {
+                @Override
+                public boolean accept(XMLStreamReader reader) {
+                    return reader.isStartElement();
                 }
             };
+
+            XMLStreamReader2 reader = factory.createXMLStreamReader(file);
+            XMLStreamReader2 filteredReader = new Stax2FilteredStreamReader(reader, filter);
             
-            XMLEventReader reader = factory.createXMLEventReader(inputStream);
-            XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
-            
+            filteredReader.validateAgainst(schema);
+
             JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
             Unmarshaller um = ctx.createUnmarshaller();
-            
+
             // skip parsing of the first element - visual-suite
-            filteredReader.nextEvent();
-            
-            while (filteredReader.peek() != null) {
-                Object o = um.unmarshal(reader);
-                if (o instanceof GlobalConfiguration) {
-                    GlobalConfiguration globalConfiguration = (GlobalConfiguration) o;
-                    handler.getContext().setCurrentConfiguration(globalConfiguration);
-                }
-                if (o instanceof Test) {
-                    Test test = (Test) o;
-                    handler.getContext().setCurrentConfiguration(test);
-                    handler.getContext().setCurrentTest(test);
+            filteredReader.nextTag();
+
+            while (filteredReader.hasNext()) {
+                try {
+                    // go on the start of the next tag
+                    filteredReader.nextTag();
+
+                    Object o = um.unmarshal(reader);
+                    if (o instanceof GlobalConfiguration) {
+                        GlobalConfiguration globalConfiguration = (GlobalConfiguration) o;
+                        handler.getContext().setCurrentConfiguration(globalConfiguration);
+                    }
+                    if (o instanceof Test) {
+                        Test test = (Test) o;
+                        handler.getContext().setCurrentConfiguration(test);
+                        handler.getContext().setCurrentTest(test);
+                    }
+                } catch (WstxParsingException e) {
+                    // intentionally blank - wrong end of document detection
                 }
             }
         } catch (XMLStreamException e) {
@@ -109,10 +150,8 @@ public final class Parser {
         } catch (JAXBException e) {
             throw new ParsingException(e);
         } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
+            if (tmpfile) {
+                FileUtils.deleteQuietly(file);
             }
         }
     }

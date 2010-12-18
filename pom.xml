@@ -101,5 +101,15 @@
 			<artifactId>guava</artifactId>
 			<version>r07</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>woodstox-core-lgpl</artifactId>
+			<version>4.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.msv</groupId>
+			<artifactId>msv-core</artifactId>
+			<version>2009.1</version>
+		</dependency>
 	</dependencies>
 </project>
