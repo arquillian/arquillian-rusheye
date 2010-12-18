@@ -25,83 +25,26 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Deque;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import org.jboss.lupic.parser.listener.ParserListener;
-import org.jboss.lupic.parser.processor.VisualSuiteProcessor;
 import org.jboss.lupic.suite.VisualSuite;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class Handler extends DefaultHandler {
+public class Handler {
 
     private Context context;
     private VisualSuite visualSuite;
-    private Deque<Processor> processors = new LinkedList<Processor>();
     private Set<ParserListener> parserListeners;
 
     private String characters = null;
 
     public Handler(Set<ParserListener> parserListeners) {
         this.parserListeners = parserListeners;
-    }
-
-    @Override
-    public void startDocument() throws SAXException {
-        context = new ListeningContext();
-        visualSuite = new VisualSuite();
-        context.invokeListeners().onSuiteStarted(visualSuite);
-    }
-
-    @Override
-    public void endDocument() throws SAXException {
-        context.invokeListeners().onSuiteParsed(visualSuite);
-    }
-
-    @Override
-    public void startElement(String uri, String tagName, String qName, Attributes attributes) throws SAXException {
-
-        Processor processor;
-
-        if (processors.isEmpty()) {
-            if (tagName.equals("visual-suite")) {
-                processor = new VisualSuiteProcessor();
-            } else {
-                throw new IllegalStateException();
-            }
-        } else {
-            processor = processors.getFirst().getProcessor(tagName);
-        }
-
-        processors.push(processor);
-
-        processor.setContext(context);
-        processor.setVisualSuite(visualSuite);
-        processor.setAttributes(attributes);
-        processor.start();
-    }
-
-    @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        characters = new String(ch, start, length);
-    }
-
-    @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-        processors.getFirst().process(characters);
-        characters = null;
-
-        Processor currentProcessor = processors.getFirst();
-        currentProcessor.end();
-        processors.removeFirst();
     }
 
     private class ListeningContext extends Context implements InvocationHandler {

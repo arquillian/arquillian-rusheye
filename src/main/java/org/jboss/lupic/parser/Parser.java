@@ -34,7 +34,6 @@ import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -42,31 +41,13 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public final class Parser {
 
-    public static final String URI = "http://www.jboss.org/test/visual-suite";
-
-    private static final String XML_VALIDATION_FEATURE = "http://xml.org/sax/features/validation";
-    private static final String XML_SCHEMA_FEATURE = "http://apache.org/xml/features/validation/schema";
-    private static final String XML_SCHEMA_FULL_CHECKING_FEATURE = "http://apache.org/xml/features/validation/schema-full-checking";
-
     private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
     private Handler handler = new Handler(listeners);
     private XMLReader reader;
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
-        try {
-            reader = XMLReaderFactory.createXMLReader();
-        } catch (SAXException e) {
-            throw new IllegalStateException("Cannot create XMLReader", e);
-        }
-        try {
-            reader.setFeature(XML_VALIDATION_FEATURE, true);
-            reader.setFeature(XML_SCHEMA_FEATURE, true);
-            reader.setFeature(XML_SCHEMA_FULL_CHECKING_FEATURE, true);
-        } catch (SAXException e) {
-            throw new IllegalStateException("Cannot configure XMLReader to validate input", e);
-        }
-        reader.setContentHandler(handler);
+        
     }
 
     public void parseResource(String resourceName) throws SAXException, IOException {

@@ -1,4 +1,4 @@
-package org.jboss.lupic.parser.processor;
+package org.jboss.lupic.parser;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;

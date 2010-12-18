@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import org.jboss.lupic.parser.processor.ElementAdapter;
+import org.jboss.lupic.parser.ElementAdapter;
 import org.w3c.dom.Element;
 
 import com.google.common.base.Predicate;
