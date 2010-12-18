@@ -41,8 +41,8 @@ public class TestConfigurationCompiler {
         assertEquals(wrapped.getName(), "testname");
         assertEquals(wrapped.getPerception().getGlobalDifferencePixelAmount(), new Long(73));
         assertNull(wrapped.getPerception().getGlobalDifferencePercentage());
-        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(0));
-        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(0));
+        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(10));
+        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(50));
 
         test.getPerception().setGlobalDifferencePercentage((short) 54);
         assertEquals(wrapped.getPerception().getGlobalDifferencePercentage(), new Short((short) 54));
@@ -59,8 +59,8 @@ public class TestConfigurationCompiler {
         assertEquals(wrapped.getName(), "testname");
         assertEquals(wrapped.getPerception().getGlobalDifferencePixelAmount(), new Long(73));
         assertNull(wrapped.getPerception().getGlobalDifferencePercentage());
-        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(0));
-        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(0));
+        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(10));
+        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(50));
 
         test.getPerception().setGlobalDifferencePercentage((short) 54);
         assertEquals(wrapped.getPerception().getGlobalDifferencePercentage(), new Short((short) 54));

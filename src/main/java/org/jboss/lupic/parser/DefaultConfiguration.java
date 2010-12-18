@@ -13,8 +13,8 @@ public class DefaultConfiguration extends Configuration {
     private static final Perception DEFAULT_PERCEPTION = new Perception();
 
     static {
-        DEFAULT_PERCEPTION.setOnePixelTreshold(0);
-        DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(0);
+        DEFAULT_PERCEPTION.setOnePixelTreshold(50);
+        DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(10);
         DEFAULT_PERCEPTION.setGlobalDifferenceAmount("0px");
     }
     
