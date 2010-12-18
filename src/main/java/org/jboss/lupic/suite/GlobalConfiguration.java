@@ -3,6 +3,7 @@ package org.jboss.lupic.suite;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,8 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.lupic.parser.listener.ParserListener;
-import org.jboss.lupic.retriever.MaskRetriever;
-import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.suite.utils.Instantiator;
 
 import com.google.common.base.Function;
@@ -23,6 +22,7 @@ import com.google.common.collect.Collections2;
 @XmlRootElement(name="global-configuration")
 public class GlobalConfiguration extends Configuration {
 
+    @XmlElement(name = "listener")
     protected List<Listener> listeners;
     @XmlElement(name = "pattern-retriever")
     protected Retriever patternRetriever;

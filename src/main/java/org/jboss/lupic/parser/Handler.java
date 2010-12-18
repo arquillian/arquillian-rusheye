@@ -80,6 +80,10 @@ public class Handler {
     public VisualSuite getVisualSuite() {
         return visualSuite;
     }
+    
+    public void setVisualSuite(VisualSuite visualSuite) {
+        this.visualSuite = visualSuite;
+    }
 
     Context getContext() {
         return context;

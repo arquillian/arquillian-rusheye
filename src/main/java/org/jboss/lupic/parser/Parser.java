@@ -45,10 +45,12 @@ import org.codehaus.stax2.XMLStreamReader2;
 import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
+import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 
@@ -100,6 +102,7 @@ public final class Parser {
     }
 
     private void parseFile(File file, boolean tmpfile) {
+        VisualSuite visualSuite = null;
         try {
             XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
                 .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
@@ -125,6 +128,10 @@ public final class Parser {
 
             // skip parsing of the first element - visual-suite
             filteredReader.nextTag();
+            
+            visualSuite = new VisualSuite();
+            handler.setVisualSuite(visualSuite);
+            handler.getContext().invokeListeners().onSuiteStarted(visualSuite);
 
             while (filteredReader.hasNext()) {
                 try {
@@ -135,21 +142,31 @@ public final class Parser {
                     if (o instanceof GlobalConfiguration) {
                         GlobalConfiguration globalConfiguration = (GlobalConfiguration) o;
                         handler.getContext().setCurrentConfiguration(globalConfiguration);
+                        visualSuite.setGlobalConfiguration(globalConfiguration);
+                        handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
                     }
                     if (o instanceof Test) {
                         Test test = (Test) o;
                         handler.getContext().setCurrentConfiguration(test);
                         handler.getContext().setCurrentTest(test);
+                        for (Pattern pattern : test.getPatterns()) {
+                            handler.getContext().invokeListeners().onPatternParsed(test, pattern);
+                        }
+                        handler.getContext().invokeListeners().onTestParsed(test);
                     }
                 } catch (WstxParsingException e) {
                     // intentionally blank - wrong end of document detection
                 }
+                
             }
         } catch (XMLStreamException e) {
             throw new ParsingException(e);
         } catch (JAXBException e) {
             throw new ParsingException(e);
         } finally {
+            if (visualSuite != null && handler.getContext() != null) {
+                handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
+            }
             if (tmpfile) {
                 FileUtils.deleteQuietly(file);
             }
@@ -188,7 +205,7 @@ public final class Parser {
             }
 
             if (listeners.size() == 1) {
-                throw new IllegalStateException("No ParserListener was registered to process parsed tests");
+                throw new LupicConfigurationException("No ParserListener was registered to process parsed tests");
             }
         }
     }
