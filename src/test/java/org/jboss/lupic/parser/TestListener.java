@@ -21,9 +21,14 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.LISTENER;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.io.IOException;
 
 import org.dom4j.Element;
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.Configuration;
@@ -31,11 +36,6 @@ import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.VisualSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -43,7 +43,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
-    @Test(expectedExceptions = { SAXParseException.class }, expectedExceptionsMessageRegExp = ".* Invalid content was found starting with element 'pattern-retriever'. .*")
+    @Test(expectedExceptions = { ConfigurationValidationException.class }, expectedExceptionsMessageRegExp = "tag name \"pattern-retriever\" is not allowed. Possible tag names are: .*")
     public void testNoListener() throws IOException, SAXException {
         stub.globalConfiguration.remove(stub.defaultListener);
         startWriter();
@@ -144,13 +144,13 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
             assertEquals(properties.getProperty("xyz"), "abc");
         }
     }
-    
+
     private void reoderElements() {
         stub.globalConfiguration.remove(stub.patternRetriever);
         stub.globalConfiguration.remove(stub.maskRetriever);
         stub.globalConfiguration.remove(stub.sampleRetriever);
         stub.globalConfiguration.remove(stub.perception);
-        
+
         stub.globalConfiguration.add(stub.patternRetriever);
         stub.globalConfiguration.add(stub.maskRetriever);
         stub.globalConfiguration.add(stub.sampleRetriever);

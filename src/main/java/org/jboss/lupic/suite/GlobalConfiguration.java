@@ -2,24 +2,24 @@ package org.jboss.lupic.suite;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.utils.Instantiator;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
     "sampleRetriever" })
-@XmlRootElement(name="global-configuration")
+@XmlRootElement(name = "global-configuration")
 public class GlobalConfiguration extends Configuration {
 
     @XmlElement(name = "listener")
@@ -68,15 +68,18 @@ public class GlobalConfiguration extends Configuration {
     /*
      * logic
      */
+    @XmlTransient
+    private Map<String, ParserListener> parserListeners = new HashMap<String, ParserListener>();
+
     public Collection<ParserListener> getConfiguredListeners() {
-        return Collections2.transform(getListeners(), new Function<Listener, ParserListener>() {
-            @Override
-            public ParserListener apply(Listener listener) {
-                String type = listener.getType();
+        for (Listener listener : listeners) {
+            final String type = listener.getType();
+            if (!parserListeners.containsKey(type)) {
                 ParserListener parserListener = new Instantiator<ParserListener>().getInstance(type);
                 parserListener.setProperties(listener);
-                return parserListener;
+                parserListeners.put(type, parserListener);
             }
-        });
+        }
+        return parserListeners.values();
     }
 }

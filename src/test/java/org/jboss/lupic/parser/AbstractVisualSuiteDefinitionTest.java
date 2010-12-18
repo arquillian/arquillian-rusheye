@@ -106,11 +106,8 @@ public class AbstractVisualSuiteDefinitionTest {
         writerThread.start();
     }
 
+    // FIXME does not throw exceptions 
     public void parse() throws SAXException, IOException {
-        try {
-            parser.parseStream(inputStream);
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
+        parser.parseStream(inputStream);
     }
 }

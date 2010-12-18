@@ -45,6 +45,7 @@ import org.codehaus.stax2.XMLStreamReader2;
 import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
@@ -55,6 +56,7 @@ import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 
 import com.ctc.wstx.exc.WstxParsingException;
+import com.ctc.wstx.exc.WstxValidationException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -120,7 +122,7 @@ public final class Parser {
 
             XMLStreamReader2 reader = factory.createXMLStreamReader(file);
             XMLStreamReader2 filteredReader = new Stax2FilteredStreamReader(reader, filter);
-            
+
             filteredReader.validateAgainst(schema);
 
             JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
@@ -128,7 +130,7 @@ public final class Parser {
 
             // skip parsing of the first element - visual-suite
             filteredReader.nextTag();
-            
+
             visualSuite = new VisualSuite();
             handler.setVisualSuite(visualSuite);
             handler.getContext().invokeListeners().onSuiteStarted(visualSuite);
@@ -157,15 +159,20 @@ public final class Parser {
                 } catch (WstxParsingException e) {
                     // intentionally blank - wrong end of document detection
                 }
-                
+
             }
         } catch (XMLStreamException e) {
             throw new ParsingException(e);
         } catch (JAXBException e) {
+            final Throwable linkedException = e.getLinkedException();
+            if (linkedException != null && linkedException instanceof WstxValidationException) {
+                String message = linkedException.getMessage().replaceAll("\n", "");
+                throw new ConfigurationValidationException(message, linkedException);
+            }
             throw new ParsingException(e);
         } finally {
             if (visualSuite != null && handler.getContext() != null) {
-                handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
+                handler.getContext().invokeListeners().onSuiteParsed(visualSuite);
             }
             if (tmpfile) {
                 FileUtils.deleteQuietly(file);
