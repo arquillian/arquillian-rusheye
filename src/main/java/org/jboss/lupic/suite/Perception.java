@@ -6,11 +6,12 @@ import java.util.regex.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold",
-    "globalDifferencePixelAmount" })
+    "globalDifferenceAmount" })
 public class Perception {
     
     public final static Number NOT_THIS_TYPE = new Double("0");
@@ -49,6 +50,7 @@ public class Perception {
     /*
      * 
      */
+    @XmlTransient
     public Long getGlobalDifferencePixelAmount() {
         Number number = getGlobalDifferenceAmount(AmountType.PIXEL);
         return (number != NOT_THIS_TYPE) ? number.longValue() : null;
@@ -58,6 +60,7 @@ public class Perception {
         this.globalDifferenceAmount = Long.toString(globalDifferencePixelAmount) + "px";
     }
 
+    @XmlTransient
     public Short getGlobalDifferencePercentage() {
         Number number = getGlobalDifferenceAmount(AmountType.PERCENTAGE);
         return (number != NOT_THIS_TYPE) ? number.shortValue() : null;
@@ -88,7 +91,7 @@ public class Perception {
             }
         }
     }
-
+    
     public Number getGlobalDifferenceAmount(AmountType amountType) {
         String amount = getGlobalDifferenceAmount();
         if (amount == null) {

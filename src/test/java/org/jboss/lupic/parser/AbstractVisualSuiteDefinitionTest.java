@@ -23,6 +23,7 @@ package org.jboss.lupic.parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
@@ -46,7 +47,8 @@ public class AbstractVisualSuiteDefinitionTest {
     XMLWriter writer;
     Parser parser;
     Handler handler;
-    InputSource inputSource;
+    // InputSource inputSource;
+    InputStream inputStream;
     String generatedDocument;
     ByteArrayOutputStream documentOutputStream;
 
@@ -61,10 +63,10 @@ public class AbstractVisualSuiteDefinitionTest {
 
         OutputFormat format = new OutputFormat("\t", true);
         writer = new XMLWriter(out, format);
-        inputSource = new InputSource(in);
+        // inputSource = new InputSource(in);
+        inputStream = in;
 
         parser = new Parser();
-        parser.getXMLReader().setErrorHandler(new PassingSAXErrorHandler());
 
         handler = parser.getHandler();
     }
@@ -104,7 +106,11 @@ public class AbstractVisualSuiteDefinitionTest {
         writerThread.start();
     }
 
-    public void parse() throws IOException, SAXException {
-        parser.parseSource(inputSource);
+    public void parse() throws SAXException, IOException {
+        try {
+            parser.parseStream(inputStream);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 }

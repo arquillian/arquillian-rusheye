@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.w3c.dom.Element;
@@ -17,7 +18,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ImageSource", propOrder = { "any" })
+@XmlType(name = "ImageSource")
 @XmlSeeAlso({ Mask.class, Pattern.class })
 public abstract class ImageSource extends Properties {
 
@@ -26,6 +27,7 @@ public abstract class ImageSource extends Properties {
     @XmlAttribute
     protected String source;
 
+    @XmlTransient
     FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
         public BufferedImage call() throws Exception {
             return retrieve();
@@ -35,12 +37,12 @@ public abstract class ImageSource extends Properties {
     /*
      * accessors
      */
-    // public List<Element> getAny() {
-    // if (any == null) {
-    // any = new ArrayList<Element>();
-    // }
-    // return this.any;
-    // }
+//     public List<Element> getAny() {
+//     if (any == null) {
+//     any = new ArrayList<Element>();
+//     }
+//     return this.any;
+//     }
 
     public String getSource() {
         return source;

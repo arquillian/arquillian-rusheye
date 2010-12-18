@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,6 +22,7 @@ public class Sample {
     @Resource
     public SampleRetriever sampleRetriever;
 
+    @XmlTransient
     FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
         public BufferedImage call() throws Exception {
             return sampleRetriever.retrieve(source, null);

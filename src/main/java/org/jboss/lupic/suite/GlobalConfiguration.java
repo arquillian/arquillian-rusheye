@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.lupic.parser.listener.ParserListener;
@@ -19,6 +20,7 @@ import com.google.common.collect.Collections2;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
     "sampleRetriever" })
+@XmlRootElement(name="global-configuration")
 public class GlobalConfiguration extends Configuration {
 
     protected List<Listener> listeners;

@@ -37,11 +37,9 @@ import org.jboss.lupic.suite.VisualSuite;
  */
 public class Handler {
 
-    private Context context;
+    private Context context = new ListeningContext();
     private VisualSuite visualSuite;
     private Set<ParserListener> parserListeners;
-
-    private String characters = null;
 
     public Handler(Set<ParserListener> parserListeners) {
         this.parserListeners = parserListeners;

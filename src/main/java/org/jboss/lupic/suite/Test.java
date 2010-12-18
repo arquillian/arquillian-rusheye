@@ -6,13 +6,16 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Test", propOrder = { "pattern" })
+@XmlType(name = "Test", propOrder = { "patterns" })
+@XmlRootElement(name="test")
 public class Test extends Configuration {
 
     @XmlElement(name="pattern", required = true)
@@ -43,6 +46,7 @@ public class Test extends Configuration {
     /*
      * logic
      */
+    @XmlTransient
     private Sample sample;
     
     public Sample getSample() {

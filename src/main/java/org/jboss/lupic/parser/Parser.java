@@ -21,19 +21,34 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.EventFilter;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+
+import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
+import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -43,30 +58,63 @@ public final class Parser {
 
     private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
     private Handler handler = new Handler(listeners);
-    private XMLReader reader;
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
-        
     }
 
-    public void parseResource(String resourceName) throws SAXException, IOException {
+    public void parseResource(String resourceName) {
         InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName);
         parseStream(inputStream);
     }
 
-    public void parseFile(File file) throws SAXException, IOException {
+    public void parseFile(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
         parseStream(inputStream);
     }
 
-    public void parseStream(InputStream inputStream) throws SAXException, IOException {
-        InputSource inputSource = new InputSource(inputStream);
-        parseSource(inputSource);
-    }
-
-    public void parseSource(InputSource input) throws SAXException, IOException {
-        reader.parse(input);
+    public void parseStream(InputStream inputStream) {
+        try {
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            
+            EventFilter filter = new EventFilter() {
+                public boolean accept(XMLEvent event) {
+                    return event.isStartElement();
+                }
+            };
+            
+            XMLEventReader reader = factory.createXMLEventReader(inputStream);
+            XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
+            
+            JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
+            Unmarshaller um = ctx.createUnmarshaller();
+            
+            // skip parsing of the first element - visual-suite
+            filteredReader.nextEvent();
+            
+            while (filteredReader.peek() != null) {
+                Object o = um.unmarshal(reader);
+                if (o instanceof GlobalConfiguration) {
+                    GlobalConfiguration globalConfiguration = (GlobalConfiguration) o;
+                    handler.getContext().setCurrentConfiguration(globalConfiguration);
+                }
+                if (o instanceof Test) {
+                    Test test = (Test) o;
+                    handler.getContext().setCurrentConfiguration(test);
+                    handler.getContext().setCurrentTest(test);
+                }
+            }
+        } catch (XMLStreamException e) {
+            throw new ParsingException(e);
+        } catch (JAXBException e) {
+            throw new ParsingException(e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
+        }
     }
 
     public void registerListener(ParserListener parserListener) {
@@ -85,10 +133,6 @@ public final class Parser {
             }
         }
         throw new IllegalStateException("Given parser isn't registered");
-    }
-
-    public XMLReader getXMLReader() {
-        return reader;
     }
 
     Handler getHandler() {

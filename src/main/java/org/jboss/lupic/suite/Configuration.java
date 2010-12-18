@@ -13,7 +13,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Configuration", propOrder = { "perception", "mask" })
+@XmlType(name = "Configuration", propOrder = { "perception", "masks" })
 @XmlSeeAlso({ GlobalConfiguration.class, Test.class })
 public abstract class Configuration {
 
