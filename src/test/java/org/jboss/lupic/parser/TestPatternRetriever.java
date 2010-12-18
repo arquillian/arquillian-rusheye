@@ -21,19 +21,22 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.fail;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Properties;
 
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.MaskRetriever;
 import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
+import org.jboss.lupic.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -69,8 +72,8 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
             final Properties properties = mergeProperties(localProperties);
 
             assertSame(source, SOURCE);
-            assertEquals(properties.get("xxx"), "1");
-            assertEquals(properties.get("yyy"), "2");
+            assertEquals(properties.getProperty("xxx"), "1");
+            assertEquals(properties.getProperty("yyy"), "2");
 
             return null;
         }

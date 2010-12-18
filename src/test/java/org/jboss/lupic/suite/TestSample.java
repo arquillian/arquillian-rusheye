@@ -25,12 +25,8 @@ import static org.testng.Assert.assertSame;
 import static org.testng.Assert.fail;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.jboss.lupic.retriever.sample.AbstractSampleRetriever;
-import org.jboss.lupic.retriever.sample.SampleRetriever;
+import org.jboss.lupic.retriever.RetrieverException;
 import org.testng.annotations.Test;
 
 /**
@@ -44,10 +40,10 @@ public class TestSample {
     private static final BufferedImage BUFFERED_IMAGE1 = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
     private static final BufferedImage BUFFERED_IMAGE2 = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 
-    private final SampleRetriever sampleRetriever = new AbstractSampleRetriever() {
-
+    private final SampleRetriever sampleRetriever = new SampleRetriever() {
+        
         @Override
-        protected BufferedImage loadSource(String source) throws org.jboss.lupic.retriever.RetrieverException {
+        public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
             if (source.equals(TEST_NAME1)) {
                 return BUFFERED_IMAGE1;
             } else if (source.equals(TEST_NAME2)) {
@@ -56,17 +52,12 @@ public class TestSample {
                 throw new AssertionError();
             }
         }
-
-        @Override
-        public Set<String> getAllSources() {
-            return new HashSet<String>(Arrays.asList(new String[] { TEST_NAME1, TEST_NAME2 }));
-        }
     };
 
     @Test
     public void testRetrievingTwoImages() {
-        Sample sample1 = new Sample(TEST_NAME1, sampleRetriever);
-        Sample sample2 = new Sample(TEST_NAME2, sampleRetriever);
+        Sample sample1 = newSample(TEST_NAME1, sampleRetriever);
+        Sample sample2 = newSample(TEST_NAME2, sampleRetriever);
 
         sample1.run();
         sample2.run();
@@ -81,8 +72,8 @@ public class TestSample {
 
     @Test
     public void testRepeatingRetrieve() {
-        Sample sample1 = new Sample(TEST_NAME1, sampleRetriever);
-        Sample sample2 = new Sample(TEST_NAME2, sampleRetriever);
+        Sample sample1 = newSample(TEST_NAME1, sampleRetriever);
+        Sample sample2 = newSample(TEST_NAME2, sampleRetriever);
 
         sample1.run();
         sample2.run();
@@ -97,5 +88,13 @@ public class TestSample {
         } catch (Exception e) {
             fail();
         }
+    }
+    
+    private Sample newSample(String source, SampleRetriever sampleRetriever) {
+        Sample sample = new Sample();
+        sample.setSource(source);
+        sample.sampleRetriever = sampleRetriever;
+        return sample;
+        
     }
 }

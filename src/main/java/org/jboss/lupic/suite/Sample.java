@@ -11,20 +11,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-import org.jboss.lupic.retriever.sample.SampleRetriever;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Sample")
 public class Sample {
 
-    
     @XmlAttribute
     protected String source;
-    
-    
+
     @Resource
-    SampleRetriever sampleRetriever;
-    
+    public SampleRetriever sampleRetriever;
+
     FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
         public BufferedImage call() throws Exception {
             return sampleRetriever.retrieve(source, null);
@@ -38,7 +34,7 @@ public class Sample {
     public void setSource(String value) {
         this.source = value;
     }
-    
+
     /*
      * logic
      */

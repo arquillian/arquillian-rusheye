@@ -21,11 +21,10 @@
  */
 package org.jboss.lupic.result.collector;
 
-import java.util.Properties;
-
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 

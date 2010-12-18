@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import org.jboss.lupic.core.ComparisonResult;
@@ -17,6 +16,7 @@ import org.jboss.lupic.result.collector.ResultCollector;
 import org.jboss.lupic.result.collector.ResultCollectorAdapter;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Sample;
 import org.jboss.lupic.suite.VisualSuite;
 import org.mockito.InOrder;
@@ -26,6 +26,7 @@ import org.mockito.Spy;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.w3c.dom.Element;
 
 public class TestCompareListener {
     @Mock
@@ -60,6 +61,9 @@ public class TestCompareListener {
 
     @Mock
     ComparisonResult comparisonResult;
+    
+    @Mock
+    Element element;
 
     @BeforeClass
     public void initMocks() {
@@ -74,8 +78,11 @@ public class TestCompareListener {
             imageComparator.compare(any(BufferedImage.class), any(BufferedImage.class), any(Perception.class),
                 any(Set.class))).thenReturn(comparisonResult);
 
+        when(element.getTagName()).thenReturn("result-collector");
+        when(element.getTextContent()).thenReturn(InvocationPassingResultCollector.class.getName());
+            
         Properties properties = new Properties();
-        properties.setProperty("result-collector", InvocationPassingResultCollector.class.getName());
+        properties.getAny().add(element);
 
         LinkedHashSet<Pattern> patterns = new LinkedHashSet<Pattern>();
         patterns.add(pattern);

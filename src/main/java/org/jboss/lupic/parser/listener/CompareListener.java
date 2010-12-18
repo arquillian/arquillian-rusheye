@@ -54,7 +54,7 @@ public class CompareListener implements ParserListener {
     @Override
     public void onSuiteStarted(VisualSuite visualSuite) {
         this.visualSuite = visualSuite;
-        String resultListenerClass = properties.getProperty("result-collector");
+        String resultListenerClass = (String) properties.getProperty("result-collector");
         resultCollector = new Instantiator<ResultCollector>().getInstance(resultListenerClass);
         resultCollector.setProperties(properties);
         resultCollector.onSuiteStarted(visualSuite);

@@ -22,7 +22,6 @@
 package org.jboss.lupic.result.collector;
 
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -35,6 +34,7 @@ import org.jboss.lupic.result.statistics.ResultStatistics;
 import org.jboss.lupic.result.storage.ResultStorage;
 import org.jboss.lupic.result.writer.ResultWriter;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 import org.jboss.lupic.suite.VisualSuite;
 import org.jboss.lupic.suite.utils.Instantiator;
@@ -60,15 +60,15 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
 
     @Override
     public void onConfigurationParsed(VisualSuite visualSuite) {
-        String storageClass = (String) properties.get("result-storage");
+        String storageClass = (String) properties.getProperty("result-storage");
         storage = new Instantiator<ResultStorage>().getInstance(storageClass);
         storage.setProperties(properties);
         
-        String writerClass = (String) properties.get("result-writer");
+        String writerClass = (String) properties.getProperty("result-writer");
         writer = new Instantiator<ResultWriter>().getInstance(writerClass);
         writer.setProperties(properties);
         
-        String statisticsClass = (String) properties.get("result-statistics");
+        String statisticsClass = (String) properties.getProperty("result-statistics");
         statistics = new Instantiator<ResultStatistics>().getInstance(statisticsClass);
         statistics.setProperties(properties);
 

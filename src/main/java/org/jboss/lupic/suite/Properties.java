@@ -30,7 +30,7 @@ public class Properties {
     /*
      * logic
      */
-    public String getProperty(final String key) {
+    public Object getProperty(final String key) {
         return Collections2.filter(any, new Predicate<Element>() {
             @Override
             public boolean apply(Element element) {

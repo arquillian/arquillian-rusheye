@@ -30,11 +30,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.jboss.lupic.result.ResultConclusion;
 import org.jboss.lupic.result.ResultDetail;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 
 /**
@@ -55,7 +55,7 @@ public class OverallStatistics implements ResultStatistics {
 
     @Override
     public void setProperties(Properties properties) {
-        Writer writer = (Writer) properties.get("overall-statistics-output");
+        Writer writer = (Writer) properties.getProperty("overall-statistics-output");
 
         if (writer == null) {
             writer = new OutputStreamWriter(System.out);

@@ -76,7 +76,7 @@ public class TestImageComparison {
 
     @Test
     public void testPerceptible() {
-        perception.setOnePixelTreshold((short) 2);
+        perception.setOnePixelTreshold(2);
         ComparisonResult result = diffImages("perceptible");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -89,8 +89,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferent() {
-        perception.setOnePixelTreshold((short) 200);
-        perception.setGlobalDifferenceTreshold((short) 2);
+        perception.setOnePixelTreshold(200);
+        perception.setGlobalDifferenceTreshold(2);
         ComparisonResult result = diffImages("different");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -103,8 +103,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferentMasked() {
-        perception.setOnePixelTreshold((short) 200);
-        perception.setGlobalDifferenceTreshold((short) 2);
+        perception.setOnePixelTreshold(200);
+        perception.setGlobalDifferenceTreshold(2);
         ComparisonResult result = diffImages("different-masked");
         assertTrue(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -152,7 +152,7 @@ public class TestImageComparison {
             BufferedImage screenshot = ImageIO.read(screenshotFiles[0]);
             expectedDiff = diffFiles.length == 1 ? ImageIO.read(diffFiles[0]) : null;
 
-            perception.setDefaultValuesForUnset();
+            // perception.setDefaultValuesForUnset();
             ComparisonResult result = comparator.compare(pattern, screenshot, perception, masks);
 
             return result;
@@ -163,8 +163,8 @@ public class TestImageComparison {
 
     private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
         Perception strictPerception = new Perception();
-        strictPerception.setOnePixelTreshold((short) 0);
-        strictPerception.setGlobalDifferenceTreshold((short) 0);
+        strictPerception.setOnePixelTreshold(0);
+        strictPerception.setGlobalDifferenceTreshold(0);
 
         ComparisonResult result = comparator.compare(actualDiff, expectedDiff, strictPerception, new HashSet<Mask>());
         assertTrue(result.isEqualsImages());

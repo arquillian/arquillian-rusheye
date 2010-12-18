@@ -21,15 +21,16 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
-import java.util.Properties;
 
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
+import org.jboss.lupic.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

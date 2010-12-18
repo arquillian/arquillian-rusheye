@@ -27,16 +27,15 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import org.jboss.lupic.retriever.FileRetriever;
-import org.jboss.lupic.suite.HorizontalAlignment;
+import org.jboss.lupic.suite.HorizontalAlign;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.MaskType;
-import org.jboss.lupic.suite.VerticalAlignment;
+import org.jboss.lupic.suite.VerticalAlign;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -86,18 +85,23 @@ public final class ImageUtils {
 
     public static Mask readMaskImage(File maskFile) throws Exception {
         String maskFilename = maskFile.getName();
-        Mask mask = new Mask(maskFile.getName(), MaskType.SELECTIVE_ALPHA, maskFile.toString(), new Properties(), fileRetriever,
-            resolveVerticalOrientation(maskFilename), resolveHorizontalOrientation(maskFilename));
+        Mask mask = new Mask();
+        mask.setId(maskFile.getName());
+        mask.setType(MaskType.SELECTIVE_ALPHA);
+        mask.setSource(maskFile.toString());
+        mask.maskRetriever = fileRetriever;
+        mask.setHorizontalAlign(resolveHorizontalOrientation(maskFilename));
+        mask.setVerticalAlign(resolveVerticalOrientation(maskFilename));
         mask.run();
         return mask;
     }
 
-    private static HorizontalAlignment resolveHorizontalOrientation(String fileName) {
-        return getFileFlags(fileName).contains("right") ? HorizontalAlignment.RIGHT : HorizontalAlignment.LEFT;
+    private static HorizontalAlign resolveHorizontalOrientation(String fileName) {
+        return getFileFlags(fileName).contains("right") ? HorizontalAlign.RIGHT : HorizontalAlign.LEFT;
     }
 
-    private static VerticalAlignment resolveVerticalOrientation(String fileName) {
-        return getFileFlags(fileName).contains("bottom") ? VerticalAlignment.BOTTOM : VerticalAlignment.TOP;
+    private static VerticalAlign resolveVerticalOrientation(String fileName) {
+        return getFileFlags(fileName).contains("bottom") ? VerticalAlign.BOTTOM : VerticalAlign.TOP;
     }
 
     private static List<String> getFileFlags(String fileName) {

@@ -21,15 +21,11 @@
  */
 package org.jboss.lupic.parser.processor;
 
-import org.apache.commons.lang.Validate;
 import org.jboss.lupic.exception.LupicConfigurationException;
 import org.jboss.lupic.parser.Processor;
-import org.jboss.lupic.retriever.MaskRetriever;
-import org.jboss.lupic.retriever.PatternRetriever;
-import org.jboss.lupic.retriever.Retriever;
-import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.jboss.lupic.suite.GlobalConfiguration;
-import org.jboss.lupic.suite.utils.Instantiator;
+import org.jboss.lupic.suite.Retriever;
+import org.jboss.lupic.suite.SampleRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -45,32 +41,20 @@ public class RetrieverProcessor extends Processor {
 
     @Override
     public void start() {
-        String retrieverType = getAttribute("type");
-        Validate.notNull(retrieverType,
-            "image-retriever must have 'type' attribute defined pointing to Retriever implementation");
-
-        retriever = new Instantiator<Retriever>().getInstance(retrieverType);
-
         String tagName = getTagName();
         GlobalConfiguration globalConfiguration = getVisualSuite().getGlobalConfiguration();
 
         if ("mask-retriever".equals(tagName)) {
-            if (!MaskRetriever.class.isAssignableFrom(retriever.getClass())) {
-                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
-                    + " is not instance of MaskRetriever");
-            }
-            globalConfiguration.setMaskRetriever((MaskRetriever) retriever);
+            retriever = new Retriever();
+            retriever.setType(getAttribute("type"));
+            globalConfiguration.setMaskRetriever(retriever);
         } else if ("pattern-retriever".equals(tagName)) {
-            if (!PatternRetriever.class.isAssignableFrom(retriever.getClass())) {
-                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
-                    + " is not instance of PatternRetriever");
-            }
-            globalConfiguration.setPatternRetriever((PatternRetriever) retriever);
+            retriever = new Retriever();
+            retriever.setType(getAttribute("type"));
+            globalConfiguration.setPatternRetriever(retriever);
         } else if ("sample-retriever".equals(tagName)) {
-            if (!SampleRetriever.class.isAssignableFrom(retriever.getClass())) {
-                throw new LupicConfigurationException("Retriever " + retriever.getClass().getName()
-                    + " is not instance of SampleRetriever");
-            }
+            retriever = new SampleRetriever();
+            retriever.setType(getAttribute("type"));
             globalConfiguration.setSampleRetriever((SampleRetriever) retriever);
         } else {
             throw new LupicConfigurationException("unsupported retriever tag name '" + tagName + "'");

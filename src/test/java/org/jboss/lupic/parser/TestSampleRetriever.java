@@ -27,12 +27,12 @@ import static org.testng.Assert.fail;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
+import org.jboss.lupic.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 

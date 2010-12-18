@@ -22,9 +22,9 @@
 package org.jboss.lupic.result.statistics;
 
 import java.util.List;
-import java.util.Properties;
 
 import org.jboss.lupic.result.ResultDetail;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 
 /**

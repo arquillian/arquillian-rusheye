@@ -26,8 +26,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Properties;
-import java.util.Set;
+import java.util.List;
 
 import org.jboss.lupic.parser.Context;
 import org.jboss.lupic.parser.listener.ParserListener;
@@ -36,6 +35,7 @@ import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.GlobalConfiguration;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.VisualSuite;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -89,17 +89,12 @@ public class TestPatternProcessor {
     PatternRetriever patternRetriever;
 
     @Mock
-    Set<Pattern> patterns;
+    List<Pattern> patterns;
 
     @Mock
     ParserListener parserListener;
 
     Perception perception = new Perception();
-
-    {
-        perception.setDefaultValuesForUnset();
-        globalConfiguration.setDefaultValuesForUnset();
-    }
 
     @BeforeMethod
     public void initMocks() {

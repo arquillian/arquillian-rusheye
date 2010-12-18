@@ -24,12 +24,12 @@ package org.jboss.lupic.result.storage;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 
 /**
@@ -47,7 +47,7 @@ public class FileStorage implements ResultStorage {
 
     @Override
     public String store(Test test, Pattern pattern, BufferedImage differenceImage) {
-        File directory = new File((String) properties.get("file-storage-directory"));
+        File directory = new File((String) properties.getProperty("file-storage-directory"));
         File addition = new File(test.getName() + "/" + pattern.getName() + ".png");
         File file = new File(directory, addition.getPath());
 

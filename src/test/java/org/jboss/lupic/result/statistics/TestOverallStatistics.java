@@ -31,7 +31,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -39,6 +38,7 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.jboss.lupic.result.ResultConclusion;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
@@ -86,7 +86,7 @@ public class TestOverallStatistics {
 
         new Thread(new StreamToListWrapper(pipedWriter, list, barrier)).start();
 
-        when(properties.get("overall-statistics-output")).thenReturn(pipedWriter);
+        when(properties.getProperty("overall-statistics-output")).thenReturn(pipedWriter);
         when(detailList.iterator()).thenReturn(detailIterator);
         when(test.getName()).thenReturn("testName");
         when(pattern.getName()).thenReturn("patternName");

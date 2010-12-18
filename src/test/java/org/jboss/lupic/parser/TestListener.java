@@ -139,8 +139,8 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
     public static class PropertiesCheckingListener extends ParserListenerAdapter {
         @Override
         public void onSuiteStarted(VisualSuite visualSuite) {
-            assertEquals(properties.size(), 1);
-            assertEquals(properties.get("xyz"), "abc");
+            assertEquals(properties.getAny().size(), 1);
+            assertEquals(properties.getProperty("xyz"), "abc");
         }
     }
     

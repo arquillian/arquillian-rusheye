@@ -23,7 +23,7 @@ public class Pattern extends ImageSource {
     protected String name;
 
     @Resource
-    private PatternRetriever patternRetriever;
+    public PatternRetriever patternRetriever;
     
     public String getName() {
         return name;

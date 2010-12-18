@@ -21,26 +21,27 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.MASK;
+import static org.jboss.lupic.suite.MaskType.IGNORE_BITMAP;
+import static org.jboss.lupic.suite.MaskType.SELECTIVE_ALPHA;
+import static org.testng.Assert.assertEquals;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Properties;
-import java.util.Set;
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import org.dom4j.Element;
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.MaskRetriever;
-import org.jboss.lupic.suite.HorizontalAlignment;
+import org.jboss.lupic.suite.HorizontalAlign;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.MaskType;
-import org.jboss.lupic.suite.VerticalAlignment;
+import org.jboss.lupic.suite.Properties;
+import org.jboss.lupic.suite.VerticalAlign;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
-import static org.testng.Assert.*;
-import static org.jboss.lupic.suite.MaskType.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -102,14 +103,14 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         startWriter();
         parse();
 
-        Set<Mask> ignoreBitmapMasks = getCurrentIgnoreBitmapMasks();
+        Collection<Mask> ignoreBitmapMasks = getCurrentIgnoreBitmapMasks();
         assertEquals(ignoreBitmapMasks.size(), 1);
 
         Mask givenMask = ignoreBitmapMasks.iterator().next();
 
         assertEquals(givenMask.getId(), MASK1_ID);
-        assertEquals(givenMask.getHorizontalAlignment(), HorizontalAlignment.LEFT);
-        assertEquals(givenMask.getVerticalAlignment(), VerticalAlignment.BOTTOM);
+        assertEquals(givenMask.getHorizontalAlign(), HorizontalAlign.LEFT);
+        assertEquals(givenMask.getVerticalAlign(), VerticalAlign.BOTTOM);
 
         // mask needs to be ran first before obtaining image
         givenMask.run();
@@ -117,7 +118,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         assertEquals(givenMask.get(), SAMPLE_IMAGE);
     }
 
-    Set<Mask> getCurrentIgnoreBitmapMasks() {
+    Collection<Mask> getCurrentIgnoreBitmapMasks() {
         return handler.getVisualSuite().getGlobalConfiguration().getIgnoreBitmapMasks();
     }
 
@@ -143,7 +144,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
             mask.addAttribute("id", id);
         }
         if (type != null) {
-            mask.addAttribute("type", type.toXmlId());
+            mask.addAttribute("type", type.value());
         }
         if (source != null) {
             mask.addAttribute("source", source);

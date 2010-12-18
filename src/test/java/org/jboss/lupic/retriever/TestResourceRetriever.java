@@ -24,15 +24,15 @@ package org.jboss.lupic.retriever;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.DefaultImageComparator;
 import org.jboss.lupic.core.ImageComparator;
+import org.jboss.lupic.parser.ConfigurationCompiler;
 import org.jboss.lupic.suite.Mask;
-import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Properties;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,12 +51,11 @@ public class TestResourceRetriever {
 
         BufferedImage loadedImage = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(imageResource));
 
-        Perception perception = new Perception();
-        perception.setDefaultValuesForUnset();
+        ConfigurationCompiler configurationCompiler = new ConfigurationCompiler();
 
         ImageComparator imageComparator = new DefaultImageComparator();
-        ComparisonResult comparisonResult = imageComparator.compare(retrievedImage, loadedImage, perception,
-            new HashSet<Mask>());
+        ComparisonResult comparisonResult = imageComparator.compare(retrievedImage, loadedImage,
+            configurationCompiler.getPerception(), new HashSet<Mask>());
 
         Assert.assertTrue(comparisonResult.isEqualsImages());
 

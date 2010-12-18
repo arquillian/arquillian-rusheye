@@ -25,11 +25,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
-import java.util.Properties;
-
 import org.jboss.lupic.parser.Context;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.GlobalConfiguration;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.VisualSuite;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashSet;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
@@ -34,9 +33,11 @@ import org.apache.commons.io.FileUtils;
 import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.DefaultImageComparator;
 import org.jboss.lupic.core.ImageComparator;
+import org.jboss.lupic.parser.ConfigurationCompiler;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Properties;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
@@ -69,7 +70,7 @@ public class TestFileStorage {
 
     @Test
     public void test() throws Exception {
-        when(properties.get("file-storage-directory")).thenReturn(directory.getPath());
+        when(properties.getProperty("file-storage-directory")).thenReturn(directory.getPath());
 
         FileStorage fileStorage = new FileStorage();
         fileStorage.setProperties(properties);
@@ -84,10 +85,9 @@ public class TestFileStorage {
             fileStorage.store(test, pattern, expectedImage);
             BufferedImage actualImage = ImageIO.read(getComplete());
 
-            Perception perception = new Perception();
-            perception.setDefaultValuesForUnset();
+            ConfigurationCompiler configurationCompiler = new ConfigurationCompiler();
 
-            ComparisonResult result = comparator.compare(expectedImage, actualImage, perception, new HashSet<Mask>());
+            ComparisonResult result = comparator.compare(expectedImage, actualImage, configurationCompiler.getPerception(), new HashSet<Mask>());
             Assert.assertTrue(result.isEqualsImages());
         }
 

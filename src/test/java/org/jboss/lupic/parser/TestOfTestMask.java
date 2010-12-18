@@ -23,7 +23,7 @@ package org.jboss.lupic.parser;
 
 import static org.jboss.lupic.parser.VisualSuiteDefinitions.MASK;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.MaskType;
@@ -43,7 +43,7 @@ public class TestOfTestMask extends TestMask {
             mask.addAttribute("id", id);
         }
         if (type != null) {
-            mask.addAttribute("type", type.toXmlId());
+            mask.addAttribute("type", type.value());
         }
         if (source != null) {
             mask.addAttribute("source", source);
@@ -52,7 +52,7 @@ public class TestOfTestMask extends TestMask {
     }
 
     @Override
-    Set<Mask> getCurrentIgnoreBitmapMasks() {
+    Collection<Mask> getCurrentIgnoreBitmapMasks() {
         return handler.getContext().getCurrentTest().getIgnoreBitmapMasks();
     }
 

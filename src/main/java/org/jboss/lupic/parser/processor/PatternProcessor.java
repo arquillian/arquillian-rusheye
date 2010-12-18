@@ -21,6 +21,7 @@
  */
 package org.jboss.lupic.parser.processor;
 
+import org.jboss.lupic.parser.ConfigurationCompiler;
 import org.jboss.lupic.parser.Processor;
 import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.suite.Configuration;
@@ -48,15 +49,14 @@ public class PatternProcessor extends Processor {
         Pattern pattern = new Pattern();
         pattern.setName(name);
         pattern.setSource(source);
-        pattern.setProperties(getProperties());
-        pattern.setRetriever(patternRetriever);
+        pattern.getAny().addAll(getProperties().getAny());
+        pattern.patternRetriever = patternRetriever;
         
         test.getPatterns().add(pattern);
 
-        Configuration patternConfiguration = new Configuration();
-        patternConfiguration.setValuesFromParent(globalConfiguration);
-        patternConfiguration.setValuesFromParent(test);
-        patternConfiguration.setDefaultValuesForUnset();
+        ConfigurationCompiler patternConfiguration = new ConfigurationCompiler();
+        patternConfiguration.pushConfiguration(globalConfiguration);
+        patternConfiguration.pushConfiguration(test);
 
         getContext().invokeListeners().onPatternParsed(patternConfiguration, pattern);
     }

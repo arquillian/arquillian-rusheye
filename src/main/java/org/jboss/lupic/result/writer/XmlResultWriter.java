@@ -24,7 +24,6 @@ package org.jboss.lupic.result.writer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Properties;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -33,6 +32,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.result.writer.spooler.SpoolerContext;
 import org.jboss.lupic.result.writer.spooler.TestSpooler;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 
 /**

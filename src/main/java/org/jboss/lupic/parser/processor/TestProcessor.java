@@ -40,14 +40,16 @@ public class TestProcessor extends Processor {
 
     @Override
     public void start() {
-        test = new Test(getAttribute("name"), getVisualSuite().getGlobalConfiguration().getSampleRetriever());
+        test = new Test();
+        test.setName(getAttribute("name"));
+        test.getSample().sampleRetriever = getVisualSuite().getGlobalConfiguration().getSampleRetriever();
+
         getContext().setCurrentTest(test);
         getContext().setCurrentConfiguration(test);
     }
 
     @Override
     public void end() {
-        test.getPerception().setDefaultValuesForUnset();
         getContext().invokeListeners().onTestParsed(test);
     }
 }

@@ -25,7 +25,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.Set;
+import java.util.Collection;
 
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
@@ -59,7 +59,7 @@ public class DefaultImageComparator implements ImageComparator {
         g.dispose();
     }
 
-    private boolean isMaskedPixel(BufferedImage image, Set<Mask> masks, int x, int y) {
+    private boolean isMaskedPixel(BufferedImage image, Collection<Mask> masks, int x, int y) {
         for (Mask mask : masks) {
             if (mask.isPixelMasked(image, x, y)) {
                 return true;
@@ -76,7 +76,7 @@ public class DefaultImageComparator implements ImageComparator {
     }
 
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
-        Set<Mask> selectiveAlphaMasks) {
+        Collection<Mask> selectiveAlphaMasks) {
         // TODO
         // test.setDefaultValuesForUnset();
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);

@@ -22,16 +22,15 @@
 package org.jboss.lupic.result.collector;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentMap;
 
 import org.jboss.lupic.core.ComparisonResult;
@@ -41,6 +40,7 @@ import org.jboss.lupic.result.storage.ResultStorage;
 import org.jboss.lupic.result.writer.ResultWriter;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.VisualSuite;
 import org.mockito.InOrder;
 import org.mockito.Mock;
@@ -206,9 +206,9 @@ public class TestResultCollectorImpl {
     private Properties setupProperties() {
         Properties properties = mock(Properties.class);
 
-        when(properties.get("result-statistics")).thenReturn(MockStatistics.class.getName());
-        when(properties.get("result-writer")).thenReturn(MockWriter.class.getName());
-        when(properties.get("result-storage")).thenReturn(MockStorage.class.getName());
+        when(properties.getProperty("result-statistics")).thenReturn(MockStatistics.class.getName());
+        when(properties.getProperty("result-writer")).thenReturn(MockWriter.class.getName());
+        when(properties.getProperty("result-storage")).thenReturn(MockStorage.class.getName());
 
         collector.setProperties(properties);
 

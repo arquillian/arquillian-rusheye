@@ -27,7 +27,6 @@ import static org.jboss.lupic.parser.VisualSuiteDefinitions.TEST;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Properties;
 
 import org.dom4j.Element;
 import org.jboss.lupic.parser.listener.CompareListener;
@@ -38,6 +37,7 @@ import org.jboss.lupic.result.writer.XmlResultWriter;
 import org.jboss.lupic.retriever.ResourceRetriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.retriever.sample.ResourceSampleRetriever;
+import org.jboss.lupic.suite.Properties;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

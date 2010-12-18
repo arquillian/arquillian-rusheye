@@ -13,9 +13,6 @@ import javax.xml.bind.annotation.XmlType;
     "globalDifferencePixelAmount" })
 public class Perception {
 
-    Pattern percentPattern = Pattern.compile("([0-9]{1,2}|100)%");
-    Pattern pixelPattern = Pattern.compile("(\\d)+px");
-    
     @XmlElement(name = "one-pixel-treshold")
     protected Integer onePixelTreshold;
     @XmlElement(name = "global-difference-treshold")
@@ -46,12 +43,13 @@ public class Perception {
     public void setGlobalDifferenceAmount(String value) {
         this.globalDifferenceAmount = value;
     }
-    
+
     /*
      * 
      */
     public Long getGlobalDifferencePixelAmount() {
-        return getGlobalDifferenceAmount(AmountType.PIXEL).longValue();
+        Number number = getGlobalDifferenceAmount(AmountType.PIXEL);
+        return (number != null) ? number.longValue() : null;
     }
 
     public void setGlobalDifferencePixelAmount(long globalDifferencePixelAmount) {
@@ -59,29 +57,46 @@ public class Perception {
     }
 
     public Short getGlobalDifferencePercentage() {
-        return getGlobalDifferenceAmount(AmountType.PERCENTAGE).shortValue();
+        Number number = getGlobalDifferenceAmount(AmountType.PERCENTAGE);
+        return (number != null) ? number.shortValue() : null;
     }
 
     public void setGlobalDifferencePercentage(short globalDifferencePercentage) {
         this.globalDifferenceAmount = Short.valueOf(globalDifferencePercentage) + "%";
     }
-    
+
     private enum AmountType {
-        PERCENTAGE, PIXEL
-    }
-    
-    private Number getGlobalDifferenceAmount(AmountType type) {
-        Matcher matcher;
-        for (Pattern pattern : new Pattern[] { percentPattern, pixelPattern }) {
-            matcher = pattern.matcher(globalDifferenceAmount);
-            if (matcher.lookingAt()) {
-                if (pattern == percentPattern) {
-                    return Short.valueOf(matcher.group(1));
-                } else {
-                    return Long.valueOf(matcher.group(1));
-                }
+        PERCENTAGE("([0-9]{1,2}|100)%"), PIXEL("(\\d)+px");
+
+        private AmountType(String pattern) {
+            this.pattern = Pattern.compile(pattern);
+        }
+
+        Pattern pattern;
+
+        Pattern getPattern() {
+            return pattern;
+        }
+
+        Number parseAmount(String string) {
+            if (this == PERCENTAGE) {
+                return Short.valueOf(string);
+            } else {
+                return Long.valueOf(string);
             }
         }
-        throw new IllegalStateException();
+    }
+
+    private Number getGlobalDifferenceAmount(AmountType amountType) {
+        if (globalDifferenceAmount == null) {
+            return null;
+        }
+
+        Matcher matcher = amountType.getPattern().matcher(globalDifferenceAmount);
+        if (matcher.lookingAt()) {
+            return amountType.parseAmount(matcher.group(1));
+        } else {
+            return null;
+        }
     }
 }

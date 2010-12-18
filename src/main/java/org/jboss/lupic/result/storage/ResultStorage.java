@@ -22,9 +22,9 @@
 package org.jboss.lupic.result.storage;
 
 import java.awt.image.BufferedImage;
-import java.util.Properties;
 
 import org.jboss.lupic.suite.Pattern;
+import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
 
 /**

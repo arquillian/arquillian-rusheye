@@ -39,8 +39,8 @@ public abstract class Configuration {
     /*
      * logic
      */
-    public Collection<Mask> getSelectiveAlphaMasks() {
-        return Collections2.filter(masks, new Predicate<Mask>() {
+    public final Collection<Mask> getSelectiveAlphaMasks() {
+        return Collections2.filter(getMasks(), new Predicate<Mask>() {
             @Override
             public boolean apply(Mask mask) {
                 return MaskType.SELECTIVE_ALPHA.equals(mask.getType());
@@ -48,8 +48,8 @@ public abstract class Configuration {
         });
     }
     
-    public Collection<Mask> getIgnoreBitmapMasks() {
-        return Collections2.filter(masks, new Predicate<Mask>() {
+    public final Collection<Mask> getIgnoreBitmapMasks() {
+        return Collections2.filter(getMasks(), new Predicate<Mask>() {
             @Override
             public boolean apply(Mask mask) {
                 return MaskType.IGNORE_BITMAP.equals(mask.getType());
