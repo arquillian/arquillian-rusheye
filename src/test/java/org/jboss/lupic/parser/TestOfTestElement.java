@@ -38,7 +38,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         stub.visualSuite.remove(stub.defaultTest);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "test's \"name\" attribute have to be unique across suite")
     public void testNotUniqueNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);

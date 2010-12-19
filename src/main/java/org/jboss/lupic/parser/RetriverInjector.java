@@ -15,20 +15,12 @@ import org.jboss.lupic.retriever.PatternRetriever;
 import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 import org.jboss.lupic.suite.GlobalConfiguration;
-import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Test;
 
-class RetriverRegistrator extends Unmarshaller.Listener {
-
-    /**
-     * 
-     */
+class RetriverInjector extends Unmarshaller.Listener {
     private Parser parser;
 
-    /**
-     * @param parser
-     */
-    RetriverRegistrator(Parser parser) {
+    RetriverInjector(Parser parser) {
         this.parser = parser;
     }
 
@@ -39,12 +31,12 @@ class RetriverRegistrator extends Unmarshaller.Listener {
         final Class<?> targetClass = target.getClass();
 
         List<Field> fields;
-        
+
         if (target instanceof Test) {
             Test test = (Test) target;
             afterUnmarshal(test.getSample(), test);
         }
-        
+
         if (!fieldMap.containsKey(target.getClass())) {
             fields = new LinkedList<Field>();
             fieldMap.put(targetClass, fields);
@@ -75,7 +67,7 @@ class RetriverRegistrator extends Unmarshaller.Listener {
     }
 
     private Retriever getRetriever(Class<?> type) {
-        GlobalConfiguration globalConfiguration = this.parser.handler.getVisualSuite().getGlobalConfiguration();
+        GlobalConfiguration globalConfiguration = this.parser.getHandler().getVisualSuite().getGlobalConfiguration();
 
         if (type == MaskRetriever.class) {
             return globalConfiguration.getMaskRetriever();

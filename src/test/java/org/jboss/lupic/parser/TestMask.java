@@ -42,7 +42,6 @@ import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.VerticalAlign;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -77,16 +76,8 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class)
-    public void testNonUniqueMaskIdInsideOneMasksElementRaiseException() throws IOException, SAXException {
-        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
-        addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
-        startWriter();
-        parse();
-    }
-
-    @Test(expectedExceptions = ConfigurationValidationException.class)
-    public void testNonUniqueMaskIdAcrossTwoMasksElementsRaiseException() throws IOException, SAXException {
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "mask's \"id\" attribute have to be unique across suite")
+    public void testNonUniqueMaskIdsRaiseException() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         addMask(MASK1_ID, SELECTIVE_ALPHA, MASK1_SOURCE);
         startWriter();
@@ -131,7 +122,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp="attribute \"horizontal-align\" has a bad value: the value is not a member of the enumeration: .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"horizontal-align\" has a bad value: the value is not a member of the enumeration: .*")
     public void testMaskWrongHorizontalAlign() throws IOException, SAXException {
         addMask(MASK1_ID, IGNORE_BITMAP, MASK1_SOURCE);
         mask.addAttribute("horizontal-align", "bottom");

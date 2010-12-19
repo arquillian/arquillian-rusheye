@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.Configuration;
-import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Test;
 
 /**
@@ -36,8 +35,9 @@ import org.jboss.lupic.suite.Test;
 public abstract class Context {
     private Test currentTest;
     private Configuration currentConfiguration;
-    private Set<Mask> currentMasks;
+    private Set<String> testNames = new HashSet<String>();
     private Set<String> maskIds = new HashSet<String>();
+    private Set<String> patternNames = new HashSet<String>();
 
     public Configuration getCurrentConfiguration() {
         return currentConfiguration;
@@ -53,6 +53,14 @@ public abstract class Context {
 
     public void setCurrentTest(Test currentTest) {
         this.currentTest = currentTest;
+    }
+
+    public Set<String> getTestNames() {
+        return testNames;
+    }
+
+    public Set<String> getPatternNames() {
+        return patternNames;
     }
 
     public Set<String> getMaskIds() {

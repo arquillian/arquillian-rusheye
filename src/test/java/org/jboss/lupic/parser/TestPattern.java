@@ -32,7 +32,8 @@ import org.xml.sax.SAXException;
  * @version $Revision$
  */
 public class TestPattern extends AbstractTestOfTestElement {
-    @Test(expectedExceptions = ConfigurationValidationException.class)
+
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "pattern's \"name\" attribute have to be unique across suite")
     public void testNotUniqueNameAcrossTestsShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);
@@ -44,7 +45,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "pattern's \"name\" attribute have to be unique across suite")
     public void testNotUniqueNameInsideOneTestShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);

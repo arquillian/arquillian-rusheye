@@ -131,19 +131,22 @@ public final class Parser {
             XMLStreamReader2 filteredReader = new Stax2FilteredStreamReader(reader, filter);
 
             reader.validateAgainst(schema);
-            
-//            EventFilter filter = new EventFilter() {
-//                @Override
-//                public boolean accept(XMLEvent reader) {
-//                    return reader.isStartElement();
-//                }
-//            };
-//            
-//            XMLEventReader reader = factory.createXMLEventReader(file);
-//            XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
+
+            // EventFilter filter = new EventFilter() {
+            // @Override
+            // public boolean accept(XMLEvent reader) {
+            // return reader.isStartElement();
+            // }
+            // };
+            //
+            // XMLEventReader reader = factory.createXMLEventReader(file);
+            // XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
 
             JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
             Unmarshaller um = ctx.createUnmarshaller();
+
+            UnmarshallerMultiListener listener = new UnmarshallerMultiListener();
+            um.setListener(listener);
 
             // skip parsing of the first element - visual-suite
             filteredReader.nextTag();
@@ -151,6 +154,8 @@ public final class Parser {
             visualSuite = new VisualSuite();
             handler.setVisualSuite(visualSuite);
             handler.getContext().invokeListeners().onSuiteStarted(visualSuite);
+
+             listener.registerListener(new UniqueIdentityChecker(handler.getContext()));
 
             while (filteredReader.hasNext()) {
                 try {
@@ -164,11 +169,11 @@ public final class Parser {
                         visualSuite.setGlobalConfiguration(globalConfiguration);
                         handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
 
-                        RetriverRegistrator retriverRegistrator = new RetriverRegistrator(this);
+                        RetriverInjector retriverInjector = new RetriverInjector(this);
                         for (Mask mask : globalConfiguration.getMasks()) {
-                            retriverRegistrator.afterUnmarshal(mask, null);
+                            retriverInjector.afterUnmarshal(mask, null);
                         }
-                        um.setListener(retriverRegistrator);
+                        listener.registerListener(retriverInjector);
                     }
                     if (o instanceof Test) {
                         Test test = (Test) o;
@@ -198,7 +203,7 @@ public final class Parser {
             }
         }
     }
-    
+
     private RuntimeException handleParsingException(Throwable originalException, Throwable cause) {
         if (cause != null && cause instanceof WstxValidationException) {
             String message = cause.getMessage().replaceAll("\n", "");
