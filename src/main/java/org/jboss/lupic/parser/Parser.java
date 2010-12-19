@@ -130,7 +130,7 @@ public final class Parser {
             XMLStreamReader2 reader = factory.createXMLStreamReader(file);
             XMLStreamReader2 filteredReader = new Stax2FilteredStreamReader(reader, filter);
 
-            filteredReader.validateAgainst(schema);
+            reader.validateAgainst(schema);
             
 //            EventFilter filter = new EventFilter() {
 //                @Override
