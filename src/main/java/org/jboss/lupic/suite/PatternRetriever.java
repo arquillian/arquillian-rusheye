@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
@@ -18,25 +19,29 @@ public class PatternRetriever extends TypeProperties implements org.jboss.lupic.
     @XmlTransient
     org.jboss.lupic.retriever.PatternRetriever patternRetriever;
 
-    @Override
-    public void setType(String value) {
-        super.setType(value);
-        Validate.notNull(type);
-        patternRetriever = new Instantiator<org.jboss.lupic.retriever.PatternRetriever>().getInstance(type);
+    public void initializeRetriever() {
+        if (patternRetriever == null) {
+            Validate.notNull(getType());
+            patternRetriever = new Instantiator<org.jboss.lupic.retriever.PatternRetriever>().getInstance(getType());
+            patternRetriever.setGlobalProperties(this);
+        }
     }
 
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        initializeRetriever();
         return patternRetriever.retrieve(source, localProperties);
     }
 
     @Override
     public Properties mergeProperties(Properties localProperties) {
+        initializeRetriever();
         return patternRetriever.mergeProperties(localProperties);
     }
 
     @Override
     public void setGlobalProperties(Properties properties) {
+        initializeRetriever();
         patternRetriever.setGlobalProperties(properties);
     }
 

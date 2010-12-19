@@ -21,14 +21,14 @@
  */
 package org.jboss.lupic.parser;
 
+import static org.jboss.lupic.parser.VisualSuiteDefinitions.GLOBAL_DIFFERENCE_PIXEL_AMOUNT;
+
 import java.io.IOException;
 
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import static org.jboss.lupic.parser.VisualSuiteDefinitions.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -44,8 +44,7 @@ public class TestPerceptionAmount extends AbstractVisualSuiteDefinitionTest {
 
     @DataProvider(name = "pixel-amount-not-allowed")
     public Object[][] providePixelAmountNotAllowed() {
-        return new Object[][] { { "-1%" }, { "0.1%" }, { "101%" }, { "-1px" }, { "0" }, { "1" }, { "a" }, { "" },
-            { "null" } };
+        return new Object[][] { { "-1%" }, { "0.1%" }, { "101%" }, { "-1px" }, { "0" }, { "1" }, { "a" }, { "null" } };
     }
 
     @Test(dataProvider = "pixel-amount-allowed")
@@ -53,9 +52,14 @@ public class TestPerceptionAmount extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelAmount(pixelAmount);
     }
 
-    @Test(dataProvider = "pixel-amount-not-allowed", expectedExceptions = SAXParseException.class)
+    @Test(dataProvider = "pixel-amount-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "bad character literal: .*")
     public void testGlobalDifferencePixelAmountNotAllowed(Object pixelAmount) throws IOException, SAXException {
         tryParsePixelAmount(pixelAmount);
+    }
+
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    public void testGlobalDifferencePixelAmountEmptyNotAllowed() throws IOException, SAXException {
+        tryParsePixelAmount("");
     }
 
     private void tryParsePixelAmount(Object pixelAmount) throws IOException, SAXException {

@@ -23,10 +23,10 @@ package org.jboss.lupic.parser;
 
 import java.io.IOException;
 
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -38,7 +38,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         stub.visualSuite.remove(stub.defaultTest);
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class)
     public void testNotUniqueNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);
@@ -50,15 +50,16 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"test\" is missing \"name\" attribute .*")
     public void testWithoutNameShouldRaiseException() throws IOException, SAXException {
+        addTest(null);
         addPattern(PATTERN1_NAME);
 
         startWriter();
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type .*")
     public void testEmptyNameShouldRaiseException() throws IOException, SAXException {
         addTest("");
         addPattern(PATTERN1_NAME);
@@ -67,7 +68,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "uncompleted content model. expecting: <mask>,<pattern>,<perception> .*")
     public void testNoPatternRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
 

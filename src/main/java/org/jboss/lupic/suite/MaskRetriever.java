@@ -18,25 +18,29 @@ public class MaskRetriever extends TypeProperties implements org.jboss.lupic.ret
     @XmlTransient
     org.jboss.lupic.retriever.MaskRetriever maskRetriever;
 
-    @Override
-    public void setType(String value) {
-        super.setType(value);
-        Validate.notNull(type);
-        maskRetriever = new Instantiator<org.jboss.lupic.retriever.MaskRetriever>().getInstance(type);
+    public void initializeRetriever() {
+        if (maskRetriever == null) {
+            Validate.notNull(getType());
+            maskRetriever = new Instantiator<org.jboss.lupic.retriever.MaskRetriever>().getInstance(getType());
+            maskRetriever.setGlobalProperties(this);
+        }
     }
 
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        initializeRetriever();
         return maskRetriever.retrieve(source, localProperties);
     }
 
     @Override
     public Properties mergeProperties(Properties localProperties) {
+        initializeRetriever();
         return maskRetriever.mergeProperties(localProperties);
     }
 
     @Override
     public void setGlobalProperties(Properties properties) {
+        initializeRetriever();
         maskRetriever.setGlobalProperties(properties);
     }
 

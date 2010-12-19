@@ -19,25 +19,29 @@ public class SampleRetriever extends TypeProperties implements org.jboss.lupic.r
     @XmlTransient
     org.jboss.lupic.retriever.sample.SampleRetriever sampleRetriever;
 
-    @Override
-    public void setType(String value) {
-        super.setType(value);
-        Validate.notNull(type);
-        sampleRetriever = new Instantiator<org.jboss.lupic.retriever.sample.SampleRetriever>().getInstance(type);
+    public void initializeRetriever() {
+        if (sampleRetriever == null) {
+            Validate.notNull(getType());
+            sampleRetriever = new Instantiator<org.jboss.lupic.retriever.sample.SampleRetriever>().getInstance(getType());
+            sampleRetriever.setGlobalProperties(this);
+        }
     }
 
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        initializeRetriever();
         return sampleRetriever.retrieve(source, localProperties);
     }
 
     @Override
     public Properties mergeProperties(Properties localProperties) {
+        initializeRetriever();
         return sampleRetriever.mergeProperties(localProperties);
     }
 
     @Override
     public void setGlobalProperties(Properties properties) {
+        initializeRetriever();
         sampleRetriever.setGlobalProperties(properties);
     }
 

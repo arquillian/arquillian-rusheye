@@ -23,16 +23,16 @@ package org.jboss.lupic.parser;
 
 import java.io.IOException;
 
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class TestPattern extends AbstractTestOfTestElement {
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class)
     public void testNotUniqueNameAcrossTestsShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);
@@ -44,7 +44,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class)
     public void testNotUniqueNameInsideOneTestShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(PATTERN1_NAME);
@@ -54,7 +54,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type .*")
     public void testEmptyNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern("");
@@ -63,7 +63,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = SAXParseException.class)
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"pattern\" is missing \"name\" attribute .*")
     public void testWithoutNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(null);

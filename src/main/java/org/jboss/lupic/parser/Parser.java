@@ -35,10 +35,13 @@ import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.EventFilter;
 import javax.xml.stream.StreamFilter;
+import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 
 import org.apache.commons.io.FileUtils;
 import org.codehaus.stax2.XMLEventReader2;
@@ -128,6 +131,16 @@ public final class Parser {
             XMLStreamReader2 filteredReader = new Stax2FilteredStreamReader(reader, filter);
 
             filteredReader.validateAgainst(schema);
+            
+//            EventFilter filter = new EventFilter() {
+//                @Override
+//                public boolean accept(XMLEvent reader) {
+//                    return reader.isStartElement();
+//                }
+//            };
+//            
+//            XMLEventReader reader = factory.createXMLEventReader(file);
+//            XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
 
             JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
             Unmarshaller um = ctx.createUnmarshaller();
@@ -172,14 +185,9 @@ public final class Parser {
 
             }
         } catch (XMLStreamException e) {
-            throw new ParsingException(e);
+            throw handleParsingException(e, e);
         } catch (JAXBException e) {
-            final Throwable linkedException = e.getLinkedException();
-            if (linkedException != null && linkedException instanceof WstxValidationException) {
-                String message = linkedException.getMessage().replaceAll("\n", "");
-                throw new ConfigurationValidationException(message, linkedException);
-            }
-            throw new ParsingException(e);
+            throw handleParsingException(e, e.getLinkedException());
         } finally {
             if (visualSuite != null && handler.getContext() != null) {
                 handler.getContext().invokeListeners().onSuiteParsed(visualSuite);
@@ -188,6 +196,14 @@ public final class Parser {
                 FileUtils.deleteQuietly(file);
             }
         }
+    }
+    
+    private RuntimeException handleParsingException(Throwable originalException, Throwable cause) {
+        if (cause != null && cause instanceof WstxValidationException) {
+            String message = cause.getMessage().replaceAll("\n", "");
+            return new ConfigurationValidationException(message, cause);
+        }
+        return new ParsingException(originalException);
     }
 
     public void registerListener(ParserListener parserListener) {

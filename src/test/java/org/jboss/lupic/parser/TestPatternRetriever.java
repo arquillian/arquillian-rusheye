@@ -28,6 +28,8 @@ import static org.testng.Assert.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jboss.lupic.retriever.AbstractRetriever;
 import org.jboss.lupic.retriever.MaskRetriever;
@@ -36,6 +38,7 @@ import org.jboss.lupic.retriever.Retriever;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.suite.Properties;
 import org.testng.annotations.Test;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
@@ -57,7 +60,10 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
         startWriter();
         parse();
 
-        Retriever retriever = handler.getVisualSuite().getGlobalConfiguration().getPatternRetriever();
+        org.jboss.lupic.suite.PatternRetriever retriever = (org.jboss.lupic.suite.PatternRetriever) handler.getVisualSuite().getGlobalConfiguration().getPatternRetriever();
+        List<Element> any = retriever.getAny();
+        System.out.println(any.toString());
+        
         try {
             assertNull(retriever.retrieve(SOURCE, new Properties()));
         } catch (RetrieverException e) {

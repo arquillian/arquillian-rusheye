@@ -239,15 +239,16 @@
 	</xs:complexType>
 
 	<xs:complexType name="ImageSource" abstract="true">
-		<xs:sequence>
-			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
-		</xs:sequence>
-		<xs:attribute name="source">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:minLength value="1"></xs:minLength>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
+		<xs:complexContent>
+			<xs:extension base="vs:Properties">
+				<xs:attribute name="source">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1"></xs:minLength>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 </xs:schema>
