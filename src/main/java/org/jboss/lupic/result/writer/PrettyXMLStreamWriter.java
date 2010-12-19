@@ -22,6 +22,10 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object result;
 
+        if ("writeNamespace".equals(method.getName()) || "writeDefaultNamespace".equals(method.getName())) {
+            return null;
+        }
+        
         if ("writeStartElement".equals(method.getName())) {
             writer.writeCharacters("\n");
             writer.writeCharacters(StringUtils.repeat("\t", indentation));

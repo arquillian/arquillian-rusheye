@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.jboss.lupic.suite.utils.Nullify;
+import org.jboss.lupic.suite.utils.VisualSuiteResult;
+
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Test", propOrder = { "patterns" })
 @XmlRootElement(name = "test")
@@ -26,6 +29,7 @@ public class Test extends Configuration {
      */
 
     @XmlElement(name = "pattern", required = true)
+    @Nullify(VisualSuiteResult.class)
     public List<Pattern> getPatterns() {
         if (patterns == null) {
             patterns = new ArrayList<Pattern>();

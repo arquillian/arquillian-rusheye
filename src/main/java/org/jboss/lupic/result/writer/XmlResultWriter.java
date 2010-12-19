@@ -23,17 +23,29 @@ package org.jboss.lupic.result.writer;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.codehaus.stax2.XMLStreamWriter2;
+import org.codehaus.stax2.validation.XMLValidationSchema;
+import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
+import org.jboss.lupic.parser.MyNamespacePrefixMapper;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.result.writer.spooler.SpoolerContext;
 import org.jboss.lupic.result.writer.spooler.TestSpooler;
 import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
+import org.jboss.lupic.suite.VisualSuite;
+import org.jboss.lupic.suite.utils.ApplyOmitting;
+import org.jboss.lupic.suite.utils.NullingProxy;
+import org.jboss.lupic.suite.utils.VisualSuiteResult;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -44,6 +56,7 @@ public abstract class XmlResultWriter implements ResultWriter {
     protected Properties properties;
     private XMLStreamWriter writer;
     private OutputStream out;
+    private Marshaller marshaller;
     private boolean writerFailedToInitialize = false;
     private boolean writerFailed = false;
     private boolean writtenStartDocument = false;
@@ -70,7 +83,6 @@ public abstract class XmlResultWriter implements ResultWriter {
     private void tryWriteStartDocument() {
         if (!writerFailed && !writtenStartDocument) {
             try {
-
                 writer.writeStartDocument("UTF-8", "1.0");
                 writer.writeStartElement("visual-suite-result");
                 writer.writeDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
@@ -87,8 +99,11 @@ public abstract class XmlResultWriter implements ResultWriter {
     private void tryWriteTest(SpoolerContext context) {
         if (!writerFailed) {
             try {
-                new TestSpooler().write(writer, context);
-            } catch (XMLStreamException e) {
+                Test test = context.getTest();
+                test = NullingProxy.handle(test, VisualSuiteResult.class);
+                marshaller.marshal(test, writer);
+            } catch (Exception e) {
+                e.printStackTrace();
                 writerFailed = true;
             }
         }
@@ -104,12 +119,14 @@ public abstract class XmlResultWriter implements ResultWriter {
 
             try {
                 writer = createXMLStreamWriter();
-            } catch (XMLStreamException e) {
+                marshaller = createMarshaller();
+                marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+            } catch (Exception e) {
                 writerFailedToInitialize = true;
                 try {
                     out.close();
                 } catch (IOException ioe) {
-                    // not need to close
+                    // no need to close
                 }
             }
         }
@@ -118,8 +135,25 @@ public abstract class XmlResultWriter implements ResultWriter {
     }
 
     private XMLStreamWriter createXMLStreamWriter() throws XMLStreamException {
-        XMLOutputFactory factory = XMLOutputFactory.newFactory();
-        return PrettyXMLStreamWriter.pretty(factory.createXMLStreamWriter(out));
+        XMLOutputFactory factory = XMLOutputFactory.newInstance();
+        XMLStreamWriter2 writer = (XMLStreamWriter2) factory.createXMLStreamWriter(out);
+        // TODO
+        // writer.validateAgainst(createXMLValidationSchema());
+        return PrettyXMLStreamWriter.pretty(writer);
+    }
+    
+    private Marshaller createMarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("org.jboss.lupic.suite");
+        Marshaller marshaller = context.createMarshaller();
+        return marshaller;
+    }
+
+    private XMLValidationSchema createXMLValidationSchema() throws XMLStreamException {
+        XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
+            .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
+        URL schemaURL = getClass().getClassLoader().getResource("visual-suite-result.xsd");
+        XMLValidationSchema schema = schemaFactory.createSchema(schemaURL);
+        return schema;
     }
 
     protected abstract OutputStream openOutputStream() throws Exception;

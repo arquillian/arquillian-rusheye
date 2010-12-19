@@ -18,8 +18,14 @@ public class NullingProxy {
     public static <T> T handle(T instance, Class<? extends Annotation> nullified) throws InstantiationException,
         IllegalAccessException {
 
+        Class<?> originalClass = (Class<?>) instance.getClass();
+        
+        if (instance instanceof ProxyObject) {
+            originalClass = (Class<?>) originalClass.getSuperclass();
+        }
+        
         ProxyFactory proxyFactory = new ProxyFactory();
-        proxyFactory.setSuperclass(instance.getClass());
+        proxyFactory.setSuperclass(originalClass);
 
         Class<?> proxyClass = proxyFactory.createClass();
 

@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.jboss.lupic.suite.utils.Nullify;
+import org.jboss.lupic.suite.utils.VisualSuiteResult;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
@@ -21,6 +24,7 @@ public abstract class Configuration {
     protected Perception perception;
     protected List<Mask> masks;
 
+    @Nullify(VisualSuiteResult.class)
     public Perception getPerception() {
         return perception;
     }
