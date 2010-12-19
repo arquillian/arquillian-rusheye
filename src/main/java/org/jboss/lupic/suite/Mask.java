@@ -15,28 +15,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.jboss.lupic.retriever.MaskRetriever;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Mask")
 public class Mask extends ImageSource {
 
-    @XmlAttribute(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "Name")
     protected String id;
-    @XmlAttribute(required = true)
     protected MaskType type;
-    @XmlAttribute(name = "vertical-align")
     protected VerticalAlign verticalAlign;
-    @XmlAttribute(name = "horizontal-align")
     protected HorizontalAlign horizontalAlign;
 
     @Resource
     @XmlTransient
     public MaskRetriever maskRetriever;
-    
+
     /*
      * accessors
      */
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "Name")
     public String getId() {
         return id;
     }
@@ -45,6 +42,7 @@ public class Mask extends ImageSource {
         this.id = value;
     }
 
+    @XmlAttribute(required = true)
     public MaskType getType() {
         return type;
     }
@@ -53,6 +51,7 @@ public class Mask extends ImageSource {
         this.type = value;
     }
 
+    @XmlAttribute(name = "vertical-align")
     public VerticalAlign getVerticalAlign() {
         return verticalAlign;
     }
@@ -61,6 +60,7 @@ public class Mask extends ImageSource {
         this.verticalAlign = value;
     }
 
+    @XmlAttribute(name = "horizontal-align")
     public HorizontalAlign getHorizontalAlign() {
         return horizontalAlign;
     }
@@ -76,7 +76,7 @@ public class Mask extends ImageSource {
     public BufferedImage retrieve() throws Exception {
         return maskRetriever.retrieve(source, this);
     }
-    
+
     private BufferedImage getMask() {
         try {
             return get();

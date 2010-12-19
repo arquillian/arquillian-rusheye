@@ -13,21 +13,19 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Test", propOrder = { "patterns" })
-@XmlRootElement(name="test")
+@XmlRootElement(name = "test")
 public class Test extends Configuration {
 
-    @XmlElement(name="pattern", required = true)
     protected List<Pattern> patterns;
-    @XmlAttribute(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "Name")
     protected String name;
 
     /*
      * accessors
      */
+
+    @XmlElement(name = "pattern", required = true)
     public List<Pattern> getPatterns() {
         if (patterns == null) {
             patterns = new ArrayList<Pattern>();
@@ -35,6 +33,9 @@ public class Test extends Configuration {
         return this.patterns;
     }
 
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "Name")
     public String getName() {
         return name;
     }
@@ -42,13 +43,13 @@ public class Test extends Configuration {
     public void setName(String value) {
         this.name = value;
     }
-    
+
     /*
      * logic
      */
     @XmlTransient
     private Sample sample;
-    
+
     public Sample getSample() {
         if (sample == null) {
             sample = new Sample();

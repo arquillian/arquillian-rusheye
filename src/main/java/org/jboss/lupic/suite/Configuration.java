@@ -7,18 +7,18 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Configuration", propOrder = { "perception", "masks" })
 @XmlSeeAlso({ GlobalConfiguration.class, Test.class })
 public abstract class Configuration {
 
     protected Perception perception;
-    @XmlElement(name="mask")
     protected List<Mask> masks;
 
     public Perception getPerception() {
@@ -29,16 +29,18 @@ public abstract class Configuration {
         this.perception = value;
     }
 
+    @XmlElement(name = "mask")
     public List<Mask> getMasks() {
         if (masks == null) {
             masks = new ArrayList<Mask>();
         }
         return this.masks;
     }
-    
+
     /*
      * logic
      */
+    @XmlTransient
     public final Collection<Mask> getSelectiveAlphaMasks() {
         return Collections2.filter(getMasks(), new Predicate<Mask>() {
             @Override
@@ -47,7 +49,8 @@ public abstract class Configuration {
             }
         });
     }
-    
+
+    @XmlTransient
     public final Collection<Mask> getIgnoreBitmapMasks() {
         return Collections2.filter(getMasks(), new Predicate<Mask>() {
             @Override

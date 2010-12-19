@@ -14,19 +14,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.jboss.lupic.retriever.PatternRetriever;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Pattern")
 public class Pattern extends ImageSource {
 
-    @XmlAttribute(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "Name")
     protected String name;
 
     @Resource
     @XmlTransient
     public PatternRetriever patternRetriever;
-    
+
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "Name")
     public String getName() {
         return name;
     }
@@ -34,7 +34,7 @@ public class Pattern extends ImageSource {
     public void setName(String value) {
         this.name = value;
     }
-    
+
     /*
      * logic
      */

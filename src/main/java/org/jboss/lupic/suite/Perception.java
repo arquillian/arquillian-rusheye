@@ -9,20 +9,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold",
-    "globalDifferenceAmount" })
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold", "globalDifferenceAmount" })
 public class Perception {
-    
+
     public final static Number NOT_THIS_TYPE = new Double("0");
-        
-    @XmlElement(name = "one-pixel-treshold")
+
     protected Integer onePixelTreshold;
-    @XmlElement(name = "global-difference-treshold")
     protected Integer globalDifferenceTreshold;
-    @XmlElement(name = "global-difference-pixel-amount")
     protected String globalDifferenceAmount;
 
+    @XmlElement(name = "one-pixel-treshold")
     public Integer getOnePixelTreshold() {
         return onePixelTreshold;
     }
@@ -31,6 +28,7 @@ public class Perception {
         this.onePixelTreshold = value;
     }
 
+    @XmlElement(name = "global-difference-treshold")
     public Integer getGlobalDifferenceTreshold() {
         return globalDifferenceTreshold;
     }
@@ -39,6 +37,7 @@ public class Perception {
         this.globalDifferenceTreshold = value;
     }
 
+    @XmlElement(name = "global-difference-pixel-amount")
     public String getGlobalDifferenceAmount() {
         return globalDifferenceAmount;
     }
@@ -91,7 +90,7 @@ public class Perception {
             }
         }
     }
-    
+
     public Number getGlobalDifferenceAmount(AmountType amountType) {
         String amount = getGlobalDifferenceAmount();
         if (amount == null) {

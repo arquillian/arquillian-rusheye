@@ -18,20 +18,21 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Properties", propOrder = { "any" })
 @XmlSeeAlso({ TypeProperties.class, ImageSource.class })
 public class Properties {
 
-    @XmlAnyElement(lax = false)
     protected List<Element> any;
-    
+
+    @XmlAnyElement(lax = false)
     public List<Element> getAny() {
         if (any == null) {
             any = new ArrayList<Element>();
         }
         return this.any;
     }
+
     /*
      * logic
      */

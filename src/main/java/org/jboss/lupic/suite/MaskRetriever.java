@@ -11,7 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.suite.utils.Instantiator;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "MaskRetriever")
 public class MaskRetriever extends TypeProperties implements org.jboss.lupic.retriever.MaskRetriever {
 

@@ -16,24 +16,21 @@ import javax.xml.bind.annotation.XmlType;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.suite.utils.Instantiator;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
     "sampleRetriever" })
 @XmlRootElement(name = "global-configuration")
 public class GlobalConfiguration extends Configuration {
 
-    @XmlElement(name = "listener")
     protected List<Listener> listeners;
-    @XmlElement(name = "pattern-retriever")
     protected PatternRetriever patternRetriever;
-    @XmlElement(name = "mask-retriever")
     protected MaskRetriever maskRetriever;
-    @XmlElement(name = "sample-retriever")
     protected SampleRetriever sampleRetriever;
 
     /*
      * accessors
      */
+    @XmlElement(name = "listener")
     public List<Listener> getListeners() {
         if (listeners == null) {
             listeners = new ArrayList<Listener>();
@@ -41,6 +38,7 @@ public class GlobalConfiguration extends Configuration {
         return this.listeners;
     }
 
+    @XmlElement(name = "pattern-retriever")
     public PatternRetriever getPatternRetriever() {
         return patternRetriever;
     }
@@ -49,6 +47,7 @@ public class GlobalConfiguration extends Configuration {
         this.patternRetriever = value;
     }
 
+    @XmlElement(name = "mask-retriever")
     public MaskRetriever getMaskRetriever() {
         return maskRetriever;
     }
@@ -57,6 +56,7 @@ public class GlobalConfiguration extends Configuration {
         this.maskRetriever = value;
     }
 
+    @XmlElement(name = "sample-retriever")
     public SampleRetriever getSampleRetriever() {
         return sampleRetriever;
     }

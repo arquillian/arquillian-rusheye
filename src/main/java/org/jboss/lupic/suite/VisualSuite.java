@@ -10,18 +10,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "", propOrder = { "globalConfiguration", "test" })
 @XmlRootElement(name = "visual-suite")
 public class VisualSuite {
 
-    @XmlElement(name = "global-configuration", required = true)
     protected GlobalConfiguration globalConfiguration;
-    @XmlElement(required = true)
     protected List<Test> test;
-    @XmlAttribute
     protected BigInteger id;
 
+    @XmlElement(name = "global-configuration", required = true)
     public GlobalConfiguration getGlobalConfiguration() {
         return globalConfiguration;
     }
@@ -30,6 +28,7 @@ public class VisualSuite {
         this.globalConfiguration = value;
     }
 
+    @XmlElement(required = true)
     public List<Test> getTest() {
         if (test == null) {
             test = new ArrayList<Test>();
@@ -37,6 +36,7 @@ public class VisualSuite {
         return this.test;
     }
 
+    @XmlAttribute
     public BigInteger getId() {
         return id;
     }

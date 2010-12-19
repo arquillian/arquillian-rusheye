@@ -12,12 +12,11 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "ImageSource")
 @XmlSeeAlso({ Mask.class, Pattern.class })
 public abstract class ImageSource extends Properties {
-    
-    @XmlAttribute
+
     protected String source;
 
     @XmlTransient
@@ -27,6 +26,7 @@ public abstract class ImageSource extends Properties {
         };
     });
 
+    @XmlAttribute
     public String getSource() {
         return source;
     }

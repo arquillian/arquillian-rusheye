@@ -12,7 +12,7 @@ import org.apache.commons.lang.Validate;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.suite.utils.Instantiator;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "PatternRetriever")
 public class PatternRetriever extends TypeProperties implements org.jboss.lupic.retriever.PatternRetriever {
 

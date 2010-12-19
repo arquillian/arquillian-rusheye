@@ -12,7 +12,7 @@ import org.apache.commons.lang.Validate;
 import org.jboss.lupic.retriever.RetrieverException;
 import org.jboss.lupic.suite.utils.Instantiator;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "SampleRetriever")
 public class SampleRetriever extends TypeProperties implements org.jboss.lupic.retriever.sample.SampleRetriever {
 
@@ -22,7 +22,8 @@ public class SampleRetriever extends TypeProperties implements org.jboss.lupic.r
     public void initializeRetriever() {
         if (sampleRetriever == null) {
             Validate.notNull(getType());
-            sampleRetriever = new Instantiator<org.jboss.lupic.retriever.sample.SampleRetriever>().getInstance(getType());
+            sampleRetriever = new Instantiator<org.jboss.lupic.retriever.sample.SampleRetriever>()
+                .getInstance(getType());
             sampleRetriever.setGlobalProperties(this);
         }
     }

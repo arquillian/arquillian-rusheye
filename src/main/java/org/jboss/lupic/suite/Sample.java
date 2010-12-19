@@ -13,11 +13,10 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import org.jboss.lupic.retriever.sample.SampleRetriever;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Sample")
 public class Sample {
 
-    @XmlAttribute
     protected String source;
 
     @Resource
@@ -31,6 +30,7 @@ public class Sample {
         };
     });
 
+    @XmlAttribute
     public String getSource() {
         return source;
     }
