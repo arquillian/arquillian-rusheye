@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import org.jboss.lupic.retriever.sample.SampleRetriever;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Sample")
@@ -20,6 +21,7 @@ public class Sample {
     protected String source;
 
     @Resource
+    @XmlTransient
     public SampleRetriever sampleRetriever;
 
     @XmlTransient

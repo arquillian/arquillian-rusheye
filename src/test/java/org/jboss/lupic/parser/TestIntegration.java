@@ -42,7 +42,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$

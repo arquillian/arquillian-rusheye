@@ -128,8 +128,10 @@ public abstract class XmlResultWriter implements ResultWriter {
 
     public void close() {
         try {
-            writer.writeEndElement();
-            writer.close();
+            if (writer != null) {
+                writer.writeEndElement();
+                writer.close();
+            }
         } catch (XMLStreamException e) {
             // needs to be logged
         }

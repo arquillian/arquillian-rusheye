@@ -177,7 +177,8 @@ public final class Parser {
                         for (Pattern pattern : test.getPatterns()) {
                             handler.getContext().invokeListeners().onPatternParsed(test, pattern);
                         }
-                        handler.getContext().invokeListeners().onTestParsed(test);
+                        Test testWrapped = ConfigurationCompiler.wrap(test, visualSuite.getGlobalConfiguration());
+                        handler.getContext().invokeListeners().onTestParsed(testWrapped);
                     }
                 } catch (WstxParsingException e) {
                     // intentionally blank - wrong end of document detection
