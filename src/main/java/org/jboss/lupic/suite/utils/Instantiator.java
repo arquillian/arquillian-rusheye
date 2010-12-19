@@ -21,7 +21,7 @@
  */
 package org.jboss.lupic.suite.utils;
 
-import org.jboss.lupic.exception.LupicConfigurationException;
+import org.jboss.lupic.exception.ConfigurationException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -32,10 +32,10 @@ public class Instantiator<T> {
         try {
             return getInstanceClass(className).newInstance();
         } catch (InstantiationException e) {
-            throw new LupicConfigurationException(getMessage(className), e);
+            throw new ConfigurationException(getMessage(className), e);
 
         } catch (IllegalAccessException e) {
-            throw new LupicConfigurationException(getMessage(className), e);
+            throw new ConfigurationException(getMessage(className), e);
         }
     }
 
@@ -44,7 +44,7 @@ public class Instantiator<T> {
         try {
             return (Class<? extends T>) Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new LupicConfigurationException(getMessage(className), e);
+            throw new ConfigurationException(getMessage(className), e);
         }
     }
 

@@ -51,7 +51,7 @@ import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.lupic.exception.ConfigurationValidationException;
-import org.jboss.lupic.exception.LupicConfigurationException;
+import org.jboss.lupic.exception.ConfigurationException;
 import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
@@ -244,7 +244,7 @@ public final class Parser {
             }
 
             if (listeners.size() == 1) {
-                throw new LupicConfigurationException("No ParserListener was registered to process parsed tests");
+                throw new ConfigurationException("No ParserListener was registered to process parsed tests");
             }
         }
     }

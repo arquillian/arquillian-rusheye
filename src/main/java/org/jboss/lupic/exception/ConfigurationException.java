@@ -25,21 +25,21 @@ package org.jboss.lupic.exception;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class LupicConfigurationException extends RuntimeException {
+public class ConfigurationException extends RuntimeException {
 
-    public LupicConfigurationException() {
+    public ConfigurationException() {
         super();
     }
 
-    public LupicConfigurationException(String message, Throwable cause) {
+    public ConfigurationException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public LupicConfigurationException(String message) {
+    public ConfigurationException(String message) {
         super(message);
     }
 
-    public LupicConfigurationException(Throwable cause) {
+    public ConfigurationException(Throwable cause) {
         super(cause);
     }
 

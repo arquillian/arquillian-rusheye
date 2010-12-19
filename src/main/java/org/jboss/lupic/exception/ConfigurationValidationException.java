@@ -1,6 +1,6 @@
 package org.jboss.lupic.exception;
 
-public class ConfigurationValidationException extends RuntimeException {
+public class ConfigurationValidationException extends ConfigurationException {
 
     public ConfigurationValidationException() {
         super();

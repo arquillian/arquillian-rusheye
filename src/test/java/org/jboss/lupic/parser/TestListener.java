@@ -29,7 +29,7 @@ import java.io.IOException;
 
 import org.dom4j.Element;
 import org.jboss.lupic.exception.ConfigurationValidationException;
-import org.jboss.lupic.exception.LupicConfigurationException;
+import org.jboss.lupic.exception.ConfigurationException;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
 import org.jboss.lupic.suite.Configuration;
 import org.jboss.lupic.suite.Pattern;
@@ -50,7 +50,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = LupicConfigurationException.class, expectedExceptionsMessageRegExp = "Error when trying to create instance of class 'non.existent.Class'")
+    @Test(expectedExceptions = ConfigurationException.class, expectedExceptionsMessageRegExp = "Error when trying to create instance of class 'non.existent.Class'")
     public void testListenerClassNotOnClassPath() throws IOException, SAXException {
         stub.globalConfiguration.remove(stub.defaultListener);
         Element listener = stub.globalConfiguration.addElement(LISTENER);
