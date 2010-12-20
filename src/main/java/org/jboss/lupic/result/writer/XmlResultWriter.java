@@ -80,13 +80,15 @@ public abstract class XmlResultWriter implements ResultWriter {
         if (!writerFailed && !writtenStartDocument) {
             try {
                 writer.writeStartDocument("UTF-8", "1.0");
-                writer.writeStartElement("visual-suite-result");
+                writer.setDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
+                writer.writeStartElement("http://www.jboss.org/test/visual-suite-result", "visual-suite-result");
                 writer.writeDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
-                writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                writer.writeAttribute("xsi:schemaLocation",
-                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
+//                writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+//                writer.writeAttribute("xsi:schemaLocation",
+//                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
                 writtenStartDocument = true;
             } catch (XMLStreamException e) {
+                e.printStackTrace();
                 writerFailed = true;
             }
         }
@@ -99,6 +101,7 @@ public abstract class XmlResultWriter implements ResultWriter {
                 Test test = context.getTest();
                 test = NullingProxy.handle(test, VisualSuiteResult.class);
                 marshaller.marshal(test, writer);
+                writer.flush();
             } catch (Exception e) {
                 e.printStackTrace();
                 writerFailed = true;
@@ -120,6 +123,7 @@ public abstract class XmlResultWriter implements ResultWriter {
             try {
                 out = openOutputStream();
             } catch (Exception e) {
+                e.printStackTrace();
                 writerFailedToInitialize = true;
             }
 
@@ -128,6 +132,7 @@ public abstract class XmlResultWriter implements ResultWriter {
                 marshaller = createMarshaller();
                 marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
             } catch (Exception e) {
+                e.printStackTrace();
                 writerFailedToInitialize = true;
                 try {
                     out.close();
@@ -143,8 +148,8 @@ public abstract class XmlResultWriter implements ResultWriter {
     private XMLStreamWriter createXMLStreamWriter() throws XMLStreamException {
         XMLOutputFactory factory = XMLOutputFactory.newInstance();
         XMLStreamWriter2 writer = (XMLStreamWriter2) factory.createXMLStreamWriter(out);
-        // TODO
-        // writer.validateAgainst(createXMLValidationSchema());
+         writer.validateAgainst(createXMLValidationSchema());
+//         return writer;
         return PrettyXMLStreamWriter.pretty(writer);
     }
     
@@ -169,16 +174,19 @@ public abstract class XmlResultWriter implements ResultWriter {
     public void close() {
         try {
             if (writer != null) {
+                writer.flush();
                 writer.writeEndElement();
                 writer.close();
             }
         } catch (XMLStreamException e) {
+            e.printStackTrace();
             // needs to be logged
         }
 
         try {
             closeOutputStream();
         } catch (Exception e) {
+            e.printStackTrace();
             // needs to be logged
         }
 

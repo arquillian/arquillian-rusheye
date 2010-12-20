@@ -97,7 +97,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	
 	<xs:complexType name="RectangleType">
 		<xs:sequence>
-			<xs:element name="point" minOccurs="2" maxOccurs="2">
+			<xs:element name="min" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
+					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="max" minOccurs="1" maxOccurs="1">
 				<xs:complexType>
 					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
 					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />

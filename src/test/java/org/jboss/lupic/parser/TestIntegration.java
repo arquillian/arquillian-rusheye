@@ -48,11 +48,9 @@ import org.xml.sax.SAXException;
  */
 public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
-//    private final static String[] samples = new String[] { "different", "different-masked", "not-same", "perceptible",
-//        "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
+    private final static String[] samples = new String[] { "different", "different-masked", "not-same", "perceptible",
+        "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
 
-    private final static String[] samples = new String[] { "different" };
-    
     @DataProvider
     public Object[][] provideSamples() {
         Object[][] result = new Object[samples.length][1];
@@ -92,7 +90,7 @@ public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-//    @Test
+    @Test
     public void testAllSamplesAtOnce() throws IOException, SAXException {
         setup();
 

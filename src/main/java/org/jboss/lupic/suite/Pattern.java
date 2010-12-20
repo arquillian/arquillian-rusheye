@@ -40,7 +40,7 @@ public class Pattern extends ImageSource {
         this.name = value;
     }
 
-    @XmlElement
+    @XmlElement(name="comparison-result")
     public ComparisonResult getComparisonResult() {
         return comparisonResult;
     }
