@@ -19,22 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.lupic.core;
+package org.jboss.lupic.suite;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @version $Revision$
  */
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlType(propOrder = { "area", "rectangle", "totalPixels", "maskedPixels", "perceptibleDiffs", "differentPixels", "smallDifferences", "equalPixels" })
 public class ComparisonResult {
     private boolean equalsImages;
     private BufferedImage diffImage;
-    private Point rectangleMin;
-    private Point rectangleMax;
-    private int areaWidth;
-    private int areaHeight;
+    private Rectangle rectangle = new Rectangle();
+    private Area area = new Area();
     private int totalPixels;
     private int maskedPixels;
     private int perceptibleDiffs;
@@ -42,15 +47,18 @@ public class ComparisonResult {
     private int smallDifferences;
     private int equalPixels;
 
+    public ComparisonResult() {
+    }
+
     public ComparisonResult(boolean equalsImages, BufferedImage diffImage, Point rectangleMin, Point rectangleMax,
         int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs, int differentPixels,
         int smallDifferences, int equalPixels) {
         this.equalsImages = equalsImages;
         this.diffImage = diffImage;
-        this.rectangleMin = rectangleMin;
-        this.rectangleMax = rectangleMax;
-        this.areaWidth = areaWidth;
-        this.areaHeight = areaHeight;
+        this.rectangle.setMin(rectangleMin);
+        this.rectangle.setMax(rectangleMax);
+        this.area.setWidth(areaWidth);
+        this.area.setHeight(areaHeight);
         this.totalPixels = totalPixels;
         this.maskedPixels = maskedPixels;
         this.perceptibleDiffs = perceptibleDiffs;
@@ -67,42 +75,50 @@ public class ComparisonResult {
         return diffImage;
     }
 
-    public Point getRectangleMin() {
-        return rectangleMin;
+    @XmlElement
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public Point getRectangleMax() {
-        return rectangleMax;
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 
-    public int getAreaWidth() {
-        return areaWidth;
+    @XmlElement
+    public Area getArea() {
+        return area;
     }
 
-    public int getAreaHeight() {
-        return areaHeight;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
+    @XmlElement(name = "total-pixels")
     public int getTotalPixels() {
         return totalPixels;
     }
 
+    @XmlElement(name = "masked-pixels")
     public int getMaskedPixels() {
         return maskedPixels;
     }
 
+    @XmlElement(name = "perceptible-different-pixels")
     public int getPerceptibleDiffs() {
         return perceptibleDiffs;
     }
 
+    @XmlElement(name = "global-different-pixels")
     public int getDifferentPixels() {
         return differentPixels;
     }
 
+    @XmlElement(name = "unperceptible-different-pixels")
     public int getSmallDifferences() {
         return smallDifferences;
     }
 
+    @XmlElement(name = "same-pixels")
     public int getEqualPixels() {
         return equalPixels;
     }
@@ -112,11 +128,11 @@ public class ComparisonResult {
     }
 
     public String getAreaAsString() {
-        return String.format("%d&times;%d", this.getAreaWidth(), this.getAreaHeight());
+        return String.format("%d&times;%d", this.area.getWidth(), this.area.getHeight());
     }
 
     public String getRectangleAsString() {
-        return String.format("[%d, %d] - [%d, %d]", this.getRectangleMin().x, this.getRectangleMin().y,
-            this.getRectangleMax().x, this.getRectangleMax().y);
+        return String.format("[%d, %d] - [%d, %d]", this.rectangle.getMin().x, this.rectangle.getMin().y,
+            this.rectangle.getMax().x, this.rectangle.getMax().y);
     }
 }

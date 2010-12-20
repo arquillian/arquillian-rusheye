@@ -33,11 +33,11 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.result.statistics.ResultStatistics;
 import org.jboss.lupic.result.storage.ResultStorage;
 import org.jboss.lupic.result.writer.ResultWriter;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
 import org.jboss.lupic.suite.Properties;

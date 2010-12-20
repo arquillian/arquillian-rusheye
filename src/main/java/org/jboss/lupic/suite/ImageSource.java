@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.jboss.lupic.suite.utils.Nullify;
+import org.jboss.lupic.suite.utils.VisualSuiteResult;
+
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "ImageSource")
 @XmlSeeAlso({ Mask.class, Pattern.class })
@@ -27,6 +30,7 @@ public abstract class ImageSource extends Properties {
     });
 
     @XmlAttribute
+    @Nullify(VisualSuiteResult.class)
     public String getSource() {
         return source;
     }

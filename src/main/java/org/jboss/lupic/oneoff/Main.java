@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.DefaultImageComparator;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Mask;
 
 /**

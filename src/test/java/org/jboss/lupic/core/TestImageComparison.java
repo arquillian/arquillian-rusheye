@@ -36,6 +36,7 @@ import javax.imageio.ImageIO;
 
 import org.jboss.lupic.oneoff.ImageUtils;
 import org.jboss.lupic.parser.ConfigurationCompiler;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
 import org.testng.annotations.BeforeMethod;

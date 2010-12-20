@@ -27,6 +27,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Perception;
 

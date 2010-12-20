@@ -6,12 +6,14 @@ import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.jboss.lupic.result.ResultConclusion;
 import org.jboss.lupic.retriever.PatternRetriever;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -19,6 +21,9 @@ import org.jboss.lupic.retriever.PatternRetriever;
 public class Pattern extends ImageSource {
 
     protected String name;
+    protected ComparisonResult comparisonResult;
+    private ResultConclusion conclusion;
+    private String output;
 
     @Resource
     @XmlTransient
@@ -33,6 +38,33 @@ public class Pattern extends ImageSource {
 
     public void setName(String value) {
         this.name = value;
+    }
+
+    @XmlElement
+    public ComparisonResult getComparisonResult() {
+        return comparisonResult;
+    }
+
+    public void setComparisonResult(ComparisonResult comparisonResult) {
+        this.comparisonResult = comparisonResult;
+    }
+
+    @XmlAttribute(name = "result")
+    public ResultConclusion getConclusion() {
+        return this.conclusion;
+    }
+
+    public void setConclusion(ResultConclusion conclusion) {
+        this.conclusion = conclusion;
+    }
+
+    @XmlAttribute
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
     }
 
     /*

@@ -26,13 +26,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.result.ResultConclusion;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.result.ResultEvaluator;
 import org.jboss.lupic.result.statistics.ResultStatistics;
 import org.jboss.lupic.result.storage.ResultStorage;
 import org.jboss.lupic.result.writer.ResultWriter;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;

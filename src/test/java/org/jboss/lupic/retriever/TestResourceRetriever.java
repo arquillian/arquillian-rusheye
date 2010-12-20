@@ -27,10 +27,10 @@ import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.DefaultImageComparator;
 import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.parser.ConfigurationCompiler;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Mask;
 import org.jboss.lupic.suite.Properties;
 import org.testng.Assert;

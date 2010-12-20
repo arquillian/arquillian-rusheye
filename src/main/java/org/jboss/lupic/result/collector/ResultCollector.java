@@ -21,8 +21,8 @@
  */
 package org.jboss.lupic.result.collector;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.parser.listener.ParserListener;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;

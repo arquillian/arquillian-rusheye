@@ -16,9 +16,9 @@ import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.output.TeeOutputStream;
 import org.jboss.lupic.PassingSAXErrorHandler;
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.result.ResultConclusion;
 import org.jboss.lupic.result.ResultDetail;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -75,15 +75,15 @@ public class TestXmlResultWriter {
         when(detail.getComparisonResult()).thenReturn(comparisonResult);
         when(detail.getConclusion()).thenReturn(ResultConclusion.PERCEPTUALLY_SAME);
         when(detail.getLocation()).thenReturn("someLocation");
-        when(comparisonResult.getAreaHeight()).thenReturn(1);
-        when(comparisonResult.getAreaWidth()).thenReturn(2);
+        when(comparisonResult.getArea().getWidth()).thenReturn(1);
+        when(comparisonResult.getArea().getHeight()).thenReturn(2);
         when(comparisonResult.getEqualPixels()).thenReturn(3);
         when(comparisonResult.getDifferentPixels()).thenReturn(4);
         when(comparisonResult.getPerceptibleDiffs()).thenReturn(5);
         when(comparisonResult.getSmallDifferences()).thenReturn(6);
         when(comparisonResult.getTotalPixels()).thenReturn(7);
-        when(comparisonResult.getRectangleMin()).thenReturn(new Point(1, 2));
-        when(comparisonResult.getRectangleMax()).thenReturn(new Point(3, 4));
+        when(comparisonResult.getRectangle().getMin()).thenReturn(new Point(1, 2));
+        when(comparisonResult.getRectangle().getMax()).thenReturn(new Point(3, 4));
 
         when(detailList.iterator()).thenReturn(detailIterator);
 

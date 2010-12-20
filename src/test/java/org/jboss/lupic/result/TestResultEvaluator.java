@@ -28,7 +28,7 @@ import static org.jboss.lupic.result.ResultConclusion.SAME;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Perception;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

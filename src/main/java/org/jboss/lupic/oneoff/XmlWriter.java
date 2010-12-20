@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.suite.ComparisonResult;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -106,10 +106,10 @@ public class XmlWriter {
 
     private void printPerception(ComparisonResult cr) throws IOException {
         this.println("            <perception>");
-        this.println("                <area width=\"%d\" height=\"%d\" />", cr.getAreaWidth(), cr.getAreaHeight());
+        this.println("                <area width=\"%d\" height=\"%d\" />", cr.getArea().getWidth(), cr.getArea().getHeight());
         this.println("                <rectangle>");
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangleMin().x, cr.getRectangleMin().y);
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangleMax().x, cr.getRectangleMax().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangle().getMin().x, cr.getRectangle().getMin().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangle().getMax().x, cr.getRectangle().getMax().y);
         this.println("                </rectangle>");
         this.println("                <totalPixels>%d</totalPixels>", cr.getTotalPixels());
         this.println("                <maskedPixels>%d</maskedPixels>", cr.getMaskedPixels());

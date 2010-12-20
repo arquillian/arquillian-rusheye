@@ -29,7 +29,6 @@ public class Test extends Configuration {
      */
 
     @XmlElement(name = "pattern", required = true)
-    @Nullify(VisualSuiteResult.class)
     public List<Pattern> getPatterns() {
         if (patterns == null) {
             patterns = new ArrayList<Pattern>();

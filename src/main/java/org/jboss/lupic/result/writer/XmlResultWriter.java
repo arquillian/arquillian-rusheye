@@ -36,14 +36,10 @@ import javax.xml.stream.XMLStreamWriter;
 import org.codehaus.stax2.XMLStreamWriter2;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
-import org.jboss.lupic.parser.MyNamespacePrefixMapper;
 import org.jboss.lupic.result.ResultDetail;
 import org.jboss.lupic.result.writer.spooler.SpoolerContext;
-import org.jboss.lupic.result.writer.spooler.TestSpooler;
 import org.jboss.lupic.suite.Properties;
 import org.jboss.lupic.suite.Test;
-import org.jboss.lupic.suite.VisualSuite;
-import org.jboss.lupic.suite.utils.ApplyOmitting;
 import org.jboss.lupic.suite.utils.NullingProxy;
 import org.jboss.lupic.suite.utils.VisualSuiteResult;
 
@@ -99,6 +95,7 @@ public abstract class XmlResultWriter implements ResultWriter {
     private void tryWriteTest(SpoolerContext context) {
         if (!writerFailed) {
             try {
+                fulfilTest(context);
                 Test test = context.getTest();
                 test = NullingProxy.handle(test, VisualSuiteResult.class);
                 marshaller.marshal(test, writer);
@@ -106,6 +103,15 @@ public abstract class XmlResultWriter implements ResultWriter {
                 e.printStackTrace();
                 writerFailed = true;
             }
+        }
+    }
+    
+    private void fulfilTest(SpoolerContext context) {
+        while (context.hasNextDetail()) {
+            ResultDetail detail = context.getNextDetail();
+            detail.getPattern().setComparisonResult(detail.getComparisonResult());
+            detail.getPattern().setOutput(detail.getLocation());
+            detail.getPattern().setConclusion(detail.getConclusion());
         }
     }
 

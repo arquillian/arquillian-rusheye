@@ -21,7 +21,7 @@
  */
 package org.jboss.lupic.result;
 
-import org.jboss.lupic.core.ComparisonResult;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 
 /**

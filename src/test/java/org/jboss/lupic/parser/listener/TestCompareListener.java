@@ -11,10 +11,10 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jboss.lupic.core.ComparisonResult;
 import org.jboss.lupic.core.ImageComparator;
 import org.jboss.lupic.result.collector.ResultCollector;
 import org.jboss.lupic.result.collector.ResultCollectorAdapter;
+import org.jboss.lupic.suite.ComparisonResult;
 import org.jboss.lupic.suite.Pattern;
 import org.jboss.lupic.suite.Perception;
 import org.jboss.lupic.suite.Properties;
