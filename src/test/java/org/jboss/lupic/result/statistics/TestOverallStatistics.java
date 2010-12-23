@@ -76,7 +76,7 @@ public class TestOverallStatistics {
     }
 
     @Test
-    public void test() throws IOException, InterruptedException, BrokenBarrierException {
+    public void testOverallStatistics() throws IOException, InterruptedException, BrokenBarrierException {
         Iterator<ResultDetail> detailIterator = new LinkedList<ResultDetail>(
             Arrays.asList(new ResultDetail[] { detail })).iterator();
 

@@ -38,7 +38,7 @@ public class TestXmlResultWriter {
 	CountDownLatch latch = new CountDownLatch(1);
 
 	@org.testng.annotations.Test
-	public void test() throws InterruptedException {
+	public void testXmlResultWriter() throws InterruptedException {
 		ResultDetail detail = new ResultDetail();
 		Test test = new Test();
 		Pattern pattern = new Pattern();

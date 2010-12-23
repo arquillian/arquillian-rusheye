@@ -57,7 +57,7 @@ public class TestObjectMapStorage {
     }
 
     @Test
-    public void test() throws IOException {
+    public void testObjectMapStorage() throws IOException {
         when(test.getName()).thenReturn("test");
         when(pattern.getName()).thenReturn("pattern");
 

@@ -69,7 +69,7 @@ public class TestFileStorage {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testFileStorage() throws Exception {
         when(properties.getProperty("file-storage-directory")).thenReturn(directory.getPath());
 
         FileStorage fileStorage = new FileStorage();
