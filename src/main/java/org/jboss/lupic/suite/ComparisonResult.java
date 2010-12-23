@@ -27,6 +27,7 @@ import java.awt.image.BufferedImage;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -34,105 +35,145 @@ import javax.xml.bind.annotation.XmlType;
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(propOrder = { "area", "rectangle", "totalPixels", "maskedPixels", "perceptibleDiffs", "differentPixels", "smallDifferences", "equalPixels" })
+@XmlType(propOrder = { "area", "rectangle", "totalPixels", "maskedPixels",
+		"perceptibleDiffs", "differentPixels", "smallDifferences",
+		"equalPixels" })
 public class ComparisonResult {
-    private boolean equalsImages;
-    private BufferedImage diffImage;
-    private Rectangle rectangle = new Rectangle();
-    private Area area = new Area();
-    private int totalPixels;
-    private int maskedPixels;
-    private int perceptibleDiffs;
-    private int differentPixels;
-    private int smallDifferences;
-    private int equalPixels;
+	private boolean equalsImages;
+	private BufferedImage diffImage;
+	private Rectangle rectangle = new Rectangle();
+	private Area area = new Area();
+	private int totalPixels;
+	private int maskedPixels;
+	private int perceptibleDiffs;
+	private int differentPixels;
+	private int smallDifferences;
+	private int equalPixels;
 
-    public ComparisonResult() {
-    }
+	public ComparisonResult() {
+	}
 
-    public ComparisonResult(boolean equalsImages, BufferedImage diffImage, Point rectangleMin, Point rectangleMax,
-        int areaWidth, int areaHeight, int totalPixels, int maskedPixels, int perceptibleDiffs, int differentPixels,
-        int smallDifferences, int equalPixels) {
-        this.equalsImages = equalsImages;
-        this.diffImage = diffImage;
-        this.rectangle.setMin(rectangleMin);
-        this.rectangle.setMax(rectangleMax);
-        this.area.setWidth(areaWidth);
-        this.area.setHeight(areaHeight);
-        this.totalPixels = totalPixels;
-        this.maskedPixels = maskedPixels;
-        this.perceptibleDiffs = perceptibleDiffs;
-        this.differentPixels = differentPixels;
-        this.smallDifferences = smallDifferences;
-        this.equalPixels = equalPixels;
-    }
+	public ComparisonResult(boolean equalsImages, BufferedImage diffImage,
+			Point rectangleMin, Point rectangleMax, int areaWidth,
+			int areaHeight, int totalPixels, int maskedPixels,
+			int perceptibleDiffs, int differentPixels, int smallDifferences,
+			int equalPixels) {
+		this.equalsImages = equalsImages;
+		this.diffImage = diffImage;
+		this.rectangle.setMin(rectangleMin);
+		this.rectangle.setMax(rectangleMax);
+		this.area.setWidth(areaWidth);
+		this.area.setHeight(areaHeight);
+		this.totalPixels = totalPixels;
+		this.maskedPixels = maskedPixels;
+		this.perceptibleDiffs = perceptibleDiffs;
+		this.differentPixels = differentPixels;
+		this.smallDifferences = smallDifferences;
+		this.equalPixels = equalPixels;
+	}
 
-    public boolean isEqualsImages() {
-        return equalsImages;
-    }
+	@XmlTransient
+	public boolean isEqualsImages() {
+		return equalsImages;
+	}
 
-    public BufferedImage getDiffImage() {
-        return diffImage;
-    }
+	public void setEqualsImages(boolean equalsImages) {
+		this.equalsImages = equalsImages;
+	}
 
-    @XmlElement
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
+	@XmlTransient
+	public BufferedImage getDiffImage() {
+		return diffImage;
+	}
 
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
+	public void setDiffImage(BufferedImage diffImage) {
+		this.diffImage = diffImage;
+	}
 
-    @XmlElement
-    public Area getArea() {
-        return area;
-    }
+	@XmlElement
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
 
-    public void setArea(Area area) {
-        this.area = area;
-    }
+	public void setRectangle(Rectangle rectangle) {
+		this.rectangle = rectangle;
+	}
 
-    @XmlElement(name = "total-pixels")
-    public int getTotalPixels() {
-        return totalPixels;
-    }
+	@XmlElement
+	public Area getArea() {
+		return area;
+	}
 
-    @XmlElement(name = "masked-pixels")
-    public int getMaskedPixels() {
-        return maskedPixels;
-    }
+	public void setArea(Area area) {
+		this.area = area;
+	}
 
-    @XmlElement(name = "perceptible-different-pixels")
-    public int getPerceptibleDiffs() {
-        return perceptibleDiffs;
-    }
+	@XmlElement(name = "total-pixels")
+	public int getTotalPixels() {
+		return totalPixels;
+	}
 
-    @XmlElement(name = "global-different-pixels")
-    public int getDifferentPixels() {
-        return differentPixels;
-    }
+	public void setTotalPixels(int totalPixels) {
+		this.totalPixels = totalPixels;
+	}
 
-    @XmlElement(name = "unperceptible-different-pixels")
-    public int getSmallDifferences() {
-        return smallDifferences;
-    }
+	@XmlElement(name = "masked-pixels")
+	public int getMaskedPixels() {
+		return maskedPixels;
+	}
 
-    @XmlElement(name = "same-pixels")
-    public int getEqualPixels() {
-        return equalPixels;
-    }
+	public void setMaskedPixels(int maskedPixels) {
+		this.maskedPixels = maskedPixels;
+	}
 
-    public String getComparisonStatus() {
-        return this.isEqualsImages() ? "same" : "different";
-    }
+	@XmlElement(name = "perceptible-different-pixels")
+	public int getPerceptibleDiffs() {
+		return perceptibleDiffs;
+	}
 
-    public String getAreaAsString() {
-        return String.format("%d&times;%d", this.area.getWidth(), this.area.getHeight());
-    }
+	public void setPerceptibleDiffs(int perceptibleDiffs) {
+		this.perceptibleDiffs = perceptibleDiffs;
+	}
 
-    public String getRectangleAsString() {
-        return String.format("[%d, %d] - [%d, %d]", this.rectangle.getMin().x, this.rectangle.getMin().y,
-            this.rectangle.getMax().x, this.rectangle.getMax().y);
-    }
+	@XmlElement(name = "global-different-pixels")
+	public int getDifferentPixels() {
+		return differentPixels;
+	}
+
+	public void setDifferentPixels(int differentPixels) {
+		this.differentPixels = differentPixels;
+	}
+
+	@XmlElement(name = "unperceptible-different-pixels")
+	public int getSmallDifferences() {
+		return smallDifferences;
+	}
+
+	public void setSmallDifferences(int smallDifferences) {
+		this.smallDifferences = smallDifferences;
+	}
+
+	@XmlElement(name = "same-pixels")
+	public int getEqualPixels() {
+		return equalPixels;
+	}
+
+	public void setEqualPixels(int equalPixels) {
+		this.equalPixels = equalPixels;
+	}
+
+	public String getComparisonStatus() {
+		return this.isEqualsImages() ? "same" : "different";
+	}
+
+	public String getAreaAsString() {
+		return String.format("%d&times;%d", this.area.getWidth(),
+				this.area.getHeight());
+	}
+
+	public String getRectangleAsString() {
+		return String.format("[%d, %d] - [%d, %d]", this.rectangle.getMin().x,
+				this.rectangle.getMin().y, this.rectangle.getMax().x,
+				this.rectangle.getMax().y);
+	}
 }

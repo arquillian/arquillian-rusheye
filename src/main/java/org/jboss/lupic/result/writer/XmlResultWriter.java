@@ -83,9 +83,9 @@ public abstract class XmlResultWriter implements ResultWriter {
                 writer.setDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
                 writer.writeStartElement("http://www.jboss.org/test/visual-suite-result", "visual-suite-result");
                 writer.writeDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
-//                writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-//                writer.writeAttribute("xsi:schemaLocation",
-//                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
+                writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                writer.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
+                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
                 writtenStartDocument = true;
             } catch (XMLStreamException e) {
                 e.printStackTrace();
@@ -156,6 +156,7 @@ public abstract class XmlResultWriter implements ResultWriter {
     private Marshaller createMarshaller() throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("org.jboss.lupic.suite");
         Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         return marshaller;
     }
 

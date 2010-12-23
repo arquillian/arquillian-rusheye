@@ -3,7 +3,6 @@ package org.jboss.lupic.result.writer;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Arrays;
 
 import javax.xml.stream.XMLStreamWriter;
 
@@ -21,9 +20,8 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    	
         Object result;
-        
-//        System.out.println(method.getName() + ": " + Arrays.deepToString(args));
 
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
@@ -34,7 +32,9 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
         }
         
         if ("writeNamespace".equals(method.getName()) || "writeDefaultNamespace".equals(method.getName())) {
-            return null;
+        	if (indentation > 1) {
+        		return null;
+        	}
         }
         
         if ("writeStartElement".equals(method.getName())) {
@@ -54,7 +54,7 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
 
         if ("writeStartElement".equals(method.getName())) {
             simpleContent = true;
-        } else if ("writeCharacters".equals(method.getName())) {
+        } else if ("writeCharacters".equals(method.getName()) || "writeAttribute".equals(method.getName())) {
         } else {
             simpleContent = false;
         }
