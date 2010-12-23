@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -35,23 +34,19 @@ import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.EventFilter;
 import javax.xml.stream.StreamFilter;
-import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
 
 import org.apache.commons.io.FileUtils;
-import org.codehaus.stax2.XMLEventReader2;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.codehaus.stax2.ri.Stax2FilteredStreamReader;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
-import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.jboss.lupic.exception.ConfigurationException;
+import org.jboss.lupic.exception.ConfigurationValidationException;
 import org.jboss.lupic.exception.ParsingException;
 import org.jboss.lupic.parser.listener.ParserListener;
 import org.jboss.lupic.parser.listener.ParserListenerAdapter;
@@ -63,7 +58,6 @@ import org.jboss.lupic.suite.VisualSuite;
 
 import com.ctc.wstx.exc.WstxParsingException;
 import com.ctc.wstx.exc.WstxValidationException;
-import com.google.inject.internal.cglib.core.ReflectUtils;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
