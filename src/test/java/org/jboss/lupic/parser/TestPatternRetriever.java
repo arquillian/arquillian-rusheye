@@ -61,8 +61,6 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
         parse();
 
         org.jboss.lupic.suite.PatternRetriever retriever = (org.jboss.lupic.suite.PatternRetriever) handler.getVisualSuite().getGlobalConfiguration().getPatternRetriever();
-        List<Element> any = retriever.getAny();
-        System.out.println(any.toString());
         
         try {
             assertNull(retriever.retrieve(SOURCE, new Properties()));

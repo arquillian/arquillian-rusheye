@@ -73,7 +73,6 @@ public class TestXmlResultWriter {
 		latch.await();
 		Assert.assertNull(writer.validatingReader.validationMessage,
 				writer.validatingReader.validationMessage);
-		System.err.println(new String(writer.byteStream.toByteArray()));
 	}
 
 	@AfterMethod(alwaysRun = true)
