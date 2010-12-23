@@ -108,8 +108,8 @@ public class XmlWriter {
         this.println("            <perception>");
         this.println("                <area width=\"%d\" height=\"%d\" />", cr.getArea().getWidth(), cr.getArea().getHeight());
         this.println("                <rectangle>");
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangle().getMin().x, cr.getRectangle().getMin().y);
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangle().getMax().x, cr.getRectangle().getMax().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMin().x, cr.getRectangles().get(0).getMin().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMax().x, cr.getRectangles().get(0).getMax().y);
         this.println("                </rectangle>");
         this.println("                <totalPixels>%d</totalPixels>", cr.getTotalPixels());
         this.println("                <maskedPixels>%d</maskedPixels>", cr.getMaskedPixels());

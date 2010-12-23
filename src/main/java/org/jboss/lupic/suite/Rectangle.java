@@ -13,49 +13,49 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(propOrder = { "min", "max" })
 public class Rectangle {
-    private Point min;
-    private Point max;
+	private Point min;
+	private Point max;
 
-    @XmlElement
-    @XmlJavaTypeAdapter(Adapter.class)
-    public Point getMin() {
-        return min;
-    }
+	@XmlElement
+	@XmlJavaTypeAdapter(Adapter.class)
+	public Point getMin() {
+		return min;
+	}
 
-    public void setMin(Point point) {
-        this.min = point;
-    }
+	public void setMin(Point point) {
+		this.min = point;
+	}
 
-    @XmlElement
-    @XmlJavaTypeAdapter(Adapter.class)
-    public Point getMax() {
-        return max;
-    }
+	@XmlElement
+	@XmlJavaTypeAdapter(Adapter.class)
+	public Point getMax() {
+		return max;
+	}
 
-    public void setMax(Point point) {
-        this.max = point;
-    }
+	public void setMax(Point point) {
+		this.max = point;
+	}
 
-    private static class Adapter extends XmlAdapter<XmlPoint, Point> {
-        @Override
-        public XmlPoint marshal(Point v) throws Exception {
-            XmlPoint r = new XmlPoint();
-            r.x = v.x;
-            r.y = v.y;
-            return r;
-        }
+	private static class Adapter extends XmlAdapter<XmlPoint, Point> {
+		@Override
+		public XmlPoint marshal(Point v) throws Exception {
+			XmlPoint r = new XmlPoint();
+			r.x = new Double(v.getX()).intValue();
+			r.y = new Double(v.getY()).intValue();
+			return r;
+		}
 
-        @Override
-        public Point unmarshal(XmlPoint v) throws Exception {
-            return new Point(v.x, v.y);
-        }
-    }
+		@Override
+		public Point unmarshal(XmlPoint v) throws Exception {
+			return new Point(v.x, v.y);
+		}
+	}
 
-    @XmlAccessorType(XmlAccessType.FIELD)
-    private static class XmlPoint {
-        @XmlAttribute
-        protected int x;
-        @XmlAttribute
-        protected int y;
-    }
+	@XmlAccessorType(XmlAccessType.FIELD)
+	private static class XmlPoint {
+		@XmlAttribute
+		protected int x;
+		@XmlAttribute
+		protected int y;
+	}
 }

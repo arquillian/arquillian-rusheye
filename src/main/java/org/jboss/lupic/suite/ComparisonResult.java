@@ -23,6 +23,8 @@ package org.jboss.lupic.suite;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -32,16 +34,17 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(propOrder = { "area", "rectangle", "totalPixels", "maskedPixels",
+@XmlType(propOrder = { "area", "rectangles", "totalPixels", "maskedPixels",
 		"perceptibleDiffs", "differentPixels", "smallDifferences",
 		"equalPixels" })
 public class ComparisonResult {
 	private boolean equalsImages;
 	private BufferedImage diffImage;
-	private Rectangle rectangle = new Rectangle();
+	private List<Rectangle> rectangles;
 	private Area area = new Area();
 	private int totalPixels;
 	private int maskedPixels;
@@ -60,8 +63,6 @@ public class ComparisonResult {
 			int equalPixels) {
 		this.equalsImages = equalsImages;
 		this.diffImage = diffImage;
-		this.rectangle.setMin(rectangleMin);
-		this.rectangle.setMax(rectangleMax);
 		this.area.setWidth(areaWidth);
 		this.area.setHeight(areaHeight);
 		this.totalPixels = totalPixels;
@@ -70,6 +71,12 @@ public class ComparisonResult {
 		this.differentPixels = differentPixels;
 		this.smallDifferences = smallDifferences;
 		this.equalPixels = equalPixels;
+		if (rectangleMax.getX() > 0 && rectangleMax.getY() > 0) {
+			Rectangle rectangle = new Rectangle();
+			this.getRectangles().add(rectangle);
+			rectangle.setMin(rectangleMin);
+			rectangle.setMax(rectangleMax);
+		}
 	}
 
 	@XmlTransient
@@ -90,13 +97,12 @@ public class ComparisonResult {
 		this.diffImage = diffImage;
 	}
 
-	@XmlElement
-	public Rectangle getRectangle() {
-		return rectangle;
-	}
-
-	public void setRectangle(Rectangle rectangle) {
-		this.rectangle = rectangle;
+	@XmlElement(name = "rectangle")
+	public List<Rectangle> getRectangles() {
+		if (rectangles == null) {
+			rectangles = new LinkedList<Rectangle>();
+		}
+		return rectangles;
 	}
 
 	@XmlElement
@@ -164,16 +170,5 @@ public class ComparisonResult {
 
 	public String getComparisonStatus() {
 		return this.isEqualsImages() ? "same" : "different";
-	}
-
-	public String getAreaAsString() {
-		return String.format("%d&times;%d", this.area.getWidth(),
-				this.area.getHeight());
-	}
-
-	public String getRectangleAsString() {
-		return String.format("[%d, %d] - [%d, %d]", this.rectangle.getMin().x,
-				this.rectangle.getMin().y, this.rectangle.getMax().x,
-				this.rectangle.getMax().y);
 	}
 }

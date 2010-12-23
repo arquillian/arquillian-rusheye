@@ -59,7 +59,7 @@ public class TestXmlResultWriter {
 		comparisonResult.setPerceptibleDiffs(5);
 		comparisonResult.setSmallDifferences(6);
 		comparisonResult.setTotalPixels(7);
-		comparisonResult.setRectangle(rectangle);
+		comparisonResult.getRectangles().add(rectangle);
 		comparisonResult.setArea(area);
 		area.setWidth(8);
 		area.setHeight(9);
