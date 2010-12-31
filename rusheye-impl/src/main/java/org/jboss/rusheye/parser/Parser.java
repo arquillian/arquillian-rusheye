@@ -66,7 +66,7 @@ import com.ctc.wstx.exc.WstxValidationException;
 public final class Parser {
 
     private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
-    Handler handler = new Handler(listeners);
+    private Handler handler = new Handler(listeners);
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
@@ -83,7 +83,7 @@ public final class Parser {
             BufferedInputStream in = new BufferedInputStream(inputStream);
             BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(tmp));
 
-            byte buf[] = new byte[1024];
+            byte[] buf = new byte[1024];
             int len;
             while ((len = inputStream.read(buf)) > 0) {
                 out.write(buf, 0, len);
@@ -149,7 +149,7 @@ public final class Parser {
             handler.setVisualSuite(visualSuite);
             handler.getContext().invokeListeners().onSuiteStarted(visualSuite);
 
-             listener.registerListener(new UniqueIdentityChecker(handler.getContext()));
+            listener.registerListener(new UniqueIdentityChecker(handler.getContext()));
 
             while (filteredReader.hasNext()) {
                 try {

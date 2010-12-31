@@ -17,5 +17,5 @@ public class ParserError extends Error {
     public ParserError(Throwable cause) {
         super(cause);
     }
-    
+
 }

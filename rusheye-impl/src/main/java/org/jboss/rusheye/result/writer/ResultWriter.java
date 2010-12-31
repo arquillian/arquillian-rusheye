@@ -33,8 +33,8 @@ import org.jboss.rusheye.suite.Test;
  */
 public interface ResultWriter {
     public void setProperties(Properties properties);
-    
+
     public boolean write(Test test, List<ResultDetail> details);
-    
+
     public void close();
 }

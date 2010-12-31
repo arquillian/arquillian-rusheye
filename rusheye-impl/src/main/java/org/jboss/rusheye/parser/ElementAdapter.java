@@ -12,12 +12,12 @@ import org.w3c.dom.UserDataHandler;
 
 public class ElementAdapter implements Element {
 
+    private String localName;
+    private String textContent;
+
     public ElementAdapter(String localName) {
         this.localName = localName;
     }
-    
-    String localName;
-    String textContent;
 
     @Override
     public String getNodeName() {

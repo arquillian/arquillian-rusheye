@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold", "globalDifferenceAmount" })
 public class Perception {
 
-    public final static Number NOT_THIS_TYPE = new Double("0");
+    public static final Number NOT_THIS_TYPE = new Double("0");
 
     protected Integer onePixelTreshold;
     protected Integer globalDifferenceTreshold;
@@ -72,11 +72,11 @@ public class Perception {
     public static enum AmountType {
         PERCENTAGE("([0-9]{1,2}|100)%"), PIXEL("^([0-9]+)px$");
 
+        private Pattern pattern;
+
         private AmountType(String pattern) {
             this.pattern = Pattern.compile(pattern);
         }
-
-        Pattern pattern;
 
         Pattern getPattern() {
             return pattern;

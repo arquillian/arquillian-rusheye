@@ -2,6 +2,7 @@ package org.jboss.rusheye.suite;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,9 +14,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.rusheye.suite.utils.Nullify;
-import org.jboss.rusheye.suite.utils.VisualSuiteResult;
-
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Test", propOrder = { "patterns" })
 @XmlRootElement(name = "test")
@@ -23,6 +21,9 @@ public class Test extends Configuration {
 
     protected List<Pattern> patterns;
     protected String name;
+
+    @XmlTransient
+    private Sample sample;
 
     /*
      * accessors
@@ -50,9 +51,6 @@ public class Test extends Configuration {
     /*
      * logic
      */
-    @XmlTransient
-    private Sample sample;
-
     public Sample getSample() {
         if (sample == null) {
             sample = new Sample();
@@ -71,18 +69,23 @@ public class Test extends Configuration {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (!(obj instanceof Test))
+        }
+        if (!(obj instanceof Test)) {
             return false;
+        }
         Test other = (Test) obj;
         if (getName() == null) {
-            if (other.getName() != null)
+            if (other.getName() != null) {
                 return false;
-        } else if (!getName().equals(other.getName()))
+            }
+        } else if (!getName().equals(other.getName())) {
             return false;
+        }
         return true;
     }
 }

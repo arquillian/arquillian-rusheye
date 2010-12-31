@@ -26,7 +26,7 @@ public class Mask extends ImageSource {
 
     @Resource
     @XmlTransient
-    public MaskRetriever maskRetriever;
+    private MaskRetriever maskRetriever;
 
     /*
      * accessors
@@ -106,4 +106,7 @@ public class Mask extends ImageSource {
         return (mask.getRGB(maskX, maskY) & 0xff000000) != 0;
     }
 
+    public void setMaskRetriever(MaskRetriever maskRetriever) {
+        this.maskRetriever = maskRetriever;
+    }
 }

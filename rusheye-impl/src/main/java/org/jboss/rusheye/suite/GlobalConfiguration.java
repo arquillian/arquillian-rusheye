@@ -18,7 +18,7 @@ import org.jboss.rusheye.suite.utils.Instantiator;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
-    "sampleRetriever" })
+        "sampleRetriever" })
 @XmlRootElement(name = "global-configuration")
 public class GlobalConfiguration extends Configuration {
 
@@ -26,6 +26,9 @@ public class GlobalConfiguration extends Configuration {
     protected PatternRetriever patternRetriever;
     protected MaskRetriever maskRetriever;
     protected SampleRetriever sampleRetriever;
+
+    @XmlTransient
+    private Map<String, ParserListener> parserListeners = new HashMap<String, ParserListener>();
 
     /*
      * accessors
@@ -68,9 +71,6 @@ public class GlobalConfiguration extends Configuration {
     /*
      * logic
      */
-    @XmlTransient
-    private Map<String, ParserListener> parserListeners = new HashMap<String, ParserListener>();
-
     public Collection<ParserListener> getConfiguredListeners() {
         for (Listener listener : listeners) {
             final String type = listener.getType();

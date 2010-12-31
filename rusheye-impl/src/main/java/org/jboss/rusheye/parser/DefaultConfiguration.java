@@ -17,7 +17,7 @@ public class DefaultConfiguration extends Configuration {
         DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(10);
         DEFAULT_PERCEPTION.setGlobalDifferenceAmount("0px");
     }
-    
+
     {
         perception = DEFAULT_PERCEPTION;
         masks = EMPTY_MASKS;

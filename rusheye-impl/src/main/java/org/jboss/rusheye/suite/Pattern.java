@@ -27,7 +27,7 @@ public class Pattern extends ImageSource {
 
     @Resource
     @XmlTransient
-    public PatternRetriever patternRetriever;
+    private PatternRetriever patternRetriever;
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -40,7 +40,7 @@ public class Pattern extends ImageSource {
         this.name = value;
     }
 
-    @XmlElement(name="comparison-result")
+    @XmlElement(name = "comparison-result")
     public ComparisonResult getComparisonResult() {
         return comparisonResult;
     }

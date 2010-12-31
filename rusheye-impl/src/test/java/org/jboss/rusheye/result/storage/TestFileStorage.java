@@ -36,7 +36,6 @@ import org.jboss.rusheye.parser.ConfigurationCompiler;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;
-import org.jboss.rusheye.suite.Perception;
 import org.jboss.rusheye.suite.Properties;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -50,7 +49,7 @@ import org.testng.annotations.Test;
  */
 public class TestFileStorage {
 
-    private static final File directory = new File("target/fileStorageTest");
+    private static final File STORAGE_DIR = new File("target/fileStorageTest");
 
     ImageComparator comparator = new DefaultImageComparator();
 
@@ -70,7 +69,7 @@ public class TestFileStorage {
 
     @Test
     public void testFileStorage() throws Exception {
-        when(properties.getProperty("file-storage-directory")).thenReturn(directory.getPath());
+        when(properties.getProperty("file-storage-directory")).thenReturn(STORAGE_DIR.getPath());
 
         FileStorage fileStorage = new FileStorage();
         fileStorage.setProperties(properties);
@@ -87,11 +86,12 @@ public class TestFileStorage {
 
             ConfigurationCompiler configurationCompiler = new ConfigurationCompiler();
 
-            ComparisonResult result = comparator.compare(expectedImage, actualImage, configurationCompiler.getPerception(), new HashSet<Mask>());
+            ComparisonResult result = comparator.compare(expectedImage, actualImage,
+                configurationCompiler.getPerception(), new HashSet<Mask>());
             Assert.assertTrue(result.isEqualsImages());
         }
 
-        FileUtils.deleteQuietly(directory);
+        FileUtils.deleteQuietly(STORAGE_DIR);
     }
 
     private File getAddition() {
@@ -99,6 +99,6 @@ public class TestFileStorage {
     }
 
     private File getComplete() {
-        return new File(directory, getAddition().getPath());
+        return new File(STORAGE_DIR, getAddition().getPath());
     }
 }

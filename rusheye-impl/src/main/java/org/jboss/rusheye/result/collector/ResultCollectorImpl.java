@@ -63,11 +63,11 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
         String storageClass = (String) properties.getProperty("result-storage");
         storage = new Instantiator<ResultStorage>().getInstance(storageClass);
         storage.setProperties(properties);
-        
+
         String writerClass = (String) properties.getProperty("result-writer");
         writer = new Instantiator<ResultWriter>().getInstance(writerClass);
         writer.setProperties(properties);
-        
+
         String statisticsClass = (String) properties.getProperty("result-statistics");
         statistics = new Instantiator<ResultStatistics>().getInstance(statisticsClass);
         statistics.setProperties(properties);
@@ -96,7 +96,7 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
 
         details.putIfAbsent(test, new CopyOnWriteArrayList<ResultDetail>());
         details.get(test).add(detail);
-        
+
         statistics.onPatternCompleted(detail);
     }
 

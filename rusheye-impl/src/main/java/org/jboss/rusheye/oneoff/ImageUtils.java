@@ -89,7 +89,7 @@ public final class ImageUtils {
         mask.setId(maskFile.getName());
         mask.setType(MaskType.SELECTIVE_ALPHA);
         mask.setSource(maskFile.toString());
-        mask.maskRetriever = fileRetriever;
+        mask.setMaskRetriever(fileRetriever);
         mask.setHorizontalAlign(resolveHorizontalOrientation(maskFilename));
         mask.setVerticalAlign(resolveVerticalOrientation(maskFilename));
         mask.run();

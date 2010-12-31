@@ -26,9 +26,5 @@ package org.jboss.rusheye.result;
  * @version $Revision$
  */
 public enum ResultConclusion {
-    SAME,
-    PERCEPTUALLY_SAME,
-    DIFFER,
-    NOT_TESTED,
-    ERROR
+    SAME, PERCEPTUALLY_SAME, DIFFER, NOT_TESTED, ERROR
 }

@@ -19,12 +19,11 @@ import org.jboss.rusheye.suite.Test;
 
 class RetriverInjector extends Unmarshaller.Listener {
     private Parser parser;
+    private Map<Class<?>, List<Field>> fieldMap = new HashMap<Class<?>, List<Field>>();
 
     RetriverInjector(Parser parser) {
         this.parser = parser;
     }
-
-    Map<Class<?>, List<Field>> fieldMap = new HashMap<Class<?>, List<Field>>();
 
     @Override
     public void afterUnmarshal(Object target, Object parent) {

@@ -44,10 +44,8 @@ public abstract class AbstractSampleRetriever extends AbstractRetriever implemen
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         if (allSources == null) {
             synchronized (this) {
-                if (allSources == null) {
-                    allSources = new TreeSet<String>(getAllSources());
-                    unretrievedSources = new TreeSet<String>(allSources);
-                }
+                allSources = new TreeSet<String>(getAllSources());
+                unretrievedSources = new TreeSet<String>(allSources);
             }
         }
 

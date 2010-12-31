@@ -30,11 +30,9 @@ import java.io.PipedOutputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import org.jboss.rusheye.PassingSAXErrorHandler;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -106,7 +104,7 @@ public class AbstractVisualSuiteDefinitionTest {
         writerThread.start();
     }
 
-    // FIXME does not throw exceptions 
+    // FIXME does not throw exceptions
     public void parse() throws SAXException, IOException {
         parser.parseStream(inputStream);
     }

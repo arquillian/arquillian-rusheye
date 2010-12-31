@@ -7,7 +7,6 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -30,6 +29,9 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 
 public class TestCompareListener {
+
+    private static TestCompareListener parent;
+
     @Mock
     ImageComparator imageComparator;
 
@@ -62,7 +64,7 @@ public class TestCompareListener {
 
     @Mock
     ComparisonResult comparisonResult;
-    
+
     @Mock
     Element element;
 
@@ -78,7 +80,7 @@ public class TestCompareListener {
         when(
             imageComparator.compare(any(BufferedImage.class), any(BufferedImage.class), any(Perception.class),
                 any(Set.class))).thenReturn(comparisonResult);
-            
+
         Properties properties = new Properties();
         properties.setProperty("result-collector", InvocationPassingResultCollector.class.getName());
 
@@ -108,7 +110,7 @@ public class TestCompareListener {
         compareListener.onPatternParsed(test, pattern);
         compareListener.onTestParsed(test);
         compareListener.onSuiteParsed(visualSuite);
-        
+
         // order verification
         sampleOrder.verify(sample).run();
         sampleOrder.verify(sample).get();
@@ -131,8 +133,6 @@ public class TestCompareListener {
         col.onSuiteParsed(visualSuite);
         col.onSuiteCompleted(visualSuite);
     }
-
-    static TestCompareListener parent;
 
     public static class OrderTestingResultCollector extends ResultCollectorAdapter {
     }

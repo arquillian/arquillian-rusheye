@@ -25,7 +25,7 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-    	
+
         Object result;
 
         // namespace handling
@@ -37,23 +37,23 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
             }
         }
         if ("writeNamespace".equals(method.getName()) || "writeDefaultNamespace".equals(method.getName())) {
-        	if (indentation > 1) {
-        		return null;
-        	}
+            if (indentation > 1) {
+                return null;
+            }
         }
-        
+
         // attribute reordering (alphabethical order)
         if ("writeAttribute".equals(method.getName())) {
-        	writeAttributes.add(new WriteAttribute(method, args));
-        	return null;
+            writeAttributes.add(new WriteAttribute(method, args));
+            return null;
         } else if (!writeAttributes.isEmpty()) {
-        	Collections.sort(writeAttributes);
-        	for (WriteAttribute writeAttribute : writeAttributes) {
-        		invoke(writeAttribute.method, writeAttribute.args);
-        	}
-        	writeAttributes.clear();
+            Collections.sort(writeAttributes);
+            for (WriteAttribute writeAttribute : writeAttributes) {
+                invoke(writeAttribute.method, writeAttribute.args);
+            }
+            writeAttributes.clear();
         }
-        
+
         // handling of empty elements
         if ("writeStartElement".equals(method.getName())) {
             writer.writeCharacters("\n");
@@ -73,38 +73,40 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
         if ("writeStartElement".equals(method.getName())) {
             simpleContent = true;
         } else if ("writeCharacters".equals(method.getName()) || "writeAttribute".equals(method.getName())) {
+            // intentionally left blank
         } else {
             simpleContent = false;
         }
-        
+
         result = invoke(method, args);
 
         return result;
     }
-    
-    private Object invoke(Method method, Object[] args) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-    	return method.invoke(writer, args);
+
+    private Object invoke(Method method, Object[] args) throws IllegalArgumentException, IllegalAccessException,
+        InvocationTargetException {
+        return method.invoke(writer, args);
     }
 
     public static XMLStreamWriter pretty(XMLStreamWriter writer) {
         return (XMLStreamWriter) Proxy.newProxyInstance(writer.getClass().getClassLoader(),
             new Class[] { XMLStreamWriter.class }, new PrettyXMLStreamWriter(writer));
     }
-    
+
     private class WriteAttribute implements Comparable<WriteAttribute> {
-    	Method method;
-    	Object[] args;
-    	String attributeName;
-    	
-		public WriteAttribute(Method method, Object[] args) {
-			this.method = method;
-			this.args = args;
-			attributeName = (String) args[args.length - 2];
-		}
-		
-		@Override
-		public int compareTo(WriteAttribute o) {
-			return attributeName.compareTo(o.attributeName);
-		}
+        Method method;
+        Object[] args;
+        String attributeName;
+
+        public WriteAttribute(Method method, Object[] args) {
+            this.method = method;
+            this.args = args;
+            attributeName = (String) args[args.length - 2];
+        }
+
+        @Override
+        public int compareTo(WriteAttribute o) {
+            return attributeName.compareTo(o.attributeName);
+        }
     }
 }

@@ -28,17 +28,13 @@ import static org.testng.Assert.fail;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jboss.rusheye.retriever.AbstractRetriever;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
-import org.jboss.rusheye.retriever.Retriever;
 import org.jboss.rusheye.retriever.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
@@ -60,8 +56,9 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
         startWriter();
         parse();
 
-        org.jboss.rusheye.suite.PatternRetriever retriever = (org.jboss.rusheye.suite.PatternRetriever) handler.getVisualSuite().getGlobalConfiguration().getPatternRetriever();
-        
+        org.jboss.rusheye.suite.PatternRetriever retriever = (org.jboss.rusheye.suite.PatternRetriever) handler
+            .getVisualSuite().getGlobalConfiguration().getPatternRetriever();
+
         try {
             assertNull(retriever.retrieve(SOURCE, new Properties()));
         } catch (RetrieverException e) {

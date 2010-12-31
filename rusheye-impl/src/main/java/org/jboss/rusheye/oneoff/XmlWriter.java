@@ -106,10 +106,13 @@ public class XmlWriter {
 
     private void printPerception(ComparisonResult cr) throws IOException {
         this.println("            <perception>");
-        this.println("                <area width=\"%d\" height=\"%d\" />", cr.getArea().getWidth(), cr.getArea().getHeight());
+        this.println("                <area width=\"%d\" height=\"%d\" />", cr.getArea().getWidth(), cr.getArea()
+            .getHeight());
         this.println("                <rectangle>");
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMin().x, cr.getRectangles().get(0).getMin().y);
-        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMax().x, cr.getRectangles().get(0).getMax().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMin().x, cr
+            .getRectangles().get(0).getMin().y);
+        this.println("                    <vertex x=\"%d\" y=\"%d\" />", cr.getRectangles().get(0).getMax().x, cr
+            .getRectangles().get(0).getMax().y);
         this.println("                </rectangle>");
         this.println("                <totalPixels>%d</totalPixels>", cr.getTotalPixels());
         this.println("                <maskedPixels>%d</maskedPixels>", cr.getMaskedPixels());

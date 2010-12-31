@@ -179,7 +179,7 @@ public class DirectoryCrawler {
         if (globalDifferencePixelAmount != null) {
             boolean matches = false;
             Pattern[] pixelAmountPatterns = new Pattern[] { Pattern.compile("\\d+px"),
-                Pattern.compile("([0-9]{1,2}|100)%") };
+                    Pattern.compile("([0-9]{1,2}|100)%") };
             for (Pattern pattern : pixelAmountPatterns) {
                 if (pattern.matcher(globalDifferencePixelAmount).matches()) {
                     matches = true;

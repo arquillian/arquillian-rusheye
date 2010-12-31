@@ -56,9 +56,6 @@ public class VisualSuiteStub {
     Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER).addAttribute("type",
         FileSampleRetriever.class.getName());
     Element perception = globalConfiguration.addElement(PERCEPTION);
-    
-
-    
 
     Element defaultTest = visualSuite.addElement(TEST).addAttribute("name", "default-test");
 

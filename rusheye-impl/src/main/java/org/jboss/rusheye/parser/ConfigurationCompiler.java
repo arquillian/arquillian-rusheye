@@ -16,7 +16,7 @@ import org.jboss.rusheye.suite.Perception;
 
 public class ConfigurationCompiler extends Configuration {
 
-    private final static Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
+    private static final Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
 
     private Deque<Configuration> customConfigurations = new LinkedList<Configuration>();
 
@@ -49,6 +49,7 @@ public class ConfigurationCompiler extends Configuration {
         return masks;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends Configuration> T wrap(final T configuration, final Configuration... configurations) {
         ProxyFactory f = new ProxyFactory();
         f.setSuperclass(configuration.getClass());

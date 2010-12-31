@@ -46,7 +46,7 @@ public class FileSampleRetriever extends AbstractSampleRetriever {
             throw new IllegalArgumentException(
                 "the 'samples' argument have to be set in order to load list of available sources");
         }
-        
+
         Set<String> sources = new TreeSet<String>();
         sources.addAll(Arrays.asList(samplesDirectory.list()));
 

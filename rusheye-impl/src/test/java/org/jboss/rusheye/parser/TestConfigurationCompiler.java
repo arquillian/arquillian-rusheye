@@ -18,18 +18,18 @@ public class TestConfigurationCompiler {
         test.setName("testname");
         test.setPerception(new Perception());
     }
-    
+
     @org.testng.annotations.Test
     public void testHashcode() {
         Test wrapped = ConfigurationCompiler.wrap(test);
-        
+
         assertEquals(wrapped.hashCode(), test.hashCode());
     }
-    
+
     @org.testng.annotations.Test
     public void testEquals() {
         Test wrapped = ConfigurationCompiler.wrap(test);
-        
+
         assertEquals(wrapped, test);
     }
 

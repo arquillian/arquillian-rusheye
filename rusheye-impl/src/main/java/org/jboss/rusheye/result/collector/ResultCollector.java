@@ -50,6 +50,6 @@ public interface ResultCollector extends ParserListener {
     void onTestStarted(Test test);
 
     void onTestCompleted(Test test);
-    
+
     void onSuiteCompleted(VisualSuite visualSuite);
 }

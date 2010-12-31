@@ -58,9 +58,6 @@ import org.testng.annotations.Test;
  */
 public class TestResultCollectorImpl {
 
-    @Spy
-    ResultCollectorImpl collector = new ResultCollectorImpl();
-
     @Mock
     static ResultStatistics statistics;
 
@@ -69,6 +66,9 @@ public class TestResultCollectorImpl {
 
     @Mock
     static ResultStorage storage;
+
+    @Spy
+    ResultCollectorImpl collector = new ResultCollectorImpl();
 
     @Mock
     VisualSuite visualSuite;
@@ -100,6 +100,8 @@ public class TestResultCollectorImpl {
     @Mock
     ConcurrentMap<org.jboss.rusheye.suite.Test, List<ResultDetail>> map;
 
+    InOrder order;
+
     @BeforeMethod
     public void beforeClass() {
         MockitoAnnotations.initMocks(this);
@@ -126,8 +128,6 @@ public class TestResultCollectorImpl {
         verify(writer, times(1)).setProperties(properties);
         verify(storage, times(1)).setProperties(properties);
     }
-
-    InOrder order;
 
     @Test
     public void testPropertEnd() {

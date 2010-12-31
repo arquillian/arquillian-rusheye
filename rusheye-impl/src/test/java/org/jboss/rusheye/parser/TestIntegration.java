@@ -48,14 +48,14 @@ import org.xml.sax.SAXException;
  */
 public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
-    private final static String[] samples = new String[] { "different", "different-masked", "not-same", "perceptible",
-        "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
+    private static final String[] SAMPLES = new String[] { "different", "different-masked", "not-same", "perceptible",
+            "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
 
     @DataProvider
     public Object[][] provideSamples() {
-        Object[][] result = new Object[samples.length][1];
+        Object[][] result = new Object[SAMPLES.length][1];
         int i = 0;
-        for (String sample : samples) {
+        for (String sample : SAMPLES) {
             result[i++][0] = sample;
         }
         return result;
@@ -96,7 +96,7 @@ public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
         stub.visualSuite.remove(stub.defaultTest);
 
-        for (String sample : samples) {
+        for (String sample : SAMPLES) {
             Element test = stub.visualSuite.addElement(TEST).addAttribute("name", sample);
 
             Element pattern = test.addElement(PATTERN);

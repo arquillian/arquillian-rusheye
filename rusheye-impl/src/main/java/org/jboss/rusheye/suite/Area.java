@@ -9,7 +9,7 @@ public class Area {
     private Integer width;
     private Integer height;
 
-    @XmlAttribute(required=true)
+    @XmlAttribute(required = true)
     public Integer getWidth() {
         return width;
     }
@@ -18,7 +18,7 @@ public class Area {
         this.width = width;
     }
 
-    @XmlAttribute(required=true)
+    @XmlAttribute(required = true)
     public Integer getHeight() {
         return height;
     }

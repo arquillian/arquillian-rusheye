@@ -21,10 +21,10 @@ public class Sample {
 
     @Resource
     @XmlTransient
-    public SampleRetriever sampleRetriever;
+    private SampleRetriever sampleRetriever;
 
     @XmlTransient
-    FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
+    private FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
         public BufferedImage call() throws Exception {
             return sampleRetriever.retrieve(source, null);
         };
@@ -42,6 +42,10 @@ public class Sample {
     /*
      * logic
      */
+    public void setSampleRetriever(SampleRetriever sampleRetriever) {
+        this.sampleRetriever = sampleRetriever;
+    }
+
     public void run() {
         future.run();
     }

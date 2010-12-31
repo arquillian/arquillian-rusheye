@@ -108,7 +108,7 @@ public abstract class XmlResultWriter implements ResultWriter {
             }
         }
     }
-    
+
     private void fulfilTest(SpoolerContext context) {
         while (context.hasNextDetail()) {
             ResultDetail detail = context.getNextDetail();
@@ -148,11 +148,11 @@ public abstract class XmlResultWriter implements ResultWriter {
     private XMLStreamWriter createXMLStreamWriter() throws XMLStreamException {
         XMLOutputFactory factory = XMLOutputFactory.newInstance();
         XMLStreamWriter2 writer = (XMLStreamWriter2) factory.createXMLStreamWriter(out);
-         writer.validateAgainst(createXMLValidationSchema());
-//         return writer;
+        writer.validateAgainst(createXMLValidationSchema());
+        // return writer;
         return PrettyXMLStreamWriter.pretty(writer);
     }
-    
+
     private Marshaller createMarshaller() throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("org.jboss.rusheye.suite");
         Marshaller marshaller = context.createMarshaller();

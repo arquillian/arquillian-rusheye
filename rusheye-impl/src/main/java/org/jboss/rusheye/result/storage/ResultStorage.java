@@ -35,6 +35,6 @@ public interface ResultStorage {
     public void setProperties(Properties properties);
 
     public String store(Test test, Pattern pattern, BufferedImage differenceImage);
-    
+
     public void end();
 }

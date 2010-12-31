@@ -41,7 +41,7 @@ public class TestSample {
     private static final BufferedImage BUFFERED_IMAGE2 = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 
     private final SampleRetriever sampleRetriever = new SampleRetriever() {
-        
+
         @Override
         public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
             if (source.equals(TEST_NAME1)) {
@@ -89,12 +89,12 @@ public class TestSample {
             fail();
         }
     }
-    
+
     private Sample newSample(String source, SampleRetriever sampleRetriever) {
         Sample sample = new Sample();
         sample.setSource(source);
-        sample.sampleRetriever = sampleRetriever;
+        sample.setSampleRetriever(sampleRetriever);
         return sample;
-        
+
     }
 }

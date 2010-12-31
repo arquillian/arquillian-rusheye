@@ -30,15 +30,15 @@ import org.jboss.rusheye.suite.Properties;
  * @version $Revision$
  */
 public class ConvertingProperties extends Properties {
-    
+
+    private static final long serialVersionUID = 9212012944902693011L;
+
     public ConvertingProperties() {
     }
 
     public ConvertingProperties(Properties properties) {
         this.include(properties);
     }
-
-    private static final long serialVersionUID = 9212012944902693011L;
 
     public <T> T getProperty(String propertyKey, Class<T> tClass) {
         Object object = getProperty(propertyKey);

@@ -49,8 +49,8 @@ public abstract class AbstractRetriever extends RetrieverAdapter {
     protected <T> T getProperty(String propertyKey, Class<T> tClass) {
         return properties.getProperty(propertyKey, tClass);
     }
-    
-    protected <T> T getProperty(String propertyKey, T defaultValue,  Class<T> tClass) {
+
+    protected <T> T getProperty(String propertyKey, T defaultValue, Class<T> tClass) {
         return properties.getProperty(propertyKey, defaultValue, tClass);
     }
 }

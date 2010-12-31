@@ -14,16 +14,20 @@ import javassist.util.proxy.ProxyObject;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public class NullingProxy {
+public final class NullingProxy {
+
+    private NullingProxy() {
+    }
+
     public static <T> T handle(T instance, Class<? extends Annotation> nullified) throws InstantiationException,
         IllegalAccessException {
 
         Class<?> originalClass = (Class<?>) instance.getClass();
-        
+
         if (instance instanceof ProxyObject) {
             originalClass = (Class<?>) originalClass.getSuperclass();
         }
-        
+
         ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.setSuperclass(originalClass);
 

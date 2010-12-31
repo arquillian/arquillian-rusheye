@@ -158,7 +158,7 @@ public class TestImageComparison {
             org.jboss.rusheye.suite.Test test = new org.jboss.rusheye.suite.Test();
             test.setPerception(perception);
             configuration.pushConfiguration(test);
-            
+
             ComparisonResult result = comparator.compare(pattern, screenshot, configuration.getPerception(), masks);
 
             return result;
