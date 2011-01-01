@@ -22,9 +22,34 @@
 package org.jboss.rusheye.result;
 
 /**
+ * The type of result of the comparison process.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public enum ResultConclusion {
-    SAME, PERCEPTUALLY_SAME, DIFFER, NOT_TESTED, ERROR
+    /**
+     * The images are same in scope of pixels
+     */
+    SAME,
+
+    /**
+     * The images are same when applied perceptual comparison or filtering by masks.
+     */
+    PERCEPTUALLY_SAME,
+
+    /**
+     * Images are visible different also after applying filtering by masks.
+     */
+    DIFFER,
+
+    /**
+     * The pattern was not tested because it wasn't necessary to inspect it.
+     */
+    NOT_TESTED,
+
+    /**
+     * The error occured during process of comparison.
+     */
+    ERROR
 }

@@ -27,10 +27,23 @@ import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Perception;
 
 /**
+ * Evaluates the comparison result using perception settings to obtain conclusion of comparison process.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class ResultEvaluator {
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+
+    /**
+     * Evaluates the comparison result using perception settings to obtain conclusion of comparison process.
+     * 
+     * @param perception
+     *            the perception settings used in process of comparison which got the given comparisonResult
+     * @param comparisonResult
+     *            the result of comparison process
+     * @return the simple conclusion of comparison process
+     */
     public ResultConclusion evaluate(Perception perception, ComparisonResult comparisonResult) {
 
         if (comparisonResult.isEqualsImages()) {
@@ -43,7 +56,7 @@ public class ResultEvaluator {
 
             BigDecimal ratio;
             if (comparisonResult.getTotalPixels() != 0) {
-                ratio = differentPixels.multiply(new BigDecimal(100)).divide(totalPixels);
+                ratio = differentPixels.multiply(ONE_HUNDRED).divide(totalPixels);
             } else {
                 ratio = BigDecimal.ZERO;
             }

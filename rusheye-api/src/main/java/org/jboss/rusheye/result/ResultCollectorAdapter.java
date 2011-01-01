@@ -28,6 +28,8 @@ import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
 
 /**
+ * Adapter for easy implementation of {@link ResultCollector}.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

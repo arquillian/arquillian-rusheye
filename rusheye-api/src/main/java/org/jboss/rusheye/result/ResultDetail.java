@@ -25,43 +25,93 @@ import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
 
 /**
+ * The detailed result of the comparison process for given pattern.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class ResultDetail {
+    
+    /** The pattern. */
     private Pattern pattern;
+    
+    /** The location. */
     private String location;
+    
+    /** The comparison result. */
     private ComparisonResult comparisonResult;
+    
+    /** The conclusion. */
     private ResultConclusion conclusion;
 
+    /**
+     * Gets the pattern.
+     *
+     * @return the pattern
+     */
     public Pattern getPattern() {
         return pattern;
     }
 
+    /**
+     * Sets the pattern.
+     *
+     * @param pattern the new pattern
+     */
     public void setPattern(Pattern pattern) {
         this.pattern = pattern;
     }
 
+    /**
+     * Gets the location.
+     *
+     * @return the location
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Sets the location.
+     *
+     * @param location the new location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * Gets the comparison result.
+     *
+     * @return the comparison result
+     */
     public ComparisonResult getComparisonResult() {
         return comparisonResult;
     }
 
+    /**
+     * Sets the comparison result.
+     *
+     * @param comparisonResult the new comparison result
+     */
     public void setComparisonResult(ComparisonResult comparisonResult) {
         this.comparisonResult = comparisonResult;
     }
 
+    /**
+     * Gets the conclusion.
+     *
+     * @return the conclusion
+     */
     public ResultConclusion getConclusion() {
         return conclusion;
     }
 
+    /**
+     * Sets the conclusion.
+     *
+     * @param conclusion the new conclusion
+     */
     public void setConclusion(ResultConclusion conclusion) {
         this.conclusion = conclusion;
     }

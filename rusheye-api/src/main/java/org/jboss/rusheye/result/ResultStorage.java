@@ -28,13 +28,37 @@ import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 
 /**
+ * Mechanism for storing difference image from comparison process in case of not same images.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public interface ResultStorage {
-    public void setProperties(Properties properties);
 
-    public String store(Test test, Pattern pattern, BufferedImage differenceImage);
+    /**
+     * Set the properties to be consumed by final implementation.
+     * 
+     * @param properties
+     *            to setup final implementation of storage.
+     */
+    void setProperties(Properties properties);
 
-    public void end();
+    /**
+     * Stores the differenceImage to location given by pattern and test.
+     * 
+     * @param test
+     *            tied with pattern and sample which both constructed the differenceImage
+     * @param pattern
+     *            which constructed differenceImage
+     * @param differenceImage
+     *            the difference image constructed in process of comparison
+     * @return the location where was saved the difference image
+     */
+    String store(Test test, Pattern pattern, BufferedImage differenceImage);
+
+    /**
+     * Invoked on the end of visual suite comparison process to finish the storage mechanism (e.g. close connection,
+     * handles).
+     */
+    void end();
 }

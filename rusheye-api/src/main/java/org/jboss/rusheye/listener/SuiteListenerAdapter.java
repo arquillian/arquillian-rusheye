@@ -28,10 +28,12 @@ import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
 
 /**
+ * Adapter for easy implementation of {@link SuiteListener}.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class SuiteListenerAdapter implements SuiteListener {
+public abstract class SuiteListenerAdapter implements SuiteListener {
 
     protected Properties properties;
 

@@ -24,15 +24,17 @@ package org.jboss.rusheye.retriever;
 import java.util.Set;
 
 /**
+ * Retrieves sample images from given source and provides method to check the new sources which wasn't retrieved yet.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public interface SampleRetriever extends Retriever {
 
     /**
-     * Returns the list of samples, which wasn't in test suite definition.
+     * Returns the list of samples, which isn't mentioned in whole visual test suite definiton, but can be retrieved.
      * 
-     * @return
+     * @return the list of samples, which isn't mentioned in whole visual test suite definiton, but can be retrieved.
      */
     Set<String> getNewSources();
 }

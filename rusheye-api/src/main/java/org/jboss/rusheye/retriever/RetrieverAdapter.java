@@ -26,7 +26,13 @@ import java.awt.image.BufferedImage;
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 
-public class RetrieverAdapter implements Retriever {
+/**
+ * Adapter for easy implementation of {@link Retriever}.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
+public abstract class RetrieverAdapter implements Retriever {
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         return null;
@@ -38,5 +44,4 @@ public class RetrieverAdapter implements Retriever {
 
     public void setGlobalProperties(Properties properties) {
     }
-
 }

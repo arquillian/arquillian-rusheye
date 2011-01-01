@@ -27,16 +27,41 @@ import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 
 /**
+ * The derivation of {@link ResultCollector} which is dedicated to collect statistics of completion.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public interface ResultStatistics {
 
-    public void setProperties(Properties properties);
+    /**
+     * Set the properties to be consumed by final implementation.
+     * 
+     * @param properties
+     *            to setup final implementation of statistics.
+     */
+    void setProperties(Properties properties);
 
-    public void onPatternCompleted(ResultDetail detail);
+    /**
+     * Fired when pattern completed.
+     * 
+     * @param detail
+     *            the detail of pattern comparison
+     */
+    void onPatternCompleted(ResultDetail detail);
 
-    public void onTestCompleted(Test test, List<ResultDetail> detail);
+    /**
+     * Fired when test completed including all it's pattern completed.
+     * 
+     * @param test
+     *            the test which completed
+     * @param details
+     *            the list of result details
+     */
+    void onTestCompleted(Test test, List<ResultDetail> details);
 
-    public void onSuiteCompleted();
+    /**
+     * Fired when whole suite completed and there will be no more result details available.
+     */
+    void onSuiteCompleted();
 }
