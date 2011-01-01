@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
+import org.jboss.rusheye.retriever.MaskRetriever;
 
 /** 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -37,17 +38,17 @@ import org.jboss.rusheye.internal.Instantiator;
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "MaskRetriever")
-public class MaskRetriever extends TypeProperties implements org.jboss.rusheye.retriever.MaskRetriever {
+public class MaskRetrieverImpl extends TypeProperties implements MaskRetriever {
 
     @XmlTransient
-    org.jboss.rusheye.retriever.MaskRetriever maskRetriever;
+    MaskRetriever maskRetriever;
 
-    public void initializeRetriever() {
+    private void initializeRetriever() {
         if (maskRetriever == null) {
             if (getType() == null) {
                 throw new IllegalStateException("type of the mask retriver can't be null");
             }
-            maskRetriever = new Instantiator<org.jboss.rusheye.retriever.MaskRetriever>().getInstance(getType());
+            maskRetriever = new Instantiator<MaskRetriever>().getInstance(getType());
             maskRetriever.setGlobalProperties(this);
         }
     }

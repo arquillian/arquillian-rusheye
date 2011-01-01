@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.jboss.rusheye.retriever.MaskRetriever;
+
 /**
  * <p>
  * The mask for the filtering of the samples during comparison.
@@ -71,7 +73,7 @@ public class Mask extends ImageSource {
     /** The mask retriever. */
     @Resource
     @XmlTransient
-    private org.jboss.rusheye.retriever.MaskRetriever maskRetriever;
+    private MaskRetriever maskRetriever;
     
     /**
      * Gets the id.
@@ -206,7 +208,7 @@ public class Mask extends ImageSource {
      *
      * @param maskRetriever the new mask retriever
      */
-    public void setMaskRetriever(org.jboss.rusheye.retriever.MaskRetriever maskRetriever) {
+    public void setMaskRetriever(MaskRetriever maskRetriever) {
         this.maskRetriever = maskRetriever;
     }
 }

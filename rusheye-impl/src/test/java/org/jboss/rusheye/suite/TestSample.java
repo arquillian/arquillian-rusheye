@@ -27,6 +27,7 @@ import static org.testng.Assert.fail;
 import java.awt.image.BufferedImage;
 
 import org.jboss.rusheye.exception.RetrieverException;
+import org.jboss.rusheye.retriever.SampleRetriever;
 import org.testng.annotations.Test;
 
 /**
@@ -40,7 +41,7 @@ public class TestSample {
     private static final BufferedImage BUFFERED_IMAGE1 = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
     private static final BufferedImage BUFFERED_IMAGE2 = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 
-    private final SampleRetriever sampleRetriever = new SampleRetriever() {
+    private final SampleRetriever sampleRetriever = new SampleRetrieverImpl() {
 
         @Override
         public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {

@@ -56,8 +56,8 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
         startWriter();
         parse();
 
-        org.jboss.rusheye.suite.PatternRetriever retriever = (org.jboss.rusheye.suite.PatternRetriever) handler
-            .getVisualSuite().getGlobalConfiguration().getPatternRetriever();
+        PatternRetriever retriever = (PatternRetriever) handler.getVisualSuite().getGlobalConfiguration()
+            .getPatternRetriever();
 
         try {
             assertNull(retriever.retrieve(SOURCE, new Properties()));

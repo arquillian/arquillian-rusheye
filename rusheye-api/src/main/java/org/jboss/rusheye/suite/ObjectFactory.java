@@ -41,8 +41,8 @@ public class ObjectFactory {
         return new Listener();
     }
 
-    public SampleRetriever createSampleRetriever() {
-        return new SampleRetriever();
+    public SampleRetrieverImpl createSampleRetriever() {
+        return new SampleRetrieverImpl();
     }
 
     public Sample createSample() {
@@ -61,12 +61,12 @@ public class ObjectFactory {
         return new Test();
     }
 
-    public PatternRetriever createPatternRetriever() {
-        return new PatternRetriever();
+    public PatternRetrieverImpl createPatternRetriever() {
+        return new PatternRetrieverImpl();
     }
 
-    public MaskRetriever createMaskRetriever() {
-        return new MaskRetriever();
+    public MaskRetrieverImpl createMaskRetriever() {
+        return new MaskRetrieverImpl();
     }
 
     public GlobalConfiguration createGlobalConfiguration() {

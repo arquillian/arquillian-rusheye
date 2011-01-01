@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.listener.SuiteListener;
+import org.jboss.rusheye.retriever.MaskRetriever;
+import org.jboss.rusheye.retriever.PatternRetriever;
+import org.jboss.rusheye.retriever.SampleRetriever;
 
 /**
  * <p>
@@ -89,7 +92,7 @@ public class GlobalConfiguration extends Configuration {
      * 
      * @return the pattern retriever
      */
-    @XmlElement(name = "pattern-retriever")
+    @XmlElement(name = "pattern-retriever", type = PatternRetrieverImpl.class)
     public PatternRetriever getPatternRetriever() {
         return patternRetriever;
     }
@@ -109,7 +112,7 @@ public class GlobalConfiguration extends Configuration {
      * 
      * @return the mask retriever
      */
-    @XmlElement(name = "mask-retriever")
+    @XmlElement(name = "mask-retriever", type = MaskRetrieverImpl.class)
     public MaskRetriever getMaskRetriever() {
         return maskRetriever;
     }
@@ -129,7 +132,7 @@ public class GlobalConfiguration extends Configuration {
      * 
      * @return the sample retriever
      */
-    @XmlElement(name = "sample-retriever")
+    @XmlElement(name = "sample-retriever", type = SampleRetrieverImpl.class)
     public SampleRetriever getSampleRetriever() {
         return sampleRetriever;
     }

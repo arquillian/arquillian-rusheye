@@ -19,12 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.rusheye.retriever;
+package org.jboss.rusheye.suite;
 
+import java.awt.image.BufferedImage;
+
+import org.jboss.rusheye.exception.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public interface MaskRetriever extends Retriever {
+public interface Retriever {
+
+    BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException;
+
+    Properties mergeProperties(Properties localProperties);
+
+    void setGlobalProperties(Properties properties);
 }

@@ -22,7 +22,6 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -31,40 +30,38 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
+import org.jboss.rusheye.retriever.PatternRetriever;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "SampleRetriever")
-public class SampleRetriever extends TypeProperties implements org.jboss.rusheye.retriever.SampleRetriever {
+@XmlType(name = "PatternRetriever")
+public class PatternRetrieverImpl extends TypeProperties implements PatternRetriever {
 
     @XmlTransient
-    org.jboss.rusheye.retriever.SampleRetriever sampleRetriever;
+    PatternRetriever patternRetriever;
 
     public void initializeRetriever() {
-        if (sampleRetriever == null) {
+        if (patternRetriever == null) {
             if (getType() == null) {
-                throw new IllegalStateException("type of the sample retriver can't be null");
+                throw new IllegalStateException("type of the pattern retriver can't be null");
             }
-            sampleRetriever = new Instantiator<org.jboss.rusheye.retriever.SampleRetriever>().getInstance(getType());
-            sampleRetriever.setGlobalProperties(this);
+            patternRetriever = new Instantiator<PatternRetriever>().getInstance(getType());
+            patternRetriever.setGlobalProperties(this);
         }
     }
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         initializeRetriever();
-        return sampleRetriever.retrieve(source, localProperties);
+        return patternRetriever.retrieve(source, localProperties);
     }
 
     public Properties mergeProperties(Properties localProperties) {
         initializeRetriever();
-        return sampleRetriever.mergeProperties(localProperties);
+        return patternRetriever.mergeProperties(localProperties);
     }
 
     public void setGlobalProperties(Properties properties) {
         initializeRetriever();
-        sampleRetriever.setGlobalProperties(properties);
+        patternRetriever.setGlobalProperties(properties);
     }
 
-    public Set<String> getNewSources() {
-        return null;
-    }
 }
