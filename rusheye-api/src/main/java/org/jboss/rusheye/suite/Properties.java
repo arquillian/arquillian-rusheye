@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import org.jboss.rusheye.internal.ElementAdapter;
+import org.jboss.rusheye.internal.SimpleElement;
 import org.jboss.rusheye.internal.FilterCollection;
 import org.jboss.rusheye.internal.Predicate;
 import org.w3c.dom.Element;
@@ -79,7 +79,7 @@ public class Properties {
         if (elementForRemoval != null) {
             getAny().remove(elementForRemoval);
         }
-        Element element = new ElementAdapter(key);
+        Element element = new SimpleElement(key);
         element.setTextContent(value.toString());
         getAny().add(element);
     }

@@ -26,15 +26,42 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Satisfies filtering of collection.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public final class FilterCollection {
 
     private FilterCollection() {
     }
 
+    /**
+     * Returns the collection with the same elements like given collection but only those, which returns true for
+     * application of given predicate.
+     * 
+     * @param <E>
+     *            the element type of the collection
+     * 
+     * @param collection
+     *            the collection of elements
+     * @param predicate
+     *            the predicate to filter by
+     * @return the collection with only those elements from given collection, which returns true for application of
+     *         given predicate
+     */
     public static <E> Collection<E> filter(Collection<E> collection, Predicate<E> predicate) {
         return new FilteredCollection<E>(collection, predicate);
     }
 
+    /**
+     * Collection filtered by predicate.
+     * 
+     * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+     * @version $Revision$
+     * @param <E>
+     */
     private static class FilteredCollection<E> extends AbstractCollection<E> {
         private Collection<E> originalCollection;
         private Predicate<E> predicate;
@@ -60,6 +87,13 @@ public final class FilterCollection {
         }
     }
 
+    /**
+     * Iterator filtering by predicate.
+     * 
+     * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+     * @version $Revision$
+     * @param <E>
+     */
     private static class FilteredIterator<E> implements Iterator<E> {
 
         private Iterator<E> originalIterator;
@@ -99,6 +133,5 @@ public final class FilterCollection {
         public void remove() {
             throw new UnsupportedOperationException();
         }
-
     }
 }
