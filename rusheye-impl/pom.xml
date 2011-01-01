@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.rusheye</groupId>
 	<artifactId>rusheye-impl</artifactId>
-	<name>Rusheye Implementation</name>
+	<name>Rusheye - Implementation</name>
 	
 	<parent>
 		<groupId>org.jboss.rusheye</groupId>
-		<artifactId>rusheye-parent</artifactId>
+		<artifactId>rusheye-root-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
@@ -27,6 +27,10 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

@@ -3,13 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jboss.rusheye</groupId>
-	<artifactId>rusheye-api</artifactId>
-	<name>RushEye - API</name>
+	<artifactId>rusheye-build</artifactId>
+	<name>RushEye - Build Resources</name>
 
 	<parent>
 		<artifactId>rusheye-root-parent</artifactId>
 		<groupId>org.jboss.rusheye</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	
 </project>
