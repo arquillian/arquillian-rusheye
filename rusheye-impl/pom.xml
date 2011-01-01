@@ -5,7 +5,7 @@
 	<groupId>org.jboss.rusheye</groupId>
 	<artifactId>rusheye-impl</artifactId>
 	<name>Rusheye - Implementation</name>
-	
+
 	<parent>
 		<groupId>org.jboss.rusheye</groupId>
 		<artifactId>rusheye-root-parent</artifactId>
@@ -31,6 +31,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
