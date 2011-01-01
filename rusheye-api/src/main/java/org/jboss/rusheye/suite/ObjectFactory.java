@@ -37,8 +37,8 @@ public class ObjectFactory {
         return new VisualSuite();
     }
 
-    public Listener createListener() {
-        return new Listener();
+    public SuiteListenerImpl createListener() {
+        return new SuiteListenerImpl();
     }
 
     public SampleRetrieverImpl createSampleRetriever() {

@@ -22,19 +22,14 @@
 package org.jboss.rusheye.suite;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
@@ -59,7 +54,7 @@ import org.jboss.rusheye.retriever.SampleRetriever;
 public class GlobalConfiguration extends Configuration {
 
     /** The listeners. */
-    protected List<Listener> listeners;
+    protected List<SuiteListener> suiteListeners;
 
     /** The pattern retriever. */
     protected PatternRetriever patternRetriever;
@@ -70,21 +65,17 @@ public class GlobalConfiguration extends Configuration {
     /** The sample retriever. */
     protected SampleRetriever sampleRetriever;
 
-    /** The suite listeners. */
-    @XmlTransient
-    private Map<String, SuiteListener> suiteListeners = new HashMap<String, SuiteListener>();
-
     /**
      * Gets the listeners.
      * 
      * @return the listeners
      */
-    @XmlElement(name = "listener")
-    public List<Listener> getListeners() {
-        if (listeners == null) {
-            listeners = new ArrayList<Listener>();
+    @XmlElement(name = "listener", type = SuiteListenerImpl.class)
+    public List<SuiteListener> getListeners() {
+        if (suiteListeners == null) {
+            suiteListeners = new ArrayList<SuiteListener>();
         }
-        return this.listeners;
+        return this.suiteListeners;
     }
 
     /**
@@ -145,22 +136,5 @@ public class GlobalConfiguration extends Configuration {
      */
     public void setSampleRetriever(SampleRetriever value) {
         this.sampleRetriever = value;
-    }
-
-    /**
-     * Gets the configured listeners.
-     * 
-     * @return the configured listeners
-     */
-    public Collection<SuiteListener> getConfiguredListeners() {
-        for (Listener listener : listeners) {
-            final String type = listener.getType();
-            if (!suiteListeners.containsKey(type)) {
-                SuiteListener parserListener = new Instantiator<SuiteListener>().getInstance(type);
-                parserListener.setProperties(listener);
-                suiteListeners.put(type, parserListener);
-            }
-        }
-        return suiteListeners.values();
     }
 }

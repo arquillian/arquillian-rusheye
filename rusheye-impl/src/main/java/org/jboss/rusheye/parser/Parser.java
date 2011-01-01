@@ -231,7 +231,7 @@ public final class Parser {
     private class ParserListenerRegistrationListener extends SuiteListenerAdapter {
         @Override
         public void onConfigurationReady(VisualSuite visualSuite) {
-            for (SuiteListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
+            for (SuiteListener listener : visualSuite.getGlobalConfiguration().getListeners()) {
                 listener.onSuiteStarted(visualSuite);
                 listener.onConfigurationReady(visualSuite);
                 Parser.this.registerListener(listener);

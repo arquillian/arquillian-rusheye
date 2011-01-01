@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "TypeProperties")
-@XmlSeeAlso({ Listener.class, MaskRetrieverImpl.class, PatternRetrieverImpl.class, SampleRetrieverImpl.class })
+@XmlSeeAlso({ SuiteListenerImpl.class, MaskRetrieverImpl.class, PatternRetrieverImpl.class, SampleRetrieverImpl.class })
 public abstract class TypeProperties extends Properties {
 
     protected String type;
