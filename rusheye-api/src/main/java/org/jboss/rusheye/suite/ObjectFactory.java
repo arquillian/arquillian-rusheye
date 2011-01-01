@@ -23,6 +23,13 @@ package org.jboss.rusheye.suite;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
+/**
+ * The implementation of ObjectFactory to satisfy JAXB package convention made possible to construct new object from
+ * this package.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlRegistry
 public class ObjectFactory {
 
@@ -76,5 +83,4 @@ public class ObjectFactory {
     public Properties createProperties() {
         return new Properties();
     }
-
 }

@@ -32,7 +32,15 @@ import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.retriever.MaskRetriever;
 
-/** 
+/**
+ * <p>
+ * Proxy for actual implementation of {@link MaskRetriever}.
+ * </p>
+ * 
+ * <p>
+ * The actual implementation is constructed from the {@link #getType()} value.
+ * </p>
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -40,9 +48,15 @@ import org.jboss.rusheye.retriever.MaskRetriever;
 @XmlType(name = "MaskRetriever")
 public class MaskRetrieverImpl extends TypeProperties implements MaskRetriever {
 
+    /**
+     * The reference to actual implementation of mask retriever
+     */
     @XmlTransient
-    MaskRetriever maskRetriever;
+    private MaskRetriever maskRetriever;
 
+    /**
+     * Initializes actual implementation of mask retriever
+     */
     private void initializeRetriever() {
         if (maskRetriever == null) {
             if (getType() == null) {
@@ -53,16 +67,28 @@ public class MaskRetrieverImpl extends TypeProperties implements MaskRetriever {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#retrieve(java.lang.String, org.jboss.rusheye.suite.Properties)
+     */
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         initializeRetriever();
         return maskRetriever.retrieve(source, localProperties);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#mergeProperties(org.jboss.rusheye.suite.Properties)
+     */
     public Properties mergeProperties(Properties localProperties) {
         initializeRetriever();
         return maskRetriever.mergeProperties(localProperties);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#setGlobalProperties(org.jboss.rusheye.suite.Properties)
+     */
     public void setGlobalProperties(Properties properties) {
         initializeRetriever();
         maskRetriever.setGlobalProperties(properties);

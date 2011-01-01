@@ -36,6 +36,10 @@ import org.jboss.rusheye.internal.FilterCollection;
 import org.jboss.rusheye.internal.Predicate;
 import org.w3c.dom.Element;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Properties", propOrder = { "any" })
 @XmlSeeAlso({ TypeProperties.class, ImageSource.class })
@@ -51,9 +55,7 @@ public class Properties {
         return this.any;
     }
 
-    /*
-     * logic
-     */
+    
     public Object getProperty(final String key) {
         Collection<Element> elements = FilterCollection.filter(getAny(), new Predicate<Element>() {
             @Override

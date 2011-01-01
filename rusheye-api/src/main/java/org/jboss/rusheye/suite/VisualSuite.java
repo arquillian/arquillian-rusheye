@@ -21,49 +21,62 @@
  */
 package org.jboss.rusheye.suite;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * The representation of visual test suite containing global configuration and list of tests.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "", propOrder = { "globalConfiguration", "test" })
+@XmlType(name = "VisualSuite", propOrder = { "globalConfiguration", "tests" })
 @XmlRootElement(name = "visual-suite")
 public class VisualSuite {
 
+    /** The global configuration. */
     protected GlobalConfiguration globalConfiguration;
-    protected List<Test> test;
-    protected BigInteger id;
 
+    /** The list of tests */
+    protected List<Test> tests;
+
+    /**
+     * Gets the global configuration.
+     * 
+     * @return the global configuration
+     */
     @XmlElement(name = "global-configuration", required = true)
     public GlobalConfiguration getGlobalConfiguration() {
         return globalConfiguration;
     }
 
+    /**
+     * Sets the global configuration.
+     * 
+     * @param value
+     *            the new global configuration
+     */
     public void setGlobalConfiguration(GlobalConfiguration value) {
         this.globalConfiguration = value;
     }
 
-    @XmlElement(required = true)
-    public List<Test> getTest() {
-        if (test == null) {
-            test = new ArrayList<Test>();
+    /**
+     * Gets the test.
+     * 
+     * @return the test
+     */
+    @XmlElement(name = "test", required = true)
+    public List<Test> getTests() {
+        if (tests == null) {
+            tests = new ArrayList<Test>();
         }
-        return this.test;
+        return this.tests;
     }
-
-    @XmlAttribute
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger value) {
-        this.id = value;
-    }
-
 }

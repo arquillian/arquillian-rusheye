@@ -46,6 +46,7 @@ public enum HorizontalAlign {
      */
     @XmlEnumValue("right")
     RIGHT("right");
+    
     private final String value;
 
     HorizontalAlign(String v) {

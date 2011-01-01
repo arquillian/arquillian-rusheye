@@ -32,14 +32,32 @@ import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.retriever.PatternRetriever;
 
+/**
+ * <p>
+ * Proxy for actual implementation of {@link PatternRetriever}.
+ * </p>
+ * 
+ * <p>
+ * The actual implementation is constructed from the {@link #getType()} value.
+ * </p>
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "PatternRetriever")
 public class PatternRetrieverImpl extends TypeProperties implements PatternRetriever {
 
+    /**
+     * Reference to actual implementation of pattern retriever.
+     */
     @XmlTransient
-    PatternRetriever patternRetriever;
+    private PatternRetriever patternRetriever;
 
-    public void initializeRetriever() {
+    /**
+     * Initializes actual implementation of pattern retriever.
+     */
+    private void initializeRetriever() {
         if (patternRetriever == null) {
             if (getType() == null) {
                 throw new IllegalStateException("type of the pattern retriver can't be null");
@@ -49,16 +67,28 @@ public class PatternRetrieverImpl extends TypeProperties implements PatternRetri
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#retrieve(java.lang.String, org.jboss.rusheye.suite.Properties)
+     */
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         initializeRetriever();
         return patternRetriever.retrieve(source, localProperties);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#mergeProperties(org.jboss.rusheye.suite.Properties)
+     */
     public Properties mergeProperties(Properties localProperties) {
         initializeRetriever();
         return patternRetriever.mergeProperties(localProperties);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.jboss.rusheye.retriever.Retriever#setGlobalProperties(org.jboss.rusheye.suite.Properties)
+     */
     public void setGlobalProperties(Properties properties) {
         initializeRetriever();
         patternRetriever.setGlobalProperties(properties);

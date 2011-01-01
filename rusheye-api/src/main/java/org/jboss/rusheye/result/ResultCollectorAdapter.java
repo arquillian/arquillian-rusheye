@@ -33,7 +33,7 @@ import org.jboss.rusheye.suite.VisualSuite;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class ResultCollectorAdapter extends SuiteListenerAdapter implements ResultCollector {
+public class ResultCollectorAdapter extends SuiteListenerAdapter implements ResultCollector {
 
     public void onConfigurationReady(VisualSuite visualSuite) {
     }

@@ -35,21 +35,32 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+/**
+ * The one test of visual test suite.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Test", propOrder = { "patterns" })
 @XmlRootElement(name = "test")
 public class Test extends Configuration {
 
+    /** The list of patterns. */
     protected List<Pattern> patterns;
+
+    /** The name. */
     protected String name;
 
+    /** The sample. */
     @XmlTransient
     private Sample sample;
 
-    /*
-     * accessors
+    /**
+     * Gets the patterns.
+     * 
+     * @return the patterns
      */
-
     @XmlElement(name = "pattern", required = true)
     public List<Pattern> getPatterns() {
         if (patterns == null) {
@@ -58,6 +69,11 @@ public class Test extends Configuration {
         return this.patterns;
     }
 
+    /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "Name")
@@ -65,12 +81,20 @@ public class Test extends Configuration {
         return name;
     }
 
+    /**
+     * Sets the name.
+     * 
+     * @param value
+     *            the new name
+     */
     public void setName(String value) {
         this.name = value;
     }
 
-    /*
-     * logic
+    /**
+     * Gets the sample.
+     * 
+     * @return the sample
      */
     public Sample getSample() {
         if (sample == null) {
@@ -80,6 +104,9 @@ public class Test extends Configuration {
         return sample;
     }
 
+    /**
+     * Counts the hash from name.
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -88,6 +115,9 @@ public class Test extends Configuration {
         return result;
     }
 
+    /**
+     * Satisfies equality contract on the level of name comparison.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -25,16 +25,32 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Enumeration of known mask types.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlType(name = "MaskType")
 @XmlEnum
 public enum MaskType {
 
+    /**
+     * The type selective alpha stands for image with alpha channel defining pixels which should be masked.
+     */
     @XmlEnumValue("selective-alpha")
-    SELECTIVE_ALPHA("selective-alpha"), @XmlEnumValue("ignore-bitmap")
+    SELECTIVE_ALPHA("selective-alpha"),
+
+    /**
+     * The type ignore bitmap stands for image which defines image, which should be identified in scope of
+     * sample/pattern to mask such area.
+     */
+    @XmlEnumValue("ignore-bitmap")
     IGNORE_BITMAP("ignore-bitmap");
+    
     private final String value;
 
-    MaskType(String v) {
+    private MaskType(String v) {
         value = v;
     }
 
@@ -50,5 +66,4 @@ public enum MaskType {
         }
         throw new IllegalArgumentException(v);
     }
-
 }

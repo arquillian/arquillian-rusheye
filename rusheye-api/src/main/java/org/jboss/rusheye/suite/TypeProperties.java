@@ -27,18 +27,36 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * The properties with type attribute to derive implementations of elements meaning particular implementation.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "TypeProperties")
 @XmlSeeAlso({ SuiteListenerImpl.class, MaskRetrieverImpl.class, PatternRetrieverImpl.class, SampleRetrieverImpl.class })
 public abstract class TypeProperties extends Properties {
 
+    /** The Java type. */
     protected String type;
 
+    /**
+     * Gets the Java type.
+     * 
+     * @return the Java type
+     */
     @XmlAttribute
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets the Java type.
+     * 
+     * @param value
+     *            the Java type
+     */
     public void setType(String value) {
         this.type = value;
     }

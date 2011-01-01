@@ -37,19 +37,38 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jboss.rusheye.result.ResultConclusion;
 import org.jboss.rusheye.retriever.PatternRetriever;
 
+/**
+ * The pattern as input into comparison process, to be compared with sample.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Pattern")
 public class Pattern extends ImageSource {
 
+    /** The name. */
     protected String name;
+
+    /** The comparison result. */
     protected ComparisonResult comparisonResult;
+
+    /** The conclusion. */
     private ResultConclusion conclusion;
+
+    /** The output. */
     private String output;
 
+    /** The pattern retriever - needs to be injected from outside to let pattern work correctly. */
     @Resource
     @XmlTransient
     private PatternRetriever patternRetriever;
 
+    /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "Name")
@@ -57,39 +76,80 @@ public class Pattern extends ImageSource {
         return name;
     }
 
+    /**
+     * Sets the name.
+     * 
+     * @param value
+     *            the new name
+     */
     public void setName(String value) {
         this.name = value;
     }
 
+    /**
+     * Gets the comparison result.
+     * 
+     * @return the comparison result
+     */
     @XmlElement(name = "comparison-result")
     public ComparisonResult getComparisonResult() {
         return comparisonResult;
     }
 
+    /**
+     * Sets the comparison result.
+     * 
+     * @param comparisonResult
+     *            the new comparison result
+     */
     public void setComparisonResult(ComparisonResult comparisonResult) {
         this.comparisonResult = comparisonResult;
     }
 
+    /**
+     * Gets the conclusion.
+     * 
+     * @return the conclusion
+     */
     @XmlAttribute(name = "result")
     public ResultConclusion getConclusion() {
         return this.conclusion;
     }
 
+    /**
+     * Sets the conclusion.
+     * 
+     * @param conclusion
+     *            the new conclusion
+     */
     public void setConclusion(ResultConclusion conclusion) {
         this.conclusion = conclusion;
     }
-
+    
+    /**
+     * Gets the output.
+     * 
+     * @return the output
+     */
     @XmlAttribute
     public String getOutput() {
         return output;
     }
 
+    /**
+     * Sets the output.
+     * 
+     * @param output
+     *            the new output
+     */
     public void setOutput(String output) {
         this.output = output;
     }
 
     /*
-     * logic
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.suite.ImageSource#retrieve()
      */
     @Override
     public BufferedImage retrieve() throws Exception {

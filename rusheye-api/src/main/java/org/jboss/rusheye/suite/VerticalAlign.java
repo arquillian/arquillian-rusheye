@@ -25,13 +25,28 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Vertical alignment of mask in context of sample/pattern image.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlType(name = "VerticalAlign")
 @XmlEnum
 public enum VerticalAlign {
 
+    /**
+     * The vertical alignment to top
+     */
     @XmlEnumValue("top")
-    TOP("top"), @XmlEnumValue("bottom")
+    TOP("top"),
+
+    /**
+     * The vertical alignment to bottom
+     */
+    @XmlEnumValue("bottom")
     BOTTOM("bottom");
+
     private final String value;
 
     VerticalAlign(String v) {

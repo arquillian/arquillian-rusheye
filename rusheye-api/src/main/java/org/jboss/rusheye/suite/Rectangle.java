@@ -31,6 +31,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+/**
+ * Rectangle defining area which needs to be highlighted in the difference image.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(propOrder = { "min", "max" })
 public class Rectangle {
@@ -57,6 +63,9 @@ public class Rectangle {
         this.max = point;
     }
 
+    /**
+     * Adapter to convert {@link Rectangle} from/to the XML representation.
+     */
     private static class Adapter extends XmlAdapter<XmlPoint, Point> {
         @Override
         public XmlPoint marshal(Point v) throws Exception {
@@ -72,6 +81,9 @@ public class Rectangle {
         }
     }
 
+    /**
+     * The definition of XML representation of point in image.
+     */
     @XmlAccessorType(XmlAccessType.FIELD)
     private static class XmlPoint {
         @XmlAttribute

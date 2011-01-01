@@ -30,7 +30,13 @@ import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.listener.SuiteListener;
 
 /**
- * The encapsulation of the type of listener.
+ * <p>
+ * Proxy for actual implementation of {@link SuiteListener}.
+ * </p>
+ * 
+ * <p>
+ * Actual implementation will be constructed from {@link #getType()} value.
+ * </p>
  * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
@@ -39,9 +45,15 @@ import org.jboss.rusheye.listener.SuiteListener;
 @XmlType(name = "Listener")
 public class SuiteListenerImpl extends TypeProperties implements SuiteListener {
 
+    /**
+     * Reference to actual implementation of suite listener.
+     */
     @XmlTransient
-    SuiteListener suiteListener;
+    private SuiteListener suiteListener;
 
+    /**
+     * Initializes actual implementation of suite listener.
+     */
     private void initializeListener() {
         if (suiteListener == null) {
             if (getType() == null) {
@@ -52,32 +64,63 @@ public class SuiteListenerImpl extends TypeProperties implements SuiteListener {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#setProperties(org.jboss.rusheye.suite.Properties)
+     */
     public void setProperties(Properties properties) {
         initializeListener();
         suiteListener.setProperties(properties);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#onSuiteStarted(org.jboss.rusheye.suite.VisualSuite)
+     */
     public void onSuiteStarted(VisualSuite visualSuite) {
         initializeListener();
         suiteListener.onSuiteStarted(visualSuite);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#onConfigurationReady(org.jboss.rusheye.suite.VisualSuite)
+     */
     public void onConfigurationReady(VisualSuite visualSuite) {
         initializeListener();
         suiteListener.onConfigurationReady(visualSuite);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#onPatternReady(org.jboss.rusheye.suite.Configuration,
+     * org.jboss.rusheye.suite.Pattern)
+     */
     public void onPatternReady(Configuration configuration, Pattern pattern) {
         initializeListener();
         suiteListener.onPatternReady(configuration, pattern);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#onTestReady(org.jboss.rusheye.suite.Test)
+     */
     public void onTestReady(Test test) {
         initializeListener();
         suiteListener.onTestReady(test);
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.rusheye.listener.SuiteListener#onSuiteReady(org.jboss.rusheye.suite.VisualSuite)
+     */
     public void onSuiteReady(VisualSuite visualSuite) {
         initializeListener();
         suiteListener.onSuiteReady(visualSuite);

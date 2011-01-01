@@ -32,7 +32,7 @@ import org.jboss.rusheye.suite.Properties;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class RetrieverAdapter implements Retriever {
+public class RetrieverAdapter implements Retriever {
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         return null;

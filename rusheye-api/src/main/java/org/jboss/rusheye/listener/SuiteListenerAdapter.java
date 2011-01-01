@@ -33,7 +33,7 @@ import org.jboss.rusheye.suite.VisualSuite;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public abstract class SuiteListenerAdapter implements SuiteListener {
+public class SuiteListenerAdapter implements SuiteListener {
 
     protected Properties properties;
 
