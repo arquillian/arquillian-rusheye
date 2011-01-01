@@ -30,7 +30,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.xml.bind.Unmarshaller;
 
-import org.jboss.rusheye.exception.ParserError;
+import org.jboss.rusheye.exception.ParsingException;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
 import org.jboss.rusheye.retriever.Retriever;
@@ -97,7 +97,6 @@ class RetriverInjector extends Unmarshaller.Listener {
             return globalConfiguration.getSampleRetriever();
         }
 
-        throw new ParserError();
+        throw new ParsingException();
     }
-
 }

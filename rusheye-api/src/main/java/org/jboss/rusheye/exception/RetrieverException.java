@@ -22,10 +22,14 @@
 package org.jboss.rusheye.exception;
 
 /**
+ * Thrown when {@link org.jboss.rusheye.retriever.Retriever} failed to retrieve image from given source.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class RetrieverException extends Exception {
+
+    private static final long serialVersionUID = -7076528651503627399L;
 
     public RetrieverException() {
         super();

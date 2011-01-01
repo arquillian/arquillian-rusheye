@@ -21,7 +21,15 @@
  */
 package org.jboss.rusheye.exception;
 
+/**
+ * Thrown when basic validation of configuration was unsuccessful and configuration can't be used to work properly.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
 public class ConfigurationValidationException extends ConfigurationException {
+
+    private static final long serialVersionUID = 7955432560947185757L;
 
     public ConfigurationValidationException() {
         super();

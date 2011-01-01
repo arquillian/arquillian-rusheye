@@ -22,10 +22,25 @@
 package org.jboss.rusheye.exception;
 
 /**
+ * <p>
+ * Thrown when the implementation get wrongly configured and cannot work properly anymore.
+ * </p>
+ * 
+ * <p>
+ * In case of simple validation of configuration, {@link ConfigurationValidationException} should be thrown instead.
+ * </p>
+ * 
+ * <p>
+ * In the case of behavioral or functional problem during parsing not tied directly to configuration, the
+ * {@link ParsingException} should be thrown instead.
+ * </p>
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class ConfigurationException extends RuntimeException {
+
+    private static final long serialVersionUID = 853633924862791708L;
 
     public ConfigurationException() {
         super();
@@ -42,5 +57,4 @@ public class ConfigurationException extends RuntimeException {
     public ConfigurationException(Throwable cause) {
         super(cause);
     }
-
 }
