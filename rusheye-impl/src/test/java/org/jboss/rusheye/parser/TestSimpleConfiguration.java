@@ -26,7 +26,7 @@ import static org.testng.Assert.fail;
 
 import java.io.IOException;
 
-import org.jboss.rusheye.parser.listener.ParserListenerAdapter;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.VisualSuite;
@@ -67,7 +67,7 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         }
     }
 
-    public class AssertedListener extends ParserListenerAdapter {
+    public class AssertedListener extends SuiteListenerAdapter {
 
         int state = 0;
 
@@ -78,25 +78,25 @@ public class TestSimpleConfiguration extends AbstractVisualSuiteDefinitionTest {
         }
 
         @Override
-        public void onConfigurationParsed(VisualSuite visualSuite) {
+        public void onConfigurationReady(VisualSuite visualSuite) {
             assertEquals(state, 1);
             nextState();
         }
 
         @Override
-        public void onPatternParsed(Configuration configuration, Pattern pattern) {
+        public void onPatternReady(Configuration configuration, Pattern pattern) {
             assertEquals(state, 2);
             nextState();
         }
 
         @Override
-        public void onTestParsed(org.jboss.rusheye.suite.Test test) {
+        public void onTestReady(org.jboss.rusheye.suite.Test test) {
             assertEquals(state, 3);
             nextState();
         }
 
         @Override
-        public void onSuiteParsed(VisualSuite visualSuite) {
+        public void onSuiteReady(VisualSuite visualSuite) {
             assertEquals(state, 4);
             nextState();
         }

@@ -31,9 +31,9 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jboss.rusheye.core.ImageComparator;
-import org.jboss.rusheye.result.collector.ResultCollector;
-import org.jboss.rusheye.result.collector.ResultCollectorAdapter;
+import org.jboss.rusheye.comparison.ImageComparator;
+import org.jboss.rusheye.result.ResultCollector;
+import org.jboss.rusheye.result.ResultCollectorAdapter;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Perception;
@@ -127,10 +127,10 @@ public class TestCompareListener {
         // run
         compareListener.onSuiteStarted(visualSuite);
         compareListener.resultCollector = resultCollector;
-        compareListener.onConfigurationParsed(visualSuite);
-        compareListener.onPatternParsed(test, pattern);
-        compareListener.onTestParsed(test);
-        compareListener.onSuiteParsed(visualSuite);
+        compareListener.onConfigurationReady(visualSuite);
+        compareListener.onPatternReady(test, pattern);
+        compareListener.onTestReady(test);
+        compareListener.onSuiteReady(visualSuite);
 
         // order verification
         sampleOrder.verify(sample).run();
@@ -141,17 +141,17 @@ public class TestCompareListener {
         ResultCollector col = collectorOrder.verify(resultCollector);
         col.setProperties(any(Properties.class));
         col.onSuiteStarted(visualSuite);
-        col.onConfigurationParsed(visualSuite);
-        col.onPatternParsed(test, pattern);
+        col.onConfigurationReady(visualSuite);
+        col.onPatternReady(test, pattern);
         col.onPatternStarted(pattern);
-        col.onTestParsed(test);
+        col.onTestReady(test);
         col.onTestStarted(test);
         col.onSampleStarted(test);
         col.onSampleLoaded(test);
         col.onPatternLoaded(test, pattern);
         col.onPatternCompleted(test, pattern, comparisonResult);
         col.onTestCompleted(test);
-        col.onSuiteParsed(visualSuite);
+        col.onSuiteReady(visualSuite);
         col.onSuiteCompleted(visualSuite);
     }
 

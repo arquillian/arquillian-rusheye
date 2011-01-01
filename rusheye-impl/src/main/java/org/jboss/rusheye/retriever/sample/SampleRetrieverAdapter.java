@@ -24,6 +24,7 @@ package org.jboss.rusheye.retriever.sample;
 import java.util.Set;
 
 import org.jboss.rusheye.retriever.RetrieverAdapter;
+import org.jboss.rusheye.retriever.SampleRetriever;
 
 public class SampleRetrieverAdapter extends RetrieverAdapter implements SampleRetriever {
 

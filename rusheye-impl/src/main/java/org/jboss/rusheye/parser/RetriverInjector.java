@@ -34,7 +34,7 @@ import org.jboss.rusheye.exception.ParserError;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
 import org.jboss.rusheye.retriever.Retriever;
-import org.jboss.rusheye.retriever.sample.SampleRetriever;
+import org.jboss.rusheye.retriever.SampleRetriever;
 import org.jboss.rusheye.suite.GlobalConfiguration;
 import org.jboss.rusheye.suite.Test;
 

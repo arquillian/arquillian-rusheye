@@ -26,7 +26,7 @@ import static org.testng.Assert.fail;
 
 import java.awt.image.BufferedImage;
 
-import org.jboss.rusheye.retriever.RetrieverException;
+import org.jboss.rusheye.exception.RetrieverException;
 import org.testng.annotations.Test;
 
 /**

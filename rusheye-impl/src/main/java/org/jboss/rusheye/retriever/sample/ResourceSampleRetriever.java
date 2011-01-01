@@ -30,9 +30,10 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.AbstractRetriever;
 import org.jboss.rusheye.retriever.ResourceRetriever;
-import org.jboss.rusheye.retriever.RetrieverException;
+import org.jboss.rusheye.retriever.SampleRetriever;
 import org.jboss.rusheye.suite.Properties;
 
 /**

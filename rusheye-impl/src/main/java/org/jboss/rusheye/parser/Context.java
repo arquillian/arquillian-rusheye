@@ -24,7 +24,7 @@ package org.jboss.rusheye.parser;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jboss.rusheye.parser.listener.ParserListener;
+import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Test;
 
@@ -67,5 +67,5 @@ public abstract class Context {
         return maskIds;
     }
 
-    public abstract ParserListener invokeListeners();
+    public abstract SuiteListener invokeListeners();
 }

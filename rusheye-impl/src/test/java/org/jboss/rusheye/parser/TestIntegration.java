@@ -29,13 +29,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.dom4j.Element;
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.parser.listener.CompareListener;
 import org.jboss.rusheye.result.collector.ResultCollectorImpl;
 import org.jboss.rusheye.result.statistics.OverallStatistics;
 import org.jboss.rusheye.result.storage.ObjectMapStorage;
 import org.jboss.rusheye.result.writer.XmlResultWriter;
 import org.jboss.rusheye.retriever.ResourceRetriever;
-import org.jboss.rusheye.retriever.RetrieverException;
 import org.jboss.rusheye.retriever.sample.ResourceSampleRetriever;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.DataProvider;

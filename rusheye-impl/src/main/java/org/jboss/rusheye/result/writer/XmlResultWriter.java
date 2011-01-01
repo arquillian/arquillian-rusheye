@@ -40,8 +40,8 @@ import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.writer.spooler.SpoolerContext;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
+import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
 import org.jboss.rusheye.suite.utils.NullingProxy;
-import org.jboss.rusheye.suite.utils.VisualSuiteResult;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

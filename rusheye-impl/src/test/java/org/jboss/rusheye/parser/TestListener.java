@@ -30,7 +30,7 @@ import java.io.IOException;
 import org.dom4j.Element;
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.exception.ConfigurationException;
-import org.jboss.rusheye.parser.listener.ParserListenerAdapter;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.VisualSuite;
@@ -70,7 +70,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    public static class ExceptionThrowingListener extends ParserListenerAdapter {
+    public static class ExceptionThrowingListener extends SuiteListenerAdapter {
         public ExceptionThrowingListener() {
             throw new UnsupportedOperationException("for assertion purposes");
         }
@@ -88,7 +88,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         assertEquals(AssertingListener.state, 5);
     }
 
-    public static class AssertingListener extends ParserListenerAdapter {
+    public static class AssertingListener extends SuiteListenerAdapter {
 
         static int state = 0;
 
@@ -99,25 +99,25 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         }
 
         @Override
-        public void onConfigurationParsed(VisualSuite visualSuite) {
+        public void onConfigurationReady(VisualSuite visualSuite) {
             assertTrue(state < 2);
             state = 2;
         }
 
         @Override
-        public void onPatternParsed(Configuration configuration, Pattern pattern) {
+        public void onPatternReady(Configuration configuration, Pattern pattern) {
             assertTrue(state < 3);
             state = 3;
         }
 
         @Override
-        public void onTestParsed(org.jboss.rusheye.suite.Test test) {
+        public void onTestReady(org.jboss.rusheye.suite.Test test) {
             assertTrue(state < 4);
             state = 4;
         }
 
         @Override
-        public void onSuiteParsed(VisualSuite visualSuite) {
+        public void onSuiteReady(VisualSuite visualSuite) {
             assertTrue(state < 5);
             state = 5;
         }
@@ -137,7 +137,7 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    public static class PropertiesCheckingListener extends ParserListenerAdapter {
+    public static class PropertiesCheckingListener extends SuiteListenerAdapter {
         @Override
         public void onSuiteStarted(VisualSuite visualSuite) {
             assertEquals(properties.size(), 1);

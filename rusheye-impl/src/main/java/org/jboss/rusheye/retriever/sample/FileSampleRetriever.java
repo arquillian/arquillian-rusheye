@@ -31,7 +31,7 @@ import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 
-import org.jboss.rusheye.retriever.RetrieverException;
+import org.jboss.rusheye.exception.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

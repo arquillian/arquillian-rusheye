@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.jboss.rusheye.result.ResultConclusion;
 import org.jboss.rusheye.result.ResultDetail;
+import org.jboss.rusheye.result.ResultStatistics;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 

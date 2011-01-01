@@ -34,6 +34,7 @@ import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.jboss.rusheye.suite.annotations.Nullify;
 
 public final class NullingProxy {
 

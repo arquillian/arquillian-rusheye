@@ -26,8 +26,8 @@ import static org.testng.Assert.fail;
 
 import java.io.IOException;
 
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.Retriever;
-import org.jboss.rusheye.retriever.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

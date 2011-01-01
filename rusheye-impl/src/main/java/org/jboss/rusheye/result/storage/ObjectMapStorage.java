@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jboss.rusheye.result.ResultStorage;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;

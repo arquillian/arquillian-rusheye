@@ -21,7 +21,7 @@
  */
 package org.jboss.rusheye.retriever.sample;
 
-import org.jboss.rusheye.retriever.RetrieverException;
+import org.jboss.rusheye.exception.RetrieverException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

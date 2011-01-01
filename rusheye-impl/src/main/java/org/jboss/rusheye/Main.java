@@ -24,9 +24,9 @@ package org.jboss.rusheye;
 import java.io.File;
 import java.io.IOException;
 
+import org.jboss.rusheye.internal.Instantiator;
+import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.parser.Parser;
-import org.jboss.rusheye.parser.listener.ParserListener;
-import org.jboss.rusheye.suite.utils.Instantiator;
 import org.xml.sax.SAXException;
 
 /**
@@ -45,7 +45,7 @@ public final class Main {
             System.setProperty("user.dir", visualSuiteDefinition.getParent());
             Parser parser = new Parser();
             if (args.length > 2) {
-                ParserListener parserListener = new Instantiator<ParserListener>().getInstance(args[2]);
+                SuiteListener parserListener = new Instantiator<SuiteListener>().getInstance(args[2]);
                 parser.registerListener(parserListener);
             }
             parser.parseFile(visualSuiteDefinition);

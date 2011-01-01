@@ -27,7 +27,7 @@ import org.dom4j.Document;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.jboss.rusheye.parser.listener.ParserListenerAdapter;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.retriever.FileRetriever;
 import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
 
@@ -48,7 +48,7 @@ public class VisualSuiteStub {
 
     Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
     Element defaultListener = globalConfiguration.addElement(LISTENER).addAttribute("type",
-        ParserListenerAdapter.class.getName());
+        SuiteListenerAdapter.class.getName());
     Element patternRetriever = globalConfiguration.addElement(PATTERN_RETRIEVER).addAttribute("type",
         FileRetriever.class.getName());
     Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("type",

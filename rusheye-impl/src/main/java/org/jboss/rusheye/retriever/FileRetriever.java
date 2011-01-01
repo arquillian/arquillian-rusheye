@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 
 /**

@@ -28,7 +28,7 @@ import java.lang.reflect.Proxy;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.jboss.rusheye.parser.listener.ParserListener;
+import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.suite.VisualSuite;
 
 /**
@@ -39,26 +39,26 @@ public class Handler {
 
     private Context context = new ListeningContext();
     private VisualSuite visualSuite;
-    private Set<ParserListener> parserListeners;
+    private Set<SuiteListener> parserListeners;
 
-    public Handler(Set<ParserListener> parserListeners) {
+    public Handler(Set<SuiteListener> parserListeners) {
         this.parserListeners = parserListeners;
     }
 
     private class ListeningContext extends Context implements InvocationHandler {
 
-        ParserListener wrappedListener = (ParserListener) Proxy.newProxyInstance(Handler.this.getClass()
-            .getClassLoader(), new Class<?>[] { ParserListener.class }, this);
+        SuiteListener wrappedListener = (SuiteListener) Proxy.newProxyInstance(Handler.this.getClass()
+            .getClassLoader(), new Class<?>[] { SuiteListener.class }, this);
 
         @Override
-        public ParserListener invokeListeners() {
+        public SuiteListener invokeListeners() {
             return wrappedListener;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Set<ParserListener> listeners = new LinkedHashSet<ParserListener>(parserListeners);
-            for (ParserListener listener : listeners) {
+            Set<SuiteListener> listeners = new LinkedHashSet<SuiteListener>(parserListeners);
+            for (SuiteListener listener : listeners) {
                 Method wrappedMethod = listener.getClass().getMethod(method.getName(), method.getParameterTypes());
                 try {
                     wrappedMethod.invoke(listener, args);

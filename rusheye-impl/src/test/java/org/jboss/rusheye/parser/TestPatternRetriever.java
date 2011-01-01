@@ -29,10 +29,10 @@ import static org.testng.Assert.fail;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.AbstractRetriever;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
-import org.jboss.rusheye.retriever.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

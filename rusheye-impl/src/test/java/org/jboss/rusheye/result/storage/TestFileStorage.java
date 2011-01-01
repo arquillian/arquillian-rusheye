@@ -30,8 +30,8 @@ import java.util.HashSet;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.jboss.rusheye.comparison.ImageComparator;
 import org.jboss.rusheye.core.DefaultImageComparator;
-import org.jboss.rusheye.core.ImageComparator;
 import org.jboss.rusheye.parser.ConfigurationCompiler;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;

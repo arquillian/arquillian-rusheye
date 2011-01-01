@@ -29,9 +29,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.Retriever;
-import org.jboss.rusheye.retriever.RetrieverException;
-import org.jboss.rusheye.retriever.sample.SampleRetriever;
+import org.jboss.rusheye.retriever.SampleRetriever;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

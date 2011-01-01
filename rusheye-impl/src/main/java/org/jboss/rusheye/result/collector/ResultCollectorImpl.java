@@ -26,18 +26,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.jboss.rusheye.internal.Instantiator;
+import org.jboss.rusheye.result.ResultCollectorAdapter;
 import org.jboss.rusheye.result.ResultConclusion;
 import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.ResultEvaluator;
-import org.jboss.rusheye.result.statistics.ResultStatistics;
-import org.jboss.rusheye.result.storage.ResultStorage;
+import org.jboss.rusheye.result.ResultStatistics;
+import org.jboss.rusheye.result.ResultStorage;
 import org.jboss.rusheye.result.writer.ResultWriter;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
-import org.jboss.rusheye.suite.utils.Instantiator;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -59,7 +60,7 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
     }
 
     @Override
-    public void onConfigurationParsed(VisualSuite visualSuite) {
+    public void onConfigurationReady(VisualSuite visualSuite) {
         String storageClass = (String) properties.getProperty("result-storage");
         storage = new Instantiator<ResultStorage>().getInstance(storageClass);
         storage.setProperties(properties);

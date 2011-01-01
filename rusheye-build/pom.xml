@@ -4,7 +4,7 @@
 
 	<groupId>org.jboss.rusheye</groupId>
 	<artifactId>rusheye-build</artifactId>
-	<name>RushEye - Build Resources</name>
+	<name>RushEye - Build</name>
 
 	<parent>
 		<artifactId>rusheye-root-parent</artifactId>

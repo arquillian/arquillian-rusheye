@@ -24,9 +24,11 @@ package org.jboss.rusheye.parser.listener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutionException;
 
+import org.jboss.rusheye.comparison.ImageComparator;
 import org.jboss.rusheye.core.DefaultImageComparator;
-import org.jboss.rusheye.core.ImageComparator;
-import org.jboss.rusheye.result.collector.ResultCollector;
+import org.jboss.rusheye.internal.Instantiator;
+import org.jboss.rusheye.listener.SuiteListener;
+import org.jboss.rusheye.result.ResultCollector;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Pattern;
@@ -34,13 +36,12 @@ import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Sample;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
-import org.jboss.rusheye.suite.utils.Instantiator;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class CompareListener implements ParserListener {
+public class CompareListener implements SuiteListener {
     Properties properties;
     ImageComparator imageComparator = new DefaultImageComparator();
     VisualSuite visualSuite;
@@ -61,26 +62,26 @@ public class CompareListener implements ParserListener {
     }
 
     @Override
-    public void onConfigurationParsed(VisualSuite visualSuite) {
-        resultCollector.onConfigurationParsed(visualSuite);
+    public void onConfigurationReady(VisualSuite visualSuite) {
+        resultCollector.onConfigurationReady(visualSuite);
     }
 
     @Override
-    public void onSuiteParsed(VisualSuite visualSuite) {
-        resultCollector.onSuiteParsed(visualSuite);
+    public void onSuiteReady(VisualSuite visualSuite) {
+        resultCollector.onSuiteReady(visualSuite);
         resultCollector.onSuiteCompleted(visualSuite);
     }
 
     @Override
-    public void onPatternParsed(Configuration configuration, Pattern pattern) {
+    public void onPatternReady(Configuration configuration, Pattern pattern) {
         pattern.run();
-        resultCollector.onPatternParsed(configuration, pattern);
+        resultCollector.onPatternReady(configuration, pattern);
         resultCollector.onPatternStarted(pattern);
     }
 
     @Override
-    public void onTestParsed(Test test) {
-        resultCollector.onTestParsed(test);
+    public void onTestReady(Test test) {
+        resultCollector.onTestReady(test);
         resultCollector.onTestStarted(test);
 
         resultCollector.onSampleStarted(test);

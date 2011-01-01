@@ -48,8 +48,8 @@ import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.rusheye.exception.ConfigurationException;
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.exception.ParsingException;
-import org.jboss.rusheye.parser.listener.ParserListener;
-import org.jboss.rusheye.parser.listener.ParserListenerAdapter;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
+import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.suite.GlobalConfiguration;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;
@@ -65,7 +65,7 @@ import com.ctc.wstx.exc.WstxValidationException;
  */
 public final class Parser {
 
-    private Set<ParserListener> listeners = new LinkedHashSet<ParserListener>();
+    private Set<SuiteListener> listeners = new LinkedHashSet<SuiteListener>();
     private Handler handler = new Handler(listeners);
 
     public Parser() {
@@ -161,7 +161,7 @@ public final class Parser {
                         GlobalConfiguration globalConfiguration = (GlobalConfiguration) o;
                         handler.getContext().setCurrentConfiguration(globalConfiguration);
                         visualSuite.setGlobalConfiguration(globalConfiguration);
-                        handler.getContext().invokeListeners().onConfigurationParsed(visualSuite);
+                        handler.getContext().invokeListeners().onConfigurationReady(visualSuite);
 
                         RetriverInjector retriverInjector = new RetriverInjector(this);
                         for (Mask mask : globalConfiguration.getMasks()) {
@@ -174,10 +174,10 @@ public final class Parser {
                         handler.getContext().setCurrentConfiguration(test);
                         handler.getContext().setCurrentTest(test);
                         for (Pattern pattern : test.getPatterns()) {
-                            handler.getContext().invokeListeners().onPatternParsed(test, pattern);
+                            handler.getContext().invokeListeners().onPatternReady(test, pattern);
                         }
                         Test testWrapped = ConfigurationCompiler.wrap(test, visualSuite.getGlobalConfiguration());
-                        handler.getContext().invokeListeners().onTestParsed(testWrapped);
+                        handler.getContext().invokeListeners().onTestReady(testWrapped);
                     }
                 } catch (WstxParsingException e) {
                     // intentionally blank - wrong end of document detection
@@ -190,7 +190,7 @@ public final class Parser {
             throw handleParsingException(e, e.getLinkedException());
         } finally {
             if (visualSuite != null && handler.getContext() != null) {
-                handler.getContext().invokeListeners().onSuiteParsed(visualSuite);
+                handler.getContext().invokeListeners().onSuiteReady(visualSuite);
             }
             if (tmpfile) {
                 FileUtils.deleteQuietly(file);
@@ -206,7 +206,7 @@ public final class Parser {
         return new ParsingException(originalException);
     }
 
-    public void registerListener(ParserListener parserListener) {
+    public void registerListener(SuiteListener parserListener) {
         synchronized (parserListener) {
             if (listeners.contains(parserListener)) {
                 return;
@@ -215,7 +215,7 @@ public final class Parser {
         }
     }
 
-    public void unregisterListener(ParserListener parserListener) {
+    public void unregisterListener(SuiteListener parserListener) {
         synchronized (listeners) {
             if (listeners.contains(parserListener)) {
                 listeners.remove(parserListener);
@@ -228,12 +228,12 @@ public final class Parser {
         return handler;
     }
 
-    private class ParserListenerRegistrationListener extends ParserListenerAdapter {
+    private class ParserListenerRegistrationListener extends SuiteListenerAdapter {
         @Override
-        public void onConfigurationParsed(VisualSuite visualSuite) {
-            for (ParserListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
+        public void onConfigurationReady(VisualSuite visualSuite) {
+            for (SuiteListener listener : visualSuite.getGlobalConfiguration().getConfiguredListeners()) {
                 listener.onSuiteStarted(visualSuite);
-                listener.onConfigurationParsed(visualSuite);
+                listener.onConfigurationReady(visualSuite);
                 Parser.this.registerListener(listener);
             }
 

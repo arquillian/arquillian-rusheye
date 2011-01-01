@@ -34,8 +34,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import org.jboss.rusheye.result.ResultDetail;
-import org.jboss.rusheye.result.statistics.ResultStatistics;
-import org.jboss.rusheye.result.storage.ResultStorage;
+import org.jboss.rusheye.result.ResultStatistics;
+import org.jboss.rusheye.result.ResultStorage;
 import org.jboss.rusheye.result.writer.ResultWriter;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
@@ -122,7 +122,7 @@ public class TestResultCollectorImpl {
     @Test
     public void testProperties() {
         Properties properties = setupProperties();
-        collector.onConfigurationParsed(visualSuite);
+        collector.onConfigurationReady(visualSuite);
 
         verify(statistics, times(1)).setProperties(properties);
         verify(writer, times(1)).setProperties(properties);
@@ -132,7 +132,7 @@ public class TestResultCollectorImpl {
     @Test
     public void testPropertEnd() {
         setupProperties();
-        collector.onConfigurationParsed(visualSuite);
+        collector.onConfigurationReady(visualSuite);
         collector.onSuiteCompleted(visualSuite);
 
         verify(statistics, times(1)).onSuiteCompleted();
@@ -158,14 +158,14 @@ public class TestResultCollectorImpl {
         }).when(statistics).onPatternCompleted(any(ResultDetail.class));
 
         setupProperties();
-        collector.onConfigurationParsed(visualSuite);
+        collector.onConfigurationReady(visualSuite);
         collector.onPatternCompleted(test1, pattern1, comparisonResult);
     }
 
     @Test
     public void testOrder() {
         setupProperties();
-        collector.onConfigurationParsed(visualSuite);
+        collector.onConfigurationReady(visualSuite);
         collector.onPatternCompleted(test1, pattern1, comparisonResult);
         collector.onPatternCompleted(test1, pattern2, comparisonResult);
         collector.onTestCompleted(test1);

@@ -27,9 +27,12 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
+import org.jboss.rusheye.comparison.ImageComparator;
+import org.jboss.rusheye.suite.Area;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Perception;
+import org.jboss.rusheye.suite.Rectangle;
 
 /**
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
@@ -122,8 +125,28 @@ public class DefaultImageComparator implements ImageComparator {
             min = new Point(-1, -1);
             max = new Point(-1, -1);
         }
-        return new ComparisonResult(equalImages, diffImage, min, max, width, height, totalPixels, maskedPixels,
-            perceptibleDiffs, differentPixels, smallDifferences, equalPixels);
+
+        ComparisonResult result = new ComparisonResult();
+        result.setEqualsImages(equalImages);
+        result.setDiffImage(diffImage);
+        result.setArea(new Area());
+        result.getArea().setWidth(width);
+        result.getArea().setHeight(height);
+        result.setTotalPixels(totalPixels);
+        result.setMaskedPixels(maskedPixels);
+        result.setPerceptibleDiffs(perceptibleDiffs);
+        result.setDifferentPixels(differentPixels);
+        result.setSmallDifferences(smallDifferences);
+        result.setEqualPixels(equalPixels);
+
+        if (max.x > 0 && max.y > 0) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setMin(min);
+            rectangle.setMax(max);
+            result.getRectangles().add(rectangle);
+        }
+
+        return result;
     }
 
 }
