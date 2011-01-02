@@ -44,7 +44,7 @@ public class VisualSuiteStub {
 
     Element visualSuite = document.addElement(VISUAL_SUITE)
         .addNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")
-        .addAttribute("xsi:schemaLocation", LUPIC_NS.getURI() + " src/main/resources/visual-suite.xsd");
+        .addAttribute("xsi:schemaLocation", RUSHEYE_NS.getURI() + " src/main/resources/visual-suite.xsd");
 
     Element globalConfiguration = visualSuite.addElement(GLOBAL_CONFIGURATION);
     Element defaultListener = globalConfiguration.addElement(LISTENER).addAttribute("type",

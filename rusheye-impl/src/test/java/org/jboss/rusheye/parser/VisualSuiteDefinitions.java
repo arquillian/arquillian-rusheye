@@ -23,6 +23,7 @@ package org.jboss.rusheye.parser;
 
 import org.dom4j.Namespace;
 import org.dom4j.QName;
+import org.jboss.rusheye.RushEye;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -30,25 +31,25 @@ import org.dom4j.QName;
  */
 public final class VisualSuiteDefinitions {
 
-    public static final Namespace LUPIC_NS = new Namespace("", "http://www.jboss.org/test/visual-suite");
+    public static final Namespace RUSHEYE_NS = new Namespace("", RushEye.NAMESPACE_VISUAL_SUITE);
 
-    public static final QName VISUAL_SUITE = new QName("visual-suite", LUPIC_NS);
-    public static final QName GLOBAL_CONFIGURATION = new QName("global-configuration", LUPIC_NS);
-    public static final QName PATTERN_RETRIEVER = new QName("pattern-retriever", LUPIC_NS);
-    public static final QName MASK_RETRIEVER = new QName("mask-retriever", LUPIC_NS);
-    public static final QName SAMPLE_RETRIEVER = new QName("sample-retriever", LUPIC_NS);
-    public static final QName PERCEPTION = new QName("perception", LUPIC_NS);
-    public static final QName MASKS = new QName("masks", LUPIC_NS);
-    public static final QName TEST = new QName("test", LUPIC_NS);
-    public static final QName PATTERN = new QName("pattern", LUPIC_NS);
+    public static final QName VISUAL_SUITE = new QName("visual-suite", RUSHEYE_NS);
+    public static final QName GLOBAL_CONFIGURATION = new QName("global-configuration", RUSHEYE_NS);
+    public static final QName PATTERN_RETRIEVER = new QName("pattern-retriever", RUSHEYE_NS);
+    public static final QName MASK_RETRIEVER = new QName("mask-retriever", RUSHEYE_NS);
+    public static final QName SAMPLE_RETRIEVER = new QName("sample-retriever", RUSHEYE_NS);
+    public static final QName PERCEPTION = new QName("perception", RUSHEYE_NS);
+    public static final QName MASKS = new QName("masks", RUSHEYE_NS);
+    public static final QName TEST = new QName("test", RUSHEYE_NS);
+    public static final QName PATTERN = new QName("pattern", RUSHEYE_NS);
 
-    public static final QName ONE_PIXEL_TRESHOLD = new QName("one-pixel-treshold", LUPIC_NS);
-    public static final QName GLOBAL_DIFFERENCE_TRESHOLD = new QName("global-difference-treshold", LUPIC_NS);
-    public static final QName GLOBAL_DIFFERENCE_PIXEL_AMOUNT = new QName("global-difference-pixel-amount", LUPIC_NS);
+    public static final QName ONE_PIXEL_TRESHOLD = new QName("one-pixel-treshold", RUSHEYE_NS);
+    public static final QName GLOBAL_DIFFERENCE_TRESHOLD = new QName("global-difference-treshold", RUSHEYE_NS);
+    public static final QName GLOBAL_DIFFERENCE_PIXEL_AMOUNT = new QName("global-difference-pixel-amount", RUSHEYE_NS);
 
-    public static final QName MASK = new QName("mask", LUPIC_NS);
+    public static final QName MASK = new QName("mask", RUSHEYE_NS);
 
-    public static final QName LISTENER = new QName("listener", LUPIC_NS);
+    public static final QName LISTENER = new QName("listener", RUSHEYE_NS);
 
     private VisualSuiteDefinitions() {
     }

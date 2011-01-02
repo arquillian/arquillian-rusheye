@@ -109,7 +109,7 @@ public final class Parser {
         try {
             XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
                 .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
-            URL schemaURL = getClass().getClassLoader().getResource("visual-suite.xsd");
+            URL schemaURL = getClass().getClassLoader().getResource("org/jboss/rusheye/visual-suite.xsd");
             XMLValidationSchema schema = schemaFactory.createSchema(schemaURL);
 
             XMLInputFactory2 factory = (XMLInputFactory2) XMLInputFactory.newInstance();

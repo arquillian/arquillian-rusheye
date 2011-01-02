@@ -36,6 +36,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.codehaus.stax2.XMLStreamWriter2;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
+import org.jboss.rusheye.RushEye;
 import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.writer.spooler.SpoolerContext;
 import org.jboss.rusheye.suite.Properties;
@@ -80,12 +81,12 @@ public abstract class XmlResultWriter implements ResultWriter {
         if (!writerFailed && !writtenStartDocument) {
             try {
                 writer.writeStartDocument("UTF-8", "1.0");
-                writer.setDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
-                writer.writeStartElement("http://www.jboss.org/test/visual-suite-result", "visual-suite-result");
-                writer.writeDefaultNamespace("http://www.jboss.org/test/visual-suite-result");
+                writer.setDefaultNamespace(RushEye.NAMESPACE_VISUAL_SUITE_RESULT);
+                writer.writeStartElement(RushEye.NAMESPACE_VISUAL_SUITE_RESULT, "visual-suite-result");
+                writer.writeDefaultNamespace(RushEye.NAMESPACE_VISUAL_SUITE_RESULT);
                 writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
                 writer.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
-                    "http://www.jboss.org/test/visual-suite-result src/main/resources/visual-suite-result.xsd");
+                    RushEye.NAMESPACE_VISUAL_SUITE_RESULT + " " + RushEye.SCHEMA_LOCATION_VISUAL_SUITE_RESULT);
                 writtenStartDocument = true;
             } catch (XMLStreamException e) {
                 e.printStackTrace();
@@ -163,7 +164,7 @@ public abstract class XmlResultWriter implements ResultWriter {
     private XMLValidationSchema createXMLValidationSchema() throws XMLStreamException {
         XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
             .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
-        URL schemaURL = getClass().getClassLoader().getResource("visual-suite-result.xsd");
+        URL schemaURL = getClass().getClassLoader().getResource("org/jboss/rusheye/visual-suite-result.xsd");
         XMLValidationSchema schema = schemaFactory.createSchema(schemaURL);
         return schema;
     }

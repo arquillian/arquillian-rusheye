@@ -19,6 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-@javax.xml.bind.annotation.XmlSchema(namespace = org.jboss.rusheye.RushEye.NAMESPACE_VISUAL_SUITE, elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package org.jboss.rusheye.suite;
+package org.jboss.rusheye;
 
+/**
+ * Global definitions for RushEye project.
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision$
+ */
+public final class RushEye {
+
+    /** Namespace for Visual Suite descriptor */
+    public static final String NAMESPACE_VISUAL_SUITE = "http://www.jboss.org/rusheye/visual-suite";
+
+    /** Namespace for Visual Suite Result descriptor */
+    public static final String NAMESPACE_VISUAL_SUITE_RESULT = "http://www.jboss.org/rusheye/visual-suite-result";
+
+    /** Schema Location for Visual Suite descriptor */
+    public static final String SCHEMA_LOCATION_VISUAL_SUITE = "http://fryc.eu/rusheye/visual-suite.xsd";
+
+    /** Schema Location for Visual Suite Result descriptor */
+    public static final String SCHEMA_LOCATION_VISUAL_SUITE_RESULT = "http://fryc.eu/rusheye/visual-suite-result.xsd";
+
+    private RushEye() {
+    }
+}

@@ -32,6 +32,7 @@ import java.util.List;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.rusheye.RushEye;
 
 public class PrettyXMLStreamWriter implements InvocationHandler {
 
@@ -52,8 +53,8 @@ public class PrettyXMLStreamWriter implements InvocationHandler {
         // namespace handling
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
-                if ("http://www.jboss.org/test/visual-suite".equals(args[i])) {
-                    args[i] = "http://www.jboss.org/test/visual-suite-result";
+                if (RushEye.NAMESPACE_VISUAL_SUITE.equals(args[i])) {
+                    args[i] = RushEye.NAMESPACE_VISUAL_SUITE_RESULT;
                 }
             }
         }

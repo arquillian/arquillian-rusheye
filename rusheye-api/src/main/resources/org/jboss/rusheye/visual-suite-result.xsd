@@ -23,8 +23,8 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.jboss.org/test/visual-suite-result"
-	xmlns:tns="http://www.jboss.org/test/visual-suite-result" xmlns:vsr="http://www.jboss.org/test/visual-suite-result"
+	targetNamespace="http://www.jboss.org/rusheye/visual-suite-result"
+	xmlns:tns="http://www.jboss.org/rusheye/visual-suite-result" xmlns:vsr="http://www.jboss.org/rusheye/visual-suite-result"
 	elementFormDefault="qualified" version="1.0">
 
 	<xs:element name="visual-suite-result">
