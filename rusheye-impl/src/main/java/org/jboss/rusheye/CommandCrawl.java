@@ -38,8 +38,17 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.Namespace;
+import org.dom4j.QName;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.jboss.rusheye.parser.listener.CompareListener;
+import org.jboss.rusheye.result.collector.ResultCollectorImpl;
+import org.jboss.rusheye.result.statistics.OverallStatistics;
+import org.jboss.rusheye.result.storage.FileStorage;
+import org.jboss.rusheye.result.writer.FileResultWriter;
+import org.jboss.rusheye.retriever.FileRetriever;
+import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
 import org.jboss.rusheye.suite.MaskType;
 
 import com.beust.jcommander.Parameter;
@@ -51,7 +60,7 @@ public class CommandCrawl extends CommandBase {
 
     @Parameter(converter = FileConverter.class, description = "base directory to be crawled")
     private List<File> files;
-    
+
     private File base = new File(".");
 
     @Parameter(names = { "--output", "-O" }, converter = FileConverter.class,
@@ -71,6 +80,7 @@ public class CommandCrawl extends CommandBase {
     private String globalDifferenceAmount;
 
     private Document document;
+    private Namespace ns;
 
     @Override
     public boolean isForce() {
@@ -78,10 +88,6 @@ public class CommandCrawl extends CommandBase {
     }
 
     public void crawl() {
-        if (!files.isEmpty()) {
-            base = files.get(0);
-        }
-        
         document = DocumentHelper.createDocument();
         addDocumentRoot();
         writeDocument();
@@ -116,32 +122,55 @@ public class CommandCrawl extends CommandBase {
     }
 
     private void addDocumentRoot() {
-        Element root = document.addElement("visual-suite");
+        ns = Namespace.get(RushEye.NAMESPACE_VISUAL_SUITE);
 
-        Element globalConfiguration = root.addElement("global-configuration");
-        addImageRetriever(globalConfiguration);
+        Element root = document.addElement(QName.get("visual-suite", ns));
+
+        Namespace xsi = Namespace.get("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        QName schemaLocation = QName.get("schemaLocation", xsi);
+
+        root.addNamespace("", ns.getURI());
+        root.addNamespace(xsi.getPrefix(), xsi.getURI());
+        root.addAttribute(schemaLocation, ns.getURI() + " " + RushEye.SCHEMA_LOCATION_VISUAL_SUITE);
+
+        Element globalConfiguration = root.addElement(QName.get("global-configuration", ns));
+        addSuiteListener(globalConfiguration);
+        addRetrievers(globalConfiguration);
         addPerception(globalConfiguration);
         addMasksByType(base, globalConfiguration);
         addTests(base, root);
     }
 
-    private void addImageRetriever(Element globalConfiguration) {
-        Element imageRetriever = globalConfiguration.addElement("image-retriever");
+    private void addSuiteListener(Element globalConfiguration) {
+        Element suiteListener = globalConfiguration.addElement(QName.get("listener", ns));
+        suiteListener.addAttribute("type", CompareListener.class.getName());
+        suiteListener.addElement(QName.get("result-collector", ns)).addText(ResultCollectorImpl.class.getName());
+        suiteListener.addElement(QName.get("result-storage", ns)).addText(FileStorage.class.getName());
+        suiteListener.addElement(QName.get("result-writer", ns)).addText(FileResultWriter.class.getName());
+        suiteListener.addElement(QName.get("result-statistics", ns)).addText(OverallStatistics.class.getName());
+    }
 
-        imageRetriever.addAttribute("type", "org.jboss.rusheye.retriever.FileRetriever");
+    private void addRetrievers(Element globalConfiguration) {
+        globalConfiguration.addElement(QName.get("pattern-retriever", ns)).addAttribute("type",
+            FileRetriever.class.getName());
+        globalConfiguration.addElement(QName.get("mask-retriever", ns)).addAttribute("type",
+            FileRetriever.class.getName());
+        globalConfiguration.addElement(QName.get("sample-retriever", ns)).addAttribute("type",
+            FileSampleRetriever.class.getName());
     }
 
     private void addPerception(Element base) {
-        Element perception = base.addElement("perception");
+        Element perception = base.addElement(QName.get("perception", ns));
 
         if (onePixelTreshold != null) {
-            perception.addElement("one-pixel-treshold").addText(String.valueOf(onePixelTreshold));
+            perception.addElement(QName.get("one-pixel-treshold", ns)).addText(String.valueOf(onePixelTreshold));
         }
         if (globalDifferenceTreshold != null) {
-            perception.addElement("global-difference-treshold").addText(String.valueOf(globalDifferenceTreshold));
+            perception.addElement(QName.get("global-difference-treshold", ns)).addText(
+                String.valueOf(globalDifferenceTreshold));
         }
         if (globalDifferenceAmount != null) {
-            perception.addElement("global-difference-amount").addText(globalDifferenceAmount);
+            perception.addElement(QName.get("global-difference-amount", ns)).addText(globalDifferenceAmount);
         }
     }
 
@@ -150,7 +179,7 @@ public class CommandCrawl extends CommandBase {
             File maskDir = new File(dir, "masks-" + mask.value());
 
             if (maskDir.exists() && maskDir.isDirectory() && maskDir.listFiles().length > 0) {
-                Element masks = base.addElement("masks").addAttribute("type", mask.value());
+                Element masks = base.addElement(QName.get("masks", ns)).addAttribute("type", mask.value());
                 addMasks(maskDir, masks);
             }
         }
@@ -164,7 +193,8 @@ public class CommandCrawl extends CommandBase {
                 String info = substringAfterLast(id, "--");
                 String[] infoTokens = split(info, "-");
 
-                Element mask = masks.addElement("mask").addAttribute("id", id).addAttribute("source", source);
+                Element mask = masks.addElement(QName.get("mask", ns)).addAttribute("id", id)
+                    .addAttribute("source", source);
 
                 for (String alignment : new String[] { "top", "bottom", "left", "right" }) {
                     String attribute = ArrayUtils.contains(new String[] { "top", "bottom" }, alignment) ? "vertical-align"
@@ -188,7 +218,7 @@ public class CommandCrawl extends CommandBase {
                 if (testFile.isDirectory() && testFile.listFiles().length > 0) {
                     String name = testFile.getName();
 
-                    Element test = root.addElement("test");
+                    Element test = root.addElement(QName.get("test", ns));
                     test.addAttribute("name", name);
 
                     addPatterns(testFile, test);
@@ -197,12 +227,12 @@ public class CommandCrawl extends CommandBase {
                 if (testFile.isFile()) {
                     String name = substringBeforeLast(testFile.getName(), ".");
 
-                    Element test = root.addElement("test");
+                    Element test = root.addElement(QName.get("test", ns));
                     test.addAttribute("name", name);
-                    
+
                     String source = getRelativePath(testFile);
 
-                    Element pattern = test.addElement("pattern");
+                    Element pattern = test.addElement(QName.get("pattern", ns));
                     pattern.addAttribute("name", name);
                     pattern.addAttribute("source", source);
                 }
@@ -217,7 +247,7 @@ public class CommandCrawl extends CommandBase {
                     String name = substringBeforeLast(file.getName(), ".");
                     String source = getRelativePath(file);
 
-                    Element pattern = test.addElement("pattern");
+                    Element pattern = test.addElement(QName.get("pattern", ns));
                     pattern.addAttribute("name", name);
                     pattern.addAttribute("source", source);
                 }
@@ -230,11 +260,15 @@ public class CommandCrawl extends CommandBase {
     }
 
     @Override
-    public void validate() throws CommandValidationException {
-        if (!files.isEmpty()) {
+    public void initialize() {
+        if (files != null && !files.isEmpty()) {
             base = files.get(0);
         }
-        
+    }
+
+    @Override
+    public void validate() throws CommandValidationException {
+
         List<String> messages = constructMessages();
         messages.add(validateInputDirectory("Base", base));
         messages.add(validateOutputFile("Output", output));

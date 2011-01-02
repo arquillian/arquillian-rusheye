@@ -27,12 +27,12 @@ import java.util.List;
 
 import com.beust.jcommander.Parameter;
 
-public abstract class CommandBase {
+public class CommandBase {
 
     @Parameter(names = { "-h", "--help" })
     private Boolean help;
 
-    @Parameter(names = { "-d", "--debug" })
+    @Parameter(names = { "--debug" })
     private Boolean debug;
 
     public boolean isHelp() {
@@ -41,6 +41,9 @@ public abstract class CommandBase {
 
     public boolean isDebug() {
         return debug == Boolean.TRUE;
+    }
+
+    public void initialize() {
     }
 
     public void validate() throws CommandValidationException {

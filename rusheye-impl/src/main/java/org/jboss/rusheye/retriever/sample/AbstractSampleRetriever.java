@@ -44,14 +44,16 @@ public abstract class AbstractSampleRetriever extends AbstractRetriever implemen
 
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
+        Properties mergedProperties = mergeProperties(localProperties);
+        
         if (allSources == null) {
             synchronized (this) {
-                allSources = new TreeSet<String>(getAllSources());
+                allSources = new TreeSet<String>(getAllSources(mergedProperties));
                 unretrievedSources = new TreeSet<String>(allSources);
             }
         }
 
-        int retries = getProperty("load-source-retries", 1, Integer.class);
+        int retries = mergedProperties.getProperty("load-source-retries", 1, Integer.class);
 
         if (!allSources.contains(source)) {
             throw new NoSuchSampleException("source '" + source
@@ -60,7 +62,7 @@ public abstract class AbstractSampleRetriever extends AbstractRetriever implemen
 
         for (int i = 0; i < retries; i++) {
             try {
-                return loadSource(source);
+                return loadSource(source, mergedProperties);
             } catch (Exception e) {
                 continue;
             }
@@ -69,9 +71,9 @@ public abstract class AbstractSampleRetriever extends AbstractRetriever implemen
         throw new RetrieverException("can't load the source '" + source + "'");
     }
 
-    protected abstract Set<String> getAllSources();
+    protected abstract Set<String> getAllSources(Properties properties) throws RetrieverException;
 
-    protected abstract BufferedImage loadSource(String source) throws RetrieverException;
+    protected abstract BufferedImage loadSource(String source, Properties properties) throws RetrieverException;
 
     @Override
     public Set<String> getNewSources() {

@@ -53,6 +53,7 @@ import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.suite.GlobalConfiguration;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;
+import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
 
@@ -67,6 +68,7 @@ public final class Parser {
 
     private Set<SuiteListener> listeners = new LinkedHashSet<SuiteListener>();
     private Handler handler = new Handler(listeners);
+    private Properties properties;
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
@@ -228,10 +230,17 @@ public final class Parser {
         return handler;
     }
 
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
     private class ParserListenerRegistrationListener extends SuiteListenerAdapter {
         @Override
         public void onConfigurationReady(VisualSuite visualSuite) {
             for (SuiteListener listener : visualSuite.getGlobalConfiguration().getListeners()) {
+                if (Parser.this.properties != null) {
+                    listener.setProperties(Parser.this.properties);
+                }
                 listener.onSuiteStarted(visualSuite);
                 listener.onConfigurationReady(visualSuite);
                 Parser.this.registerListener(listener);

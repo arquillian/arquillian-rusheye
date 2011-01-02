@@ -19,9 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.rusheye;
+package org.jboss.rusheye.result.writer;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
-public class CommandMain extends CommandBase {
-    
+import org.apache.commons.io.output.NullOutputStream;
+
+public class FileResultWriter extends XmlResultWriter {
+
+    FileOutputStream fout;
+
+    @Override
+    protected OutputStream openOutputStream() throws Exception {
+        final File outputFile = properties.getProperty("result-output-file", File.class);
+
+        if (outputFile == null) {
+            return new NullOutputStream();
+        }
+
+        fout = new FileOutputStream(outputFile);
+        return fout;
+    }
+
+    @Override
+    protected void closeOutputStream() throws Exception {
+        fout.close();
+    }
 }

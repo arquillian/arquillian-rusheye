@@ -49,7 +49,7 @@ public final class Main {
         CommandBase base = cm.getCommand();
         JCommander jc = cm.getJCommander();
 
-        if (base instanceof CommandMain) {
+        if (base.getClass() == CommandBase.class) {
             jc.usage();
         } else {
             if (base.isHelp()) {
@@ -57,6 +57,8 @@ public final class Main {
                 System.exit(0);
             }
 
+            base.initialize();
+            
             try {
                 base.validate();
             } catch (CommandValidationException e) {
@@ -65,18 +67,23 @@ public final class Main {
             }
 
             if (base instanceof CommandCompare) {
-                CommandCompare command = (CommandCompare) base;
-                command.compare();
-                command.printResult();
+                CommandCompare commandCompare = (CommandCompare) base;
+                commandCompare.compare();
+                commandCompare.printResult();
                 
-                if (command.isOutputSet()) {
-                    command.writeDifferenceImage();
+                if (commandCompare.isOutputSet()) {
+                    commandCompare.writeDifferenceImage();
                 }
             }
             
             if (base instanceof CommandCrawl) {
-                CommandCrawl command = (CommandCrawl) base;
-                command.crawl();
+                CommandCrawl commandCrawl = (CommandCrawl) base;
+                commandCrawl.crawl();
+            }
+            
+            if (base instanceof CommandParse) {
+                CommandParse commandParse = (CommandParse) base;
+                commandParse.parse();
             }
         }
     }

@@ -42,14 +42,14 @@ import org.jboss.rusheye.suite.VisualSuite;
  * @version $Revision$
  */
 public class CompareListener implements SuiteListener {
-    Properties properties;
+    Properties properties = new Properties();
     ImageComparator imageComparator = new DefaultImageComparator();
     VisualSuite visualSuite;
     ResultCollector resultCollector;
 
     @Override
     public void setProperties(Properties properties) {
-        this.properties = properties;
+        this.properties.include(properties);
     }
 
     @Override
@@ -74,6 +74,7 @@ public class CompareListener implements SuiteListener {
 
     @Override
     public void onPatternReady(Configuration configuration, Pattern pattern) {
+        pattern.include(properties);
         pattern.run();
         resultCollector.onPatternReady(configuration, pattern);
         resultCollector.onPatternStarted(pattern);
@@ -85,7 +86,11 @@ public class CompareListener implements SuiteListener {
         resultCollector.onTestStarted(test);
 
         resultCollector.onSampleStarted(test);
-        BufferedImage sampleImage = getSampleImage(test.getSample());
+        
+        Sample sample = test.getSample();
+        sample.include(properties);
+        BufferedImage sampleImage = getSampleImage(sample);
+        
         resultCollector.onSampleLoaded(test);
 
         for (Pattern pattern : test.getPatterns()) {

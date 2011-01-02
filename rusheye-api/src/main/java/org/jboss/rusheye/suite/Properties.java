@@ -21,6 +21,7 @@
  */
 package org.jboss.rusheye.suite;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -92,5 +93,38 @@ public class Properties {
 
     public int size() {
         return getAny().size();
+    }
+    
+    public <T> T getProperty(String propertyKey, Class<T> tClass) {
+        Object object = getProperty(propertyKey);
+
+        if (object == null) {
+            return null;
+        }
+
+        Constructor<T> constructor;
+        try {
+            constructor = tClass.getConstructor(String.class);
+        } catch (Exception e) {
+            throw new IllegalStateException("can't automatically convert property '" + propertyKey
+                + "', the constructor " + tClass.getName() + "(String) can't be access", e);
+        }
+
+        try {
+            return constructor.newInstance(object.toString());
+        } catch (Exception e) {
+            throw new IllegalStateException("can't automatically convert property, the call to " + tClass.getName()
+                + "(\"" + propertyKey + "\") failed", e);
+        }
+    }
+
+    public <T> T getProperty(String propertyKey, T defaultValue, Class<T> tClass) {
+        T result = getProperty(propertyKey, tClass);
+
+        if (result == null) {
+            return defaultValue;
+        }
+
+        return result;
     }
 }

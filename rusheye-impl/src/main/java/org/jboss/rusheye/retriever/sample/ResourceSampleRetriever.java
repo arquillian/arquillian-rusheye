@@ -47,8 +47,10 @@ public class ResourceSampleRetriever extends AbstractRetriever implements Sample
 
     @Override
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
-        final File resourcesLocation = getProperty(RESOURCES_LOCATION, File.class);
-        final String resourceExtension = getProperty(RESOURCE_EXTENSION, String.class);
+        Properties properties = mergeProperties(localProperties);
+        
+        final File resourcesLocation = properties.getProperty(RESOURCES_LOCATION, File.class);
+        final String resourceExtension = properties.getProperty(RESOURCE_EXTENSION, String.class);
 
         if (resourcesLocation == null) {
             throw new IllegalStateException("sample retriever property '" + RESOURCES_LOCATION

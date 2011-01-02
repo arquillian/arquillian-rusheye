@@ -35,10 +35,10 @@ import org.jboss.rusheye.suite.VisualSuite;
  */
 public class SuiteListenerAdapter implements SuiteListener {
 
-    protected Properties properties;
+    protected Properties properties = new Properties();
 
     public void setProperties(Properties properties) {
-        this.properties = properties;
+        this.properties.include(properties);
     }
 
     public void onSuiteStarted(VisualSuite visualSuite) {

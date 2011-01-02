@@ -50,7 +50,7 @@ public class Sample extends ImageSource {
 
     @Override
     public BufferedImage retrieve() throws Exception {
-        return sampleRetriever.retrieve(source, null);
+        return sampleRetriever.retrieve(source, this);
     }
 
     /**

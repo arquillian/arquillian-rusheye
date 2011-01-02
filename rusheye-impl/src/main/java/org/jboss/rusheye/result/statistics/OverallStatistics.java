@@ -67,9 +67,6 @@ public class OverallStatistics implements ResultStatistics {
 
     @Override
     public void onPatternCompleted(ResultDetail detail) {
-        writer.println("- " + detail.getPattern().getName() + ": " + detail.getConclusion());
-        writer.flush();
-
         if (detail.getConclusion() == ERROR) {
             addConclusion(ERROR);
         }
@@ -90,7 +87,7 @@ public class OverallStatistics implements ResultStatistics {
             addConclusion(bestConclusion);
         }
 
-        writer.println("* " + test.getName() + ": " + bestConclusion);
+        writer.println("[ " + bestConclusion + " ] " + test.getName());
         writer.flush();
     }
 

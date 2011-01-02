@@ -38,6 +38,7 @@ public class FileRetriever extends AbstractRetriever implements PatternRetriever
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         Properties properties = mergeProperties(localProperties);
+        
         String baseDirectory = (String) properties.getProperty("base-directory");
 
         File file;

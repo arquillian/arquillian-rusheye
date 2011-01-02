@@ -23,11 +23,11 @@ package org.jboss.rusheye;
 
 import com.beust.jcommander.JCommander;
 
-public class Commander extends CommandMain {
+public class Commander {
 
     JCommander jCommander;
 
-    CommandMain main = new CommandMain();
+    CommandBase main = new CommandBase();
     CommandCompare compare = new CommandCompare();
     CommandCrawl crawl = new CommandCrawl();
     CommandParse parse = new CommandParse();
@@ -37,18 +37,6 @@ public class Commander extends CommandMain {
         jCommander.addCommand("compare", compare);
         jCommander.addCommand("crawl", crawl);
         jCommander.addCommand("parse", parse);
-    }
-
-    public CommandMain getMain() {
-        return main;
-    }
-
-    public CommandCompare getCompare() {
-        return compare;
-    }
-
-    public CommandCrawl getCrawl() {
-        return crawl;
     }
     
     public void parse(String[] args) {

@@ -22,7 +22,6 @@
 package org.jboss.rusheye.retriever;
 
 import org.jboss.rusheye.suite.Properties;
-import org.jboss.rusheye.suite.utils.ConvertingProperties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -30,12 +29,13 @@ import org.jboss.rusheye.suite.utils.ConvertingProperties;
  */
 public abstract class AbstractRetriever extends RetrieverAdapter {
 
-    private ConvertingProperties properties = new ConvertingProperties();
+    private Properties properties = new Properties();
 
     @Override
     public void setGlobalProperties(Properties properties) {
         if (properties != null) {
-            this.properties = new ConvertingProperties(properties);
+            this.properties = new Properties();
+            this.properties.include(properties);
         }
     }
 
@@ -44,13 +44,5 @@ public abstract class AbstractRetriever extends RetrieverAdapter {
         result.include(localProperties);
         result.include(properties);
         return result;
-    }
-
-    protected <T> T getProperty(String propertyKey, Class<T> tClass) {
-        return properties.getProperty(propertyKey, tClass);
-    }
-
-    protected <T> T getProperty(String propertyKey, T defaultValue, Class<T> tClass) {
-        return properties.getProperty(propertyKey, defaultValue, tClass);
     }
 }

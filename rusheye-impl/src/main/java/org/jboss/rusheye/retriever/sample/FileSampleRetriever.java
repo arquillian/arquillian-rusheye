@@ -24,41 +24,76 @@ package org.jboss.rusheye.retriever.sample;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang.StringUtils;
 import org.jboss.rusheye.exception.RetrieverException;
+import org.jboss.rusheye.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class FileSampleRetriever extends AbstractSampleRetriever {
-    @Override
-    protected Set<String> getAllSources() {
-        final File samplesDirectory = getProperty("sample-directory", File.class);
 
-        if (samplesDirectory == null) {
-            throw new IllegalArgumentException(
-                "the 'samples' argument have to be set in order to load list of available sources");
-        }
+    private String commonExtension;
+
+    @Override
+    protected Set<String> getAllSources(Properties properties) throws RetrieverException {
+        final File samplesDirectory = getSamplesDirectory(properties);
 
         Set<String> sources = new TreeSet<String>();
-        sources.addAll(Arrays.asList(samplesDirectory.list()));
+
+        for (String sourceFilename : samplesDirectory.list()) {
+            String extension = StringUtils.substringAfterLast(sourceFilename, ".");
+            checkExtensionUniformity(extension);
+
+            String sourceName = StringUtils.substringBeforeLast(sourceFilename, ".");
+            sources.add(sourceName);
+        }
 
         return Collections.unmodifiableSet(sources);
     }
 
     @Override
-    protected BufferedImage loadSource(String source) throws RetrieverException {
+    protected BufferedImage loadSource(String source, Properties properties) throws RetrieverException {
+        final File samplesDirectory = getSamplesDirectory(properties);
+
+        final String filename = source + "." + commonExtension;
+
         try {
-            return ImageIO.read(new File(source));
+            return ImageIO.read(new File(samplesDirectory, filename));
         } catch (IOException e) {
             throw new RetrieverException("can't load sample from source '" + source + "'", e);
         }
+    }
+
+    private void checkExtensionUniformity(String extension) throws RetrieverException {
+        if (commonExtension == null) {
+            commonExtension = extension;
+        } else {
+            if (!commonExtension.equals(extension)) {
+                throw new RetrieverException(
+                    "This retriever found the two certain file extensions ("
+                        + commonExtension
+                        + ", "
+                        + extension
+                        + ") when loading images, it is against the contract of the extension uniformity of all loaded samples");
+            }
+        }
+    }
+
+    private static File getSamplesDirectory(Properties properties) {
+        final File samplesDirectory = properties.getProperty("samples-directory", File.class);
+
+        if (samplesDirectory == null) {
+            throw new IllegalArgumentException(
+                "the 'samples-directory' property have to be defined in order to load list of available sources");
+        }
+        return samplesDirectory;
     }
 }
