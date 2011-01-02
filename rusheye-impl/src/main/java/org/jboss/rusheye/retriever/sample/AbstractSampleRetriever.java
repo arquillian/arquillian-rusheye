@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.jboss.rusheye.exception.NoSuchSampleException;
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.AbstractRetriever;
 import org.jboss.rusheye.retriever.SampleRetriever;
@@ -53,7 +54,7 @@ public abstract class AbstractSampleRetriever extends AbstractRetriever implemen
         int retries = getProperty("load-source-retries", 1, Integer.class);
 
         if (!allSources.contains(source)) {
-            throw new NotSuchSampleException("source '" + source
+            throw new NoSuchSampleException("source '" + source
                 + "' wasn't found when listing all of available samples");
         }
 

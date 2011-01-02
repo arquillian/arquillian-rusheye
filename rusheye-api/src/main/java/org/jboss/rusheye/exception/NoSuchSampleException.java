@@ -19,29 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.rusheye.retriever.sample;
-
-import org.jboss.rusheye.exception.RetrieverException;
+package org.jboss.rusheye.exception;
 
 /**
+ * Thrown when specific sample wasn't found for given source.
+ * 
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class NotSuchSampleException extends RetrieverException {
+public class NoSuchSampleException extends RetrieverException {
 
-    public NotSuchSampleException() {
+    private static final long serialVersionUID = 3099195896487833937L;
+
+    public NoSuchSampleException() {
         super();
     }
 
-    public NotSuchSampleException(String message, Throwable cause) {
+    public NoSuchSampleException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NotSuchSampleException(String message) {
+    public NoSuchSampleException(String message) {
         super(message);
     }
 
-    public NotSuchSampleException(Throwable cause) {
+    public NoSuchSampleException(Throwable cause) {
         super(cause);
     }
 
