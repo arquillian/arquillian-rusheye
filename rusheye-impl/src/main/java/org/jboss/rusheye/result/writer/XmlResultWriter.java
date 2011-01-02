@@ -38,7 +38,6 @@ import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.rusheye.RushEye;
 import org.jboss.rusheye.result.ResultDetail;
-import org.jboss.rusheye.result.writer.spooler.SpoolerContext;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
@@ -67,10 +66,10 @@ public abstract class XmlResultWriter implements ResultWriter {
             return false;
         }
 
-        return writeSafely(new SpoolerContext(test, details));
+        return writeSafely(new WriterContext(test, details));
     }
 
-    private boolean writeSafely(SpoolerContext context) {
+    private boolean writeSafely(WriterContext context) {
         tryWriteStartDocument();
         tryWriteTest(context);
 
@@ -95,7 +94,7 @@ public abstract class XmlResultWriter implements ResultWriter {
         }
     }
 
-    private void tryWriteTest(SpoolerContext context) {
+    private void tryWriteTest(WriterContext context) {
         if (!writerFailed) {
             try {
                 fulfilTest(context);
@@ -110,7 +109,7 @@ public abstract class XmlResultWriter implements ResultWriter {
         }
     }
 
-    private void fulfilTest(SpoolerContext context) {
+    private void fulfilTest(WriterContext context) {
         while (context.hasNextDetail()) {
             ResultDetail detail = context.getNextDetail();
             detail.getPattern().setComparisonResult(detail.getComparisonResult());

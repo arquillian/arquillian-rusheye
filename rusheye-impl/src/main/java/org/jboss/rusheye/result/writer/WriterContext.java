@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.rusheye.result.writer.spooler;
+package org.jboss.rusheye.result.writer;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -31,12 +31,12 @@ import org.jboss.rusheye.suite.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class SpoolerContext {
+public class WriterContext {
     private Test test;
     private Iterator<ResultDetail> detailIterator;
     private ResultDetail currentDetail;
 
-    public SpoolerContext(Test test, Collection<ResultDetail> details) {
+    public WriterContext(Test test, Collection<ResultDetail> details) {
         this.test = test;
         this.detailIterator = details.iterator();
     }
