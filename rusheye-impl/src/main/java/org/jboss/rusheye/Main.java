@@ -21,13 +21,12 @@
  */
 package org.jboss.rusheye;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.jboss.rusheye.internal.Instantiator;
-import org.jboss.rusheye.listener.SuiteListener;
-import org.jboss.rusheye.parser.Parser;
 import org.xml.sax.SAXException;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -38,17 +37,49 @@ public final class Main {
     }
 
     public static void main(String[] args) throws SAXException, IOException {
-        final String cmd = args[0];
+        Commander cm = new Commander();
 
-        if (cmd.equals("parse")) {
-            File visualSuiteDefinition = new File(args[1]);
-            System.setProperty("user.dir", visualSuiteDefinition.getParent());
-            Parser parser = new Parser();
-            if (args.length > 2) {
-                SuiteListener parserListener = new Instantiator<SuiteListener>().getInstance(args[2]);
-                parser.registerListener(parserListener);
-            }
-            parser.parseFile(visualSuiteDefinition);
+        try {
+            cm.parse(args);
+        } catch (ParameterException e) {
+            printUsageMessage(cm, e);
+            System.exit(1);
         }
+
+        CommandBase base = cm.getCommand();
+        JCommander jc = cm.getJCommander();
+
+        if (base instanceof CommandMain) {
+            jc.usage();
+        } else {
+            if (base.isHelp()) {
+                jc.usage();
+                System.exit(0);
+            }
+
+            try {
+                base.validate();
+            } catch (CommandValidationException e) {
+                printUsageMessage(cm, e);
+                System.exit(2);
+            }
+
+            if (base instanceof CommandCompare) {
+                CommandCompare compare = (CommandCompare) base;
+                compare.compare();
+                compare.printResult();
+                
+                if (compare.isOutputSet()) {
+                    compare.writeDifferenceImage();
+                }
+            }
+        }
+    }
+
+    private static void printUsageMessage(Commander cm, Exception e) {
+        StringBuilder errorMsg = new StringBuilder();
+        errorMsg.append(e.getMessage() + "\n\n");
+        cm.getJCommander().usage(errorMsg);
+        System.err.println(errorMsg);
     }
 }
