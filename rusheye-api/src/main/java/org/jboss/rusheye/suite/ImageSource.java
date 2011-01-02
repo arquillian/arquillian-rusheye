@@ -44,7 +44,7 @@ import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "ImageSource")
-@XmlSeeAlso({ Mask.class, Pattern.class })
+@XmlSeeAlso({ Mask.class, Pattern.class, Sample.class })
 public abstract class ImageSource extends Properties {
 
     /** The source. */

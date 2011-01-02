@@ -22,14 +22,10 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
@@ -43,12 +39,7 @@ import org.jboss.rusheye.retriever.SampleRetriever;
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Sample")
-public class Sample {
-
-    /**
-     * Source of the sample
-     */
-    protected String source;
+public class Sample extends ImageSource {
 
     /**
      * Sample retriever - needs to be injected from outside to let sample work properly.
@@ -57,34 +48,9 @@ public class Sample {
     @XmlTransient
     private SampleRetriever sampleRetriever;
 
-    /**
-     * The future task for retrieving sample from it's source
-     */
-    @XmlTransient
-    private FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
-        public BufferedImage call() throws Exception {
-            return sampleRetriever.retrieve(source, null);
-        };
-    });
-
-    /**
-     * Gets the source.
-     * 
-     * @return the source.
-     */
-    @XmlAttribute
-    public String getSource() {
-        return source;
-    }
-
-    /**
-     * Sets the source
-     * 
-     * @param value
-     *            of the source
-     */
-    public void setSource(String value) {
-        this.source = value;
+    @Override
+    public BufferedImage retrieve() throws Exception {
+        return sampleRetriever.retrieve(source, null);
     }
 
     /**
@@ -96,15 +62,4 @@ public class Sample {
     public void setSampleRetriever(SampleRetriever sampleRetriever) {
         this.sampleRetriever = sampleRetriever;
     }
-    
-    // TODO
-    public void run() {
-        future.run();
-    }
-
-    // TODO
-    public BufferedImage get() throws ExecutionException, InterruptedException {
-        return future.get();
-    }
-
 }
