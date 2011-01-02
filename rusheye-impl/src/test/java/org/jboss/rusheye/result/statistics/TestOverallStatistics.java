@@ -97,12 +97,10 @@ public class TestOverallStatistics {
         overallStatistics.setProperties(properties);
 
         overallStatistics.onPatternCompleted(detail);
-        barrier.await();
-        Assert.assertTrue(list.contains("- patternName: PERCEPTUALLY_SAME"));
 
         overallStatistics.onTestCompleted(test, detailList);
         barrier.await();
-        Assert.assertTrue(list.contains("* testName: PERCEPTUALLY_SAME"));
+        Assert.assertTrue(list.contains("[ PERCEPTUALLY_SAME ] testName"));
 
         overallStatistics.onSuiteCompleted();
         barrier.await();
