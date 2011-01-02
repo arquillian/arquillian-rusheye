@@ -24,7 +24,6 @@ package org.jboss.rusheye;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -67,6 +66,11 @@ public class CommandCompare extends CommandBase {
         return files.get(1);
     }
 
+    @Override
+    protected boolean isForce() {
+        return force;
+    }
+
     public void compare() {
         try {
             BufferedImage pattern = loadImage(getPatternFile());
@@ -85,7 +89,7 @@ public class CommandCompare extends CommandBase {
     public void printResult() {
         System.out.println("Result: " + conclusion);
     }
-    
+
     public boolean isOutputSet() {
         return output != null;
     }
@@ -111,30 +115,6 @@ public class CommandCompare extends CommandBase {
         }
     }
 
-    private String validateInputFile(String name, File file) {
-        if (file != null) {
-            if (!file.exists()) {
-                return name + " file '" + file.getPath() + "' does not exists";
-            }
-            if (!file.canRead()) {
-                return name + " file '" + file.getPath() + "' can't be read";
-            }
-        }
-        return null;
-    }
-
-    private String validateOutputFile(String name, File file) {
-        if (file != null) {
-            if (file.exists() && !force) {
-                return name + " file '" + file.getPath() + "' already exists (use --force/-f to overwrite)";
-            }
-            if (file.exists() && !file.canWrite()) {
-                return name + " file '" + file.getPath() + "' can't be written";
-            }
-        }
-        return null;
-    }
-
     private BufferedImage loadImage(File file) throws CommandProcessingException {
         try {
             return ImageIO.read(file);
@@ -142,17 +122,5 @@ public class CommandCompare extends CommandBase {
             throw new CommandProcessingException("Failed to load image from file '" + getSampleFile().getPath() + "': "
                 + e.getMessage(), e);
         }
-    }
-
-    @SuppressWarnings("serial")
-    private List<String> constructMessages() {
-        return new LinkedList<String>() {
-            public boolean add(String e) {
-                if (e == null) {
-                    return false;
-                }
-                return super.add(e);
-            };
-        };
     }
 }

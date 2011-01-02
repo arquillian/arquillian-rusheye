@@ -65,13 +65,18 @@ public final class Main {
             }
 
             if (base instanceof CommandCompare) {
-                CommandCompare compare = (CommandCompare) base;
-                compare.compare();
-                compare.printResult();
+                CommandCompare command = (CommandCompare) base;
+                command.compare();
+                command.printResult();
                 
-                if (compare.isOutputSet()) {
-                    compare.writeDifferenceImage();
+                if (command.isOutputSet()) {
+                    command.writeDifferenceImage();
                 }
+            }
+            
+            if (base instanceof CommandCrawl) {
+                CommandCrawl command = (CommandCrawl) base;
+                command.crawl();
             }
         }
     }

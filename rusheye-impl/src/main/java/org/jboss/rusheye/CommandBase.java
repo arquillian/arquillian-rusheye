@@ -21,6 +21,10 @@
  */
 package org.jboss.rusheye;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.beust.jcommander.Parameter;
 
 public abstract class CommandBase {
@@ -42,11 +46,64 @@ public abstract class CommandBase {
     public void validate() throws CommandValidationException {
     }
 
+    protected boolean isForce() {
+        return false;
+    }
+
     protected void printErrorMessage(Exception e) {
         if (isDebug()) {
             e.printStackTrace();
         } else {
             System.err.println(e.getMessage());
         }
+    }
+
+    protected String validateInputFile(String name, File file) {
+        if (file != null) {
+            if (!file.exists()) {
+                return name + " file '" + file.getPath() + "' does not exists";
+            }
+            if (!file.canRead()) {
+                return name + " file '" + file.getPath() + "' can't be read";
+            }
+        }
+        return null;
+    }
+
+    protected String validateOutputFile(String name, File file) {
+        if (file != null) {
+            if (file.exists() && !isForce()) {
+                return name + " file '" + file.getPath() + "' already exists (use --force/-f to overwrite)";
+            }
+            if (file.exists() && !file.canWrite()) {
+                return name + " file '" + file.getPath() + "' can't be written";
+            }
+        }
+        return null;
+    }
+
+    protected String validateInputDirectory(String name, File directory) {
+        if (directory != null) {
+            if (!directory.exists()) {
+                return name + " directory '" + directory.getPath() + "' doesnt exist)";
+            }
+
+            if (!directory.isDirectory()) {
+                return name + " directory '" + directory.getPath() + "' isn't directory)";
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("serial")
+    protected List<String> constructMessages() {
+        return new LinkedList<String>() {
+            public boolean add(String e) {
+                if (e == null) {
+                    return false;
+                }
+                return super.add(e);
+            };
+        };
     }
 }
