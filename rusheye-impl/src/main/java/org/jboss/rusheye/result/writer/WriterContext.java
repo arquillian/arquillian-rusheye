@@ -21,10 +21,9 @@
  */
 package org.jboss.rusheye.result.writer;
 
-import java.util.Collection;
 import java.util.Iterator;
 
-import org.jboss.rusheye.result.ResultDetail;
+import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Test;
 
 /**
@@ -33,12 +32,12 @@ import org.jboss.rusheye.suite.Test;
  */
 public class WriterContext {
     private Test test;
-    private Iterator<ResultDetail> detailIterator;
-    private ResultDetail currentDetail;
+    private Iterator<Pattern> patternIterator;
+    private Pattern currentPattern;
 
-    public WriterContext(Test test, Collection<ResultDetail> details) {
+    public WriterContext(Test test) {
         this.test = test;
-        this.detailIterator = details.iterator();
+        this.patternIterator = test.getPatterns().iterator();
     }
 
     public Test getTest() {
@@ -46,15 +45,15 @@ public class WriterContext {
     }
 
     public boolean hasNextDetail() {
-        return detailIterator.hasNext();
+        return patternIterator.hasNext();
     }
 
-    public ResultDetail getNextDetail() {
-        currentDetail = detailIterator.next();
-        return currentDetail;
+    public Pattern getNextDetail() {
+        currentPattern = patternIterator.next();
+        return currentPattern;
     }
 
-    public ResultDetail getCurrentDetail() {
-        return currentDetail;
+    public Pattern getCurrentDetail() {
+        return currentPattern;
     }
 }

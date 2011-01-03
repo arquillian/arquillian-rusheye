@@ -21,8 +21,7 @@
  */
 package org.jboss.rusheye.result;
 
-import java.util.List;
-
+import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 
@@ -45,20 +44,18 @@ public interface ResultStatistics {
     /**
      * Fired when pattern completed.
      * 
-     * @param detail
+     * @param pattern
      *            the detail of pattern comparison
      */
-    void onPatternCompleted(ResultDetail detail);
+    void onPatternCompleted(Pattern pattern);
 
     /**
      * Fired when test completed including all it's pattern completed.
      * 
      * @param test
      *            the test which completed
-     * @param details
-     *            the list of result details
      */
-    void onTestCompleted(Test test, List<ResultDetail> details);
+    void onTestCompleted(Test test);
 
     /**
      * Fired when whole suite completed and there will be no more result details available.

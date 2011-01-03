@@ -24,7 +24,6 @@ package org.jboss.rusheye.result.writer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -37,7 +36,6 @@ import org.codehaus.stax2.XMLStreamWriter2;
 import org.codehaus.stax2.validation.XMLValidationSchema;
 import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.rusheye.RushEye;
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
@@ -61,12 +59,12 @@ public abstract class XmlResultWriter implements ResultWriter {
         this.properties = properties;
     }
 
-    public boolean write(Test test, List<ResultDetail> details) {
+    public boolean write(Test test) {
         if (!tryInitializeWriter()) {
             return false;
         }
 
-        return writeSafely(new WriterContext(test, details));
+        return writeSafely(new WriterContext(test));
     }
 
     private boolean writeSafely(WriterContext context) {
@@ -97,7 +95,6 @@ public abstract class XmlResultWriter implements ResultWriter {
     private void tryWriteTest(WriterContext context) {
         if (!writerFailed) {
             try {
-                fulfilTest(context);
                 Test test = context.getTest();
                 test = NullingProxy.handle(test, VisualSuiteResult.class);
                 marshaller.marshal(test, writer);
@@ -106,15 +103,6 @@ public abstract class XmlResultWriter implements ResultWriter {
                 e.printStackTrace();
                 writerFailed = true;
             }
-        }
-    }
-
-    private void fulfilTest(WriterContext context) {
-        while (context.hasNextDetail()) {
-            ResultDetail detail = context.getNextDetail();
-            detail.getPattern().setComparisonResult(detail.getComparisonResult());
-            detail.getPattern().setOutput(detail.getLocation());
-            detail.getPattern().setConclusion(detail.getConclusion());
         }
     }
 

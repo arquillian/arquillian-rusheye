@@ -21,21 +21,20 @@
  */
 package org.jboss.rusheye.result.statistics;
 
-import static org.jboss.rusheye.result.ResultConclusion.ERROR;
+import static org.jboss.rusheye.suite.ResultConclusion.ERROR;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.jboss.rusheye.result.ResultConclusion;
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.ResultStatistics;
+import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
+import org.jboss.rusheye.suite.ResultConclusion;
 import org.jboss.rusheye.suite.Test;
 
 /**
@@ -44,7 +43,7 @@ import org.jboss.rusheye.suite.Test;
  */
 public class OverallStatistics implements ResultStatistics {
 
-    PrintWriter writer;
+    PrintWriter printerWriter;
 
     Map<ResultConclusion, AtomicLong> conclusionStatistics = new LinkedHashMap<ResultConclusion, AtomicLong>();
 
@@ -62,24 +61,23 @@ public class OverallStatistics implements ResultStatistics {
             writer = new OutputStreamWriter(System.out);
         }
 
-        this.writer = new PrintWriter(writer);
+        this.printerWriter = new PrintWriter(writer);
     }
 
     @Override
-    public void onPatternCompleted(ResultDetail detail) {
-        if (detail.getConclusion() == ERROR) {
+    public void onPatternCompleted(Pattern pattern) {
+        if (pattern.getConclusion() == ERROR) {
             addConclusion(ERROR);
         }
     }
 
     @Override
-    public void onTestCompleted(Test test, List<ResultDetail> details) {
-
+    public void onTestCompleted(Test test) {
         ResultConclusion bestConclusion = ERROR;
 
-        for (ResultDetail detail : details) {
-            if (detail.getConclusion().ordinal() < ERROR.ordinal()) {
-                bestConclusion = detail.getConclusion();
+        for (Pattern pattern : test.getPatterns()) {
+            if (pattern.getConclusion().ordinal() < ERROR.ordinal()) {
+                bestConclusion = pattern.getConclusion();
             }
         }
 
@@ -87,27 +85,27 @@ public class OverallStatistics implements ResultStatistics {
             addConclusion(bestConclusion);
         }
 
-        writer.println("[ " + bestConclusion + " ] " + test.getName());
-        writer.flush();
+        printerWriter.println("[ " + bestConclusion + " ] " + test.getName());
+        printerWriter.flush();
     }
 
     @Override
     public void onSuiteCompleted() {
-        writer.println();
-        writer.println("=====================");
-        writer.println("  Overall Statistics:");
+        printerWriter.println();
+        printerWriter.println("=====================");
+        printerWriter.println("  Overall Statistics:");
 
         for (Entry<ResultConclusion, AtomicLong> entry : conclusionStatistics.entrySet()) {
             long count = entry.getValue().get();
 
             if (count > 0) {
-                writer.println("  " + entry.getKey() + ": " + count);
+                printerWriter.println("  " + entry.getKey() + ": " + count);
             }
         }
 
-        writer.println("=====================");
+        printerWriter.println("=====================");
 
-        writer.flush();
+        printerWriter.flush();
     }
 
     private void addConclusion(ResultConclusion conclusion) {

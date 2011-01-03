@@ -21,15 +21,8 @@
  */
 package org.jboss.rusheye.result.collector;
 
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.result.ResultCollectorAdapter;
-import org.jboss.rusheye.result.ResultConclusion;
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.ResultEvaluator;
 import org.jboss.rusheye.result.ResultStatistics;
 import org.jboss.rusheye.result.ResultStorage;
@@ -37,6 +30,7 @@ import org.jboss.rusheye.result.writer.ResultWriter;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
+import org.jboss.rusheye.suite.ResultConclusion;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
 
@@ -51,8 +45,6 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
     ResultEvaluator evaluator;
     ResultWriter writer;
     ResultStatistics statistics;
-
-    ConcurrentMap<Test, List<ResultDetail>> details = new ConcurrentHashMap<Test, List<ResultDetail>>();
 
     @Override
     public void setProperties(Properties properties) {
@@ -78,36 +70,27 @@ public class ResultCollectorImpl extends ResultCollectorAdapter {
 
     @Override
     public void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult) {
-        ResultDetail detail = new ResultDetail();
-
         ResultConclusion conclusion = evaluator.evaluate(test.getPerception(), comparisonResult);
-        detail.setConclusion(conclusion);
+        pattern.setConclusion(conclusion);
 
         if (conclusion == ResultConclusion.DIFFER || conclusion == ResultConclusion.PERCEPTUALLY_SAME) {
             String location = storage.store(test, pattern, comparisonResult.getDiffImage());
-            detail.setLocation(location);
+            pattern.setOutput(location);
         }
 
         if (comparisonResult.getDiffImage() != null) {
             comparisonResult.getDiffImage().flush();
         }
 
-        detail.setPattern(pattern);
-        detail.setComparisonResult(comparisonResult);
+        pattern.setComparisonResult(comparisonResult);
 
-        details.putIfAbsent(test, new CopyOnWriteArrayList<ResultDetail>());
-        details.get(test).add(detail);
-
-        statistics.onPatternCompleted(detail);
+        statistics.onPatternCompleted(pattern);
     }
 
     @Override
     public void onTestCompleted(Test test) {
-        List<ResultDetail> detailList = details.get(test);
-        details.remove(test);
-
-        writer.write(test, detailList);
-        statistics.onTestCompleted(test, detailList);
+        writer.write(test);
+        statistics.onTestCompleted(test);
     }
 
     @Override

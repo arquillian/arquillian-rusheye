@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Perception;
+import org.jboss.rusheye.suite.ResultConclusion;
 
 /**
  * Evaluates the comparison result using perception settings to obtain conclusion of comparison process.

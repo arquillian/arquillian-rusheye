@@ -31,6 +31,7 @@ import org.jboss.rusheye.comparison.ImageComparator;
 import org.jboss.rusheye.suite.Area;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;
+import org.jboss.rusheye.suite.MaskType;
 import org.jboss.rusheye.suite.Perception;
 import org.jboss.rusheye.suite.Rectangle;
 
@@ -65,8 +66,10 @@ public class DefaultImageComparator implements ImageComparator {
 
     private boolean isMaskedPixel(BufferedImage image, Collection<Mask> masks, int x, int y) {
         for (Mask mask : masks) {
-            if (mask.isPixelMasked(image, x, y)) {
-                return true;
+            if (MaskType.SELECTIVE_ALPHA.equals(mask.getType())) {
+                if (mask.isPixelMasked(image, x, y)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -80,7 +83,7 @@ public class DefaultImageComparator implements ImageComparator {
     }
 
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
-        Collection<Mask> selectiveAlphaMasks) {
+        Collection<Mask> masks) {
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         int width = Math.min(patternImage.getWidth(), sampleImage.getWidth());
@@ -97,7 +100,7 @@ public class DefaultImageComparator implements ImageComparator {
                 totalPixels++;
                 int cmp = ColorModelRGBA.compare(patternImage.getRGB(i, j), sampleImage.getRGB(i, j));
                 Color color = ColorModelRGBA.rgb2grayscale(patternImage.getRGB(i, j));
-                if (isMaskedPixel(patternImage, selectiveAlphaMasks, i, j)) {
+                if (isMaskedPixel(patternImage, masks, i, j)) {
                     maskedPixels++;
                     color = getMaskedPixelColor(color);
                 } else if (cmp > perception.getOnePixelTreshold()) {

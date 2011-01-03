@@ -31,10 +31,10 @@ import javax.imageio.ImageIO;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.rusheye.core.DefaultImageComparator;
 import org.jboss.rusheye.parser.DefaultConfiguration;
-import org.jboss.rusheye.result.ResultConclusion;
 import org.jboss.rusheye.result.ResultEvaluator;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Configuration;
+import org.jboss.rusheye.suite.ResultConclusion;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;

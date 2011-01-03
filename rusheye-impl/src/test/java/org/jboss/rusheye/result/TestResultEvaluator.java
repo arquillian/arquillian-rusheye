@@ -21,10 +21,10 @@
  */
 package org.jboss.rusheye.result;
 
-import static org.jboss.rusheye.result.ResultConclusion.DIFFER;
-import static org.jboss.rusheye.result.ResultConclusion.ERROR;
-import static org.jboss.rusheye.result.ResultConclusion.PERCEPTUALLY_SAME;
-import static org.jboss.rusheye.result.ResultConclusion.SAME;
+import static org.jboss.rusheye.suite.ResultConclusion.DIFFER;
+import static org.jboss.rusheye.suite.ResultConclusion.ERROR;
+import static org.jboss.rusheye.suite.ResultConclusion.PERCEPTUALLY_SAME;
+import static org.jboss.rusheye.suite.ResultConclusion.SAME;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 

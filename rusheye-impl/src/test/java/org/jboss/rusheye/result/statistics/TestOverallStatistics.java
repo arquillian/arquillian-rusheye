@@ -28,17 +28,15 @@ import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.jboss.rusheye.result.ResultConclusion;
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
+import org.jboss.rusheye.suite.ResultConclusion;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
@@ -52,12 +50,6 @@ import org.testng.annotations.Test;
 public class TestOverallStatistics {
 
     OverallStatistics overallStatistics = new OverallStatistics();
-
-    @Mock
-    List<ResultDetail> detailList;
-
-    @Mock
-    ResultDetail detail;
 
     @Mock
     org.jboss.rusheye.suite.Test test;
@@ -77,9 +69,6 @@ public class TestOverallStatistics {
 
     @Test
     public void testOverallStatistics() throws IOException, InterruptedException, BrokenBarrierException {
-        Iterator<ResultDetail> detailIterator = new LinkedList<ResultDetail>(
-            Arrays.asList(new ResultDetail[] { detail })).iterator();
-
         List<String> list = new LinkedList<String>();
         PipedWriter pipedWriter = new PipedWriter();
         CyclicBarrier barrier = new CyclicBarrier(2);
@@ -87,18 +76,17 @@ public class TestOverallStatistics {
         new Thread(new StreamToListWrapper(pipedWriter, list, barrier)).start();
 
         when(properties.getProperty("overall-statistics-output")).thenReturn(pipedWriter);
-        when(detailList.iterator()).thenReturn(detailIterator);
         when(test.getName()).thenReturn("testName");
+        when(test.getPatterns()).thenReturn(Arrays.asList(pattern));
         when(pattern.getName()).thenReturn("patternName");
-        when(detail.getPattern()).thenReturn(pattern);
-        when(detail.getConclusion()).thenReturn(ResultConclusion.PERCEPTUALLY_SAME);
-        when(detail.getLocation()).thenReturn("someLocation");
+        when(pattern.getConclusion()).thenReturn(ResultConclusion.PERCEPTUALLY_SAME);
+        when(pattern.getOutput()).thenReturn("someLocation");
 
         overallStatistics.setProperties(properties);
 
-        overallStatistics.onPatternCompleted(detail);
+        overallStatistics.onPatternCompleted(pattern);
 
-        overallStatistics.onTestCompleted(test, detailList);
+        overallStatistics.onTestCompleted(test);
         barrier.await();
         Assert.assertTrue(list.contains("[ PERCEPTUALLY_SAME ] testName"));
 

@@ -30,10 +30,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Arrays;
 
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.result.ResultStatistics;
 import org.jboss.rusheye.result.ResultStorage;
 import org.jboss.rusheye.result.writer.ResultWriter;
@@ -79,11 +77,11 @@ public class TestResultCollectorImpl {
     @Mock
     org.jboss.rusheye.suite.Test test2;
 
-    @Mock
-    Pattern pattern1;
+    @Spy
+    Pattern pattern1 = new Pattern();
 
-    @Mock
-    Pattern pattern2;
+    @Spy
+    Pattern pattern2 = new Pattern();
 
     @Mock
     ComparisonResult comparisonResult;
@@ -94,12 +92,6 @@ public class TestResultCollectorImpl {
     @Mock
     BufferedImage image;
 
-    @Mock
-    List<ResultDetail> resultDetails;
-
-    @Mock
-    ConcurrentMap<org.jboss.rusheye.suite.Test, List<ResultDetail>> map;
-
     InOrder order;
 
     @BeforeMethod
@@ -107,16 +99,17 @@ public class TestResultCollectorImpl {
         MockitoAnnotations.initMocks(this);
 
         when(test1.getPerception()).thenReturn(perception);
+        when(test1.getPatterns()).thenReturn(Arrays.asList(pattern1));
         when(test2.getPerception()).thenReturn(perception);
+        when(test2.getPatterns()).thenReturn(Arrays.asList(pattern2));
         when(perception.getGlobalDifferencePercentage()).thenReturn((short) 5);
         when(perception.getGlobalDifferencePixelAmount()).thenReturn(null);
         when(comparisonResult.isEqualsImages()).thenReturn(false);
         when(comparisonResult.getTotalPixels()).thenReturn(100);
         when(comparisonResult.getDifferentPixels()).thenReturn(4);
         when(comparisonResult.getDiffImage()).thenReturn(image);
-        when(map.get(any(org.jboss.rusheye.suite.Test.class))).thenReturn(resultDetails);
-
-        collector.details = map;
+        when(storage.store(any(org.jboss.rusheye.suite.Test.class), any(Pattern.class), any(BufferedImage.class)))
+            .thenReturn("some-location");
     }
 
     @Test
@@ -141,21 +134,21 @@ public class TestResultCollectorImpl {
     }
 
     @Test
-    public void testRsultDetailNotNullValues() {
+    public void testPatternNotNullValues() {
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 Object[] args = invocation.getArguments();
 
-                ResultDetail resultDetail = (ResultDetail) args[0];
+                Pattern pattern = (Pattern) args[0];
 
-                Assert.assertNotNull(resultDetail.getConclusion());
-                Assert.assertNotNull(resultDetail.getPattern());
-                Assert.assertNotNull(resultDetail.getComparisonResult());
+                Assert.assertNotNull(pattern.getConclusion());
+                Assert.assertNotNull(pattern.getComparisonResult());
+                Assert.assertEquals(pattern.getOutput(), "some-location");
 
                 return null;
             }
-        }).when(statistics).onPatternCompleted(any(ResultDetail.class));
+        }).when(statistics).onPatternCompleted(any(Pattern.class));
 
         setupProperties();
         collector.onConfigurationReady(visualSuite);
@@ -178,25 +171,25 @@ public class TestResultCollectorImpl {
 
         order.verify(storage).store(test1, pattern1, image);
         order.verify(image).flush();
-        order.verify(statistics).onPatternCompleted(any(ResultDetail.class));
+        order.verify(statistics).onPatternCompleted(any(Pattern.class));
 
         order.verify(storage).store(test1, pattern2, image);
         order.verify(image).flush();
-        order.verify(statistics).onPatternCompleted(any(ResultDetail.class));
+        order.verify(statistics).onPatternCompleted(any(Pattern.class));
 
-        order.verify(writer).write(test1, resultDetails);
-        order.verify(statistics).onTestCompleted(test1, resultDetails);
+        order.verify(writer).write(test1);
+        order.verify(statistics).onTestCompleted(test1);
 
         order.verify(storage).store(test2, pattern1, image);
         order.verify(image).flush();
-        order.verify(statistics).onPatternCompleted(any(ResultDetail.class));
+        order.verify(statistics).onPatternCompleted(any(Pattern.class));
 
         order.verify(storage).store(test2, pattern2, image);
         order.verify(image).flush();
-        order.verify(statistics).onPatternCompleted(any(ResultDetail.class));
+        order.verify(statistics).onPatternCompleted(any(Pattern.class));
 
-        order.verify(writer).write(test2, resultDetails);
-        order.verify(statistics).onTestCompleted(test2, resultDetails);
+        order.verify(writer).write(test2);
+        order.verify(statistics).onTestCompleted(test2);
 
         order.verify(writer).close();
         order.verify(statistics).onSuiteCompleted();
@@ -223,13 +216,13 @@ public class TestResultCollectorImpl {
         }
 
         @Override
-        public void onPatternCompleted(ResultDetail detail) {
-            statistics.onPatternCompleted(detail);
+        public void onPatternCompleted(Pattern pattern) {
+            statistics.onPatternCompleted(pattern);
         }
 
         @Override
-        public void onTestCompleted(org.jboss.rusheye.suite.Test test, List<ResultDetail> detail) {
-            statistics.onTestCompleted(test, detail);
+        public void onTestCompleted(org.jboss.rusheye.suite.Test test) {
+            statistics.onTestCompleted(test);
         }
 
         @Override
@@ -246,8 +239,8 @@ public class TestResultCollectorImpl {
         }
 
         @Override
-        public boolean write(org.jboss.rusheye.suite.Test test, List<ResultDetail> details) {
-            return writer.write(test, details);
+        public boolean write(org.jboss.rusheye.suite.Test test) {
+            return writer.write(test);
         }
 
         @Override

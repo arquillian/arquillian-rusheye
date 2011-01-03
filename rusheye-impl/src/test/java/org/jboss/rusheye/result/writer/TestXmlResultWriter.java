@@ -27,18 +27,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.output.TeeOutputStream;
 import org.jboss.rusheye.PassingSAXErrorHandler;
-import org.jboss.rusheye.result.ResultConclusion;
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.suite.Area;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Rectangle;
+import org.jboss.rusheye.suite.ResultConclusion;
 import org.jboss.rusheye.suite.Test;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -60,21 +57,18 @@ public class TestXmlResultWriter {
 
     @org.testng.annotations.Test
     public void testXmlResultWriter() throws InterruptedException {
-        ResultDetail detail = new ResultDetail();
         Test test = new Test();
         Pattern pattern = new Pattern();
         ComparisonResult comparisonResult = new ComparisonResult();
         Rectangle rectangle = new Rectangle();
         Area area = new Area();
-        List<ResultDetail> detailList;
 
         test.setName("testName");
         test.getPatterns().add(pattern);
         pattern.setName("patternName");
-        detail.setPattern(pattern);
-        detail.setComparisonResult(comparisonResult);
-        detail.setLocation("someLocation");
-        detail.setConclusion(ResultConclusion.PERCEPTUALLY_SAME);
+        pattern.setComparisonResult(comparisonResult);
+        pattern.setOutput("someLocation");
+        pattern.setConclusion(ResultConclusion.PERCEPTUALLY_SAME);
         comparisonResult.setEqualPixels(3);
         comparisonResult.setDifferentPixels(4);
         comparisonResult.setPerceptibleDiffs(5);
@@ -86,9 +80,8 @@ public class TestXmlResultWriter {
         area.setHeight(9);
         rectangle.setMin(new Point(10, 11));
         rectangle.setMax(new Point(12, 13));
-        detailList = Arrays.asList(new ResultDetail[] { detail });
 
-        writer.write(test, detailList);
+        writer.write(test);
         writer.close();
 
         latch.await();

@@ -21,9 +21,6 @@
  */
 package org.jboss.rusheye.result.writer;
 
-import java.util.List;
-
-import org.jboss.rusheye.result.ResultDetail;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 
@@ -32,9 +29,9 @@ import org.jboss.rusheye.suite.Test;
  * @version $Revision$
  */
 public interface ResultWriter {
-    public void setProperties(Properties properties);
+    void setProperties(Properties properties);
 
-    public boolean write(Test test, List<ResultDetail> details);
+    boolean write(Test test);
 
-    public void close();
+    void close();
 }
