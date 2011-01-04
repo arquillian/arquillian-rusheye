@@ -49,7 +49,7 @@ public class FileStorage implements ResultStorage {
     @Override
     public String store(Test test, Pattern pattern, BufferedImage differenceImage) {
         File directory = new File((String) properties.getProperty("file-storage-directory"));
-        File addition = new File(test.getName() + "/" + pattern.getName() + ".png");
+        File addition = new File(test.getName() + "." + pattern.getName() + ".png");
         File file = new File(directory, addition.getPath());
 
         try {

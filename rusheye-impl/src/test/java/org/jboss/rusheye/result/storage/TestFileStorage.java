@@ -95,7 +95,7 @@ public class TestFileStorage {
     }
 
     private File getAddition() {
-        return new File(test.getName() + "/" + pattern.getName() + ".png");
+        return new File(test.getName() + "." + pattern.getName() + ".png");
     }
 
     private File getComplete() {
