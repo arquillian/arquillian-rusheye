@@ -79,6 +79,7 @@ public abstract class Configuration {
      * @return the list of all masks
      */
     @XmlElement(name = "mask")
+    @Nullify(VisualSuiteResult.class)
     public List<Mask> getMasks() {
         if (masks == null) {
             masks = new ArrayList<Mask>();
