@@ -48,6 +48,10 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestImageComparison {
+
+    static final float SMALL = 0.5f;
+    static final float BIG = 200f;
+
     Perception perception;
     DefaultImageComparator comparator = new DefaultImageComparator();
 
@@ -78,7 +82,7 @@ public class TestImageComparison {
 
     @Test
     public void testPerceptible() {
-        perception.setOnePixelTreshold(2);
+        perception.setOnePixelTreshold(SMALL);
         ComparisonResult result = diffImages("perceptible");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -91,8 +95,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferent() {
-        perception.setOnePixelTreshold(200);
-        perception.setGlobalDifferenceTreshold(2);
+        perception.setOnePixelTreshold(BIG);
+        perception.setGlobalDifferenceTreshold(SMALL);
         ComparisonResult result = diffImages("different");
         assertFalse(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -105,8 +109,8 @@ public class TestImageComparison {
 
     @Test
     public void testDifferentMasked() {
-        perception.setOnePixelTreshold(200);
-        perception.setGlobalDifferenceTreshold(2);
+        perception.setOnePixelTreshold(BIG);
+        perception.setGlobalDifferenceTreshold(SMALL);
         ComparisonResult result = diffImages("different-masked");
         assertTrue(result.isEqualsImages());
         assertEquals(result.getEqualPixels(), 97);
@@ -121,7 +125,7 @@ public class TestImageComparison {
     @DataProvider(name = "real-samples")
     Object[][] provideRealSampleNames() {
         Object[][] provide = new Object[5][1];
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= provide.length; i++) {
             provide[i - 1][0] = "real-sample-" + i;
         }
         return provide;
@@ -169,8 +173,8 @@ public class TestImageComparison {
 
     private void assertSame(BufferedImage actualDiff, BufferedImage expectedDiff) {
         Perception strictPerception = new Perception();
-        strictPerception.setOnePixelTreshold(0);
-        strictPerception.setGlobalDifferenceTreshold(0);
+        strictPerception.setOnePixelTreshold(0f);
+        strictPerception.setGlobalDifferenceTreshold(0f);
 
         ComparisonResult result = comparator.compare(actualDiff, expectedDiff, strictPerception, new HashSet<Mask>());
         assertTrue(result.isEqualsImages());

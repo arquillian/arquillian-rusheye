@@ -30,12 +30,16 @@ import org.jboss.rusheye.suite.Perception;
 
 public class DefaultConfiguration extends Configuration {
 
+    public static final float DEFAULT_ONE_PIXEL_TRESHOLD = 20f;
+    public static final float DEFAULT_GLOBAL_DIFFERENCE_TRESHOLD = 1f;
+    public static final int DEFAULT_GLOBAL_DIFFERENCE_AMOUNT = 0;
+
     private static final List<Mask> EMPTY_MASKS = new LinkedList<Mask>();
     private static final Perception DEFAULT_PERCEPTION = new Perception();
 
     static {
-        DEFAULT_PERCEPTION.setOnePixelTreshold(50);
-        DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(10);
+        DEFAULT_PERCEPTION.setOnePixelTreshold(DEFAULT_ONE_PIXEL_TRESHOLD);
+        DEFAULT_PERCEPTION.setGlobalDifferenceTreshold(DEFAULT_GLOBAL_DIFFERENCE_TRESHOLD);
         DEFAULT_PERCEPTION.setGlobalDifferenceAmount("0px");
     }
 

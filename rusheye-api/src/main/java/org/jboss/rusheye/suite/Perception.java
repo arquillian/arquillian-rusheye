@@ -49,10 +49,10 @@ public class Perception {
     private static final Number NOT_THIS_TYPE = new Double("0");
 
     /** The one pixel treshold. */
-    protected Integer onePixelTreshold;
+    protected Float onePixelTreshold;
 
     /** The global difference treshold. */
-    protected Integer globalDifferenceTreshold;
+    protected Float globalDifferenceTreshold;
 
     /** The global difference amount. */
     protected String globalDifferenceAmount;
@@ -63,7 +63,7 @@ public class Perception {
      * @return the one pixel treshold
      */
     @XmlElement(name = "one-pixel-treshold")
-    public Integer getOnePixelTreshold() {
+    public Float getOnePixelTreshold() {
         return onePixelTreshold;
     }
 
@@ -73,7 +73,7 @@ public class Perception {
      * @param value
      *            the new one pixel treshold
      */
-    public void setOnePixelTreshold(Integer value) {
+    public void setOnePixelTreshold(Float value) {
         this.onePixelTreshold = value;
     }
 
@@ -83,7 +83,7 @@ public class Perception {
      * @return the global difference treshold
      */
     @XmlElement(name = "global-difference-treshold")
-    public Integer getGlobalDifferenceTreshold() {
+    public Float getGlobalDifferenceTreshold() {
         return globalDifferenceTreshold;
     }
 
@@ -93,7 +93,7 @@ public class Perception {
      * @param value
      *            the new global difference treshold
      */
-    public void setGlobalDifferenceTreshold(Integer value) {
+    public void setGlobalDifferenceTreshold(Float value) {
         this.globalDifferenceTreshold = value;
     }
 

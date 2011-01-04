@@ -280,4 +280,11 @@ public class ComparisonResult {
     public String getComparisonStatus() {
         return this.isEqualsImages() ? "same" : "different";
     }
+    
+    @Override
+    public String toString() {
+        return "ComparisonResult [equalsImages=" + equalsImages + ", totalPixels=" + totalPixels + ", maskedPixels="
+            + maskedPixels + ", perceptibleDiffs=" + perceptibleDiffs + ", differentPixels=" + differentPixels
+            + ", smallDifferences=" + smallDifferences + ", equalPixels=" + equalPixels + "]";
+    }
 }

@@ -23,6 +23,7 @@ package org.jboss.rusheye.parser;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
+import static org.jboss.rusheye.parser.DefaultConfiguration.*;
 
 import org.jboss.rusheye.suite.GlobalConfiguration;
 import org.jboss.rusheye.suite.Perception;
@@ -62,8 +63,8 @@ public class TestConfigurationCompiler {
         assertEquals(wrapped.getName(), "testname");
         assertEquals(wrapped.getPerception().getGlobalDifferencePixelAmount(), new Long(73));
         assertNull(wrapped.getPerception().getGlobalDifferencePercentage());
-        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(10));
-        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(50));
+        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Float(DEFAULT_GLOBAL_DIFFERENCE_TRESHOLD));
+        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Float(DEFAULT_ONE_PIXEL_TRESHOLD));
 
         test.getPerception().setGlobalDifferencePercentage((short) 54);
         assertEquals(wrapped.getPerception().getGlobalDifferencePercentage(), new Short((short) 54));
@@ -80,8 +81,8 @@ public class TestConfigurationCompiler {
         assertEquals(wrapped.getName(), "testname");
         assertEquals(wrapped.getPerception().getGlobalDifferencePixelAmount(), new Long(73));
         assertNull(wrapped.getPerception().getGlobalDifferencePercentage());
-        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Integer(10));
-        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Integer(50));
+        assertEquals(wrapped.getPerception().getGlobalDifferenceTreshold(), new Float(DEFAULT_GLOBAL_DIFFERENCE_TRESHOLD));
+        assertEquals(wrapped.getPerception().getOnePixelTreshold(), new Float(DEFAULT_ONE_PIXEL_TRESHOLD));
 
         test.getPerception().setGlobalDifferencePercentage((short) 54);
         assertEquals(wrapped.getPerception().getGlobalDifferencePercentage(), new Short((short) 54));
