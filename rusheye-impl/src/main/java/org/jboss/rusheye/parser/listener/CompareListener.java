@@ -31,6 +31,7 @@ import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.result.ResultCollector;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Configuration;
+import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Sample;
@@ -90,6 +91,10 @@ public class CompareListener implements SuiteListener {
         Sample sample = test.getSample();
         sample.include(properties);
         BufferedImage sampleImage = getSampleImage(sample);
+        
+        for (Mask mask : test.getMasks()) {
+            mask.include(properties);
+        }
         
         resultCollector.onSampleLoaded(test);
 
