@@ -175,17 +175,16 @@ public class CommandCrawl extends CommandBase {
     }
 
     private void addMasksByType(File dir, Element base) {
-        for (MaskType mask : MaskType.values()) {
-            File maskDir = new File(dir, "masks-" + mask.value());
+        for (MaskType maskType : MaskType.values()) {
+            File maskDir = new File(dir, "masks-" + maskType.value());
 
             if (maskDir.exists() && maskDir.isDirectory() && maskDir.listFiles().length > 0) {
-                Element masks = base.addElement(QName.get("masks", ns)).addAttribute("type", mask.value());
-                addMasks(maskDir, masks);
+                addMasks(maskDir, base, maskType);
             }
         }
     }
 
-    private void addMasks(File dir, Element masks) {
+    private void addMasks(File dir, Element base, MaskType maskType) {
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 String id = substringBeforeLast(file.getName(), ".");
@@ -193,15 +192,13 @@ public class CommandCrawl extends CommandBase {
                 String info = substringAfterLast(id, "--");
                 String[] infoTokens = split(info, "-");
 
-                Element mask = masks.addElement(QName.get("mask", ns)).addAttribute("id", id)
-                    .addAttribute("source", source);
+                Element mask = base.addElement(QName.get("mask", ns)).addAttribute("id", id)
+                    .addAttribute("type", maskType.value()).addAttribute("source", source);
 
-                for (String alignment : new String[] { "top", "bottom", "left", "right" }) {
+                for (String alignment : infoTokens) {
                     String attribute = ArrayUtils.contains(new String[] { "top", "bottom" }, alignment) ? "vertical-align"
                         : "horizontal-align";
-                    if (ArrayUtils.contains(infoTokens, "top")) {
-                        mask.addAttribute(attribute, alignment);
-                    }
+                    mask.addAttribute(attribute, alignment);
                 }
             }
         }
@@ -209,10 +206,10 @@ public class CommandCrawl extends CommandBase {
 
     private void addTests(File dir, Element root) {
         if (dir.exists() && dir.isDirectory()) {
-            for (File testFile : dir.listFiles()) {
+            tests: for (File testFile : dir.listFiles()) {
                 for (MaskType mask : MaskType.values()) {
                     if (testFile.getName().equals("masks-" + mask.value())) {
-                        continue;
+                        continue tests;
                     }
                 }
                 if (testFile.isDirectory() && testFile.listFiles().length > 0) {
