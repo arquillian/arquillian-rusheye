@@ -84,6 +84,8 @@ public class DefaultImageComparator implements ImageComparator {
 
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
         Collection<Mask> masks) {
+        final ColorDistance colorDistance = new ColorDistanceLAB();
+        
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         int width = Math.min(patternImage.getWidth(), sampleImage.getWidth());
@@ -98,20 +100,20 @@ public class DefaultImageComparator implements ImageComparator {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
                 totalPixels++;
-                int cmp = ColorModelRGBA.compare(patternImage.getRGB(i, j), sampleImage.getRGB(i, j));
+                float distance = colorDistance.getDistance(patternImage.getRGB(i, j), sampleImage.getRGB(i, j));
                 Color color = ColorModelRGBA.rgb2grayscale(patternImage.getRGB(i, j));
                 if (isMaskedPixel(patternImage, masks, i, j)) {
                     maskedPixels++;
                     color = getMaskedPixelColor(color);
-                } else if (cmp > perception.getOnePixelTreshold()) {
+                } else if (distance > perception.getOnePixelTreshold()) {
                     perceptibleDiffs++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_PERCEPTIBLE;
-                } else if (cmp > perception.getGlobalDifferenceTreshold()) {
+                } else if (distance > perception.getGlobalDifferenceTreshold()) {
                     differentPixels++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_ABOVE_TRESHOLD;
-                } else if (cmp > 0) {
+                } else if (distance > 0) {
                     smallDifferences++;
                     updateBoundary(min, max, i, j);
                     color = DIFF_COLOR_UNDER_TRESSHOLD;

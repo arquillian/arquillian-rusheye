@@ -39,35 +39,32 @@ public final class ColorModelRGBA {
     private ColorModelRGBA() {
     }
 
-    public static int colorComponent(int color, int mask, int shift) {
-        return (color & mask) >> shift;
-    }
-
-    public static int getR(int color) {
+    static int getR(int color) {
         return colorComponent(color, RED_MASK, RED_SHIFT);
     }
 
-    public static int getG(int color) {
+    static int getG(int color) {
         return colorComponent(color, GREEN_MASK, GREEN_SHIFT);
     }
 
-    public static int getB(int color) {
+    static int getB(int color) {
         return colorComponent(color, BLUE_MASK, BLUE_SHIFT);
     }
 
-    public static int compare(int color1, int color2) {
-        int d1 = Math.abs(getR(color1) - getR(color2));
-        int d2 = Math.abs(getG(color1) - getG(color2));
-        int d3 = Math.abs(getB(color1) - getB(color2));
-        return Math.max(d1, Math.max(d2, d3));
-    }
-
-    public static Color rgb2grayscale(int color) {
+    static Color rgb2grayscale(int color) {
         int r = getR(color);
         int g = getG(color);
         int b = getB(color);
         float gray = (0.3f * r + 0.59f * g + 0.11f * b) / 255.0f;
         return new Color(gray, gray, gray);
+    }
+
+    static float[] getRGB(int color) {
+        return new float[] { getR(color), getG(color), getB(color) };
+    }
+
+    private static int colorComponent(int color, int mask, int shift) {
+        return (color & mask) >> shift;
     }
 
 }
