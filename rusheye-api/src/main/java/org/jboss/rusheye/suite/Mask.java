@@ -167,6 +167,7 @@ public class Mask extends ImageSource {
      * @return the mask
      */
     private BufferedImage getMaskImage() {
+        run();
         try {
             return get();
         } catch (ExecutionException e) {
