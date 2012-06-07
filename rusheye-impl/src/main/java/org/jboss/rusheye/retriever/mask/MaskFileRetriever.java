@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.rusheye.retriever;
+package org.jboss.rusheye.retriever.mask;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,18 +28,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.jboss.rusheye.exception.RetrieverException;
+import org.jboss.rusheye.retriever.AbstractRetriever;
+import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.suite.Properties;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
-public class FileRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {
+public class MaskFileRetriever extends AbstractRetriever implements MaskRetriever {
 
     public BufferedImage retrieve(String source, Properties localProperties) throws RetrieverException {
         Properties properties = mergeProperties(localProperties);
         
-        String baseDirectory = (String) properties.getProperty("base-directory");
+        String baseDirectory = (String) properties.getProperty("masks-directory");
 
         File file;
 
@@ -52,7 +54,7 @@ public class FileRetriever extends AbstractRetriever implements PatternRetriever
         try {
             return ImageIO.read(file);
         } catch (IOException e) {
-            throw new RetrieverException("Source file is unreachable - " + file);
+            throw new RetrieverException("Mask file is unreachable - " + file);
         }
     }
 }

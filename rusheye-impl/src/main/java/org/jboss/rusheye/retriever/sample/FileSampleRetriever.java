@@ -50,7 +50,7 @@ public class FileSampleRetriever extends AbstractSampleRetriever {
 
         for (String sourceFilename : samplesDirectory.list()) {
             String extension = StringUtils.substringAfterLast(sourceFilename, ".");
-            checkExtensionUniformity(extension);
+            checkExtensionUniformity(extension, sourceFilename);
 
             String sourceName = StringUtils.substringBeforeLast(sourceFilename, ".");
             sources.add(sourceName);
@@ -72,17 +72,14 @@ public class FileSampleRetriever extends AbstractSampleRetriever {
         }
     }
 
-    private void checkExtensionUniformity(String extension) throws RetrieverException {
+    private void checkExtensionUniformity(String extension, String sourceFilename) throws RetrieverException {
         if (commonExtension == null) {
             commonExtension = extension;
         } else {
             if (!commonExtension.equals(extension)) {
-                throw new RetrieverException(
-                    "This retriever found the two certain file extensions ("
-                        + commonExtension
-                        + ", "
-                        + extension
-                        + ") when loading images, it is against the contract of the extension uniformity of all loaded samples");
+                throw new RetrieverException("This retriever found the two certain file extensions (" + commonExtension + ", "
+                        + extension + ") when loading image '" + sourceFilename
+                        + "', it is against the contract of the extension uniformity of all loaded samples");
             }
         }
     }
@@ -92,7 +89,7 @@ public class FileSampleRetriever extends AbstractSampleRetriever {
 
         if (samplesDirectory == null) {
             throw new IllegalArgumentException(
-                "the 'samples-directory' property have to be defined in order to load list of available sources");
+                    "the 'samples-directory' property have to be defined in order to load list of available sources");
         }
         return samplesDirectory;
     }

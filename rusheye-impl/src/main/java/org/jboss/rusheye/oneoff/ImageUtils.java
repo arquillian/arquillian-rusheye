@@ -31,7 +31,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import org.jboss.rusheye.retriever.FileRetriever;
+import org.jboss.rusheye.retriever.mask.MaskFileRetriever;
 import org.jboss.rusheye.suite.HorizontalAlign;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.MaskType;
@@ -43,7 +43,7 @@ import org.jboss.rusheye.suite.VerticalAlign;
  */
 public final class ImageUtils {
 
-    private static FileRetriever fileRetriever = new FileRetriever();
+    private static MaskFileRetriever maskRetriever = new MaskFileRetriever();
 
     private ImageUtils() {
     }
@@ -89,7 +89,7 @@ public final class ImageUtils {
         mask.setId(maskFile.getName());
         mask.setType(MaskType.SELECTIVE_ALPHA);
         mask.setSource(maskFile.toString());
-        mask.setMaskRetriever(fileRetriever);
+        mask.setMaskRetriever(maskRetriever);
         mask.setHorizontalAlign(resolveHorizontalOrientation(maskFilename));
         mask.setVerticalAlign(resolveVerticalOrientation(maskFilename));
         mask.run();

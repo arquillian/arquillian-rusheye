@@ -21,17 +21,26 @@
  */
 package org.jboss.rusheye.parser;
 
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_CONFIGURATION;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.LISTENER;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK_RETRIEVER;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PATTERN;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PATTERN_RETRIEVER;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PERCEPTION;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.RUSHEYE_NS;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.SAMPLE_RETRIEVER;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.TEST;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.VISUAL_SUITE;
+
 import java.util.Iterator;
 
 import org.dom4j.Document;
-
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.jboss.rusheye.listener.SuiteListenerAdapter;
-import org.jboss.rusheye.retriever.FileRetriever;
+import org.jboss.rusheye.retriever.mask.MaskFileRetriever;
+import org.jboss.rusheye.retriever.pattern.PatternFileRetriever;
 import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
-
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.*;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -50,9 +59,9 @@ public class VisualSuiteStub {
     Element defaultListener = globalConfiguration.addElement(LISTENER).addAttribute("type",
         SuiteListenerAdapter.class.getName());
     Element patternRetriever = globalConfiguration.addElement(PATTERN_RETRIEVER).addAttribute("type",
-        FileRetriever.class.getName());
+        PatternFileRetriever.class.getName());
     Element maskRetriever = globalConfiguration.addElement(MASK_RETRIEVER).addAttribute("type",
-        FileRetriever.class.getName());
+        MaskFileRetriever.class.getName());
     Element sampleRetriever = globalConfiguration.addElement(SAMPLE_RETRIEVER).addAttribute("type",
         FileSampleRetriever.class.getName());
     Element perception = globalConfiguration.addElement(PERCEPTION);

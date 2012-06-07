@@ -41,6 +41,7 @@
 		<module>rusheye-build</module>
 		<module>rusheye-api</module>
 		<module>rusheye-impl</module>
+		<module>rusheye-dist</module>
 	</modules>
 
 	<build>
