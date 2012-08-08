@@ -36,10 +36,10 @@ public final class RushEye {
     public static final String NAMESPACE_VISUAL_SUITE_RESULT = "http://www.jboss.org/rusheye/visual-suite-result";
 
     /** Schema Location for Visual Suite descriptor */
-    public static final String SCHEMA_LOCATION_VISUAL_SUITE = "http://fryc.eu/rusheye/visual-suite.xsd";
+    public static final String SCHEMA_LOCATION_VISUAL_SUITE = "http://www.jboss.org/schema/arquillian/rusheye/visual-suite.xsd";
 
     /** Schema Location for Visual Suite Result descriptor */
-    public static final String SCHEMA_LOCATION_VISUAL_SUITE_RESULT = "http://fryc.eu/rusheye/visual-suite-result.xsd";
+    public static final String SCHEMA_LOCATION_VISUAL_SUITE_RESULT = "http://www.jboss.org/schema/arquillian/rusheye/visual-suite-result.xsd";
 
     private RushEye() {
     }
