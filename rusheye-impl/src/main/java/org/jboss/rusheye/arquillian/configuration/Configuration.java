@@ -64,7 +64,6 @@ public abstract class Configuration<T extends Configuration<T>> {
      */
     public String getProperty(String name, String defaultValue) throws IllegalStateException {
         Validate.notNullOrEmpty(name, "Unable to get the configuration value of null or empty configuration key");
-        Validate.notNull(defaultValue, "Unable to set configuration value of " + name + " to null object.");
 
         String found = getConfiguration().get(name);
         if (found == null || found.isEmpty()) {

@@ -17,7 +17,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.rusheye.RushEye;
 import org.jboss.rusheye.arquillian.configuration.RusheyeConfiguration;
-import org.jboss.rusheye.arquillian.event.CrawlEvent;
+import org.jboss.rusheye.arquillian.event.StartCrawlinglEvent;
 import org.jboss.rusheye.parser.listener.CompareListener;
 import org.jboss.rusheye.result.collector.ResultCollectorImpl;
 import org.jboss.rusheye.result.statistics.OverallStatistics;
@@ -32,6 +32,8 @@ import static org.apache.commons.lang.StringUtils.split;
 import static org.apache.commons.lang.StringUtils.substringAfter;
 import static org.apache.commons.lang.StringUtils.substringAfterLast;
 import static org.apache.commons.lang.StringUtils.substringBeforeLast;
+import org.jboss.arquillian.core.api.Event;
+import org.jboss.rusheye.arquillian.event.CrawlingDoneEvent;
 
 /**
  *
@@ -42,45 +44,57 @@ public class CrawlObserver {
     @Inject
     private Instance<RusheyeConfiguration> rusheyeConfiguration;
 
+    @Inject
+    private Event<CrawlingDoneEvent> crawlingDoneEvent;
+
     private Document document;
     private Namespace ns;
 
-    public void crawl(@Observes CrawlEvent event) {
+    public void crawl(@Observes StartCrawlinglEvent event) {
         document = DocumentHelper.createDocument();
-        addDocumentRoot();
+        addDocumentRoot(event);
         writeDocument();
     }
 
     private void writeDocument() {
         OutputFormat format = OutputFormat.createPrettyPrint();
         OutputStream out = openOutputStream();
+        XMLWriter writer = null;
 
         try {
-            XMLWriter writer = new XMLWriter(out, format);
+            writer = new XMLWriter(out, format);
             writer.write(document);
             writer.flush();
-            writer.close();
+            crawlingDoneEvent.fire(new CrawlingDoneEvent());
         } catch (IOException e) {
-            printErrorMessage(e);
+            PrintErrorUtils.printErrorMessage(e);
             System.exit(7);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException ex) {
+                PrintErrorUtils.printErrorMessage(ex);
+                System.exit(7);
+            }
         }
     }
 
     private OutputStream openOutputStream() {
-        if (rusheyeConfiguration.get().getOutput() == null) {
+        RusheyeConfiguration conf = rusheyeConfiguration.get();
+        if (conf.getSuiteDescriptor() == null) {
             return System.out;
         }
 
         try {
-            return new FileOutputStream(rusheyeConfiguration.get().getOutput());
+            return new FileOutputStream(conf.getWorkingDirectory() + File.separator + conf.getSuiteDescriptor());
         } catch (IOException e) {
-            printErrorMessage(e);
+            PrintErrorUtils.printErrorMessage(e);
             System.exit(7);
             return null;
         }
     }
 
-    private void addDocumentRoot() {
+    private void addDocumentRoot(StartCrawlinglEvent event) {
         ns = Namespace.get(RushEye.NAMESPACE_VISUAL_SUITE);
 
         Element root = document.addElement(QName.get("visual-suite", ns));
@@ -97,7 +111,7 @@ public class CrawlObserver {
         addRetrievers(globalConfiguration);
         addPerception(globalConfiguration);
         addMasksByType(rusheyeConfiguration.get().getMaskBase(), globalConfiguration);
-        addTests(rusheyeConfiguration.get().getPatternBase(), root);
+        addTests(new File(event.getSamplesFolder()), root, event);
     }
 
     private void addSuiteListener(Element globalConfiguration) {
@@ -122,11 +136,11 @@ public class CrawlObserver {
         RusheyeConfiguration conf = rusheyeConfiguration.get();
 
         if (conf.getOnePixelTreshold() != null) {
-            perception.addElement(QName.get("one-pixel-treshold", ns)).addText(rusheyeConfiguration.get().getOnePixelTreshold());
+            perception.addElement(QName.get("one-pixel-treshold", ns)).addText(String.valueOf(conf.getOnePixelTreshold()));
         }
         if (conf.getGlobalDifferenceTreshold() != null) {
             perception.addElement(QName.get("global-difference-treshold", ns))
-                    .addText(conf.getGlobalDifferenceTreshold());
+                    .addText(String.valueOf(conf.getGlobalDifferenceTreshold()));
         }
         if (conf.getGlobalDifferenceAmount() != null) {
             perception.addElement(QName.get("global-difference-amount", ns)).addText(conf.getGlobalDifferenceAmount());
@@ -163,7 +177,7 @@ public class CrawlObserver {
         }
     }
 
-    private void addTests(File dir, Element root) {
+    private void addTests(File dir, Element root, StartCrawlinglEvent event) {
         if (dir.exists() && dir.isDirectory()) {
             tests:
             for (File testFile : dir.listFiles()) {
@@ -182,41 +196,48 @@ public class CrawlObserver {
 //                    addMasksByType(testFile, test);
 //                }
                 if (testFile.isDirectory()) {
-                    recursiveFindTestName(testFile, root);
+                    recursiveFindTestName(testFile, root, event);
                 }
 
             }
         }
     }
 
-    private void recursiveFindTestName(File dir, Element root) {
+    /**
+     * Adds recursively all screenshots. It presumes that screenshots are under following directory structure:
+     * [PatternBase]/[TestClassName]/[testMethodName]/nameOfScreenshot.[extension]
+     *
+     * @param dir
+     * @param root
+     */
+    private void recursiveFindTestName(File dir, Element root, StartCrawlinglEvent event) {
         for (File testFile : dir.listFiles()) {
             if (testFile.isFile()) {
-                
+
                 String patterName = substringBeforeLast(testFile.getName(), ".");
 
                 Element test = root.addElement(QName.get("test", ns));
-                String testName = testFile.getParentFile().getParentFile().getName() + 
-                        "." + testFile.getParentFile().getName();
+                String testName = testFile.getParentFile().getParentFile().getName()
+                        + "." + testFile.getParentFile().getName();
                 test.addAttribute("name", testName);
 
-                String source = getRelativePath(rusheyeConfiguration.get().getPatternBase(), testFile);
+                String source = getRelativePath(new File(event.getSamplesFolder()), testFile);
 
                 Element pattern = test.addElement(QName.get("pattern", ns));
                 pattern.addAttribute("name", patterName);
                 pattern.addAttribute("source", source);
             } else if (testFile.isDirectory()) {
-                recursiveFindTestName(testFile, root);
+                recursiveFindTestName(testFile, root, event);
             }
         }
     }
 
-    private void addPatterns(File dir, Element test) {
+    private void addPatterns(File dir, Element test, StartCrawlinglEvent event) {
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile()) {
                     String name = substringBeforeLast(file.getName(), ".");
-                    String source = getRelativePath(rusheyeConfiguration.get().getPatternBase(), file);
+                    String source = getRelativePath(new File(event.getSamplesFolder()), file);
 
                     Element pattern = test.addElement(QName.get("pattern", ns));
                     pattern.addAttribute("name", name);
@@ -228,9 +249,5 @@ public class CrawlObserver {
 
     private String getRelativePath(File base, File file) {
         return substringAfter(file.getPath(), base.getPath()).replaceFirst("^/", "");
-    }
-
-    private void printErrorMessage(Exception e) {
-        System.err.println(e.getMessage());
     }
 }
