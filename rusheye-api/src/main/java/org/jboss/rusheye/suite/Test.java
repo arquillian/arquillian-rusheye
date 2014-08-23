@@ -99,7 +99,7 @@ public class Test extends Configuration {
     public Sample getSample() {
         if (sample == null) {
             sample = new Sample();
-            sample.setSource(name);
+            sample.setSource(getPatterns().get(0).getSource());
         }
         return sample;
     }

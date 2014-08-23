@@ -218,13 +218,13 @@ public class CrawlObserver {
 
                 Element test = root.addElement(QName.get("test", ns));
                 String testName = testFile.getParentFile().getParentFile().getName()
-                        + "." + testFile.getParentFile().getName();
+                        + "." + testFile.getParentFile().getName() + "." + patterName;
                 test.addAttribute("name", testName);
 
                 String source = getRelativePath(new File(event.getSamplesFolder()), testFile);
 
                 Element pattern = test.addElement(QName.get("pattern", ns));
-                pattern.addAttribute("name", patterName);
+                pattern.addAttribute("name", testName);
                 pattern.addAttribute("source", source);
             } else if (testFile.isDirectory()) {
                 recursiveFindTestName(testFile, root, event);

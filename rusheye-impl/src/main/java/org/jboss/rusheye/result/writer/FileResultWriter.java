@@ -45,6 +45,8 @@ public class FileResultWriter extends XmlResultWriter {
 
     @Override
     protected void closeOutputStream() throws Exception {
-        fout.close();
+        if(fout != null) {
+            fout.close();
+        }
     }
 }

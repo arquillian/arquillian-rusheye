@@ -43,11 +43,17 @@ public class ParseObserver {
 
     public void initialize(StartParsingEvent event) {
         RusheyeConfiguration conf = rusheyeConfiguration.get();
-        properties.setProperty("result-output-file", conf.getResultOutputFile());
+        properties.setProperty("result-output-file", conf.getWorkingDirectory() + File.separator + conf.getResultOutputFile());
         properties.setProperty("samples-directory", event.getSamplesFolder());
-        properties.setProperty("patterns-directory", event.getPatternAndDescriptorFolder() 
-                + File.separator + event.getSamplesFolder());
-        properties.setProperty("file-storage-directory", conf.getDiffsDir());
+        properties.setProperty("patterns-directory", event.getPatternAndDescriptorFolder() +
+                getRelativePatternsDir(event.getSamplesFolder()));
+        properties.setProperty("file-storage-directory", conf.getWorkingDirectory() + File.separator + conf.getDiffsDir());
+        properties.setProperty("masks-directory", conf.getMaskBase());
+    }
+    
+    private String getRelativePatternsDir(String samplesDir) {
+        String absoluteWorking = rusheyeConfiguration.get().getWorkingDirectory().getAbsolutePath();
+        return samplesDir.replace(absoluteWorking, "");
     }
 
     public class SuiteListenerConverter implements IStringConverter<SuiteListener> {
