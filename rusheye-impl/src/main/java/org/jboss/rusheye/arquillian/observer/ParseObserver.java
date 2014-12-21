@@ -43,7 +43,7 @@ public class ParseObserver {
         File suiteDescriptor = new File(event.getPatternAndDescriptorFolder() +
                 File.separator +
                 rusheyeConfiguration.get().getSuiteDescriptor());
-        parser.parseFile(suiteDescriptor);
+        parser.parseFile(suiteDescriptor, event.getFailedTestsCollection());
         parsingDoneEvent.fire(new ParsingDoneEvent());
     }
 

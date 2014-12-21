@@ -1,23 +1,15 @@
 /**
- * JBoss, Home of Professional Open Source
- * Copyright ${year}, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+ * JBoss, Home of Professional Open Source Copyright ${year}, Red Hat, Inc. and individual contributors by the @authors tag. See
+ * the copyright.txt in the distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * You should have received a copy of the GNU Lesser General Public License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.rusheye.parser;
 
@@ -59,6 +51,8 @@ import org.jboss.rusheye.suite.VisualSuite;
 
 import com.ctc.wstx.exc.WstxParsingException;
 import com.ctc.wstx.exc.WstxValidationException;
+import java.util.logging.Logger;
+import org.jboss.rusheye.arquillian.event.FailedTestsCollection;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -69,6 +63,8 @@ public final class Parser {
     private Set<SuiteListener> listeners = new LinkedHashSet<SuiteListener>();
     private Handler handler = new Handler(listeners);
     private Properties properties;
+
+    private final Logger logger = Logger.getLogger(Parser.class.getName());
 
     public Parser() {
         this.registerListener(new ParserListenerRegistrationListener());
@@ -99,18 +95,22 @@ public final class Parser {
     }
 
     public void parseFile(File file) {
-        parseFile(file, false);
+        parseFile(file, false, null);
+    }
+
+    public void parseFile(File file, FailedTestsCollection failedTestsCollection) {
+        parseFile(file, false, failedTestsCollection);
     }
 
     public void parseFileTempFile(File file) {
-        parseFile(file, true);
+        parseFile(file, true, null);
     }
 
-    private void parseFile(File file, boolean tmpfile) {
+    private void parseFile(File file, boolean tmpfile, FailedTestsCollection failedTestsCollection) {
         VisualSuite visualSuite = null;
         try {
             XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
-                .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
+                    .newInstance(XMLValidationSchema.SCHEMA_ID_W3C_SCHEMA);
             URL schemaURL = getClass().getClassLoader().getResource("org/jboss/rusheye/visual-suite.xsd");
             XMLValidationSchema schema = schemaFactory.createSchema(schemaURL);
 
@@ -137,7 +137,6 @@ public final class Parser {
             //
             // XMLEventReader reader = factory.createXMLEventReader(file);
             // XMLEventReader filteredReader = factory.createFilteredReader(reader, filter);
-
             JAXBContext ctx = JAXBContext.newInstance(VisualSuite.class.getPackage().getName());
             Unmarshaller um = ctx.createUnmarshaller();
 
@@ -173,6 +172,11 @@ public final class Parser {
                     }
                     if (o instanceof Test) {
                         Test test = (Test) o;
+                        String testName = test.getName().substring(0, test.getName().lastIndexOf("."));
+                        if (failedTestsCollection != null && failedTestsCollection.getTestResults().contains(testName)) { 
+                            logger.info("Comparison is not made for: " + test.getName() + ", as its functional test failed!");
+                            continue;
+                        }
                         handler.getContext().setCurrentConfiguration(test);
                         handler.getContext().setCurrentTest(test);
                         for (Pattern pattern : test.getPatterns()) {
@@ -235,6 +239,7 @@ public final class Parser {
     }
 
     private class ParserListenerRegistrationListener extends SuiteListenerAdapter {
+
         @Override
         public void onConfigurationReady(VisualSuite visualSuite) {
             for (SuiteListener listener : visualSuite.getGlobalConfiguration().getListeners()) {

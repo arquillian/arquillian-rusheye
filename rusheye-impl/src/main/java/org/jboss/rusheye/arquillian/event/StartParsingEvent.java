@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jboss.rusheye.arquillian.event;
 
 /**
@@ -15,9 +10,13 @@ public class StartParsingEvent {
 
     private String samplesFolder;
 
-    public StartParsingEvent(String patternAndDescriptorFolder, String samplesFolder) {
+    private FailedTestsCollection failedTestsCollection;
+    
+    public StartParsingEvent(String patternAndDescriptorFolder, String samplesFolder, 
+            FailedTestsCollection failedTestsCollection) {
         this.patternAndDescriptorFolder = patternAndDescriptorFolder;
         this.samplesFolder = samplesFolder;
+        this.failedTestsCollection = failedTestsCollection;
     }
 
     public String getSamplesFolder() {
@@ -36,4 +35,11 @@ public class StartParsingEvent {
         this.patternAndDescriptorFolder = patternAndDescriptorFolder;
     }
 
+    public FailedTestsCollection getFailedTestsCollection() {
+        return failedTestsCollection;
+    }
+
+    public void setFailedTestsCollection(FailedTestsCollection failedTestsCollection) {
+        this.failedTestsCollection = failedTestsCollection;
+    }
 }
