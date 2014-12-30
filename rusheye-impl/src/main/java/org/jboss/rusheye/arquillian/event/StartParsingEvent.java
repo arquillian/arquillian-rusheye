@@ -12,11 +12,14 @@ public class StartParsingEvent {
 
     private FailedTestsCollection failedTestsCollection;
     
+    private VisuallyUnstableTestsCollection visuallyUnstableCollection;
+    
     public StartParsingEvent(String patternAndDescriptorFolder, String samplesFolder, 
-            FailedTestsCollection failedTestsCollection) {
+            FailedTestsCollection failedTestsCollection, VisuallyUnstableTestsCollection visuallyUnstable) {
         this.patternAndDescriptorFolder = patternAndDescriptorFolder;
         this.samplesFolder = samplesFolder;
         this.failedTestsCollection = failedTestsCollection;
+        this.visuallyUnstableCollection = visuallyUnstable;
     }
 
     public String getSamplesFolder() {
@@ -41,5 +44,13 @@ public class StartParsingEvent {
 
     public void setFailedTestsCollection(FailedTestsCollection failedTestsCollection) {
         this.failedTestsCollection = failedTestsCollection;
+    }
+
+    public VisuallyUnstableTestsCollection getVisuallyUnstableCollection() {
+        return visuallyUnstableCollection;
+    }
+
+    public void setVisuallyUnstableCollection(VisuallyUnstableTestsCollection visuallyUnstableCollection) {
+        this.visuallyUnstableCollection = visuallyUnstableCollection;
     }
 }

@@ -53,6 +53,7 @@ import com.ctc.wstx.exc.WstxParsingException;
 import com.ctc.wstx.exc.WstxValidationException;
 import java.util.logging.Logger;
 import org.jboss.rusheye.arquillian.event.FailedTestsCollection;
+import org.jboss.rusheye.arquillian.event.VisuallyUnstableTestsCollection;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -95,18 +96,20 @@ public final class Parser {
     }
 
     public void parseFile(File file) {
-        parseFile(file, false, null);
+        parseFile(file, false, null, null);
     }
 
-    public void parseFile(File file, FailedTestsCollection failedTestsCollection) {
-        parseFile(file, false, failedTestsCollection);
+    public void parseFile(File file, FailedTestsCollection failedTestsCollection, 
+            VisuallyUnstableTestsCollection visuallyUnstableCollection) {
+        parseFile(file, false, failedTestsCollection, visuallyUnstableCollection);
     }
 
     public void parseFileTempFile(File file) {
-        parseFile(file, true, null);
+        parseFile(file, true, null, null);
     }
 
-    private void parseFile(File file, boolean tmpfile, FailedTestsCollection failedTestsCollection) {
+    private void parseFile(File file, boolean tmpfile, FailedTestsCollection failedTestsCollection, 
+            VisuallyUnstableTestsCollection visuallyUnstableCollection) {
         VisualSuite visualSuite = null;
         try {
             XMLValidationSchemaFactory schemaFactory = XMLValidationSchemaFactory
@@ -173,8 +176,9 @@ public final class Parser {
                     if (o instanceof Test) {
                         Test test = (Test) o;
                         String testName = test.getName().substring(0, test.getName().lastIndexOf("."));
-                        if (failedTestsCollection != null && failedTestsCollection.getTestResults().contains(testName)) { 
-                            logger.info("Comparison is not made for: " + test.getName() + ", as its functional test failed!");
+                        if (failedTestsCollection != null && failedTestsCollection.getTests().contains(testName)
+                            || visuallyUnstableCollection != null && visuallyUnstableCollection.getTests().contains(testName)) { 
+                            logger.info("Comparison is not made for: " + test.getName() + ", as its functional test failed or is unstable!");
                             continue;
                         }
                         handler.getContext().setCurrentConfiguration(test);

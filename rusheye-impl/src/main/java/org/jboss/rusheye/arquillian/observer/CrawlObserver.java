@@ -215,10 +215,17 @@ public class CrawlObserver {
             if (testFile.isFile()) {
 
                 String patterName = substringBeforeLast(testFile.getName(), ".");
-
-                Element test = root.addElement(QName.get("test", ns));
                 String testName = testFile.getParentFile().getParentFile().getName()
                         + "." + testFile.getParentFile().getName() + "." + patterName;
+                String testNameWithoutScreenshot = testName.substring(0, testName.lastIndexOf("."));
+                if (event.getFailedTestsCollection().getTests().contains(testNameWithoutScreenshot)
+                        || event.getVisuallyUnstableCollection().getTests().contains(testNameWithoutScreenshot)) {
+                    //THE TEST HAS FAILED OR IS UNSTABLE, SKIP IT
+                    continue;
+                }
+
+                Element test = root.addElement(QName.get("test", ns));
+
                 test.addAttribute("name", testName);
 
                 String source = getRelativePath(new File(event.getSamplesFolder()), testFile);
