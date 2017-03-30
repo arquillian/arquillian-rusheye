@@ -25,31 +25,31 @@ import org.jboss.rusheye.exception.ConfigurationException;
 
 /**
  * Instantiates given type by class name.
- * 
+ *
  * @param <T>
- *            the type to instantiate
- * 
+ *     the type to instantiate
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class Instantiator<T> {
     /**
      * Returns the instance of &lt;T&gt; assuming that className is name of the class of type &lt;T&gt;
-     * 
+     *
      * @param className
-     *            the name of the class
+     *     the name of the class
+     *
      * @return the instance of &lt;T&gt; assuming that className is name of the class of type &lt;T&gt;
-     * 
+     *
      * @throws ConfigurationException
-     *             when class with className cannot be found, cannot be instantiated due to it's nature or security
-     *             purposes
+     *     when class with className cannot be found, cannot be instantiated due to it's nature or security
+     *     purposes
      */
     public T getInstance(String className) {
         try {
             return getInstanceClass(className).newInstance();
         } catch (InstantiationException e) {
             throw new ConfigurationException(getMessage(className), e);
-
         } catch (IllegalAccessException e) {
             throw new ConfigurationException(getMessage(className), e);
         }

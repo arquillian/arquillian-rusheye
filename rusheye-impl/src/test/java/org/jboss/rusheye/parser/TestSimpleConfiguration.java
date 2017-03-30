@@ -21,17 +21,16 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
-
 import java.io.IOException;
-
 import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.VisualSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

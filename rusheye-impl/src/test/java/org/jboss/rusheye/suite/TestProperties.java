@@ -21,10 +21,10 @@
  */
 package org.jboss.rusheye.suite;
 
+import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
-
-import org.testng.annotations.Test;
 
 public class TestProperties {
 

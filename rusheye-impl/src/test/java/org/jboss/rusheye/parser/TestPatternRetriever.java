@@ -21,14 +21,8 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.fail;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.AbstractRetriever;
 import org.jboss.rusheye.retriever.MaskRetriever;
@@ -36,6 +30,11 @@ import org.jboss.rusheye.retriever.PatternRetriever;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.fail;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -64,7 +63,6 @@ public class TestPatternRetriever extends AbstractVisualSuiteDefinitionTest {
         } catch (RetrieverException e) {
             fail();
         }
-
     }
 
     public static class AssertingRetriever extends AbstractRetriever implements PatternRetriever, MaskRetriever {

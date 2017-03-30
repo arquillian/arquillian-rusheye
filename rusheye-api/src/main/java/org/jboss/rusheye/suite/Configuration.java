@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.internal.FilterCollection;
 import org.jboss.rusheye.internal.Predicate;
 import org.jboss.rusheye.suite.annotations.Nullify;
@@ -38,13 +37,13 @@ import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
 
 /**
  * Abstract configuration containing perception settings and list of masks.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Configuration", propOrder = { "perception", "masks" })
-@XmlSeeAlso({ GlobalConfiguration.class, Test.class })
+@XmlType(name = "Configuration", propOrder = {"perception", "masks"})
+@XmlSeeAlso({GlobalConfiguration.class, Test.class})
 public abstract class Configuration {
 
     /** The perception. */
@@ -55,7 +54,7 @@ public abstract class Configuration {
 
     /**
      * Gets the perception settings.
-     * 
+     *
      * @return the perception settings
      */
     @Nullify(VisualSuiteResult.class)
@@ -65,9 +64,9 @@ public abstract class Configuration {
 
     /**
      * Sets the perception settings.
-     * 
+     *
      * @param value
-     *            of the new perception settings
+     *     of the new perception settings
      */
     public void setPerception(Perception value) {
         this.perception = value;
@@ -75,7 +74,7 @@ public abstract class Configuration {
 
     /**
      * Gets the list of all masks.
-     * 
+     *
      * @return the list of all masks
      */
     @XmlElement(name = "mask")
@@ -86,9 +85,10 @@ public abstract class Configuration {
         }
         return this.masks;
     }
+
     /**
      * Gets the list of selective alpha masks.
-     * 
+     *
      * @return the list of selective alpha masks
      */
     @XmlTransient
@@ -103,7 +103,7 @@ public abstract class Configuration {
 
     /**
      * Gets the list of ignore bitmap masks.
-     * 
+     *
      * @return the list of ignore bitmap masks
      */
     @XmlTransient

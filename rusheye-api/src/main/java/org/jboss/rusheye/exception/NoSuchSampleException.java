@@ -23,7 +23,7 @@ package org.jboss.rusheye.exception;
 
 /**
  * Thrown when specific sample wasn't found for given source.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -46,5 +46,4 @@ public class NoSuchSampleException extends RetrieverException {
     public NoSuchSampleException(Throwable cause) {
         super(cause);
     }
-
 }

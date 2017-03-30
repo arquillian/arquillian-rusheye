@@ -21,19 +21,13 @@
  */
 package org.jboss.rusheye.core;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.imageio.ImageIO;
-
 import org.jboss.rusheye.oneoff.ImageUtils;
 import org.jboss.rusheye.parser.ConfigurationCompiler;
 import org.jboss.rusheye.suite.ComparisonResult;
@@ -42,6 +36,10 @@ import org.jboss.rusheye.suite.Perception;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -204,6 +202,5 @@ public class TestImageComparison {
         public boolean accept(File dir, String name) {
             return name.startsWith(prefix);
         }
-
     }
 }

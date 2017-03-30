@@ -21,14 +21,13 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_DIFFERENCE_PIXEL_AMOUNT;
-
 import java.io.IOException;
-
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_DIFFERENCE_PIXEL_AMOUNT;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -39,12 +38,12 @@ public class TestPerceptionAmount extends AbstractVisualSuiteDefinitionTest {
 
     @DataProvider(name = "pixel-amount-allowed")
     public Object[][] providePixelAmountAllowed() {
-        return new Object[][] { { "0%" }, { "1%" }, { "100%" }, { "0px" }, { "1px" }, { MAX_PIXEL_AMOUNT + "px" } };
+        return new Object[][] {{"0%"}, {"1%"}, {"100%"}, {"0px"}, {"1px"}, {MAX_PIXEL_AMOUNT + "px"}};
     }
 
     @DataProvider(name = "pixel-amount-not-allowed")
     public Object[][] providePixelAmountNotAllowed() {
-        return new Object[][] { { "-1%" }, { "0.1%" }, { "101%" }, { "-1px" }, { "0" }, { "1" }, { "a" }, { "null" } };
+        return new Object[][] {{"-1%"}, {"0.1%"}, {"101%"}, {"-1px"}, {"0"}, {"1"}, {"a"}, {"null"}};
     }
 
     @Test(dataProvider = "pixel-amount-allowed")

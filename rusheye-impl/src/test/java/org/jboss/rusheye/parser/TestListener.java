@@ -21,15 +21,10 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.LISTENER;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
-
 import org.dom4j.Element;
-import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.exception.ConfigurationException;
+import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Pattern;
@@ -37,13 +32,18 @@ import org.jboss.rusheye.suite.VisualSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.LISTENER;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class TestListener extends AbstractVisualSuiteDefinitionTest {
 
-    @Test(expectedExceptions = { ConfigurationValidationException.class }, expectedExceptionsMessageRegExp = "tag name \"pattern-retriever\" is not allowed. Possible tag names are: .*")
+    @Test(expectedExceptions = {
+        ConfigurationValidationException.class}, expectedExceptionsMessageRegExp = "tag name \"pattern-retriever\" is not allowed. Possible tag names are: .*")
     public void testNoListener() throws IOException, SAXException {
         stub.globalConfiguration.remove(stub.defaultListener);
         startWriter();
@@ -70,12 +70,6 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    public static class ExceptionThrowingListener extends SuiteListenerAdapter {
-        public ExceptionThrowingListener() {
-            throw new UnsupportedOperationException("for assertion purposes");
-        }
-    }
-
     @Test
     public void testAssertingEventOrder() throws IOException, SAXException {
         stub.globalConfiguration.remove(stub.defaultListener);
@@ -86,6 +80,38 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         startWriter();
         parse();
         assertEquals(AssertingListener.state, 5);
+    }
+
+    @Test
+    public void testListenerProperties() throws IOException, SAXException {
+        stub.globalConfiguration.remove(stub.defaultListener);
+        Element listener = stub.globalConfiguration.addElement(LISTENER);
+        listener.addAttribute("type", PropertiesCheckingListener.class.getName());
+        reoderElements();
+
+        Element xyz = listener.addElement("xyz");
+        xyz.addText("abc");
+
+        startWriter();
+        parse();
+    }
+
+    private void reoderElements() {
+        stub.globalConfiguration.remove(stub.patternRetriever);
+        stub.globalConfiguration.remove(stub.maskRetriever);
+        stub.globalConfiguration.remove(stub.sampleRetriever);
+        stub.globalConfiguration.remove(stub.perception);
+
+        stub.globalConfiguration.add(stub.patternRetriever);
+        stub.globalConfiguration.add(stub.maskRetriever);
+        stub.globalConfiguration.add(stub.sampleRetriever);
+        stub.globalConfiguration.add(stub.perception);
+    }
+
+    public static class ExceptionThrowingListener extends SuiteListenerAdapter {
+        public ExceptionThrowingListener() {
+            throw new UnsupportedOperationException("for assertion purposes");
+        }
     }
 
     public static class AssertingListener extends SuiteListenerAdapter {
@@ -123,37 +149,11 @@ public class TestListener extends AbstractVisualSuiteDefinitionTest {
         }
     }
 
-    @Test
-    public void testListenerProperties() throws IOException, SAXException {
-        stub.globalConfiguration.remove(stub.defaultListener);
-        Element listener = stub.globalConfiguration.addElement(LISTENER);
-        listener.addAttribute("type", PropertiesCheckingListener.class.getName());
-        reoderElements();
-
-        Element xyz = listener.addElement("xyz");
-        xyz.addText("abc");
-
-        startWriter();
-        parse();
-    }
-
     public static class PropertiesCheckingListener extends SuiteListenerAdapter {
         @Override
         public void onSuiteStarted(VisualSuite visualSuite) {
             assertEquals(properties.size(), 1);
             assertEquals(properties.getProperty("xyz"), "abc");
         }
-    }
-
-    private void reoderElements() {
-        stub.globalConfiguration.remove(stub.patternRetriever);
-        stub.globalConfiguration.remove(stub.maskRetriever);
-        stub.globalConfiguration.remove(stub.sampleRetriever);
-        stub.globalConfiguration.remove(stub.perception);
-
-        stub.globalConfiguration.add(stub.patternRetriever);
-        stub.globalConfiguration.add(stub.maskRetriever);
-        stub.globalConfiguration.add(stub.sampleRetriever);
-        stub.globalConfiguration.add(stub.perception);
     }
 }

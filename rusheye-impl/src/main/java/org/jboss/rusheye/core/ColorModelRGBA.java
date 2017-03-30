@@ -60,11 +60,10 @@ public final class ColorModelRGBA {
     }
 
     static float[] getRGB(int color) {
-        return new float[] { getR(color), getG(color), getB(color) };
+        return new float[] {getR(color), getG(color), getB(color)};
     }
 
     private static int colorComponent(int color, int mask, int shift) {
         return (color & mask) >> shift;
     }
-
 }

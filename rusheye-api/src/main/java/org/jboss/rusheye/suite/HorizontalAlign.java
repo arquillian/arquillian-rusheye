@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Horizontal alignment of mask in context of sample/pattern image.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -46,15 +46,11 @@ public enum HorizontalAlign {
      */
     @XmlEnumValue("right")
     RIGHT("right");
-    
+
     private final String value;
 
     HorizontalAlign(String v) {
         value = v;
-    }
-
-    public String value() {
-        return value;
     }
 
     public static HorizontalAlign fromValue(String v) {
@@ -64,6 +60,10 @@ public enum HorizontalAlign {
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value() {
+        return value;
     }
 
 }

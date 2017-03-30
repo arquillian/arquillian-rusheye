@@ -23,7 +23,7 @@ package org.jboss.rusheye.suite;
 
 /**
  * The type of result of the comparison process.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

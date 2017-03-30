@@ -26,11 +26,9 @@ import java.lang.reflect.Method;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
-
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Perception;
@@ -43,31 +41,6 @@ public class ConfigurationCompiler extends Configuration {
 
     {
         customConfigurations.push(DEFAULT_CONFIGURATION);
-    }
-
-    public void pushConfiguration(Configuration configuration) {
-        customConfigurations.push(configuration);
-    }
-
-    @Override
-    public Perception getPerception() {
-        return new PerceptionCompiler().getCompiledPerception();
-    }
-
-    @Override
-    public void setPerception(Perception value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<Mask> getMasks() {
-        List<Mask> masks = new LinkedList<Mask>();
-        for (Configuration configuration : customConfigurations) {
-            if (configuration.getMasks() != null && !configuration.getMasks().isEmpty()) {
-                masks.addAll(configuration.getMasks());
-            }
-        }
-        return masks;
     }
 
     @SuppressWarnings("unchecked")
@@ -107,6 +80,31 @@ public class ConfigurationCompiler extends Configuration {
             }
         });
         return proxy;
+    }
+
+    public void pushConfiguration(Configuration configuration) {
+        customConfigurations.push(configuration);
+    }
+
+    @Override
+    public Perception getPerception() {
+        return new PerceptionCompiler().getCompiledPerception();
+    }
+
+    @Override
+    public void setPerception(Perception value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Mask> getMasks() {
+        List<Mask> masks = new LinkedList<Mask>();
+        for (Configuration configuration : customConfigurations) {
+            if (configuration.getMasks() != null && !configuration.getMasks().isEmpty()) {
+                masks.addAll(configuration.getMasks());
+            }
+        }
+        return masks;
     }
 
     public class PerceptionCompiler implements MethodHandler {

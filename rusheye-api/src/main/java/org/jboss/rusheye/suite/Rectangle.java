@@ -22,7 +22,6 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.Point;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -33,12 +32,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Rectangle defining area which needs to be highlighted in the difference image.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(propOrder = { "min", "max" })
+@XmlType(propOrder = {"min", "max"})
 public class Rectangle {
     private Point min;
     private Point max;

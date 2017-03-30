@@ -40,5 +40,4 @@ public class CommandValidationException extends Exception {
     public CommandValidationException(Throwable cause) {
         super(cause);
     }
-
 }

@@ -22,8 +22,8 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-<visual-suite xmlns="http://www.jboss.org/test/visual-suite"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<visual-suite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.jboss.org/test/visual-suite"
     xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
 
   <global-configuration>

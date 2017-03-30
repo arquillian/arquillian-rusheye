@@ -23,14 +23,13 @@ package org.jboss.rusheye.comparison;
 
 import java.awt.image.BufferedImage;
 import java.util.Collection;
-
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Perception;
 
 /**
  * Compares pixels of images one-by-one using approximation of human perception of color spaces.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -39,23 +38,19 @@ public interface ImageComparator {
      * <p>
      * Compares patternImage with sampleImage approximating human perception of color spaces.
      * </p>
-     * 
+     *
      * <p>
      * During comparison, uses the given settings of perception and the collection of masks.
      * </p>
-     * 
+     *
      * <p>
      * Implementation doesn't satisfy that it will be able to use all of the types of mask.
      * </p>
-     * 
+     *
      * <p>
      * Return comparison result with details of comparison.
      * </p>
-     * 
-     * @param patternImage
-     * @param sampleImage
-     * @param perception
-     * @param masks
+     *
      * @return comparison result with details of comparison
      */
     ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,

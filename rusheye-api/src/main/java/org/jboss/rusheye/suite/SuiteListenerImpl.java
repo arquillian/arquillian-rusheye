@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.listener.SuiteListener;
 
@@ -33,11 +32,11 @@ import org.jboss.rusheye.listener.SuiteListener;
  * <p>
  * Proxy for actual implementation of {@link SuiteListener}.
  * </p>
- * 
+ *
  * <p>
  * Actual implementation will be constructed from {@link #getType()} value.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -113,7 +112,6 @@ public class SuiteListenerImpl extends TypeProperties implements SuiteListener {
     public void onTestReady(Test test) {
         initializeListener();
         suiteListener.onTestReady(test);
-
     }
 
     /*

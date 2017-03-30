@@ -23,7 +23,6 @@ package org.jboss.rusheye.suite;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,12 +33,12 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * The perceptual settings to be used in comparison process.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Perception", propOrder = { "onePixelTreshold", "globalDifferenceTreshold", "globalDifferenceAmount" })
+@XmlType(name = "Perception", propOrder = {"onePixelTreshold", "globalDifferenceTreshold", "globalDifferenceAmount"})
 public class Perception {
 
     /**
@@ -59,7 +58,7 @@ public class Perception {
 
     /**
      * Gets the one pixel treshold.
-     * 
+     *
      * @return the one pixel treshold
      */
     @XmlElement(name = "one-pixel-treshold")
@@ -69,9 +68,9 @@ public class Perception {
 
     /**
      * Sets the one pixel treshold.
-     * 
+     *
      * @param value
-     *            the new one pixel treshold
+     *     the new one pixel treshold
      */
     public void setOnePixelTreshold(Float value) {
         this.onePixelTreshold = value;
@@ -79,7 +78,7 @@ public class Perception {
 
     /**
      * Gets the global difference treshold.
-     * 
+     *
      * @return the global difference treshold
      */
     @XmlElement(name = "global-difference-treshold")
@@ -89,9 +88,9 @@ public class Perception {
 
     /**
      * Sets the global difference treshold.
-     * 
+     *
      * @param value
-     *            the new global difference treshold
+     *     the new global difference treshold
      */
     public void setGlobalDifferenceTreshold(Float value) {
         this.globalDifferenceTreshold = value;
@@ -99,7 +98,7 @@ public class Perception {
 
     /**
      * Gets the global difference amount.
-     * 
+     *
      * @return the global difference amount
      */
     @XmlElement(name = "global-difference-pixel-amount")
@@ -109,9 +108,9 @@ public class Perception {
 
     /**
      * Sets the global difference amount.
-     * 
+     *
      * @param value
-     *            the new global difference amount
+     *     the new global difference amount
      */
     public void setGlobalDifferenceAmount(String value) {
         this.globalDifferenceAmount = value;
@@ -120,9 +119,10 @@ public class Perception {
     /*
      * 
      */
+
     /**
      * Gets the global difference pixel amount.
-     * 
+     *
      * @return the global difference pixel amount
      */
     @XmlTransient
@@ -133,9 +133,9 @@ public class Perception {
 
     /**
      * Sets the global difference pixel amount.
-     * 
+     *
      * @param globalDifferencePixelAmount
-     *            the new global difference pixel amount
+     *     the new global difference pixel amount
      */
     public void setGlobalDifferencePixelAmount(long globalDifferencePixelAmount) {
         this.globalDifferenceAmount = Long.toString(globalDifferencePixelAmount) + "px";
@@ -143,7 +143,7 @@ public class Perception {
 
     /**
      * Gets the global difference percentage.
-     * 
+     *
      * @return the global difference percentage
      */
     @XmlTransient
@@ -154,9 +154,9 @@ public class Perception {
 
     /**
      * Sets the global difference percentage.
-     * 
+     *
      * @param globalDifferencePercentage
-     *            the new global difference percentage
+     *     the new global difference percentage
      */
     public void setGlobalDifferencePercentage(short globalDifferencePercentage) {
         this.globalDifferenceAmount = Short.valueOf(globalDifferencePercentage) + "%";
@@ -164,9 +164,10 @@ public class Perception {
 
     /**
      * Gets the global difference amount.
-     * 
+     *
      * @param amountType
-     *            the amount type
+     *     the amount type
+     *
      * @return the global difference amount
      */
     public Number getGlobalDifferenceAmount(AmountType amountType) {
@@ -210,9 +211,9 @@ public class Perception {
 
         /**
          * Instantiates a new amount type.
-         * 
+         *
          * @param pattern
-         *            the pattern
+         *     the pattern
          */
         private AmountType(String pattern) {
             this.pattern = Pattern.compile(pattern);
@@ -220,7 +221,7 @@ public class Perception {
 
         /**
          * Gets the pattern.
-         * 
+         *
          * @return the pattern
          */
         Pattern getPattern() {
@@ -229,9 +230,10 @@ public class Perception {
 
         /**
          * Parses the amount.
-         * 
+         *
          * @param string
-         *            the string
+         *     the string
+         *
          * @return the number
          */
         Number parseAmount(String string) {

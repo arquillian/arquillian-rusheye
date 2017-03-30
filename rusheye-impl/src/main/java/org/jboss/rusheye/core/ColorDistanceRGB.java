@@ -21,7 +21,9 @@
  */
 package org.jboss.rusheye.core;
 
-import static org.jboss.rusheye.core.ColorModelRGBA.*;
+import static org.jboss.rusheye.core.ColorModelRGBA.getB;
+import static org.jboss.rusheye.core.ColorModelRGBA.getG;
+import static org.jboss.rusheye.core.ColorModelRGBA.getR;
 
 public class ColorDistanceRGB implements ColorDistance {
     @Override

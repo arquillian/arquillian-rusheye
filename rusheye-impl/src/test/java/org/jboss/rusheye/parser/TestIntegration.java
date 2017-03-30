@@ -21,13 +21,9 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PATTERN;
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.TEST;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import org.dom4j.Element;
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.parser.listener.CompareListener;
@@ -42,14 +38,17 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PATTERN;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.TEST;
+
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 public class TestIntegration extends AbstractVisualSuiteDefinitionTest {
 
-    private static final String[] SAMPLES = new String[] { "different", "different-masked", "not-same", "perceptible",
-            "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same" };
+    private static final String[] SAMPLES = new String[] {"different", "different-masked", "not-same", "perceptible",
+        "real-sample-1", "real-sample-2", "real-sample-3", "real-sample-4", "real-sample-5", "same"};
 
     @DataProvider
     public Object[][] provideSamples() {

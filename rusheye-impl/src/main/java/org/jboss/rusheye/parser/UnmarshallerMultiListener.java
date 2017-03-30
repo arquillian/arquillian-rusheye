@@ -23,7 +23,6 @@ package org.jboss.rusheye.parser;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import javax.xml.bind.Unmarshaller.Listener;
 
 public class UnmarshallerMultiListener extends Listener {
@@ -55,5 +54,4 @@ public class UnmarshallerMultiListener extends Listener {
             listeners.remove(listener);
         }
     }
-
 }

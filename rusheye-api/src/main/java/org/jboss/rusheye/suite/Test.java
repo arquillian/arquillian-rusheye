@@ -23,7 +23,6 @@ package org.jboss.rusheye.suite;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -37,12 +36,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * The one test of visual test suite.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Test", propOrder = { "patterns" })
+@XmlType(name = "Test", propOrder = {"patterns"})
 @XmlRootElement(name = "test")
 public class Test extends Configuration {
 
@@ -58,7 +57,7 @@ public class Test extends Configuration {
 
     /**
      * Gets the patterns.
-     * 
+     *
      * @return the patterns
      */
     @XmlElement(name = "pattern", required = true)
@@ -71,7 +70,7 @@ public class Test extends Configuration {
 
     /**
      * Gets the name.
-     * 
+     *
      * @return the name
      */
     @XmlAttribute(required = true)
@@ -83,9 +82,9 @@ public class Test extends Configuration {
 
     /**
      * Sets the name.
-     * 
+     *
      * @param value
-     *            the new name
+     *     the new name
      */
     public void setName(String value) {
         this.name = value;
@@ -93,7 +92,7 @@ public class Test extends Configuration {
 
     /**
      * Gets the sample.
-     * 
+     *
      * @return the sample
      */
     public Sample getSample() {

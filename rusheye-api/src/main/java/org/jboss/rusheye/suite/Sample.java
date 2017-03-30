@@ -22,18 +22,16 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
-
 import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.retriever.SampleRetriever;
 
 /**
  * The sample as the source of comparison process, to be compared againts patterns.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -55,9 +53,9 @@ public class Sample extends ImageSource {
 
     /**
      * Sets the sample retriever.
-     * 
+     *
      * @param sampleRetriever
-     *            sample retriever to be associated with this sample
+     *     sample retriever to be associated with this sample
      */
     public void setSampleRetriever(SampleRetriever sampleRetriever) {
         this.sampleRetriever = sampleRetriever;

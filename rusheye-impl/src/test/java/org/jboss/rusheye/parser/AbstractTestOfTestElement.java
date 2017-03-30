@@ -21,10 +21,10 @@
  */
 package org.jboss.rusheye.parser;
 
+import org.dom4j.Element;
+
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.PATTERN;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.TEST;
-
-import org.dom4j.Element;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

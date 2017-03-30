@@ -21,6 +21,15 @@
  */
 package org.jboss.rusheye.parser;
 
+import java.util.Iterator;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
+import org.jboss.rusheye.retriever.mask.MaskFileRetriever;
+import org.jboss.rusheye.retriever.pattern.PatternFileRetriever;
+import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
+
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_CONFIGURATION;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.LISTENER;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK_RETRIEVER;
@@ -31,16 +40,6 @@ import static org.jboss.rusheye.parser.VisualSuiteDefinitions.RUSHEYE_NS;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.SAMPLE_RETRIEVER;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.TEST;
 import static org.jboss.rusheye.parser.VisualSuiteDefinitions.VISUAL_SUITE;
-
-import java.util.Iterator;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.jboss.rusheye.listener.SuiteListenerAdapter;
-import org.jboss.rusheye.retriever.mask.MaskFileRetriever;
-import org.jboss.rusheye.retriever.pattern.PatternFileRetriever;
-import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -79,5 +78,4 @@ public class VisualSuiteStub {
             visualSuite.remove(defaultTest);
         }
     }
-
 }

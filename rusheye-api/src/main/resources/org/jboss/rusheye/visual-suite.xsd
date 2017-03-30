@@ -23,241 +23,242 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.jboss.org/rusheye/visual-suite" xmlns:tns="http://www.jboss.org/rusheye/visual-suite"
-	xmlns:vs="http://www.jboss.org/rusheye/visual-suite" elementFormDefault="qualified"
-	version="1.0">
+    xmlns:vs="http://www.jboss.org/rusheye/visual-suite"
+    targetNamespace="http://www.jboss.org/rusheye/visual-suite" elementFormDefault="qualified"
+    version="1.0">
 
-	<xs:element name="visual-suite">
-		<xs:annotation>
-			<xs:documentation>Visual Suite, the base of visual test configuration
-			</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="global-configuration" type="vs:GlobalConfiguration" />
-				<xs:element name="test" type="vs:Test" maxOccurs="unbounded">
-					<xs:unique name="TestMasksMaskIdUnique">
-						<xs:annotation>
-							<xs:documentation>Mask ID have to be unique across all particular
-								tests
-							</xs:documentation>
-						</xs:annotation>
-						<xs:selector xpath="vs:mask" />
-						<xs:field xpath="@id" />
-					</xs:unique>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="id" type="xs:integer" />
-		</xs:complexType>
-		<xs:unique name="TestNameUnique">
-			<xs:annotation>
-				<xs:documentation>Test name must be unique across the suite
-				</xs:documentation>
-			</xs:annotation>
-			<xs:selector xpath="vs:test" />
-			<xs:field xpath="@name" />
-		</xs:unique>
-		<xs:unique name="TestPatternNameUnique">
-			<xs:annotation>
-				<xs:documentation>Pattern name must be unique across the suite
-					(implies uniqueness across all tests and patterns)
-				</xs:documentation>
-			</xs:annotation>
-			<xs:selector xpath="vs:test/vs:pattern" />
-			<xs:field xpath="@name" />
-		</xs:unique>
-		<xs:unique name="MasksMaskIdUnique">
-			<xs:annotation>
-				<xs:documentation>Mask ID have to be unique across global
-					configuration
-				</xs:documentation>
-			</xs:annotation>
-			<xs:selector xpath="vs:global-configuration/vs:mask" />
-			<xs:field xpath="@id" />
-		</xs:unique>
-	</xs:element>
+  <xs:element name="visual-suite">
+    <xs:annotation>
+      <xs:documentation>Visual Suite, the base of visual test configuration
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="global-configuration" type="vs:GlobalConfiguration"/>
+        <xs:element name="test" type="vs:Test" maxOccurs="unbounded">
+          <xs:unique name="TestMasksMaskIdUnique">
+            <xs:annotation>
+              <xs:documentation>Mask ID have to be unique across all particular
+                tests
+              </xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="vs:mask"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:integer"/>
+    </xs:complexType>
+    <xs:unique name="TestNameUnique">
+      <xs:annotation>
+        <xs:documentation>Test name must be unique across the suite
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="vs:test"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+    <xs:unique name="TestPatternNameUnique">
+      <xs:annotation>
+        <xs:documentation>Pattern name must be unique across the suite
+          (implies uniqueness across all tests and patterns)
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="vs:test/vs:pattern"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+    <xs:unique name="MasksMaskIdUnique">
+      <xs:annotation>
+        <xs:documentation>Mask ID have to be unique across global
+          configuration
+        </xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="vs:global-configuration/vs:mask"/>
+      <xs:field xpath="@id"/>
+    </xs:unique>
+  </xs:element>
 
-	<xs:complexType name="GlobalConfiguration">
-		<xs:annotation>
-			<xs:documentation>Configuration of suite including images and masks
-				retrieving and global perception settings</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="listener" type="vs:Listener" minOccurs="1"
-				maxOccurs="unbounded" />
-			<xs:element name="pattern-retriever" type="vs:PatternRetriever"
-				minOccurs="0" />
-			<xs:element name="mask-retriever" type="vs:MaskRetriever"
-				minOccurs="0" />
-			<xs:element name="sample-retriever" type="vs:SampleRetriever"
-				minOccurs="0" />
-			<xs:element name="perception" type="vs:Perception"
-				minOccurs="0" />
-			<xs:element name="mask" type="vs:Mask" minOccurs="0"
-				maxOccurs="unbounded" />
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="GlobalConfiguration">
+    <xs:annotation>
+      <xs:documentation>Configuration of suite including images and masks
+        retrieving and global perception settings
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="listener" type="vs:Listener" minOccurs="1"
+          maxOccurs="unbounded"/>
+      <xs:element name="pattern-retriever" type="vs:PatternRetriever"
+          minOccurs="0"/>
+      <xs:element name="mask-retriever" type="vs:MaskRetriever"
+          minOccurs="0"/>
+      <xs:element name="sample-retriever" type="vs:SampleRetriever"
+          minOccurs="0"/>
+      <xs:element name="perception" type="vs:Perception"
+          minOccurs="0"/>
+      <xs:element name="mask" type="vs:Mask" minOccurs="0"
+          maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:complexType name="Listener">
-		<xs:complexContent>
-			<xs:extension base="vs:TypeProperties"></xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="Listener">
+    <xs:complexContent>
+      <xs:extension base="vs:TypeProperties"></xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:simpleType name="MaskType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="selective-alpha" />
-			<xs:enumeration value="ignore-bitmap" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="MaskType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="selective-alpha"/>
+      <xs:enumeration value="ignore-bitmap"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="Mask">
-		<xs:complexContent>
-			<xs:extension base="vs:ImageSource">
-				<xs:attribute name="id" type="xs:Name" use="required" />
-				<xs:attribute name="type" type="vs:MaskType" use="required" />
-				<xs:attribute name="vertical-align" type="vs:VerticalAlign"
-					use="optional" />
-				<xs:attribute name="horizontal-align" type="vs:HorizontalAlign"
-					use="optional" />
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="Mask">
+    <xs:complexContent>
+      <xs:extension base="vs:ImageSource">
+        <xs:attribute name="id" type="xs:Name" use="required"/>
+        <xs:attribute name="type" type="vs:MaskType" use="required"/>
+        <xs:attribute name="vertical-align" type="vs:VerticalAlign"
+            use="optional"/>
+        <xs:attribute name="horizontal-align" type="vs:HorizontalAlign"
+            use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:simpleType name="VerticalAlign">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="top" />
-			<xs:enumeration value="bottom" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="VerticalAlign">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="top"/>
+      <xs:enumeration value="bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:simpleType name="HorizontalAlign">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="left" />
-			<xs:enumeration value="right" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="HorizontalAlign">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="right"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="MaskRetriever">
-		<xs:complexContent>
-			<xs:extension base="vs:TypeProperties" />
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="MaskRetriever">
+    <xs:complexContent>
+      <xs:extension base="vs:TypeProperties"/>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:complexType name="PatternRetriever">
-		<xs:complexContent>
-			<xs:extension base="vs:TypeProperties" />
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="PatternRetriever">
+    <xs:complexContent>
+      <xs:extension base="vs:TypeProperties"/>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:complexType name="SampleRetriever">
-		<xs:complexContent>
-			<xs:extension base="vs:TypeProperties" />
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="SampleRetriever">
+    <xs:complexContent>
+      <xs:extension base="vs:TypeProperties"/>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:complexType name="TypeProperties" abstract="true">
-		<xs:complexContent>
-			<xs:extension base="vs:Properties">
-				<xs:attribute name="type" type="vs:Type" />
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="TypeProperties" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="vs:Properties">
+        <xs:attribute name="type" type="vs:Type"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:simpleType name="Type">
-		<xs:restriction base="xs:string">
-			<xs:minLength value="1" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="Type">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="Properties">
-		<xs:sequence>
-			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="Properties">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:complexType name="Perception">
-		<xs:sequence>
-			<xs:element name="one-pixel-treshold" type="vs:ColorTreshold"
-				minOccurs="0" />
-			<xs:element name="global-difference-treshold" type="vs:ColorTreshold"
-				minOccurs="0" />
-			<xs:element name="global-difference-pixel-amount" type="vs:Size"
-				minOccurs="0" />
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="Perception">
+    <xs:sequence>
+      <xs:element name="one-pixel-treshold" type="vs:ColorTreshold"
+          minOccurs="0"/>
+      <xs:element name="global-difference-treshold" type="vs:ColorTreshold"
+          minOccurs="0"/>
+      <xs:element name="global-difference-pixel-amount" type="vs:Size"
+          minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:simpleType name="ColorTreshold">
-		<xs:restriction base="xs:nonNegativeInteger">
-			<xs:maxExclusive value="768" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="ColorTreshold">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxExclusive value="768"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:simpleType name="Size">
-		<xs:union memberTypes="vs:PercentSize vs:PixelSize" />
-	</xs:simpleType>
+  <xs:simpleType name="Size">
+    <xs:union memberTypes="vs:PercentSize vs:PixelSize"/>
+  </xs:simpleType>
 
-	<xs:simpleType name="PercentSize">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="([0-9]{1,2}|100)%" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="PercentSize">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-9]{1,2}|100)%"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:simpleType name="PixelSize">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d+px" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="PixelSize">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+px"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="Test">
-		<xs:sequence>
-			<xs:element name="perception" type="vs:Perception"
-				minOccurs="0" />
-			<xs:element name="mask" type="vs:Mask" minOccurs="0"
-				maxOccurs="unbounded" />
-			<xs:element name="pattern" type="vs:Pattern" maxOccurs="unbounded" />
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:Name" use="required" />
-	</xs:complexType>
+  <xs:complexType name="Test">
+    <xs:sequence>
+      <xs:element name="perception" type="vs:Perception"
+          minOccurs="0"/>
+      <xs:element name="mask" type="vs:Mask" minOccurs="0"
+          maxOccurs="unbounded"/>
+      <xs:element name="pattern" type="vs:Pattern" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:Name" use="required"/>
+  </xs:complexType>
 
-	<xs:complexType name="Configuration" abstract="true">
-		<xs:sequence>
-			<xs:element name="perception" type="vs:Perception"
-				minOccurs="0" />
-			<xs:element name="mask" type="vs:Mask" minOccurs="0"
-				maxOccurs="unbounded" />
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="Configuration" abstract="true">
+    <xs:sequence>
+      <xs:element name="perception" type="vs:Perception"
+          minOccurs="0"/>
+      <xs:element name="mask" type="vs:Mask" minOccurs="0"
+          maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:complexType name="Pattern">
-		<xs:complexContent>
-			<xs:extension base="vs:ImageSource">
-				<xs:attribute name="name" type="xs:Name" use="required" />
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="Pattern">
+    <xs:complexContent>
+      <xs:extension base="vs:ImageSource">
+        <xs:attribute name="name" type="xs:Name" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
-	<xs:complexType name="Sample">
-		<xs:attribute name="source">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:minLength value="1"></xs:minLength>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
+  <xs:complexType name="Sample">
+    <xs:attribute name="source">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"></xs:minLength>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
 
-	<xs:complexType name="ImageSource" abstract="true">
-		<xs:complexContent>
-			<xs:extension base="vs:Properties">
-				<xs:attribute name="source">
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:minLength value="1"></xs:minLength>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+  <xs:complexType name="ImageSource" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="vs:Properties">
+        <xs:attribute name="source">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"></xs:minLength>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 </xs:schema>

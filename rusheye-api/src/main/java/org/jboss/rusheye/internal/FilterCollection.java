@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Satisfies filtering of collection.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -40,16 +40,16 @@ public final class FilterCollection {
     /**
      * Returns the collection with the same elements like given collection but only those, which returns true for
      * application of given predicate.
-     * 
+     *
      * @param <E>
-     *            the element type of the collection
-     * 
+     *     the element type of the collection
      * @param collection
-     *            the collection of elements
+     *     the collection of elements
      * @param predicate
-     *            the predicate to filter by
+     *     the predicate to filter by
+     *
      * @return the collection with only those elements from given collection, which returns true for application of
-     *         given predicate
+     * given predicate
      */
     public static <E> Collection<E> filter(Collection<E> collection, Predicate<E> predicate) {
         return new FilteredCollection<E>(collection, predicate);
@@ -57,10 +57,9 @@ public final class FilterCollection {
 
     /**
      * Collection filtered by predicate.
-     * 
+     *
      * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
      * @version $Revision$
-     * @param <E>
      */
     private static class FilteredCollection<E> extends AbstractCollection<E> {
         private Collection<E> originalCollection;
@@ -80,7 +79,7 @@ public final class FilterCollection {
         public int size() {
             int count = 0;
             for (@SuppressWarnings("unused")
-            E element : this) {
+                E element : this) {
                 count++;
             }
             return count;
@@ -89,10 +88,9 @@ public final class FilterCollection {
 
     /**
      * Iterator filtering by predicate.
-     * 
+     *
      * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
      * @version $Revision$
-     * @param <E>
      */
     private static class FilteredIterator<E> implements Iterator<E> {
 

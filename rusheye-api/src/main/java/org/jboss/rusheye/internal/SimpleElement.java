@@ -34,7 +34,7 @@ import org.w3c.dom.UserDataHandler;
 /**
  * The simple element containing localName and textContext for purposes of {@link org.jboss.rusheye.suite.Properties}
  * implementation.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

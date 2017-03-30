@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Vertical alignment of mask in context of sample/pattern image.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -53,10 +53,6 @@ public enum VerticalAlign {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static VerticalAlign fromValue(String v) {
         for (VerticalAlign c : VerticalAlign.values()) {
             if (c.value.equals(v)) {
@@ -64,6 +60,10 @@ public enum VerticalAlign {
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value() {
+        return value;
     }
 
 }

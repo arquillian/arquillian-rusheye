@@ -22,7 +22,6 @@
 package org.jboss.rusheye.parser;
 
 import java.io.IOException;
-
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

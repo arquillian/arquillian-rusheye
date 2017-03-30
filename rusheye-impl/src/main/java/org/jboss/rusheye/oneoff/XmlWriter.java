@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.jboss.rusheye.suite.ComparisonResult;
 
 /**
@@ -177,5 +176,4 @@ public class XmlWriter {
         }
         return group;
     }
-
 }

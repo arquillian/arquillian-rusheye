@@ -21,13 +21,14 @@
  */
 package org.jboss.rusheye;
 
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
+import com.beust.jcommander.converters.FileConverter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
 import org.apache.commons.lang.StringUtils;
 import org.jboss.rusheye.core.DefaultImageComparator;
 import org.jboss.rusheye.parser.DefaultConfiguration;
@@ -36,10 +37,6 @@ import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.ResultConclusion;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
-
 @Parameters(commandDescription = "Compares two images with given perceptional settings and masks")
 public class CommandCompare extends CommandBase {
 
@@ -47,11 +44,11 @@ public class CommandCompare extends CommandBase {
         description = "<Pattern> and <Sample> to be compared")
     private List<File> files;
 
-    @Parameter(names = { "--output", "-O" }, converter = FileConverter.class,
+    @Parameter(names = {"--output", "-O"}, converter = FileConverter.class,
         description = "The difference image as result of comparison")
     private File output;
 
-    @Parameter(names = { "--force", "-f" }, description = "Force to proceed")
+    @Parameter(names = {"--force", "-f"}, description = "Force to proceed")
     private boolean force = false;
 
     private ComparisonResult result;

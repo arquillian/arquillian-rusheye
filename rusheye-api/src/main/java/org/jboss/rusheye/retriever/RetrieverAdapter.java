@@ -22,13 +22,12 @@
 package org.jboss.rusheye.retriever;
 
 import java.awt.image.BufferedImage;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 
 /**
  * Adapter for easy implementation of {@link Retriever}.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

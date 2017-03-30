@@ -22,8 +22,8 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-<visual-suite-result xmlns="http://www.jboss.org/test/visual-suite-result"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<visual-suite-result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.jboss.org/test/visual-suite-result"
     xsi:schemaLocation="http://www.jboss.org/test/visual-suite-result ../../main/resources/visual-suite-result.xsd">
 
   <test name="AjaxSupportTestCase.testEmpty">

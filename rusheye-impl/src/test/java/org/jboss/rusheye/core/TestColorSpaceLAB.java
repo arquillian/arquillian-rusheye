@@ -21,22 +21,28 @@
  */
 package org.jboss.rusheye.core;
 
-import static org.jboss.rusheye.core.TestColorSpaceLAB.RGB.rgb;
-
 import java.util.Arrays;
-
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.jboss.rusheye.core.TestColorSpaceLAB.RGB.rgb;
 
 public class TestColorSpaceLAB {
 
     ColorSpaceLAB cieLABSpace = ColorSpaceLAB.getInstance();
 
-    RGB[] data = new RGB[] { rgb(0, 0, 0).lab(0, 0, 0), rgb(0, 0, 255).lab(32.303f, 79.197f, -107.864f),
-            rgb(0, 255, 0).lab(87.737f, -86.185f, 83.181f), rgb(255, 0, 0).lab(53.233f, 80.109f, 67.220f),
-            rgb(0, 255, 255).lab(91.117f, -48.080f, -14.138f), rgb(255, 0, 255).lab(60.320f, 98.254f, -60.843f),
-            rgb(255, 255, 0).lab(97.138f, -21.556f, 94.482f), rgb(255, 255, 255).lab(100.000f, 0.005f, -0.010f) };
+    RGB[] data = new RGB[] {rgb(0, 0, 0).lab(0, 0, 0), rgb(0, 0, 255).lab(32.303f, 79.197f, -107.864f),
+        rgb(0, 255, 0).lab(87.737f, -86.185f, 83.181f), rgb(255, 0, 0).lab(53.233f, 80.109f, 67.220f),
+        rgb(0, 255, 255).lab(91.117f, -48.080f, -14.138f), rgb(255, 0, 255).lab(60.320f, 98.254f, -60.843f),
+        rgb(255, 255, 0).lab(97.138f, -21.556f, 94.482f), rgb(255, 255, 255).lab(100.000f, 0.005f, -0.010f)};
+
+    private static float roundTo3(float number) {
+        number *= 1000;
+        number = Math.round(number);
+        number /= 1000;
+        return number;
+    }
 
     @DataProvider
     public Object[][] getData() {
@@ -59,12 +65,12 @@ public class TestColorSpaceLAB {
 
         public static RGB rgb(float r, float g, float b) {
             RGB rgb = new RGB();
-            rgb.rgb = new float[] { r, g, b };
+            rgb.rgb = new float[] {r, g, b};
             return rgb;
         }
 
         public RGB lab(float l, float a, float b) {
-            this.lab = new float[] { l, a, b };
+            this.lab = new float[] {l, a, b};
             return this;
         }
 
@@ -79,12 +85,5 @@ public class TestColorSpaceLAB {
         public String toString() {
             return Arrays.toString(rgb);
         }
-    }
-
-    private static float roundTo3(float number) {
-        number *= 1000;
-        number = Math.round(number);
-        number /= 1000;
-        return number;
     }
 }

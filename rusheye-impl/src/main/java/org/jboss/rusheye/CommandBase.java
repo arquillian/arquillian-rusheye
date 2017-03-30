@@ -21,18 +21,17 @@
  */
 package org.jboss.rusheye;
 
+import com.beust.jcommander.Parameter;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.beust.jcommander.Parameter;
-
 public class CommandBase {
 
-    @Parameter(names = { "-h", "--help" })
+    @Parameter(names = {"-h", "--help"})
     private Boolean help;
 
-    @Parameter(names = { "--debug" })
+    @Parameter(names = {"--debug"})
     private Boolean debug;
 
     public boolean isHelp() {
@@ -106,7 +105,9 @@ public class CommandBase {
                     return false;
                 }
                 return super.add(e);
-            };
+            }
+
+            ;
         };
     }
 }

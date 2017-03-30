@@ -23,7 +23,6 @@ package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutionException;
-
 import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,22 +32,21 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.jboss.rusheye.retriever.MaskRetriever;
 
 /**
  * <p>
  * The mask for the filtering of the samples during comparison.
  * </p>
- * 
+ *
  * <p>
  * Required options are type, source and id.
  * </p>
- * 
+ *
  * <p>
  * Optional settings are alignment of the mask (for types which requires this settings).
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -57,16 +55,16 @@ import org.jboss.rusheye.retriever.MaskRetriever;
 public class Mask extends ImageSource {
 
     private static final int ALPHA_MASK = 0xFF000000;
-    
+
     /** The id. */
     protected String id;
-    
+
     /** The type. */
     protected MaskType type;
-    
+
     /** The vertical align. */
     protected VerticalAlign verticalAlign;
-    
+
     /** The horizontal align. */
     protected HorizontalAlign horizontalAlign;
 
@@ -74,7 +72,7 @@ public class Mask extends ImageSource {
     @Resource
     @XmlTransient
     private MaskRetriever maskRetriever;
-    
+
     /**
      * Gets the id.
      *
@@ -90,7 +88,8 @@ public class Mask extends ImageSource {
     /**
      * Sets the id.
      *
-     * @param value the new id
+     * @param value
+     *     the new id
      */
     public void setId(String value) {
         this.id = value;
@@ -109,7 +108,8 @@ public class Mask extends ImageSource {
     /**
      * Sets the type.
      *
-     * @param value the new type
+     * @param value
+     *     the new type
      */
     public void setType(MaskType value) {
         this.type = value;
@@ -128,7 +128,8 @@ public class Mask extends ImageSource {
     /**
      * Sets the vertical alignment.
      *
-     * @param value the new vertical alignment
+     * @param value
+     *     the new vertical alignment
      */
     public void setVerticalAlign(VerticalAlign value) {
         this.verticalAlign = value;
@@ -147,12 +148,13 @@ public class Mask extends ImageSource {
     /**
      * Sets the horizontal alignment.
      *
-     * @param value the new horizontal alignment
+     * @param value
+     *     the new horizontal alignment
      */
     public void setHorizontalAlign(HorizontalAlign value) {
         this.horizontalAlign = value;
     }
-    
+
     /* (non-Javadoc)
      * @see org.jboss.rusheye.suite.ImageSource#retrieve()
      */
@@ -180,9 +182,13 @@ public class Mask extends ImageSource {
     /**
      * Checks if is pixel masked.
      *
-     * @param pattern the pattern
-     * @param x the x
-     * @param y the y
+     * @param pattern
+     *     the pattern
+     * @param x
+     *     the x
+     * @param y
+     *     the y
+     *
      * @return true, if is pixel masked
      */
     public boolean isPixelMasked(BufferedImage pattern, int x, int y) {
@@ -207,7 +213,8 @@ public class Mask extends ImageSource {
     /**
      * Sets the mask retriever.
      *
-     * @param maskRetriever the new mask retriever
+     * @param maskRetriever
+     *     the new mask retriever
      */
     public void setMaskRetriever(MaskRetriever maskRetriever) {
         this.maskRetriever = maskRetriever;

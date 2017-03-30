@@ -26,7 +26,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
-
 import org.jboss.rusheye.comparison.ImageComparator;
 import org.jboss.rusheye.suite.Area;
 import org.jboss.rusheye.suite.ComparisonResult;
@@ -53,7 +52,8 @@ public class DefaultImageComparator implements ImageComparator {
         max.y = Math.max(max.y, y);
     }
 
-    private void drawRectangleAroundDifferentPixels(Point min, Point max, int width, int height, BufferedImage diffImage) {
+    private void drawRectangleAroundDifferentPixels(Point min, Point max, int width, int height,
+        BufferedImage diffImage) {
         int x1 = Math.max(0, min.x - BOUNDARY_SIZE);
         int y1 = Math.max(0, min.y - BOUNDARY_SIZE);
         int x2 = Math.min(width - 1, max.x + BOUNDARY_SIZE);
@@ -85,7 +85,7 @@ public class DefaultImageComparator implements ImageComparator {
     public ComparisonResult compare(BufferedImage patternImage, BufferedImage sampleImage, Perception perception,
         Collection<Mask> masks) {
         final ColorDistance colorDistance = new ColorDistanceLAB();
-        
+
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         int width = Math.min(patternImage.getWidth(), sampleImage.getWidth());
@@ -153,5 +153,4 @@ public class DefaultImageComparator implements ImageComparator {
 
         return result;
     }
-
 }

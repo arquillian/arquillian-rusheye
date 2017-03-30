@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
-
 import org.jboss.rusheye.core.DefaultImageComparator;
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Mask;
@@ -40,6 +39,24 @@ public class Main {
     private int errorsCounter = 0;
     private int differentImageCounter = 0;
     private int sameImageCounter = 0;
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        long t1 = System.currentTimeMillis();
+        try {
+            Log.logMain("started at %s", new Date().toString());
+            new Main().run(args);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            long t2 = System.currentTimeMillis();
+            Log.logStatistic("run duration:     %ds", (t2 - t1) / 1000);
+            Log.logMain("finished at %s", new Date().toString());
+        }
+    }
 
     public void run(String[] args) throws Exception {
         OneOffConfiguration configuration = new OneOffConfiguration(args);
@@ -109,23 +126,4 @@ public class Main {
         ImageUtils.writeImage(diffImage, configuration.getDiffDirectory(), imageFileName);
         Log.logProcess("writing diff image %s", imageFileName);
     }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        long t1 = System.currentTimeMillis();
-        try {
-            Log.logMain("started at %s", new Date().toString());
-            new Main().run(args);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            long t2 = System.currentTimeMillis();
-            Log.logStatistic("run duration:     %ds", (t2 - t1) / 1000);
-            Log.logMain("finished at %s", new Date().toString());
-        }
-    }
-
 }

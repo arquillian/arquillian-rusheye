@@ -40,5 +40,4 @@ public class CommandProcessingException extends Exception {
     public CommandProcessingException(Throwable cause) {
         super(cause);
     }
-
 }

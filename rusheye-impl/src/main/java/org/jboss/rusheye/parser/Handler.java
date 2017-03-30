@@ -27,7 +27,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.suite.VisualSuite;
 
@@ -45,10 +44,22 @@ public class Handler {
         this.parserListeners = parserListeners;
     }
 
+    public VisualSuite getVisualSuite() {
+        return visualSuite;
+    }
+
+    public void setVisualSuite(VisualSuite visualSuite) {
+        this.visualSuite = visualSuite;
+    }
+
+    Context getContext() {
+        return context;
+    }
+
     private class ListeningContext extends Context implements InvocationHandler {
 
         SuiteListener wrappedListener = (SuiteListener) Proxy.newProxyInstance(Handler.this.getClass()
-            .getClassLoader(), new Class<?>[] { SuiteListener.class }, this);
+            .getClassLoader(), new Class<?>[] {SuiteListener.class}, this);
 
         @Override
         public SuiteListener invokeListeners() {
@@ -75,17 +86,5 @@ public class Handler {
 
             return null;
         }
-    }
-
-    public VisualSuite getVisualSuite() {
-        return visualSuite;
-    }
-
-    public void setVisualSuite(VisualSuite visualSuite) {
-        this.visualSuite = visualSuite;
-    }
-
-    Context getContext() {
-        return context;
     }
 }

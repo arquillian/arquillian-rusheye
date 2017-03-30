@@ -22,12 +22,10 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.retriever.MaskRetriever;
@@ -36,11 +34,11 @@ import org.jboss.rusheye.retriever.MaskRetriever;
  * <p>
  * Proxy for actual implementation of {@link MaskRetriever}.
  * </p>
- * 
+ *
  * <p>
  * The actual implementation is constructed from the {@link #getType()} value.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -93,5 +91,4 @@ public class MaskRetrieverImpl extends TypeProperties implements MaskRetriever {
         initializeRetriever();
         maskRetriever.setGlobalProperties(properties);
     }
-
 }

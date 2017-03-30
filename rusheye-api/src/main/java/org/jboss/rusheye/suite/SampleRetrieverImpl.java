@@ -23,26 +23,23 @@ package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
 import java.util.Set;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.retriever.SampleRetriever;
-
 
 /**
  * <p>
  * Proxy for actual implementation of {@link SampleRetriever}.
  * </p>
- * 
+ *
  * <p>
  * The actual implementation is constructed from the {@link #getType()} value.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

@@ -22,13 +22,12 @@
 package org.jboss.rusheye.retriever;
 
 import java.awt.image.BufferedImage;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.suite.Properties;
 
 /**
  * The general interface for retrieval of images from given source with some properties.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

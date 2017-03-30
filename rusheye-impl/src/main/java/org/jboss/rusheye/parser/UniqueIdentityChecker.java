@@ -22,7 +22,6 @@
 package org.jboss.rusheye.parser;
 
 import javax.xml.bind.Unmarshaller;
-
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;

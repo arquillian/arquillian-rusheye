@@ -38,7 +38,7 @@ public class Commander {
         jCommander.addCommand("crawl", crawl);
         jCommander.addCommand("parse", parse);
     }
-    
+
     public void parse(String[] args) {
         jCommander.parse(args);
     }

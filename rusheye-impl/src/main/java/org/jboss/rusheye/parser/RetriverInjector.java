@@ -26,10 +26,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.xml.bind.Unmarshaller;
-
 import org.jboss.rusheye.exception.ParsingException;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;

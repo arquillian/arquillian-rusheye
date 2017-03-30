@@ -21,12 +21,10 @@
  */
 package org.jboss.rusheye;
 
-import java.io.IOException;
-
-import org.xml.sax.SAXException;
-
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
+import java.io.IOException;
+import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -58,7 +56,7 @@ public final class Main {
             }
 
             base.initialize();
-            
+
             try {
                 base.validate();
             } catch (CommandValidationException e) {
@@ -70,17 +68,17 @@ public final class Main {
                 CommandCompare commandCompare = (CommandCompare) base;
                 commandCompare.compare();
                 commandCompare.printResult();
-                
+
                 if (commandCompare.isOutputSet()) {
                     commandCompare.writeDifferenceImage();
                 }
             }
-            
+
             if (base instanceof CommandCrawl) {
                 CommandCrawl commandCrawl = (CommandCrawl) base;
                 commandCrawl.crawl();
             }
-            
+
             if (base instanceof CommandParse) {
                 CommandParse commandParse = (CommandParse) base;
                 commandParse.parse();

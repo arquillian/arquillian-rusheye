@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Enumeration of known mask types.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -47,15 +47,11 @@ public enum MaskType {
      */
     @XmlEnumValue("ignore-bitmap")
     IGNORE_BITMAP("ignore-bitmap");
-    
+
     private final String value;
 
     private MaskType(String v) {
         value = v;
-    }
-
-    public String value() {
-        return value;
     }
 
     public static MaskType fromValue(String v) {
@@ -65,5 +61,9 @@ public enum MaskType {
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value() {
+        return value;
     }
 }

@@ -21,14 +21,13 @@
  */
 package org.jboss.rusheye.suite;
 
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.fail;
-
 import java.awt.image.BufferedImage;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.SampleRetriever;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.fail;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -96,6 +95,5 @@ public class TestSample {
         sample.setSource(source);
         sample.setSampleRetriever(sampleRetriever);
         return sample;
-
     }
 }

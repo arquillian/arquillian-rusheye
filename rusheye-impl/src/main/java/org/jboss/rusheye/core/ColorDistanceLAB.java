@@ -32,7 +32,7 @@ public class ColorDistanceLAB implements ColorDistance {
         if (color1 == color2) {
             return 0;
         }
-        
+
         float[] rgb1 = ColorModelRGBA.getRGB(color1);
         float[] rgb2 = ColorModelRGBA.getRGB(color2);
 

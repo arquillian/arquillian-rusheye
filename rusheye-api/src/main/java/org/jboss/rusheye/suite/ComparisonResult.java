@@ -24,7 +24,6 @@ package org.jboss.rusheye.suite;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -33,14 +32,14 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Result of the comparison containing details of the comparison process.
- * 
+ *
  * @author <a href="mailto:ptisnovs@redhat.com">Pavel Tisnovsky</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(propOrder = { "area", "rectangles", "totalPixels", "maskedPixels", "perceptibleDiffs", "differentPixels",
-        "smallDifferences", "equalPixels" })
+@XmlType(propOrder = {"area", "rectangles", "totalPixels", "maskedPixels", "perceptibleDiffs", "differentPixels",
+    "smallDifferences", "equalPixels"})
 public class ComparisonResult {
 
     /** The equals images. */
@@ -75,7 +74,7 @@ public class ComparisonResult {
 
     /**
      * Checks if is equals images.
-     * 
+     *
      * @return true, if is equals images
      */
     @XmlTransient
@@ -85,9 +84,9 @@ public class ComparisonResult {
 
     /**
      * Sets the equals images.
-     * 
+     *
      * @param equalsImages
-     *            the new equals images
+     *     the new equals images
      */
     public void setEqualsImages(boolean equalsImages) {
         this.equalsImages = equalsImages;
@@ -95,7 +94,7 @@ public class ComparisonResult {
 
     /**
      * Gets the diff image.
-     * 
+     *
      * @return the diff image
      */
     @XmlTransient
@@ -105,9 +104,9 @@ public class ComparisonResult {
 
     /**
      * Sets the diff image.
-     * 
+     *
      * @param diffImage
-     *            the new diff image
+     *     the new diff image
      */
     public void setDiffImage(BufferedImage diffImage) {
         this.diffImage = diffImage;
@@ -117,11 +116,11 @@ public class ComparisonResult {
      * <p>
      * Gets the rectangles.
      * </p>
-     * 
+     *
      * <p>
      * During first invocation of this method, new empty list of rectangles is created.
      * </p>
-     * 
+     *
      * @return the rectangles
      */
     @XmlElement(name = "rectangle")
@@ -134,7 +133,7 @@ public class ComparisonResult {
 
     /**
      * Gets the area.
-     * 
+     *
      * @return the area
      */
     @XmlElement
@@ -144,9 +143,9 @@ public class ComparisonResult {
 
     /**
      * Sets the area.
-     * 
+     *
      * @param area
-     *            the new area
+     *     the new area
      */
     public void setArea(Area area) {
         this.area = area;
@@ -154,7 +153,7 @@ public class ComparisonResult {
 
     /**
      * Gets the total pixels.
-     * 
+     *
      * @return the total pixels
      */
     @XmlElement(name = "total-pixels")
@@ -164,9 +163,9 @@ public class ComparisonResult {
 
     /**
      * Sets the total pixels.
-     * 
+     *
      * @param totalPixels
-     *            the new total pixels
+     *     the new total pixels
      */
     public void setTotalPixels(int totalPixels) {
         this.totalPixels = totalPixels;
@@ -174,7 +173,7 @@ public class ComparisonResult {
 
     /**
      * Gets the masked pixels.
-     * 
+     *
      * @return the masked pixels
      */
     @XmlElement(name = "masked-pixels")
@@ -184,9 +183,9 @@ public class ComparisonResult {
 
     /**
      * Sets the masked pixels.
-     * 
+     *
      * @param maskedPixels
-     *            the new masked pixels
+     *     the new masked pixels
      */
     public void setMaskedPixels(int maskedPixels) {
         this.maskedPixels = maskedPixels;
@@ -194,7 +193,7 @@ public class ComparisonResult {
 
     /**
      * Gets the perceptible diffs.
-     * 
+     *
      * @return the perceptible diffs
      */
     @XmlElement(name = "perceptible-different-pixels")
@@ -204,9 +203,9 @@ public class ComparisonResult {
 
     /**
      * Sets the perceptible diffs.
-     * 
+     *
      * @param perceptibleDiffs
-     *            the new perceptible diffs
+     *     the new perceptible diffs
      */
     public void setPerceptibleDiffs(int perceptibleDiffs) {
         this.perceptibleDiffs = perceptibleDiffs;
@@ -214,7 +213,7 @@ public class ComparisonResult {
 
     /**
      * Gets the different pixels.
-     * 
+     *
      * @return the different pixels
      */
     @XmlElement(name = "global-different-pixels")
@@ -224,9 +223,9 @@ public class ComparisonResult {
 
     /**
      * Sets the different pixels.
-     * 
+     *
      * @param differentPixels
-     *            the new different pixels
+     *     the new different pixels
      */
     public void setDifferentPixels(int differentPixels) {
         this.differentPixels = differentPixels;
@@ -234,7 +233,7 @@ public class ComparisonResult {
 
     /**
      * Gets the small differences.
-     * 
+     *
      * @return the small differences
      */
     @XmlElement(name = "unperceptible-different-pixels")
@@ -244,9 +243,9 @@ public class ComparisonResult {
 
     /**
      * Sets the small differences.
-     * 
+     *
      * @param smallDifferences
-     *            the new small differences
+     *     the new small differences
      */
     public void setSmallDifferences(int smallDifferences) {
         this.smallDifferences = smallDifferences;
@@ -254,7 +253,7 @@ public class ComparisonResult {
 
     /**
      * Gets the equal pixels.
-     * 
+     *
      * @return the equal pixels
      */
     @XmlElement(name = "same-pixels")
@@ -264,9 +263,9 @@ public class ComparisonResult {
 
     /**
      * Sets the equal pixels.
-     * 
+     *
      * @param equalPixels
-     *            the new equal pixels
+     *     the new equal pixels
      */
     public void setEqualPixels(int equalPixels) {
         this.equalPixels = equalPixels;
@@ -274,13 +273,13 @@ public class ComparisonResult {
 
     /**
      * Gets the comparison status.
-     * 
+     *
      * @return the comparison status
      */
     public String getComparisonStatus() {
         return this.isEqualsImages() ? "same" : "different";
     }
-    
+
     @Override
     public String toString() {
         return "ComparisonResult [equalsImages=" + equalsImages + ", totalPixels=" + totalPixels + ", maskedPixels="

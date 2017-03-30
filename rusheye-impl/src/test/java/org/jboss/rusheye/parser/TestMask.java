@@ -21,16 +21,10 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK;
-import static org.jboss.rusheye.suite.MaskType.IGNORE_BITMAP;
-import static org.jboss.rusheye.suite.MaskType.SELECTIVE_ALPHA;
-import static org.testng.Assert.assertEquals;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
-
 import org.dom4j.Element;
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.retriever.AbstractRetriever;
@@ -42,6 +36,11 @@ import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.VerticalAlign;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK;
+import static org.jboss.rusheye.suite.MaskType.IGNORE_BITMAP;
+import static org.jboss.rusheye.suite.MaskType.SELECTIVE_ALPHA;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

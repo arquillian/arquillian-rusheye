@@ -22,7 +22,6 @@
 package org.jboss.rusheye.suite;
 
 import java.awt.image.BufferedImage;
-
 import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,12 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.jboss.rusheye.retriever.PatternRetriever;
 
 /**
  * The pattern as input into comparison process, to be compared with sample.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -65,7 +63,7 @@ public class Pattern extends ImageSource {
 
     /**
      * Gets the name.
-     * 
+     *
      * @return the name
      */
     @XmlAttribute(required = true)
@@ -77,9 +75,9 @@ public class Pattern extends ImageSource {
 
     /**
      * Sets the name.
-     * 
+     *
      * @param value
-     *            the new name
+     *     the new name
      */
     public void setName(String value) {
         this.name = value;
@@ -87,7 +85,7 @@ public class Pattern extends ImageSource {
 
     /**
      * Gets the comparison result.
-     * 
+     *
      * @return the comparison result
      */
     @XmlElement(name = "comparison-result")
@@ -97,9 +95,9 @@ public class Pattern extends ImageSource {
 
     /**
      * Sets the comparison result.
-     * 
+     *
      * @param comparisonResult
-     *            the new comparison result
+     *     the new comparison result
      */
     public void setComparisonResult(ComparisonResult comparisonResult) {
         this.comparisonResult = comparisonResult;
@@ -107,7 +105,7 @@ public class Pattern extends ImageSource {
 
     /**
      * Gets the conclusion.
-     * 
+     *
      * @return the conclusion
      */
     @XmlAttribute(name = "result")
@@ -117,17 +115,17 @@ public class Pattern extends ImageSource {
 
     /**
      * Sets the conclusion.
-     * 
+     *
      * @param conclusion
-     *            the new conclusion
+     *     the new conclusion
      */
     public void setConclusion(ResultConclusion conclusion) {
         this.conclusion = conclusion;
     }
-    
+
     /**
      * Gets the output.
-     * 
+     *
      * @return the output
      */
     @XmlAttribute
@@ -137,9 +135,9 @@ public class Pattern extends ImageSource {
 
     /**
      * Sets the output.
-     * 
+     *
      * @param output
-     *            the new output
+     *     the new output
      */
     public void setOutput(String output) {
         this.output = output;
@@ -154,5 +152,4 @@ public class Pattern extends ImageSource {
     public BufferedImage retrieve() throws Exception {
         return patternRetriever.retrieve(source, this);
     }
-
 }

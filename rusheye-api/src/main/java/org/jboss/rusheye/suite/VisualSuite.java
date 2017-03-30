@@ -23,7 +23,6 @@ package org.jboss.rusheye.suite;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -32,12 +31,12 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * The representation of visual test suite containing global configuration and list of tests.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "VisualSuite", propOrder = { "globalConfiguration", "tests" })
+@XmlType(name = "VisualSuite", propOrder = {"globalConfiguration", "tests"})
 @XmlRootElement(name = "visual-suite")
 public class VisualSuite {
 
@@ -49,7 +48,7 @@ public class VisualSuite {
 
     /**
      * Gets the global configuration.
-     * 
+     *
      * @return the global configuration
      */
     @XmlElement(name = "global-configuration", required = true)
@@ -59,9 +58,9 @@ public class VisualSuite {
 
     /**
      * Sets the global configuration.
-     * 
+     *
      * @param value
-     *            the new global configuration
+     *     the new global configuration
      */
     public void setGlobalConfiguration(GlobalConfiguration value) {
         this.globalConfiguration = value;
@@ -69,7 +68,7 @@ public class VisualSuite {
 
     /**
      * Gets the test.
-     * 
+     *
      * @return the test
      */
     @XmlElement(name = "test", required = true)

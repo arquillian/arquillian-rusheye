@@ -21,13 +21,12 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK;
-
 import java.util.Collection;
-
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.MaskType;
 import org.testng.annotations.Test;
+
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.MASK;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -60,5 +59,4 @@ public class TestOfTestMask extends TestMask {
         stub.defaultTest.remove(stub.defaultPattern);
         stub.defaultTest.add(stub.defaultPattern);
     }
-
 }

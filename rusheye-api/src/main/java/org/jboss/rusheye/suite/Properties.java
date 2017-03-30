@@ -25,16 +25,14 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-
-import org.jboss.rusheye.internal.SimpleElement;
 import org.jboss.rusheye.internal.FilterCollection;
 import org.jboss.rusheye.internal.Predicate;
+import org.jboss.rusheye.internal.SimpleElement;
 import org.w3c.dom.Element;
 
 /**
@@ -42,8 +40,8 @@ import org.w3c.dom.Element;
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Properties", propOrder = { "any" })
-@XmlSeeAlso({ TypeProperties.class, ImageSource.class })
+@XmlType(name = "Properties", propOrder = {"any"})
+@XmlSeeAlso({TypeProperties.class, ImageSource.class})
 public class Properties {
 
     protected List<Element> any;
@@ -56,7 +54,6 @@ public class Properties {
         return this.any;
     }
 
-    
     public Object getProperty(final String key) {
         Collection<Element> elements = FilterCollection.filter(getAny(), new Predicate<Element>() {
             @Override
@@ -94,7 +91,7 @@ public class Properties {
     public int size() {
         return getAny().size();
     }
-    
+
     public <T> T getProperty(String propertyKey, Class<T> tClass) {
         Object object = getProperty(propertyKey);
 

@@ -22,14 +22,13 @@
 package org.jboss.rusheye.result;
 
 import java.math.BigDecimal;
-
 import org.jboss.rusheye.suite.ComparisonResult;
 import org.jboss.rusheye.suite.Perception;
 import org.jboss.rusheye.suite.ResultConclusion;
 
 /**
  * Evaluates the comparison result using perception settings to obtain conclusion of comparison process.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -38,11 +37,12 @@ public class ResultEvaluator {
 
     /**
      * Evaluates the comparison result using perception settings to obtain conclusion of comparison process.
-     * 
+     *
      * @param perception
-     *            the perception settings used in process of comparison which got the given comparisonResult
+     *     the perception settings used in process of comparison which got the given comparisonResult
      * @param comparisonResult
-     *            the result of comparison process
+     *     the result of comparison process
+     *
      * @return the simple conclusion of comparison process
      */
     public ResultConclusion evaluate(Perception perception, ComparisonResult comparisonResult) {

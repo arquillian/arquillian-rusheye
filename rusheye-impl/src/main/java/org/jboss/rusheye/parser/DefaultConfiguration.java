@@ -23,7 +23,6 @@ package org.jboss.rusheye.parser;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.jboss.rusheye.suite.Configuration;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Perception;

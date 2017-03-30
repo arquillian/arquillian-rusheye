@@ -23,7 +23,7 @@ package org.jboss.rusheye.retriever;
 
 /**
  * Retrieves mask images from given source.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

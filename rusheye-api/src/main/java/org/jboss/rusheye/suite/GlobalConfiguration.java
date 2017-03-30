@@ -23,13 +23,11 @@ package org.jboss.rusheye.suite;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.retriever.MaskRetriever;
 import org.jboss.rusheye.retriever.PatternRetriever;
@@ -39,17 +37,17 @@ import org.jboss.rusheye.retriever.SampleRetriever;
  * <p>
  * Encapsulates global configuration of the suite, containing all the settings which applies to whole run of the suite.
  * </p>
- * 
+ *
  * <p>
  * In addition to {@link Configuration} it contains information about retrievers and suite listeners.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "GlobalConfiguration", propOrder = { "listeners", "patternRetriever", "maskRetriever",
-        "sampleRetriever" })
+@XmlType(name = "GlobalConfiguration", propOrder = {"listeners", "patternRetriever", "maskRetriever",
+    "sampleRetriever"})
 @XmlRootElement(name = "global-configuration")
 public class GlobalConfiguration extends Configuration {
 
@@ -67,7 +65,7 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Gets the listeners.
-     * 
+     *
      * @return the listeners
      */
     @XmlElement(name = "listener", type = SuiteListenerImpl.class)
@@ -80,7 +78,7 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Gets the pattern retriever.
-     * 
+     *
      * @return the pattern retriever
      */
     @XmlElement(name = "pattern-retriever", type = PatternRetrieverImpl.class)
@@ -90,9 +88,9 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Sets the pattern retriever.
-     * 
+     *
      * @param value
-     *            the new pattern retriever
+     *     the new pattern retriever
      */
     public void setPatternRetriever(PatternRetriever value) {
         this.patternRetriever = value;
@@ -100,7 +98,7 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Gets the mask retriever.
-     * 
+     *
      * @return the mask retriever
      */
     @XmlElement(name = "mask-retriever", type = MaskRetrieverImpl.class)
@@ -110,9 +108,9 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Sets the mask retriever.
-     * 
+     *
      * @param value
-     *            the new mask retriever
+     *     the new mask retriever
      */
     public void setMaskRetriever(MaskRetriever value) {
         this.maskRetriever = value;
@@ -120,7 +118,7 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Gets the sample retriever.
-     * 
+     *
      * @return the sample retriever
      */
     @XmlElement(name = "sample-retriever", type = SampleRetrieverImpl.class)
@@ -130,9 +128,9 @@ public class GlobalConfiguration extends Configuration {
 
     /**
      * Sets the sample retriever.
-     * 
+     *
      * @param value
-     *            the new sample retriever
+     *     the new sample retriever
      */
     public void setSampleRetriever(SampleRetriever value) {
         this.sampleRetriever = value;

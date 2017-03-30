@@ -74,5 +74,4 @@ public final class Log {
         System.out.print("ERROR:   ");
         log(format, o);
     }
-
 }

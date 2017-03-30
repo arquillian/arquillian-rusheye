@@ -21,6 +21,8 @@
  */
 package org.jboss.rusheye.parser;
 
+import com.ctc.wstx.exc.WstxParsingException;
+import com.ctc.wstx.exc.WstxValidationException;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -30,7 +32,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -38,7 +39,6 @@ import javax.xml.stream.StreamFilter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
 import org.apache.commons.io.FileUtils;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
@@ -48,17 +48,14 @@ import org.codehaus.stax2.validation.XMLValidationSchemaFactory;
 import org.jboss.rusheye.exception.ConfigurationException;
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.jboss.rusheye.exception.ParsingException;
-import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.listener.SuiteListener;
+import org.jboss.rusheye.listener.SuiteListenerAdapter;
 import org.jboss.rusheye.suite.GlobalConfiguration;
 import org.jboss.rusheye.suite.Mask;
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 import org.jboss.rusheye.suite.VisualSuite;
-
-import com.ctc.wstx.exc.WstxParsingException;
-import com.ctc.wstx.exc.WstxValidationException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -184,7 +181,6 @@ public final class Parser {
                 } catch (WstxParsingException e) {
                     // intentionally blank - wrong end of document detection
                 }
-
             }
         } catch (XMLStreamException e) {
             throw handleParsingException(e, e);

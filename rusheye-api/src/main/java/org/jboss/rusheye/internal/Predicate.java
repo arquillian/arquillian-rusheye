@@ -23,10 +23,10 @@ package org.jboss.rusheye.internal;
 
 /**
  * Predicate applied to some element returns true if it is true; false otherwise.
- * 
+ *
  * @param <T>
- *            the type of element tied to this predicate
- * 
+ *     the type of element tied to this predicate
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

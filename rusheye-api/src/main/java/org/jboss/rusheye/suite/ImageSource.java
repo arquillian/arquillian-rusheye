@@ -25,26 +25,24 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.jboss.rusheye.suite.annotations.Nullify;
 import org.jboss.rusheye.suite.annotations.VisualSuiteResult;
 
 /**
  * The image source abstraction with possibility to pre-process retrieval of the image from source.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "ImageSource")
-@XmlSeeAlso({ Mask.class, Pattern.class, Sample.class })
+@XmlSeeAlso({Mask.class, Pattern.class, Sample.class})
 public abstract class ImageSource extends Properties {
 
     /** The source. */
@@ -55,21 +53,24 @@ public abstract class ImageSource extends Properties {
     FutureTask<BufferedImage> future = new FutureTask<BufferedImage>(new Callable<BufferedImage>() {
         public BufferedImage call() throws Exception {
             return retrieve();
-        };
+        }
+
+        ;
     });
 
     /**
      * Retrieve the image from defined source.
-     * 
+     *
      * @return the buffered image
+     *
      * @throws Exception
-     *             the exception
+     *     the exception
      */
     public abstract BufferedImage retrieve() throws Exception;
 
     /**
      * Gets the source location.
-     * 
+     *
      * @return the source
      */
     @XmlAttribute
@@ -80,9 +81,9 @@ public abstract class ImageSource extends Properties {
 
     /**
      * Sets the source location.
-     * 
+     *
      * @param value
-     *            the new source
+     *     the new source
      */
     public void setSource(String value) {
         this.source = value;
@@ -97,12 +98,13 @@ public abstract class ImageSource extends Properties {
 
     /**
      * Gets the image prepared for processing by calling {@link #run()}.
-     * 
+     *
      * @return the buffered image
+     *
      * @throws ExecutionException
-     *             the execution exception
+     *     the execution exception
      * @throws InterruptedException
-     *             the interrupted exception
+     *     the interrupted exception
      */
     public BufferedImage get() throws ExecutionException, InterruptedException {
         return future.get();

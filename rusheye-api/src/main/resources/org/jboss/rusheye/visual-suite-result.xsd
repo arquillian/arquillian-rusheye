@@ -23,91 +23,91 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.jboss.org/rusheye/visual-suite-result"
-	xmlns:tns="http://www.jboss.org/rusheye/visual-suite-result" xmlns:vsr="http://www.jboss.org/rusheye/visual-suite-result"
-	elementFormDefault="qualified" version="1.0">
+    xmlns:vsr="http://www.jboss.org/rusheye/visual-suite-result"
+    targetNamespace="http://www.jboss.org/rusheye/visual-suite-result"
+    elementFormDefault="qualified" version="1.0">
 
-	<xs:element name="visual-suite-result">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="test" type="vsr:TestType" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-		<xs:unique name="TestNameUnique">
-			<xs:selector xpath="vsr:test" />
-			<xs:field xpath="@name" />
-		</xs:unique>
-		<xs:unique name="TestPatternNameUnique">
-			<xs:selector xpath="vsr:test/vsr:pattern" />
-			<xs:field xpath="@name" />
-		</xs:unique>
-	</xs:element>
+  <xs:element name="visual-suite-result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="test" type="vsr:TestType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:unique name="TestNameUnique">
+      <xs:selector xpath="vsr:test"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+    <xs:unique name="TestPatternNameUnique">
+      <xs:selector xpath="vsr:test/vsr:pattern"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+  </xs:element>
 
-	<xs:complexType name="TestType">
-		<xs:sequence>
-			<xs:element name="pattern" type="vsr:PatternType" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:Name" use="required" />
-	</xs:complexType>
+  <xs:complexType name="TestType">
+    <xs:sequence>
+      <xs:element name="pattern" type="vsr:PatternType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:Name" use="required"/>
+  </xs:complexType>
 
-	<xs:complexType name="PatternType">
-		<xs:choice>
-			<xs:element name="comparison-result" type="vsr:ComparisonResultType"
-				minOccurs="0" />
-			<xs:element name="error-output" type="xs:string"
-				minOccurs="0" />
-		</xs:choice>
-		<xs:attribute name="name" type="xs:Name" use="required" />
-		<xs:attribute name="result" type="vsr:ResultType" use="required" />
-		<xs:attribute name="output" type="xs:string" />
-	</xs:complexType>
+  <xs:complexType name="PatternType">
+    <xs:choice>
+      <xs:element name="comparison-result" type="vsr:ComparisonResultType"
+          minOccurs="0"/>
+      <xs:element name="error-output" type="xs:string"
+          minOccurs="0"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:Name" use="required"/>
+    <xs:attribute name="result" type="vsr:ResultType" use="required"/>
+    <xs:attribute name="output" type="xs:string"/>
+  </xs:complexType>
 
-	<xs:simpleType name="ResultType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="SAME" />
-			<xs:enumeration value="PERCEPTUALLY_SAME" />
-			<xs:enumeration value="DIFFER" />
-			<xs:enumeration value="ERROR" />
-			<xs:enumeration value="NOT_TESTED" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="ResultType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SAME"/>
+      <xs:enumeration value="PERCEPTUALLY_SAME"/>
+      <xs:enumeration value="DIFFER"/>
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="NOT_TESTED"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="ComparisonResultType">
-		<xs:sequence>
-			<xs:element name="area" type="vsr:AreaType" />
-			<xs:element name="rectangle" type="vsr:RectangleType" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="total-pixels" type="vsr:PixelAmountType" />
-			<xs:element name="masked-pixels" type="vsr:PixelAmountType" />
-			<xs:element name="perceptible-different-pixels" type="vsr:PixelAmountType" />
-			<xs:element name="global-different-pixels" type="vsr:PixelAmountType" />
-			<xs:element name="unperceptible-different-pixels" type="vsr:PixelAmountType" />
-			<xs:element name="same-pixels" type="vsr:PixelAmountType" />
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="AreaType">
-		<xs:attribute name="width" type="xs:nonNegativeInteger" use="required" />
-		<xs:attribute name="height" type="xs:nonNegativeInteger" use="required" />
-	</xs:complexType>
-	
-	<xs:complexType name="RectangleType">
-		<xs:sequence>
-			<xs:element name="min" minOccurs="1" maxOccurs="1">
-				<xs:complexType>
-					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
-					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="max" minOccurs="1" maxOccurs="1">
-				<xs:complexType>
-					<xs:attribute name="x" type="xs:nonNegativeInteger" use="required" />
-					<xs:attribute name="y" type="xs:nonNegativeInteger" use="required" />
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="ComparisonResultType">
+    <xs:sequence>
+      <xs:element name="area" type="vsr:AreaType"/>
+      <xs:element name="rectangle" type="vsr:RectangleType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="total-pixels" type="vsr:PixelAmountType"/>
+      <xs:element name="masked-pixels" type="vsr:PixelAmountType"/>
+      <xs:element name="perceptible-different-pixels" type="vsr:PixelAmountType"/>
+      <xs:element name="global-different-pixels" type="vsr:PixelAmountType"/>
+      <xs:element name="unperceptible-different-pixels" type="vsr:PixelAmountType"/>
+      <xs:element name="same-pixels" type="vsr:PixelAmountType"/>
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:simpleType name="PixelAmountType">
-		<xs:restriction base="xs:nonNegativeInteger" />
-	</xs:simpleType>
+  <xs:complexType name="AreaType">
+    <xs:attribute name="width" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="height" type="xs:nonNegativeInteger" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="RectangleType">
+    <xs:sequence>
+      <xs:element name="min" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="x" type="xs:nonNegativeInteger" use="required"/>
+          <xs:attribute name="y" type="xs:nonNegativeInteger" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="max" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="x" type="xs:nonNegativeInteger" use="required"/>
+          <xs:attribute name="y" type="xs:nonNegativeInteger" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="PixelAmountType">
+    <xs:restriction base="xs:nonNegativeInteger"/>
+  </xs:simpleType>
 </xs:schema>

@@ -22,14 +22,13 @@
 package org.jboss.rusheye.result;
 
 import java.awt.image.BufferedImage;
-
 import org.jboss.rusheye.suite.Pattern;
 import org.jboss.rusheye.suite.Properties;
 import org.jboss.rusheye.suite.Test;
 
 /**
  * Mechanism for storing difference image from comparison process in case of not same images.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -37,21 +36,22 @@ public interface ResultStorage {
 
     /**
      * Set the properties to be consumed by final implementation.
-     * 
+     *
      * @param properties
-     *            to setup final implementation of storage.
+     *     to setup final implementation of storage.
      */
     void setProperties(Properties properties);
 
     /**
      * Stores the differenceImage to location given by pattern and test.
-     * 
+     *
      * @param test
-     *            tied with pattern and sample which both constructed the differenceImage
+     *     tied with pattern and sample which both constructed the differenceImage
      * @param pattern
-     *            which constructed differenceImage
+     *     which constructed differenceImage
      * @param differenceImage
-     *            the difference image constructed in process of comparison
+     *     the difference image constructed in process of comparison
+     *
      * @return the location where was saved the difference image
      */
     String store(Test test, Pattern pattern, BufferedImage differenceImage);

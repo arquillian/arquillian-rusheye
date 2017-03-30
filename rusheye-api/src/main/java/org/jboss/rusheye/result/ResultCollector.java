@@ -29,7 +29,7 @@ import org.jboss.rusheye.suite.VisualSuite;
 
 /**
  * Interface for event listeners collecting results of the comparison process.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -37,71 +37,71 @@ public interface ResultCollector extends SuiteListener {
 
     /**
      * Fired when sample retrieval was started.
-     * 
+     *
      * @param test
-     *            the test for which was sample retrieval started
+     *     the test for which was sample retrieval started
      */
     void onSampleStarted(Test test);
 
     /**
      * Fired when sample was retrieved.
-     * 
+     *
      * @param test
-     *            the test for which was sample retrieved
+     *     the test for which was sample retrieved
      */
     void onSampleLoaded(Test test);
 
     /**
      * Fired when pattern retrieval was started.
-     * 
+     *
      * @param pattern
-     *            the pattern for which was sample retrieval started
+     *     the pattern for which was sample retrieval started
      */
     void onPatternStarted(Pattern pattern);
 
     /**
      * Fired when pattern was retrieved.
-     * 
+     *
      * @param test
-     *            the test tied with pattern for which was pattern retrieved.
+     *     the test tied with pattern for which was pattern retrieved.
      * @param pattern
-     *            the pattern which was retrieved.
+     *     the pattern which was retrieved.
      */
     void onPatternLoaded(Test test, Pattern pattern);
 
     /**
      * Fired when comparison process of pattern was completed.
-     * 
+     *
      * @param test
-     *            the test tied to pattern which was completed
+     *     the test tied to pattern which was completed
      * @param pattern
-     *            the pattern which was completed
+     *     the pattern which was completed
      * @param comparisonResult
-     *            the comparison result
+     *     the comparison result
      */
     void onPatternCompleted(Test test, Pattern pattern, ComparisonResult comparisonResult);
 
     /**
      * Fired when test was started.
-     * 
+     *
      * @param test
-     *            test which was started
+     *     test which was started
      */
     void onTestStarted(Test test);
 
     /**
      * Fired when test was completed
-     * 
+     *
      * @param test
-     *            the test which was completed
+     *     the test which was completed
      */
     void onTestCompleted(Test test);
 
     /**
      * Fired when whole suite was completed
-     * 
+     *
      * @param visualSuite
-     *            the visual suite which was completed
+     *     the visual suite which was completed
      */
     void onSuiteCompleted(VisualSuite visualSuite);
 }

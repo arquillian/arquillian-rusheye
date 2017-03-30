@@ -23,7 +23,7 @@ package org.jboss.rusheye.retriever;
 
 /**
  * Retrieves pattern images from given source.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

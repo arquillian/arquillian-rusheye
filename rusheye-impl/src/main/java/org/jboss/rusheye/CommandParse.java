@@ -21,19 +21,17 @@
  */
 package org.jboss.rusheye;
 
+import com.beust.jcommander.IStringConverter;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
+import com.beust.jcommander.converters.FileConverter;
 import java.io.File;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.jboss.rusheye.internal.Instantiator;
 import org.jboss.rusheye.listener.SuiteListener;
 import org.jboss.rusheye.parser.Parser;
 import org.jboss.rusheye.suite.Properties;
-
-import com.beust.jcommander.IStringConverter;
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
 
 @Parameters(commandDescription = "Parse the Visual Suite descriptor in order to run comparison process")
 public class CommandParse extends CommandBase {
@@ -41,17 +39,17 @@ public class CommandParse extends CommandBase {
     @Parameter(required = true, arity = 1, description = "The Visual Suite descriptor", converter = FileConverter.class)
     private List<File> files;
 
-    @Parameter(names = { "--listener", "-L" }, description = "Main listener used to proceed comparison",
+    @Parameter(names = {"--listener", "-L"}, description = "Main listener used to proceed comparison",
         converter = SuiteListenerConverter.class)
     private SuiteListener suiteListener;
 
-    @Parameter(names = { "-D" }, description = "Defines properties to listeners proceeding comparison")
+    @Parameter(names = {"-D"}, description = "Defines properties to listeners proceeding comparison")
     private List<String> definitions;
 
-    @Parameter(names = { "--output", "-O" }, description = "Visual Suite Result descriptor output filename")
+    @Parameter(names = {"--output", "-O"}, description = "Visual Suite Result descriptor output filename")
     private File output;
 
-    @Parameter(names = { "--force", "-f" }, description = "Force to proceed")
+    @Parameter(names = {"--force", "-f"}, description = "Force to proceed")
     private boolean force = false;
 
     private File input;

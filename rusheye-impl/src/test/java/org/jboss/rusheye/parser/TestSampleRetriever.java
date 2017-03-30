@@ -21,20 +21,19 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.jboss.rusheye.exception.RetrieverException;
 import org.jboss.rusheye.retriever.Retriever;
 import org.jboss.rusheye.retriever.SampleRetriever;
 import org.jboss.rusheye.suite.Properties;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -66,7 +65,7 @@ public class TestSampleRetriever extends AbstractVisualSuiteDefinitionTest {
     public static class AssertingRetriever extends TestPatternRetriever.AssertingRetriever implements SampleRetriever {
         @Override
         public Set<String> getNewSources() {
-            return new HashSet<String>(Arrays.asList(new String[] { SOURCE }));
+            return new HashSet<String>(Arrays.asList(new String[] {SOURCE}));
         }
     }
 }

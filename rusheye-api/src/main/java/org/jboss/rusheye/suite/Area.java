@@ -27,19 +27,19 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 /**
  * The description of area of the image containing width and height.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Area {
-    
+
     /** The width. */
     private Integer width;
-    
+
     /** The height. */
     private Integer height;
-    
+
     /**
      * Gets the width.
      *
@@ -53,7 +53,8 @@ public class Area {
     /**
      * Sets the width.
      *
-     * @param width the new width
+     * @param width
+     *     the new width
      */
     public void setWidth(Integer width) {
         this.width = width;
@@ -72,7 +73,8 @@ public class Area {
     /**
      * Sets the height.
      *
-     * @param height the new height
+     * @param height
+     *     the new height
      */
     public void setHeight(Integer height) {
         this.height = height;

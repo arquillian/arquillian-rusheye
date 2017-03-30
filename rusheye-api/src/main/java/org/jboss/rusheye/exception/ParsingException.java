@@ -25,11 +25,11 @@ package org.jboss.rusheye.exception;
  * <p>
  * Thrown when parsing of the configuration failed due to behavior problem and cannot be continued.
  * </p>
- * 
+ *
  * <p>
  * In cases of configuration problem, the {@link ConfigurationException} should be thrown instead.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

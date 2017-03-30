@@ -21,18 +21,15 @@
  */
 package org.jboss.rusheye;
 
-import static org.apache.commons.lang.StringUtils.split;
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang.StringUtils.substringAfterLast;
-import static org.apache.commons.lang.StringUtils.substringBeforeLast;
-
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
+import com.beust.jcommander.converters.FileConverter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
@@ -52,48 +49,49 @@ import org.jboss.rusheye.retriever.pattern.PatternFileRetriever;
 import org.jboss.rusheye.retriever.sample.FileSampleRetriever;
 import org.jboss.rusheye.suite.MaskType;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
+import static org.apache.commons.lang.StringUtils.split;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static org.apache.commons.lang.StringUtils.substringAfterLast;
+import static org.apache.commons.lang.StringUtils.substringBeforeLast;
 
 @Parameters(commandDescription = "Crawls the directory with images to create Visual Suite descriptor")
 public class CommandCrawl extends CommandBase {
 
     @Parameter(converter = FileConverter.class, description = "directory with patterns to be crawled")
     private List<File> patterns;
-    
+
     private File patternBase;
 
-    @Parameter(names = { "-m", "--masks" }, converter = FileConverter.class, description = "directory with masks (default: current directory)")
+    @Parameter(names = {"-m",
+        "--masks"}, converter = FileConverter.class, description = "directory with masks (default: current directory)")
     private File maskBase = new File(".");
 
-    @Parameter(names = { "--output", "-O" }, converter = FileConverter.class, description = "The output of XML (default: written to stdout)")
+    @Parameter(names = {"--output",
+        "-O"}, converter = FileConverter.class, description = "The output of XML (default: written to stdout)")
     private File output;
 
-    @Parameter(names = { "--force", "-f" }, description = "Force to proceed")
+    @Parameter(names = {"--force", "-f"}, description = "Force to proceed")
     private boolean force;
 
-    @Parameter(names = { "one-pixel-treshold" }, description = "")
+    @Parameter(names = {"one-pixel-treshold"}, description = "")
     private Integer onePixelTreshold;
 
-    @Parameter(names = { "global-difference-treshold" }, description = "")
+    @Parameter(names = {"global-difference-treshold"}, description = "")
     private Integer globalDifferenceTreshold;
 
-    @Parameter(names = { "global-difference-amount" }, description = "")
+    @Parameter(names = {"global-difference-amount"}, description = "")
     private String globalDifferenceAmount;
 
     private Document document;
     private Namespace ns;
 
-    
     @Override
     public void initialize() {
         if (patterns != null && patterns.size() > 0) {
             patternBase = patterns.get(0);
         }
     }
-    
-    
+
     @Override
     public boolean isForce() {
         return force;
@@ -163,10 +161,12 @@ public class CommandCrawl extends CommandBase {
     }
 
     private void addRetrievers(Element globalConfiguration) {
-        globalConfiguration.addElement(QName.get("pattern-retriever", ns)).addAttribute("type", PatternFileRetriever.class.getName());
-        globalConfiguration.addElement(QName.get("mask-retriever", ns)).addAttribute("type", MaskFileRetriever.class.getName());
+        globalConfiguration.addElement(QName.get("pattern-retriever", ns))
+            .addAttribute("type", PatternFileRetriever.class.getName());
+        globalConfiguration.addElement(QName.get("mask-retriever", ns))
+            .addAttribute("type", MaskFileRetriever.class.getName());
         globalConfiguration.addElement(QName.get("sample-retriever", ns)).addAttribute("type",
-                FileSampleRetriever.class.getName());
+            FileSampleRetriever.class.getName());
     }
 
     private void addPerception(Element base) {
@@ -177,7 +177,7 @@ public class CommandCrawl extends CommandBase {
         }
         if (globalDifferenceTreshold != null) {
             perception.addElement(QName.get("global-difference-treshold", ns))
-                    .addText(String.valueOf(globalDifferenceTreshold));
+                .addText(String.valueOf(globalDifferenceTreshold));
         }
         if (globalDifferenceAmount != null) {
             perception.addElement(QName.get("global-difference-amount", ns)).addText(globalDifferenceAmount);
@@ -203,11 +203,11 @@ public class CommandCrawl extends CommandBase {
                 String[] infoTokens = split(info, "-");
 
                 Element mask = base.addElement(QName.get("mask", ns)).addAttribute("id", id)
-                        .addAttribute("type", maskType.value()).addAttribute("source", source);
+                    .addAttribute("type", maskType.value()).addAttribute("source", source);
 
                 for (String alignment : infoTokens) {
-                    String attribute = ArrayUtils.contains(new String[] { "top", "bottom" }, alignment) ? "vertical-align"
-                            : "horizontal-align";
+                    String attribute = ArrayUtils.contains(new String[] {"top", "bottom"}, alignment) ? "vertical-align"
+                        : "horizontal-align";
                     mask.addAttribute(attribute, alignment);
                 }
             }
@@ -216,7 +216,8 @@ public class CommandCrawl extends CommandBase {
 
     private void addTests(File dir, Element root) {
         if (dir.exists() && dir.isDirectory()) {
-            tests: for (File testFile : dir.listFiles()) {
+            tests:
+            for (File testFile : dir.listFiles()) {
                 for (MaskType mask : MaskType.values()) {
                     if (testFile.getName().equals("masks-" + mask.value())) {
                         continue tests;
@@ -298,7 +299,8 @@ public class CommandCrawl extends CommandBase {
     private String validateGlobalDifferenceAmount() {
         if (globalDifferenceAmount != null) {
             boolean matches = false;
-            Pattern[] pixelAmountPatterns = new Pattern[] { Pattern.compile("\\d+px"), Pattern.compile("([0-9]{1,2}|100)%") };
+            Pattern[] pixelAmountPatterns =
+                new Pattern[] {Pattern.compile("\\d+px"), Pattern.compile("([0-9]{1,2}|100)%")};
             for (Pattern pattern : pixelAmountPatterns) {
                 if (pattern.matcher(globalDifferenceAmount).matches()) {
                     matches = true;

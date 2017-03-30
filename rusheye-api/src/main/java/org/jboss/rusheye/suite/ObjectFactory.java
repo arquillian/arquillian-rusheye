@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * The implementation of ObjectFactory to satisfy JAXB package convention made possible to construct new object from
  * this package.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */

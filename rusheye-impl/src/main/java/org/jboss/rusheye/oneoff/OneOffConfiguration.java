@@ -24,7 +24,6 @@ package org.jboss.rusheye.oneoff;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jboss.rusheye.suite.Configuration;
 
 /**
