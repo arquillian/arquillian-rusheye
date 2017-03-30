@@ -23,43 +23,43 @@
 
 -->
 <visual-suite-result xmlns="http://www.jboss.org/test/visual-suite-result"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.jboss.org/test/visual-suite-result ../../main/resources/visual-suite-result.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.jboss.org/test/visual-suite-result ../../main/resources/visual-suite-result.xsd">
 
-	<test name="AjaxSupportTestCase.testEmpty">
-		<pattern name="p1" result="DIFFER"
-			output="diffs/AjaxSupportTestCase.testEmpty.1.png">
-			<comparison-result>
-				<area width="558" height="1145" />
-				<rectangle>
-					<point x="0" y="5" />
-					<point x="10" y="140" />
-				</rectangle>
-				<total-pixels>5</total-pixels>
-				<masked-pixels>15</masked-pixels>
-				<perceptible-different-pixels>345</perceptible-different-pixels>
-				<global-different-pixels>53</global-different-pixels>
-				<unperceptible-different-pixels>2345</unperceptible-different-pixels>
-				<same-pixels>3245</same-pixels>
-			</comparison-result>
-		</pattern>
-		<pattern name="p2" result="SAME" />
-		<pattern name="p3" result="NOT_TESTED" />
-	</test>
-	<test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
-		<pattern name="p4" result="DIFFER" />
-		<pattern name="p5" result="DIFFER" />
-		<pattern name="p6" result="DIFFER" />
-	</test>
-	<test name="xxx">
-		<pattern name="p7" result="PERCEPTUALLY_SAME" />
-		<pattern name="p8" result="NOT_TESTED" />
-		<pattern name="p9" result="NOT_TESTED" />
-	</test>
-	<test name="yyy">
-		<pattern name="p10" result="ERROR">
-			<error-output>Stack trace...</error-output>
-		</pattern>
-		<pattern name="p11" result="SAME" />
-	</test>
+  <test name="AjaxSupportTestCase.testEmpty">
+    <pattern name="p1" result="DIFFER"
+        output="diffs/AjaxSupportTestCase.testEmpty.1.png">
+      <comparison-result>
+        <area width="558" height="1145"/>
+        <rectangle>
+          <point x="0" y="5"/>
+          <point x="10" y="140"/>
+        </rectangle>
+        <total-pixels>5</total-pixels>
+        <masked-pixels>15</masked-pixels>
+        <perceptible-different-pixels>345</perceptible-different-pixels>
+        <global-different-pixels>53</global-different-pixels>
+        <unperceptible-different-pixels>2345</unperceptible-different-pixels>
+        <same-pixels>3245</same-pixels>
+      </comparison-result>
+    </pattern>
+    <pattern name="p2" result="SAME"/>
+    <pattern name="p3" result="NOT_TESTED"/>
+  </test>
+  <test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
+    <pattern name="p4" result="DIFFER"/>
+    <pattern name="p5" result="DIFFER"/>
+    <pattern name="p6" result="DIFFER"/>
+  </test>
+  <test name="xxx">
+    <pattern name="p7" result="PERCEPTUALLY_SAME"/>
+    <pattern name="p8" result="NOT_TESTED"/>
+    <pattern name="p9" result="NOT_TESTED"/>
+  </test>
+  <test name="yyy">
+    <pattern name="p10" result="ERROR">
+      <error-output>Stack trace...</error-output>
+    </pattern>
+    <pattern name="p11" result="SAME"/>
+  </test>
 </visual-suite-result>

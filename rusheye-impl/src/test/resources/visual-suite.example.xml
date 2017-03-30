@@ -23,52 +23,52 @@
 
 -->
 <visual-suite xmlns="http://www.jboss.org/test/visual-suite"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.jboss.org/test/visual-suite ../../main/resources/visual-suite.xsd">
 
-	<global-configuration>
-		
-		<listener type="org.jboss.lupic.parser.listener.CompareListener">
-			<result-listener>org.jboss.lupic.result.ResultStorageListener</result-listener>
-			<storage-class>org.jboss.lupic.storage.FileStorage</storage-class>
-		</listener>
-		<!-- the image retriever, implementing SourceRetriever interface -->
-		<pattern-retriever type="org.jboss.lupic.retriever.FileRetriever">
-			<xxx></xxx>
-			<yyy></yyy>
-		</pattern-retriever>
-		<mask-retriever type="org.jboss.lupic.retriever.FileRetriever" />
-		<sample-retriever
-			type="org.jboss.lupic.retriever.sample.FileSampleRetriever" />
-		<perception>
-			<!-- unperceptible treshold of color difference in scope of one pixel -->
-			<!-- 0-768 -->
-			<one-pixel-treshold>5</one-pixel-treshold>
-			<!-- unperceptible treshold of color difference of one pixel to be recognized 
-				as perceptible difference in global image scope -->
-			<!-- 0-768 -->
-			<global-difference-treshold>10</global-difference-treshold>
-			<!-- amount of pixels perceptually different -->
-			<!-- % of image surface / 0-* of pixels differ -->
-			<global-difference-pixel-amount>1%</global-difference-pixel-amount>
-		</perception>
-		<mask id="xxx" type="ignore-bitmap" source="xxx.png" />
-		<mask id="yyy" type="selective-alpha" source="yyy.png" vertical-align="bottom" />
-	</global-configuration>
+  <global-configuration>
 
-	<test name="AjaxSupportTestCase.testEmpty">
-		<mask id="xxx" type="ignore-bitmap" source="xxx.png" />
-		<pattern name="AjaxSupportTestCase.testEmpty.1" source="AjaxSupportTestCase.testEmpty.1.png" />
-		<pattern name="AjaxSupportTestCase.testEmpty.2" source="AjaxSupportTestCase.testEmpty.2.png" />
-	</test>
+    <listener type="org.jboss.lupic.parser.listener.CompareListener">
+      <result-listener>org.jboss.lupic.result.ResultStorageListener</result-listener>
+      <storage-class>org.jboss.lupic.storage.FileStorage</storage-class>
+    </listener>
+    <!-- the image retriever, implementing SourceRetriever interface -->
+    <pattern-retriever type="org.jboss.lupic.retriever.FileRetriever">
+      <xxx></xxx>
+      <yyy></yyy>
+    </pattern-retriever>
+    <mask-retriever type="org.jboss.lupic.retriever.FileRetriever"/>
+    <sample-retriever
+        type="org.jboss.lupic.retriever.sample.FileSampleRetriever"/>
+    <perception>
+      <!-- unperceptible treshold of color difference in scope of one pixel -->
+      <!-- 0-768 -->
+      <one-pixel-treshold>5</one-pixel-treshold>
+      <!-- unperceptible treshold of color difference of one pixel to be recognized
+        as perceptible difference in global image scope -->
+      <!-- 0-768 -->
+      <global-difference-treshold>10</global-difference-treshold>
+      <!-- amount of pixels perceptually different -->
+      <!-- % of image surface / 0-* of pixels differ -->
+      <global-difference-pixel-amount>1%</global-difference-pixel-amount>
+    </perception>
+    <mask id="xxx" type="ignore-bitmap" source="xxx.png"/>
+    <mask id="yyy" type="selective-alpha" source="yyy.png" vertical-align="bottom"/>
+  </global-configuration>
 
-	<test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
-		<perception>
-			<global-difference-pixel-amount>10px</global-difference-pixel-amount>
-		</perception>
-		<pattern name="BeanValidatorTestCase.testAgeIntegerOnly:168.1">
-			<xxx>BeanValidatorTestCase.testAgeIntegerOnly:168.png</xxx>
-			<yyy>10</yyy>
-		</pattern>
-	</test>
+  <test name="AjaxSupportTestCase.testEmpty">
+    <mask id="xxx" type="ignore-bitmap" source="xxx.png"/>
+    <pattern name="AjaxSupportTestCase.testEmpty.1" source="AjaxSupportTestCase.testEmpty.1.png"/>
+    <pattern name="AjaxSupportTestCase.testEmpty.2" source="AjaxSupportTestCase.testEmpty.2.png"/>
+  </test>
+
+  <test name="BeanValidatorTestCase.testAgeIntegerOnly:168">
+    <perception>
+      <global-difference-pixel-amount>10px</global-difference-pixel-amount>
+    </perception>
+    <pattern name="BeanValidatorTestCase.testAgeIntegerOnly:168.1">
+      <xxx>BeanValidatorTestCase.testAgeIntegerOnly:168.png</xxx>
+      <yyy>10</yyy>
+    </pattern>
+  </test>
 </visual-suite>

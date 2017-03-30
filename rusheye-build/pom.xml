@@ -1,26 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.jboss.rusheye</groupId>
-	<artifactId>rusheye-build</artifactId>
-	<name>RushEye - Build</name>
+  <groupId>org.jboss.rusheye</groupId>
+  <artifactId>rusheye-build</artifactId>
+  <name>RushEye - Build</name>
 
-	<parent>
-		<artifactId>rusheye-root-parent</artifactId>
-		<groupId>org.jboss.rusheye</groupId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
+  <parent>
+    <artifactId>rusheye-root-parent</artifactId>
+    <groupId>org.jboss.rusheye</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
