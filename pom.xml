@@ -16,8 +16,8 @@
 
   <repositories>
     <repository>
-      <id>jbossqa-repo</id>
-      <url>http://nexus.qa.jboss.com:8081/nexus/content/groups/public-all</url>
+      <id>jboss-repo</id>
+      <url>https://repository.jboss.org/maven2/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -28,8 +28,8 @@
   </repositories>
   <pluginRepositories>
     <pluginRepository>
-      <id>jbossqa-repo</id>
-      <url>http://nexus.qa.jboss.com:8081/nexus/content/groups/public-all</url>
+      <id>jboss-repo</id>
+      <url>https://repository.jboss.org/maven2/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
