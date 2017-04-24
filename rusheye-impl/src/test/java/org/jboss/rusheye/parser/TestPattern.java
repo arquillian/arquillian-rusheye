@@ -22,7 +22,6 @@
 package org.jboss.rusheye.parser;
 
 import java.io.IOException;
-
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
@@ -55,7 +54,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type.*")
     public void testEmptyNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern("");
@@ -64,7 +63,7 @@ public class TestPattern extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"pattern\" is missing \"name\" attribute .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"pattern\" is missing \"name\" attribute.*")
     public void testWithoutNameShouldRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
         addPattern(null);

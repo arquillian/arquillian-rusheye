@@ -22,7 +22,6 @@
 package org.jboss.rusheye.parser;
 
 import java.io.IOException;
-
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -50,7 +49,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"test\" is missing \"name\" attribute .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"test\" is missing \"name\" attribute.*")
     public void testWithoutNameShouldRaiseException() throws IOException, SAXException {
         addTest(null);
         addPattern(PATTERN1_NAME);
@@ -59,7 +58,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "attribute \"name\" has a bad value: \"\" does not satisfy the \"Name\" type.*")
     public void testEmptyNameShouldRaiseException() throws IOException, SAXException {
         addTest("");
         addPattern(PATTERN1_NAME);
@@ -68,7 +67,7 @@ public class TestOfTestElement extends AbstractTestOfTestElement {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "uncompleted content model. expecting: <mask>,<pattern>,<perception> .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "uncompleted content model. expecting: <mask>,<pattern>,<perception>.*")
     public void testNoPatternRaiseException() throws IOException, SAXException {
         addTest(TEST1_NAME);
 

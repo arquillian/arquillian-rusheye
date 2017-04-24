@@ -21,16 +21,15 @@
  */
 package org.jboss.rusheye.parser;
 
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_DIFFERENCE_TRESHOLD;
-import static org.jboss.rusheye.parser.VisualSuiteDefinitions.ONE_PIXEL_TRESHOLD;
-
 import java.io.IOException;
-
 import org.dom4j.QName;
 import org.jboss.rusheye.exception.ConfigurationValidationException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.GLOBAL_DIFFERENCE_TRESHOLD;
+import static org.jboss.rusheye.parser.VisualSuiteDefinitions.ONE_PIXEL_TRESHOLD;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -42,12 +41,12 @@ public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
 
     @DataProvider(name = "pixel-treshold-allowed")
     public Object[][] providePixelTresholdAllowed() {
-        return new Integer[][] { { 0 }, { 1 }, { MAX_PIXEL_TRESHOLD } };
+        return new Integer[][] {{0}, {1}, {MAX_PIXEL_TRESHOLD}};
     }
 
     @DataProvider(name = "pixel-treshold-not-allowed")
     public Object[][] providePixelTresholdNotAllowed() {
-        return new Object[][] { { -1 }, { "1%" }, { "3px" }, { "a" } };
+        return new Object[][] {{-1}, {"1%"}, {"3px"}, {"a"}};
     }
 
     @Test(dataProvider = "pixel-treshold-allowed")
@@ -55,12 +54,12 @@ public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, pixelTreshold);
     }
 
-    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type .*")
+    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type.*")
     public void testOnePixelTresholdNotAllowed(Object pixelTreshold) throws SAXException, IOException {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, pixelTreshold);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason.*")
     public void testOnePixelTresholdEmptyNotAllowed() throws SAXException, IOException {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, "");
     }
@@ -75,12 +74,12 @@ public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, pixelTreshold);
     }
 
-    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type .*")
+    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type.*")
     public void testGlobalDifferenceNotAllowed(Object pixelTreshold) throws SAXException, IOException {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, pixelTreshold);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason.*")
     public void testGlobalDifferenceEmptyNotAllowed() throws SAXException, IOException {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, "");
     }
