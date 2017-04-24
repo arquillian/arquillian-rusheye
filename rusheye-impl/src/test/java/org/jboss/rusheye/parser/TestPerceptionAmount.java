@@ -56,7 +56,7 @@ public class TestPerceptionAmount extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelAmount(pixelAmount);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason.*")
     public void testGlobalDifferencePixelAmountEmptyNotAllowed() throws IOException, SAXException {
         tryParsePixelAmount("");
     }

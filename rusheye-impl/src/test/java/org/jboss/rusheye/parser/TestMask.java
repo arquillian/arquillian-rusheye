@@ -61,7 +61,7 @@ public class TestMask extends AbstractVisualSuiteDefinitionTest {
         parse();
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"mask\" is missing \"id\" attribute .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "element \"mask\" is missing \"id\" attribute.*")
     public void testMaskWithNoIdRaiseException() throws IOException, SAXException {
         addMask(null, IGNORE_BITMAP, MASK1_SOURCE);
         startWriter();

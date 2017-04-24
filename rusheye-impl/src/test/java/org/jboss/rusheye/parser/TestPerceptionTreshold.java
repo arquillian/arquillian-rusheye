@@ -54,12 +54,12 @@ public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, pixelTreshold);
     }
 
-    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type .*")
+    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type.*")
     public void testOnePixelTresholdNotAllowed(Object pixelTreshold) throws SAXException, IOException {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, pixelTreshold);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason.*")
     public void testOnePixelTresholdEmptyNotAllowed() throws SAXException, IOException {
         tryParsePixelTreshold(ONE_PIXEL_TRESHOLD, "");
     }
@@ -74,12 +74,12 @@ public class TestPerceptionTreshold extends AbstractVisualSuiteDefinitionTest {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, pixelTreshold);
     }
 
-    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type .*")
+    @Test(dataProvider = "pixel-treshold-not-allowed", expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "\"[^\"]+\" does not satisfy the \"nonNegativeInteger\" type.*")
     public void testGlobalDifferenceNotAllowed(Object pixelTreshold) throws SAXException, IOException {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, pixelTreshold);
     }
 
-    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason .*")
+    @Test(expectedExceptions = ConfigurationValidationException.class, expectedExceptionsMessageRegExp = "Unknown reason.*")
     public void testGlobalDifferenceEmptyNotAllowed() throws SAXException, IOException {
         tryParsePixelTreshold(GLOBAL_DIFFERENCE_TRESHOLD, "");
     }
