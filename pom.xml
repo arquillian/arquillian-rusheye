@@ -8,7 +8,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.rusheye</groupId>
+  <groupId>org.arquillian.rusheye</groupId>
   <artifactId>rusheye-root-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -91,7 +91,7 @@
           </executions>
           <dependencies>
             <dependency>
-              <groupId>org.jboss.rusheye</groupId>
+              <groupId>org.arquillian.rusheye</groupId>
               <artifactId>rusheye-build</artifactId>
               <version>${project.version}</version>
             </dependency>
@@ -130,7 +130,7 @@
           </executions>
           <dependencies>
             <dependency>
-              <groupId>org.jboss.rusheye</groupId>
+              <groupId>org.arquillian.rusheye</groupId>
               <artifactId>rusheye-build</artifactId>
               <version>${project.version}</version>
             </dependency>

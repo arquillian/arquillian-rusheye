@@ -9,4 +9,4 @@ if [ ! -d "$TARGET/dependency" ]; then
    mvn -f $IMPL/pom.xml dependency:copy-dependencies
 fi
 
-java -cp $TARGET/classes:$TARGET/dependency/* org/jboss/rusheye/Main $*
+java -cp $TARGET/classes:$TARGET/dependency/* org/arquillian/rusheye/Main $*
