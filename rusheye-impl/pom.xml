@@ -2,12 +2,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.rusheye</groupId>
+  <groupId>org.arquillian.rusheye</groupId>
   <artifactId>rusheye-impl</artifactId>
   <name>Rusheye - Implementation</name>
 
   <parent>
-    <groupId>org.jboss.rusheye</groupId>
+    <groupId>org.arquillian.rusheye</groupId>
     <artifactId>rusheye-root-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
@@ -43,7 +43,7 @@
               <appendAssemblyId>false</appendAssemblyId>
               <archive>
                 <manifest>
-                  <mainClass>org.jboss.rusheye.Main</mainClass>
+                  <mainClass>org.arquillian.rusheye.Main</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
@@ -58,7 +58,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.jboss.rusheye</groupId>
+      <groupId>org.arquillian.rusheye</groupId>
       <artifactId>rusheye-api</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
