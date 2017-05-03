@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.arquillian.rusheye</groupId>
     <artifactId>rusheye-root-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.arquillian.rusheye</groupId>
       <artifactId>rusheye-api</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>dom4j</groupId>
